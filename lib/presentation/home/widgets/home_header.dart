@@ -4,11 +4,7 @@ class HomeHeader extends StatelessWidget {
   final String name;
   final String date;
 
-  const HomeHeader({
-    super.key,
-    required this.name,
-    required this.date,
-  });
+  const HomeHeader({super.key, required this.name, required this.date});
 
   @override
   Widget build(BuildContext context) {
@@ -86,10 +82,7 @@ class HomeHeader extends StatelessWidget {
           /// 🔹 ROW 2 — Date
           Row(
             children: [
-              const Text(
-                "📅",
-                style: TextStyle(fontSize: 20),
-              ),
+              const Text("📅", style: TextStyle(fontSize: 20)),
               const SizedBox(width: 6),
               Text(
                 date,

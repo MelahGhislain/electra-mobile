@@ -69,7 +69,9 @@ class CustomBottomNav extends StatelessWidget {
                 ),
                 child: const Icon(
                   Icons.center_focus_weak,
-                  color: Colors.white, size: 32),
+                  color: Colors.white,
+                  size: 32,
+                ),
               ),
             ),
 

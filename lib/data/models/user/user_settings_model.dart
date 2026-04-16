@@ -1,4 +1,3 @@
-
 import 'package:electra/domain/entities/user/user_settings.dart';
 
 class UserSettingsModel extends UserSettings {

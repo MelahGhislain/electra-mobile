@@ -83,46 +83,58 @@ class _MainButtonState extends State<MainButton> {
         curve: Curves.easeOut,
         child: isFullWidth
             ? _buildButton()
-            : IntrinsicWidth(child: _buildButton()), // ✅ fit content if not full
+            : IntrinsicWidth(
+                child: _buildButton(),
+              ), // ✅ fit content if not full
       ),
     );
   }
 
   Widget _buildButton() {
     return Container(
-          width: widget.width,
-          height: _height,
-          decoration: BoxDecoration(
-            color: widget.isActive == true ? AppColors.lightText : AppColors.darkText,
-            borderRadius: widget.rounded == true ? BorderRadius.circular(999) : BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: (widget.isActive == true ? AppColors.lightBackground : AppColors.darkBackground).withValues(alpha: 0.06),
-                blurRadius: 8,
-                offset: const Offset(0, 2),
+      width: widget.width,
+      height: _height,
+      decoration: BoxDecoration(
+        color: widget.isActive == true
+            ? AppColors.lightText
+            : AppColors.darkText,
+        borderRadius: widget.rounded == true
+            ? BorderRadius.circular(999)
+            : BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color:
+                (widget.isActive == true
+                        ? AppColors.lightBackground
+                        : AppColors.darkBackground)
+                    .withValues(alpha: 0.06),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      alignment: Alignment.center,
+      child: AnimatedOpacity(
+        duration: const Duration(milliseconds: 120),
+        opacity: _opacity,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            widget.icon ?? const SizedBox.shrink(),
+            const SizedBox(width: 8),
+            Text(
+              widget.text,
+              style: TextStyle(
+                fontSize: _fontSize,
+                fontWeight: FontWeight.bold,
+                color: widget.isActive == true
+                    ? AppColors.darkText
+                    : AppColors.lightText,
               ),
-            ],
-          ),
-          alignment: Alignment.center,
-          child: AnimatedOpacity(
-            duration: const Duration(milliseconds: 120),
-            opacity: _opacity,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                widget.icon ?? const SizedBox.shrink(),
-                const SizedBox(width: 8),
-                Text(
-                  widget.text,
-                  style: TextStyle(
-                    fontSize: _fontSize,
-                    fontWeight: FontWeight.bold,
-                    color: widget.isActive == true ? AppColors.darkText : AppColors.lightText,
-                  ),
-                ),
-              ],
             ),
-          ),
-        );
+          ],
+        ),
+      ),
+    );
   }
 }

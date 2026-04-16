@@ -12,7 +12,12 @@ class AppColors {
   // Neutral colors extracted from screenshots (used for fine-tuning if needed)
   static const Color darkBackground = Color(0xFF121212);
   static const Color darkSurface = Color(0xFF1F1F1F);
-  static const Color lightBackground =  Color.fromARGB(255, 241, 244, 239); // Color(0xFFF8F9FA) ;
+  static const Color lightBackground = Color.fromARGB(
+    255,
+    241,
+    244,
+    239,
+  ); // Color(0xFFF8F9FA) ;
   static const Color lightSurface = Color(0xFFFFFFFF);
 
   // Text colors (consistent with screenshots)

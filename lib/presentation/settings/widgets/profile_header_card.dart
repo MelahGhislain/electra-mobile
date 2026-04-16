@@ -68,11 +68,8 @@ class ProfileHeaderCard extends StatelessWidget {
               ],
             ),
           ),
-            
-          AnimatedIconButton(
-            icon: const Icon(Icons.edit),
-            onTap: () {},
-          ),
+
+          AnimatedIconButton(icon: const Icon(Icons.edit), onTap: () {}),
         ],
       ),
     );

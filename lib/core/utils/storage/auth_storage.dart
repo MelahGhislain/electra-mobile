@@ -14,11 +14,9 @@ class AuthStorage {
     await _storage.write(key: StorageKeys.refreshToken, value: refresh);
   }
 
-  Future<String?> get accessToken =>
-      _storage.read(StorageKeys.accessToken);
+  Future<String?> get accessToken => _storage.read(StorageKeys.accessToken);
 
-  Future<String?> get refreshToken =>
-      _storage.read(StorageKeys.refreshToken);
+  Future<String?> get refreshToken => _storage.read(StorageKeys.refreshToken);
 
   Future<void> clearTokens() async {
     await _storage.delete(StorageKeys.accessToken);

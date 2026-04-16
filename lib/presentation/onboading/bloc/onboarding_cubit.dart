@@ -3,8 +3,8 @@
 // import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 // class OnboardingCubit extends HydratedCubit<int> {
-//   static const int _initialStep = 1;  
-  
+//   static const int _initialStep = 1;
+
 //   OnboardingCubit() : super(_initialStep);
 
 //   void next() => emit(state + 1);
@@ -32,31 +32,23 @@ import 'onboarding_state.dart';
 
 class OnboardingCubit extends Cubit<OnboardingState> {
   OnboardingCubit()
-      : super(
-          OnboardingState(
-            settings: OnboardingSettings(
-              currency: "USD",
-              language: "EN",
-              expensesOnly: true,
-              monthlyBudget: 0,
-            ),
+    : super(
+        OnboardingState(
+          settings: OnboardingSettings(
+            currency: "USD",
+            language: "EN",
+            expensesOnly: true,
+            monthlyBudget: 0,
           ),
-        );
+        ),
+      );
 
   void changeCurrency(String currency) {
-    emit(
-      state.copyWith(
-        settings: state.settings.copyWith(currency: currency),
-      ),
-    );
+    emit(state.copyWith(settings: state.settings.copyWith(currency: currency)));
   }
 
   void changeLanguage(String language) {
-    emit(
-      state.copyWith(
-        settings: state.settings.copyWith(language: language),
-      ),
-    );
+    emit(state.copyWith(settings: state.settings.copyWith(language: language)));
   }
 
   void toggleAccountMode() {
@@ -71,9 +63,7 @@ class OnboardingCubit extends Cubit<OnboardingState> {
 
   void changeBudget(double budget) {
     emit(
-      state.copyWith(
-        settings: state.settings.copyWith(monthlyBudget: budget),
-      ),
+      state.copyWith(settings: state.settings.copyWith(monthlyBudget: budget)),
     );
   }
 }

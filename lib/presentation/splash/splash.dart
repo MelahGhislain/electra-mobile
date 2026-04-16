@@ -10,17 +10,16 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  
   @override
   void initState() {
     super.initState();
     _redirectAfterDelay();
-    }
+  }
 
-    Future<void> _redirectAfterDelay() async {
+  Future<void> _redirectAfterDelay() async {
     await Future.delayed(const Duration(seconds: 2));
 
-    if (!mounted) return;  // Safe check
+    if (!mounted) return; // Safe check
 
     if (context.mounted) {
       context.goNamed(RouteNames.onboarding); // Use goNamed directly
@@ -32,9 +31,11 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Center(
-        child: Text('Splash Screen', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold)),
+        child: Text(
+          'Splash Screen',
+          style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+        ),
       ),
     );
   }
-
 }

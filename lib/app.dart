@@ -2,7 +2,9 @@ import 'package:electra/common/blocs/language_cubit.dart';
 import 'package:electra/core/configs/theme/app_theme.dart';
 import 'package:electra/core/router/app_router.dart';
 import 'package:electra/common/blocs/theme_cubit.dart';
+import 'package:electra/presentation/expense-recorder/blocs/voice/voice_cubit.dart';
 import 'package:electra/presentation/onboading/bloc/onboarding_cubit.dart';
+import 'package:electra/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -30,6 +32,14 @@ class _MainAppState extends State<MainApp> {
         BlocProvider<ThemeCubit>(create: (_) => ThemeCubit()),
         BlocProvider<LanguageCubit>(create: (_) => LanguageCubit()),
         BlocProvider<OnboardingCubit>(create: (_) => OnboardingCubit()),
+        BlocProvider<VoiceCubit>(
+          create: (_) => VoiceCubit(
+            startVoiceStream: sl(),
+            stopVoiceStream: sl(),
+            listenVoiceStream: sl(),
+            repository: sl(),
+          ),
+        ),
       ],
       child: BlocBuilder<ThemeCubit, ThemeMode>(
         builder: (context, themeMode) {

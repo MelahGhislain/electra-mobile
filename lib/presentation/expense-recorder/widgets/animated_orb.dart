@@ -16,7 +16,8 @@ class AnimatedOrb extends StatefulWidget {
   State<AnimatedOrb> createState() => _AnimatedOrbState();
 }
 
-class _AnimatedOrbState extends State<AnimatedOrb> with SingleTickerProviderStateMixin {
+class _AnimatedOrbState extends State<AnimatedOrb>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
   @override
@@ -88,12 +89,16 @@ class WhiteCoreOrbPainter extends CustomPainter {
     );
 
     final bodyPaint = Paint()
-      ..shader = bodyGradient.createShader(Rect.fromCircle(center: center, radius: radius));
+      ..shader = bodyGradient.createShader(
+        Rect.fromCircle(center: center, radius: radius),
+      );
 
     canvas.drawCircle(center, radius, bodyPaint);
 
     // === ANIMATED WHITE BRIGHT AREA (The main focus) ===
-    final whitePulse = 0.68 + 0.32 * math.sin(animationValue * math.pi * 3.2); // Breathing effect
+    final whitePulse =
+        0.68 +
+        0.32 * math.sin(animationValue * math.pi * 3.2); // Breathing effect
 
     final whiteCoreRadius = radius * whitePulse;
 

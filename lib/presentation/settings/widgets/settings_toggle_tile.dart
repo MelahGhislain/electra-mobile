@@ -25,7 +25,10 @@ class SettingsToggleTile extends StatelessWidget {
     return Column(
       children: [
         ListTile(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 6,
+          ),
           leading: Icon(icon, color: AppColors.primary, size: 26),
           title: Text(
             title,
@@ -40,7 +43,6 @@ class SettingsToggleTile extends StatelessWidget {
             onChanged: onChanged,
             activeThumbColor: AppColors.lightSurface,
             activeTrackColor: AppColors.primary,
-
           ),
         ),
         if (showDivider)

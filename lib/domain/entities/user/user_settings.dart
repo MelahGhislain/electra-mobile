@@ -17,10 +17,10 @@ class UserSettings extends Equatable {
 
   @override
   List<Object?> get props => [
-        currency,
-        locale,
-        pushNotification,
-        accountMode,
-        monthlyBudget,
-      ];
+    currency,
+    locale,
+    pushNotification,
+    accountMode,
+    monthlyBudget,
+  ];
 }

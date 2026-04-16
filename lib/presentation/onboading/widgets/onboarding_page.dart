@@ -9,10 +9,10 @@ class OnboardingPage {
   final Widget? customWidget;
 
   OnboardingPage.content(this.data)
-      : type = OnboardingPageType.content,
-        customWidget = null;
+    : type = OnboardingPageType.content,
+      customWidget = null;
 
   OnboardingPage.custom(this.customWidget)
-      : type = OnboardingPageType.custom,
-        data = null;
+    : type = OnboardingPageType.custom,
+      data = null;
 }

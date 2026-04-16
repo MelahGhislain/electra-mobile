@@ -22,36 +22,60 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Language language = languages.first;
 
   final List<OnboardingPage> _pages = [
-    OnboardingPage.content(OnboardingData(
-      title: "Where Did My Money Go?",
-      description: "Stop guessing your spending.\nElectra helps you track every expense effortlessly.",
-      imagePrompt: "A dramatic full-screen photo of a person looking confused at a wallet with money flying away in a modern city at dusk, cinematic lighting, snow-capped mountains in background like the reference screenshot, high resolution, realistic, winter vibe",
-    )),
-    OnboardingPage.content(OnboardingData(
-      title: "Just Say It",
-      description: "“Bought lunch for \$12”\nElectra records it instantly — no typing needed.",
-      imagePrompt: "Close-up of a person speaking into a glowing microphone with audio waveform visualization, modern minimalist style, snowy mountain background, vibrant colors, high detail, realistic photo like the reference image",
-    )),
-    OnboardingPage.content(OnboardingData(
-      title: "Snap Your Receipts",
-      description: "Take a picture and we’ll extract items, prices, and totals automatically.",
-      imagePrompt: "Smartphone camera scanning a receipt with AI overlay highlighting items and totals, clean modern UI elements floating, snowy landscape background, professional photography style",
-    )),
-    OnboardingPage.content(OnboardingData(
-      title: "Track Your Way",
-      description: "Type it, say it, or snap it.\nElectra organizes, categorizes, and calculates everything for you. No spreadsheets. No stress.",
-      imagePrompt: "Person using phone with multiple expense tracking options (voice, camera, keyboard) glowing around it, beautiful winter mountain road background, dynamic composition, realistic high-quality photo",
-    )),
-    OnboardingPage.content(OnboardingData(
-      title: "See Where Your Money Goes",
-      description: "Get instant breakdowns by category, trends, and spending habits.",
-      imagePrompt: "Beautiful pie chart and spending insights dashboard floating over a scenic snowy mountain view, elegant data visualization, premium finance app aesthetic, cinematic lighting",
-    )),
-    OnboardingPage.content(OnboardingData(
-      title: "You’re Ready 🎉",
-      description: "Choose your currency & preferences.\nEnable mic & camera for the best experience.\nStart tracking your first expense now.",
-      imagePrompt: "Happy person celebrating with phone in hand on a snowy mountain peak at sunrise, confetti and success vibe, inspiring and motivational, high resolution realistic photo",
-    )),
+    OnboardingPage.content(
+      OnboardingData(
+        title: "Where Did My Money Go?",
+        description:
+            "Stop guessing your spending.\nElectra helps you track every expense effortlessly.",
+        imagePrompt:
+            "A dramatic full-screen photo of a person looking confused at a wallet with money flying away in a modern city at dusk, cinematic lighting, snow-capped mountains in background like the reference screenshot, high resolution, realistic, winter vibe",
+      ),
+    ),
+    OnboardingPage.content(
+      OnboardingData(
+        title: "Just Say It",
+        description:
+            "“Bought lunch for \$12”\nElectra records it instantly — no typing needed.",
+        imagePrompt:
+            "Close-up of a person speaking into a glowing microphone with audio waveform visualization, modern minimalist style, snowy mountain background, vibrant colors, high detail, realistic photo like the reference image",
+      ),
+    ),
+    OnboardingPage.content(
+      OnboardingData(
+        title: "Snap Your Receipts",
+        description:
+            "Take a picture and we’ll extract items, prices, and totals automatically.",
+        imagePrompt:
+            "Smartphone camera scanning a receipt with AI overlay highlighting items and totals, clean modern UI elements floating, snowy landscape background, professional photography style",
+      ),
+    ),
+    OnboardingPage.content(
+      OnboardingData(
+        title: "Track Your Way",
+        description:
+            "Type it, say it, or snap it.\nElectra organizes, categorizes, and calculates everything for you. No spreadsheets. No stress.",
+        imagePrompt:
+            "Person using phone with multiple expense tracking options (voice, camera, keyboard) glowing around it, beautiful winter mountain road background, dynamic composition, realistic high-quality photo",
+      ),
+    ),
+    OnboardingPage.content(
+      OnboardingData(
+        title: "See Where Your Money Goes",
+        description:
+            "Get instant breakdowns by category, trends, and spending habits.",
+        imagePrompt:
+            "Beautiful pie chart and spending insights dashboard floating over a scenic snowy mountain view, elegant data visualization, premium finance app aesthetic, cinematic lighting",
+      ),
+    ),
+    OnboardingPage.content(
+      OnboardingData(
+        title: "You’re Ready 🎉",
+        description:
+            "Choose your currency & preferences.\nEnable mic & camera for the best experience.\nStart tracking your first expense now.",
+        imagePrompt:
+            "Happy person celebrating with phone in hand on a snowy mountain peak at sunrise, confetti and success vibe, inspiring and motivational, high resolution realistic photo",
+      ),
+    ),
     OnboardingPage.custom(const AccountSetupScreen()),
   ];
 
@@ -66,7 +90,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     }
   }
 
-    void _showLanguageSelector() {
+  void _showLanguageSelector() {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -89,34 +113,32 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
+          // PageView with full-screen images
+          PageView.builder(
+            controller: _pageController,
+            onPageChanged: (index) {
+              setState(() => _currentPage = index);
+            },
+            itemCount: _pages.length,
+            itemBuilder: (context, index) {
+              final page = _pages[index];
 
-            // PageView with full-screen images
-            PageView.builder(
-              controller: _pageController,
-              onPageChanged: (index) {
-                setState(() => _currentPage = index);
-              },
-              itemCount: _pages.length,
-              itemBuilder: (context, index) {
-                final page = _pages[index];
-
-                if (page.type == OnboardingPageType.content) {
-                  return OnboardingWidget(
-                    data: page.data!,
-                    currentPage: index,
-                    totalPages: _pages.length,
-                  );
-                } else {
-                  return page.customWidget!;
-                }
-              },
-            ),
+              if (page.type == OnboardingPageType.content) {
+                return OnboardingWidget(
+                  data: page.data!,
+                  currentPage: index,
+                  totalPages: _pages.length,
+                );
+              } else {
+                return page.customWidget!;
+              }
+            },
+          ),
 
           // Top Navigation Bar
           SafeArea(
@@ -125,11 +147,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  
                   // Back button (hidden on first screen or always visible)
                   if (_currentPage != 0)
                     IconButton(
-                      icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+                      icon: const Icon(
+                        Icons.arrow_back_ios,
+                        color: Colors.white,
+                      ),
                       onPressed: () {
                         if (_currentPage > 0) {
                           _pageController.previousPage(
@@ -202,7 +226,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                   ),
                                 ),
                                 IconButton(
-                                  icon: const Icon(Icons.more_vert, color: Colors.white),
+                                  icon: const Icon(
+                                    Icons.more_vert,
+                                    color: Colors.white,
+                                  ),
                                   onPressed: _showLanguageSelector,
                                 ),
                               ],
@@ -273,7 +300,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   ),
                 ]
               : [_pages[_currentPage].customWidget!]),
-          
         ],
       ),
     );

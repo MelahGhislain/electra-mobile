@@ -24,9 +24,7 @@ class AppTheme {
       cardTheme: CardThemeData(
         color: AppColors.lightSurface,
         elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
@@ -34,9 +32,7 @@ class AppTheme {
         ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.lightText,
-        ),
+        style: ElevatedButton.styleFrom(backgroundColor: AppColors.lightText),
       ),
       switchTheme: SwitchThemeData(
         thumbColor: WidgetStateProperty.resolveWith((states) {
@@ -60,9 +56,9 @@ class AppTheme {
         thickness: 1,
       ),
       textTheme: ThemeData.light().textTheme.apply(
-            bodyColor: AppColors.lightText,
-            displayColor: AppColors.lightText,
-          ),
+        bodyColor: AppColors.lightText,
+        displayColor: AppColors.lightText,
+      ),
     );
   }
 
@@ -86,19 +82,13 @@ class AppTheme {
       cardTheme: CardThemeData(
         color: AppColors.darkSurface,
         elevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),
       textButtonTheme: TextButtonThemeData(
-        style: TextButton.styleFrom(
-          foregroundColor: AppColors.darkText,
-        ),
+        style: TextButton.styleFrom(foregroundColor: AppColors.darkText),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.darkText,
-        ),
+        style: ElevatedButton.styleFrom(backgroundColor: AppColors.darkText),
       ),
       switchTheme: SwitchThemeData(
         thumbColor: WidgetStateProperty.resolveWith((states) {
@@ -122,9 +112,9 @@ class AppTheme {
         thickness: 1,
       ),
       textTheme: ThemeData.dark().textTheme.apply(
-            bodyColor: AppColors.darkText,
-            displayColor: AppColors.darkText,
-          ),
+        bodyColor: AppColors.darkText,
+        displayColor: AppColors.darkText,
+      ),
     );
   }
 }

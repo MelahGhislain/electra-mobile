@@ -1,4 +1,3 @@
-
 import 'package:electra/core/network/api_client.dart';
 import 'package:electra/core/network/api_endpoints.dart';
 import 'package:electra/data/models/auth/auth_tokens_model.dart';
@@ -13,10 +12,7 @@ class AuthRemoteDataSource {
   Future<AuthTokensModel> login(SigninUserDto signinUserReq) async {
     final response = await apiClient.post(
       ApiEndpoints.login,
-      data: {
-        "email": signinUserReq.email,
-        "password": signinUserReq.password,
-      },
+      data: {"email": signinUserReq.email, "password": signinUserReq.password},
     );
 
     return AuthTokensModel.fromJson(response.data);
@@ -38,11 +34,9 @@ class AuthRemoteDataSource {
   Future<AuthTokensModel> refresh({required String refreshToken}) async {
     final response = await apiClient.post(
       ApiEndpoints.refresh,
-      data: {
-        "refreshToken": refreshToken,
-      },
+      data: {"refreshToken": refreshToken},
     );
-    
+
     return AuthTokensModel.fromJson(response.data);
   }
 

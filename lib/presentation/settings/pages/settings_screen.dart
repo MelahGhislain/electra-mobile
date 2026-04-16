@@ -33,7 +33,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings', style: TextStyle(fontWeight: FontWeight.w600)),
+        title: const Text(
+          'Settings',
+          style: TextStyle(fontWeight: FontWeight.w600),
+        ),
         elevation: 0,
         leading: const BackButton(),
       ),
@@ -41,7 +44,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            
             ProfileHeaderCard(
               name: "Ethan Cole",
               email: "ethancoleux@gmail.com",
@@ -99,7 +101,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ),
 
-
             // GENERAL Section
             const SettingsSectionHeader(title: 'Help'),
 
@@ -126,7 +127,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     showDivider: true,
                     showChevron: true,
                   ),
-                  
+
                   SettingsTile(
                     icon: Icons.wallet,
                     title: 'Suggest Product Improvement',

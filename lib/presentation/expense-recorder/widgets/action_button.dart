@@ -18,7 +18,8 @@ class ActionButton extends StatefulWidget {
   State<ActionButton> createState() => _ActionButtonState();
 }
 
-class _ActionButtonState extends State<ActionButton> with SingleTickerProviderStateMixin {
+class _ActionButtonState extends State<ActionButton>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
 
@@ -29,9 +30,10 @@ class _ActionButtonState extends State<ActionButton> with SingleTickerProviderSt
       duration: const Duration(milliseconds: 150),
       vsync: this,
     );
-    _scaleAnimation = Tween<double>(begin: 1.0, end: 0.92).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
+    _scaleAnimation = Tween<double>(
+      begin: 1.0,
+      end: 0.92,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
   @override
@@ -69,7 +71,9 @@ class _ActionButtonState extends State<ActionButton> with SingleTickerProviderSt
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               decoration: BoxDecoration(
-                color: isDark ? const Color(0xFF1F1F1F) : const Color(0xFFF8F9FA),
+                color: isDark
+                    ? const Color(0xFF1F1F1F)
+                    : const Color(0xFFF8F9FA),
                 borderRadius: BorderRadius.circular(999),
                 boxShadow: [
                   BoxShadow(

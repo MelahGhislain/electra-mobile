@@ -26,7 +26,9 @@ class OnboardingWidget extends StatelessWidget {
           fit: BoxFit.cover,
           errorBuilder: (context, error, stack) => Container(
             color: Colors.grey[900],
-            child: const Center(child: Icon(Icons.image, size: 100, color: Colors.white38)),
+            child: const Center(
+              child: Icon(Icons.image, size: 100, color: Colors.white38),
+            ),
           ),
         ),
 
@@ -58,7 +60,9 @@ class OnboardingWidget extends StatelessWidget {
                 width: currentPage == index ? 24 : 8,
                 height: 8,
                 decoration: BoxDecoration(
-                  color: currentPage == index ? AppColors.primary : Colors.white38,
+                  color: currentPage == index
+                      ? AppColors.primary
+                      : Colors.white38,
                   borderRadius: BorderRadius.circular(4),
                 ),
               ),

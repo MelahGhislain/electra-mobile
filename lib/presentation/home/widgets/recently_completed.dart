@@ -4,46 +4,22 @@ import 'package:flutter/material.dart';
 
 class RecentlyCompleted extends StatelessWidget {
   final List<Task> tasks;
-  final VoidCallback onViewAllPressed;
 
-  const RecentlyCompleted({
-    super.key,
-    required this.tasks,
-    required this.onViewAllPressed,
-  });
+  const RecentlyCompleted({super.key, required this.tasks});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(22, 0, 22, 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Recently Completed',
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
-              ),
-              TextButton(
-                onPressed: onViewAllPressed,
-                child: const Text('View all'),
-              ),
-            ],
-          ),
-        ),
-
-        Expanded(
-          child: ListView.builder(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            itemCount: tasks.length,
-            itemBuilder: (context, index) {
-              return TaskItem(task: tasks[index]);
-            },
-          ),
+        ListView.builder(
+          shrinkWrap: true, // ← Important
+          physics: const NeverScrollableScrollPhysics(), // ← Important
+          padding: const EdgeInsets.only(bottom: 20, left: 22, right: 22),
+          itemCount: tasks.length,
+          itemBuilder: (context, index) {
+            return TaskItem(task: tasks[index]);
+          },
         ),
       ],
     );

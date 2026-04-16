@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class LayoutScaffold extends StatefulWidget {
-  const LayoutScaffold({
-    Key? key,
-    required this.navigationShell,
-  }) : super(key: key ?? const ValueKey('LayoutScaffold'));
+  const LayoutScaffold({Key? key, required this.navigationShell})
+    : super(key: key ?? const ValueKey('LayoutScaffold'));
 
   final StatefulNavigationShell navigationShell;
 

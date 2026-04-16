@@ -1,4 +1,3 @@
-
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/domain/entities/user/language.dart';
 import 'package:flutter/material.dart';
@@ -21,22 +20,14 @@ class LanguageTile extends StatelessWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 14,
-        ),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         decoration: BoxDecoration(
-          color: isSelected
-              ? AppColors.darkBackground
-              : AppColors.lightSurface,
+          color: isSelected ? AppColors.darkBackground : AppColors.lightSurface,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Row(
           children: [
-            Text(
-              language.flag,
-              style: const TextStyle(fontSize: 20),
-            ),
+            Text(language.flag, style: const TextStyle(fontSize: 20)),
             const SizedBox(width: 12),
             Expanded(
               child: Text(
@@ -44,17 +35,11 @@ class LanguageTile extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w500,
-                  color: isSelected
-                      ? AppColors.darkText
-                      : AppColors.lightText,
+                  color: isSelected ? AppColors.darkText : AppColors.lightText,
                 ),
               ),
             ),
-            if (isSelected)
-              const Icon(
-                Icons.check,
-                color: AppColors.darkText,
-              ),
+            if (isSelected) const Icon(Icons.check, color: AppColors.darkText),
           ],
         ),
       ),

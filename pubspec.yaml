@@ -35,10 +35,15 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
 
+  # BLoC pattern for State management
   flutter_bloc: ^9.1.1
   hydrated_bloc: ^11.0.0
   path_provider: ^2.1.5
 
+  # Environment variables
+  flutter_dotenv: ^6.0.0
+
+  # Routing
   go_router: ^17.2.0
   
   # HTTP client
@@ -58,6 +63,9 @@ dependencies:
 
   # Glassmorphism
   glassmorphism: ^3.0.0
+
+  # StreamChannel wrappers for WebSockets
+  web_socket_channel: ^3.0.3
 
   record: ^6.2.0
   audio_waveforms: ^2.0.2
@@ -94,6 +102,11 @@ flutter:
     - assets/fonts/
     - assets/images/
     - assets/vectors/
+
+    # Environment files
+    - .env
+    - .env.staging
+    - .env.production
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 

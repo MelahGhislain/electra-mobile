@@ -1,4 +1,3 @@
-
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/domain/entities/user/language.dart';
 import 'package:flutter/material.dart';
@@ -20,9 +19,7 @@ class LanguageSelector extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
         color: AppColors.lightBackground,
-        borderRadius: const BorderRadius.vertical(
-          top: Radius.circular(24),
-        ),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
       ),
       child: Column(
         children: [
@@ -63,12 +60,10 @@ class LanguageSelector extends StatelessWidget {
           Expanded(
             child: ListView.separated(
               itemCount: languages.length,
-              separatorBuilder: (_, _) =>
-                  const SizedBox(height: 10),
+              separatorBuilder: (_, _) => const SizedBox(height: 10),
               itemBuilder: (context, index) {
                 final lang = languages[index];
-                final isSelected =
-                    lang.code == selectedCode;
+                final isSelected = lang.code == selectedCode;
 
                 return LanguageTile(
                   language: lang,
@@ -87,11 +82,15 @@ class LanguageSelector extends StatelessWidget {
   }
 }
 
-
 const List<Language> languages = [
   Language(code: 'en', name: 'English', flag: '🇺🇸', currency: 'USD'),
   Language(code: 'es', name: 'Español', flag: '🇪🇸', currency: 'USD'),
-  Language(code: 'pt-br', name: 'Português (Brasil)', flag: '🇧🇷', currency: 'BRL'),
+  Language(
+    code: 'pt-br',
+    name: 'Português (Brasil)',
+    flag: '🇧🇷',
+    currency: 'BRL',
+  ),
   Language(code: 'pt', name: 'Português', flag: '🇵🇹', currency: 'EUR'),
   Language(code: 'fr', name: 'Français', flag: '🇫🇷', currency: 'EUR'),
   Language(code: 'de', name: 'Deutsch', flag: '🇩🇪', currency: 'EUR'),

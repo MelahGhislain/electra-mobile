@@ -11,7 +11,10 @@ class AuthInterceptor extends Interceptor {
   AuthInterceptor(this.storage, this.remote, this.apiClient);
 
   @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
+  void onRequest(
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) async {
     final token = await storage.accessToken;
 
     if (token != null) {
@@ -31,7 +34,10 @@ class AuthInterceptor extends Interceptor {
 
         final newTokens = await remote.refresh(refreshToken: refreshToken);
 
-        await storage.saveTokens(access: newTokens.accessToken, refresh: newTokens.refreshToken);
+        await storage.saveTokens(
+          access: newTokens.accessToken,
+          refresh: newTokens.refreshToken,
+        );
 
         final cloneReq = await apiClient.dio.fetch(err.requestOptions);
         return handler.resolve(cloneReq);

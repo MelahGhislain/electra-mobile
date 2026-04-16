@@ -16,9 +16,8 @@ class AnimatedIconButton extends StatefulWidget {
   State<AnimatedIconButton> createState() => _AnimatedIconButtonState();
 }
 
-class _AnimatedIconButtonState extends State<AnimatedIconButton> 
+class _AnimatedIconButtonState extends State<AnimatedIconButton>
     with SingleTickerProviderStateMixin {
-
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
 
@@ -30,9 +29,10 @@ class _AnimatedIconButtonState extends State<AnimatedIconButton>
       vsync: this,
     );
 
-    _scaleAnimation = Tween<double>(begin: 1.0, end: 0.85).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
+    _scaleAnimation = Tween<double>(
+      begin: 1.0,
+      end: 0.85,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
   @override

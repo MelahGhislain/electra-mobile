@@ -13,7 +13,6 @@ class ApiClient {
     return await dio.post(path, data: data);
   }
 
-  
   Future<Response> patch(String path, {dynamic data}) async {
     return await dio.patch(path, data: data);
   }

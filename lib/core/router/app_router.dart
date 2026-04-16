@@ -1,4 +1,3 @@
-
 import 'package:electra/common/widgets/layout/layout_scaffold.dart';
 import 'package:electra/presentation/auth/pages/sign_in.dart';
 import 'package:electra/presentation/auth/pages/sign_up.dart';
@@ -13,7 +12,9 @@ import 'package:go_router/go_router.dart';
 import 'route_names.dart';
 
 class AppRouter {
-  static final _rootNavigationKey = GlobalKey<NavigatorState>(debugLabel: 'root');
+  static final _rootNavigationKey = GlobalKey<NavigatorState>(
+    debugLabel: 'root',
+  );
 
   static GoRouter createRouter(BuildContext context) {
     return GoRouter(
@@ -34,7 +35,6 @@ class AppRouter {
 
       //   return null;
       // },
-
       routes: [
         GoRoute(
           path: '/',
@@ -46,6 +46,7 @@ class AppRouter {
           name: RouteNames.onboarding,
           builder: (context, state) => const OnboardingScreen(),
         ),
+
         // GoRoute(
         //   path: '/sign-in',
         //   name: RouteNames.signIn,
@@ -64,58 +65,58 @@ class AppRouter {
         //     return DetailsScreen(id: id);
         //   },
         // ),
-
         StatefulShellRoute.indexedStack(
           builder: (context, state, navigationShell) {
             return LayoutScaffold(navigationShell: navigationShell);
           },
           branches: [
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: '/home',
-                name: RouteNames.home,
-                builder: (context, state) => const HomeScreen(),
-              ),
-            ],
-          ),
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: '/signin',
-                name: RouteNames.signIn,
-                builder: (context, state) => const SignInScreen(),
-              ),
-            ],
-          ),
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: '/expense-recorder',
-                name: RouteNames.expenseRecorder,
-                builder: (context, state) => const ExpenseRecorderScreen(),
-              ),
-            ],
-          ),
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: '/signup',
-                name: RouteNames.signUp,
-                builder: (context, state) => const SignUpScreen(),
-              ),
-            ],
-          ),
-          StatefulShellBranch(
-            routes: [
-              GoRoute(
-                path: '/settings',
-                name: RouteNames.settings,
-                builder: (context, state) => const SettingsScreen(),
-              ),
-            ],
-          ),
-        ])
+            StatefulShellBranch(
+              routes: [
+                GoRoute(
+                  path: '/home',
+                  name: RouteNames.home,
+                  builder: (context, state) => const HomeScreen(),
+                ),
+              ],
+            ),
+            StatefulShellBranch(
+              routes: [
+                GoRoute(
+                  path: '/signin',
+                  name: RouteNames.signIn,
+                  builder: (context, state) => const SignInScreen(),
+                ),
+              ],
+            ),
+            StatefulShellBranch(
+              routes: [
+                GoRoute(
+                  path: '/expense-recorder',
+                  name: RouteNames.expenseRecorder,
+                  builder: (context, state) => const ExpenseRecorderScreen(),
+                ),
+              ],
+            ),
+            StatefulShellBranch(
+              routes: [
+                GoRoute(
+                  path: '/signup',
+                  name: RouteNames.signUp,
+                  builder: (context, state) => const SignUpScreen(),
+                ),
+              ],
+            ),
+            StatefulShellBranch(
+              routes: [
+                GoRoute(
+                  path: '/settings',
+                  name: RouteNames.settings,
+                  builder: (context, state) => const SettingsScreen(),
+                ),
+              ],
+            ),
+          ],
+        ),
       ],
     );
   }

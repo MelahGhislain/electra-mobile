@@ -6,12 +6,8 @@ class OnboardingState extends Equatable {
 
   const OnboardingState({required this.settings});
 
-  OnboardingState copyWith({
-    OnboardingSettings? settings,
-  }) {
-    return OnboardingState(
-      settings: settings ?? this.settings,
-    );
+  OnboardingState copyWith({OnboardingSettings? settings}) {
+    return OnboardingState(settings: settings ?? this.settings);
   }
 
   @override

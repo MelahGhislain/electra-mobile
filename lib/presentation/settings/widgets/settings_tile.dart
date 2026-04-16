@@ -25,7 +25,10 @@ class SettingsTile extends StatelessWidget {
     return Column(
       children: [
         ListTile(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 6,
+          ),
           leading: Icon(icon, color: iconColor ?? AppColors.primary, size: 26),
           title: Text(
             title,
@@ -37,7 +40,7 @@ class SettingsTile extends StatelessWidget {
                   style: TextStyle(fontSize: 14.5, color: Colors.grey[700]),
                 )
               : null,
-          trailing: showChevron 
+          trailing: showChevron
               ? AnimatedIconButton(
                   icon: Icon(Icons.chevron_right, size: 26),
                   onTap: () {},
@@ -48,7 +51,7 @@ class SettingsTile extends StatelessWidget {
           Divider(
             height: 1,
             thickness: 1,
-            indent: 22,           // Starts from after the icon
+            indent: 22, // Starts from after the icon
             endIndent: 22,
             color: AppColors.dividerLight,
           ),

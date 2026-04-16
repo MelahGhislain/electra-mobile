@@ -27,8 +27,11 @@ class AccountSetupScreen extends StatelessWidget {
                     const SizedBox(height: 20),
 
                     const Center(
-                      child: Icon(Icons.settings,
-                          size: 80, color: Colors.white70),
+                      child: Icon(
+                        Icons.settings,
+                        size: 80,
+                        color: Colors.white70,
+                      ),
                     ),
 
                     const SizedBox(height: 20),
@@ -65,21 +68,24 @@ class AccountSetupScreen extends StatelessWidget {
                         children: [
                           // Currency
                           SettingTile(
-                            leading: const Icon(Icons.wallet,
-                                color: Colors.orange),
+                            leading: const Icon(
+                              Icons.wallet,
+                              color: Colors.orange,
+                            ),
                             title: "Currency",
                             subtitle: "Preferred currency for receipts",
                             trailing: DropdownButton<String>(
                               value: settings.currency,
                               dropdownColor: Colors.black,
                               items: ["USD", "EUR", "XAF"]
-                                  .map((e) => DropdownMenuItem(
-                                        value: e,
-                                        child: Text(e),
-                                      ))
+                                  .map(
+                                    (e) => DropdownMenuItem(
+                                      value: e,
+                                      child: Text(e),
+                                    ),
+                                  )
                                   .toList(),
-                              onChanged: (val) =>
-                                  cubit.changeCurrency(val!),
+                              onChanged: (val) => cubit.changeCurrency(val!),
                             ),
                           ),
 
@@ -87,21 +93,24 @@ class AccountSetupScreen extends StatelessWidget {
 
                           // Language
                           SettingTile(
-                            leading: const Icon(Icons.language,
-                                color: Colors.orange),
+                            leading: const Icon(
+                              Icons.language,
+                              color: Colors.orange,
+                            ),
                             title: "Language",
                             subtitle: "App display language",
                             trailing: DropdownButton<String>(
                               value: settings.language,
                               dropdownColor: Colors.black,
                               items: ["EN", "FR"]
-                                  .map((e) => DropdownMenuItem(
-                                        value: e,
-                                        child: Text(e),
-                                      ))
+                                  .map(
+                                    (e) => DropdownMenuItem(
+                                      value: e,
+                                      child: Text(e),
+                                    ),
+                                  )
                                   .toList(),
-                              onChanged: (val) =>
-                                  cubit.changeLanguage(val!),
+                              onChanged: (val) => cubit.changeLanguage(val!),
                             ),
                           ),
 
@@ -109,8 +118,10 @@ class AccountSetupScreen extends StatelessWidget {
 
                           // Account Mode
                           SettingTile(
-                            leading: const Icon(Icons.account_balance_wallet,
-                                color: Colors.orange),
+                            leading: const Icon(
+                              Icons.account_balance_wallet,
+                              color: Colors.orange,
+                            ),
                             title: "Account Mode",
                             subtitle: "Expenses Only",
                             trailing: Switch(
@@ -123,8 +134,10 @@ class AccountSetupScreen extends StatelessWidget {
 
                           // Budget
                           SettingTile(
-                            leading: const Icon(Icons.calculate,
-                                color: Colors.orange),
+                            leading: const Icon(
+                              Icons.calculate,
+                              color: Colors.orange,
+                            ),
                             title: "Monthly Budget",
                             subtitle: "Optional spending limit",
                             trailing: SizedBox(
