@@ -1,4 +1,5 @@
 
+import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/domain/entities/user/language.dart';
 import 'package:flutter/material.dart';
 
@@ -26,8 +27,8 @@ class LanguageTile extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           color: isSelected
-              ? Colors.black
-              : Colors.grey.shade100,
+              ? AppColors.darkBackground
+              : AppColors.lightSurface,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Row(
@@ -44,15 +45,15 @@ class LanguageTile extends StatelessWidget {
                   fontSize: 15,
                   fontWeight: FontWeight.w500,
                   color: isSelected
-                      ? Colors.white
-                      : Colors.black,
+                      ? AppColors.darkText
+                      : AppColors.lightText,
                 ),
               ),
             ),
             if (isSelected)
               const Icon(
                 Icons.check,
-                color: Colors.white,
+                color: AppColors.darkText,
               ),
           ],
         ),

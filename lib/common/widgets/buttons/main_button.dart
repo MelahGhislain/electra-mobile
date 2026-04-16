@@ -10,7 +10,7 @@ class MainButton extends StatefulWidget {
   final Widget? icon;
   final ButtonSize size;
   final bool? isActive;
-  final double width;
+  final double? width;
   final bool? rounded;
 
   const MainButton({
@@ -20,7 +20,7 @@ class MainButton extends StatefulWidget {
     this.icon,
     this.size = ButtonSize.medium, // ✅ default
     this.isActive = true,
-    this.width = double.infinity,
+    this.width,
     this.rounded = false,
   });
 

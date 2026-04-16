@@ -1,13 +1,14 @@
 
+import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/domain/entities/user/language.dart';
 import 'package:flutter/material.dart';
 import 'language_tile.dart';
 
-class LanguageBottomSheet extends StatelessWidget {
+class LanguageSelector extends StatelessWidget {
   final String selectedCode;
   final Function(Language) onSelect;
 
-  const LanguageBottomSheet({
+  const LanguageSelector({
     super.key,
     required this.selectedCode,
     required this.onSelect,
@@ -18,7 +19,7 @@ class LanguageBottomSheet extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
+        color: AppColors.lightBackground,
         borderRadius: const BorderRadius.vertical(
           top: Radius.circular(24),
         ),
@@ -46,10 +47,11 @@ class LanguageBottomSheet extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
+                  color: AppColors.lightText,
                 ),
               ),
               IconButton(
-                icon: const Icon(Icons.close),
+                icon: const Icon(Icons.close, color: AppColors.lightText),
                 onPressed: () => Navigator.pop(context),
               ),
             ],
@@ -61,7 +63,7 @@ class LanguageBottomSheet extends StatelessWidget {
           Expanded(
             child: ListView.separated(
               itemCount: languages.length,
-              separatorBuilder: (_, __) =>
+              separatorBuilder: (_, _) =>
                   const SizedBox(height: 10),
               itemBuilder: (context, index) {
                 final lang = languages[index];
@@ -87,24 +89,6 @@ class LanguageBottomSheet extends StatelessWidget {
 
 
 const List<Language> languages = [
-  Language(code: 'en', name: 'English', flag: '🇺🇸', currency: 'USD'),
-  Language(code: 'es', name: 'Español', flag: '🇪🇸', currency: 'USD'),
-  Language(code: 'pt-br', name: 'Português (Brasil)', flag: '🇧🇷', currency: 'BRL'),
-  Language(code: 'pt', name: 'Português', flag: '🇵🇹', currency: 'EUR'),
-  Language(code: 'fr', name: 'Français', flag: '🇫🇷', currency: 'EUR'),
-  Language(code: 'de', name: 'Deutsch', flag: '🇩🇪', currency: 'EUR'),
-  Language(code: 'ru', name: 'Русский', flag: '🇷🇺', currency: 'RUB'),
-  Language(code: 'it', name: 'Italiano', flag: '🇮🇹', currency: 'EUR'),
-  Language(code: 'nl', name: 'Nederlands', flag: '🇳🇱', currency: 'EUR'),
-  Language(code: 'en', name: 'English', flag: '🇺🇸', currency: 'USD'),
-  Language(code: 'es', name: 'Español', flag: '🇪🇸', currency: 'USD'),
-  Language(code: 'pt-br', name: 'Português (Brasil)', flag: '🇧🇷', currency: 'BRL'),
-  Language(code: 'pt', name: 'Português', flag: '🇵🇹', currency: 'EUR'),
-  Language(code: 'fr', name: 'Français', flag: '🇫🇷', currency: 'EUR'),
-  Language(code: 'de', name: 'Deutsch', flag: '🇩🇪', currency: 'EUR'),
-  Language(code: 'ru', name: 'Русский', flag: '🇷🇺', currency: 'RUB'),
-  Language(code: 'it', name: 'Italiano', flag: '🇮🇹', currency: 'EUR'),
-  Language(code: 'nl', name: 'Nederlands', flag: '🇳🇱', currency: 'EUR'),
   Language(code: 'en', name: 'English', flag: '🇺🇸', currency: 'USD'),
   Language(code: 'es', name: 'Español', flag: '🇪🇸', currency: 'USD'),
   Language(code: 'pt-br', name: 'Português (Brasil)', flag: '🇧🇷', currency: 'BRL'),

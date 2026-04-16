@@ -1,11 +1,13 @@
-import 'package:electra/common/widgets/buttons/main_button.dart';
-import 'package:electra/common/widgets/buttons/main_text_button.dart';
-import 'package:electra/core/assets/app_images.dart';
 import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
+import 'package:electra/data/models/onboarding/onboarding.dart';
 import 'package:electra/domain/entities/user/language.dart';
-import 'package:electra/presentation/onboading/widgets/language_bottomsheet.dart';
+import 'package:electra/presentation/onboading/pages/account_setup.dart';
+import 'package:electra/presentation/onboading/widgets/language/language_selector.dart';
+import 'package:electra/presentation/onboading/widgets/onboarding_page.dart';
+import 'package:electra/presentation/onboading/widgets/onboarding_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -15,9 +17,56 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
+  final PageController _pageController = PageController();
+  int _currentPage = 0;
   Language language = languages.first;
 
-  void _openLanguageSheet() {
+  final List<OnboardingPage> _pages = [
+    OnboardingPage.content(OnboardingData(
+      title: "Where Did My Money Go?",
+      description: "Stop guessing your spending.\nElectra helps you track every expense effortlessly.",
+      imagePrompt: "A dramatic full-screen photo of a person looking confused at a wallet with money flying away in a modern city at dusk, cinematic lighting, snow-capped mountains in background like the reference screenshot, high resolution, realistic, winter vibe",
+    )),
+    OnboardingPage.content(OnboardingData(
+      title: "Just Say It",
+      description: "“Bought lunch for \$12”\nElectra records it instantly — no typing needed.",
+      imagePrompt: "Close-up of a person speaking into a glowing microphone with audio waveform visualization, modern minimalist style, snowy mountain background, vibrant colors, high detail, realistic photo like the reference image",
+    )),
+    OnboardingPage.content(OnboardingData(
+      title: "Snap Your Receipts",
+      description: "Take a picture and we’ll extract items, prices, and totals automatically.",
+      imagePrompt: "Smartphone camera scanning a receipt with AI overlay highlighting items and totals, clean modern UI elements floating, snowy landscape background, professional photography style",
+    )),
+    OnboardingPage.content(OnboardingData(
+      title: "Track Your Way",
+      description: "Type it, say it, or snap it.\nElectra organizes, categorizes, and calculates everything for you. No spreadsheets. No stress.",
+      imagePrompt: "Person using phone with multiple expense tracking options (voice, camera, keyboard) glowing around it, beautiful winter mountain road background, dynamic composition, realistic high-quality photo",
+    )),
+    OnboardingPage.content(OnboardingData(
+      title: "See Where Your Money Goes",
+      description: "Get instant breakdowns by category, trends, and spending habits.",
+      imagePrompt: "Beautiful pie chart and spending insights dashboard floating over a scenic snowy mountain view, elegant data visualization, premium finance app aesthetic, cinematic lighting",
+    )),
+    OnboardingPage.content(OnboardingData(
+      title: "You’re Ready 🎉",
+      description: "Choose your currency & preferences.\nEnable mic & camera for the best experience.\nStart tracking your first expense now.",
+      imagePrompt: "Happy person celebrating with phone in hand on a snowy mountain peak at sunrise, confetti and success vibe, inspiring and motivational, high resolution realistic photo",
+    )),
+    OnboardingPage.custom(const AccountSetupScreen()),
+  ];
+
+  void _nextPage() {
+    if (_currentPage < _pages.length - 1) {
+      _pageController.nextPage(
+        duration: const Duration(milliseconds: 400),
+        curve: Curves.easeInOut,
+      );
+    } else {
+      context.go('/home'); // adjust route as needed
+    }
+  }
+
+    void _showLanguageSelector() {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -27,7 +76,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       builder: (_) {
         return FractionallySizedBox(
           heightFactor: 0.8,
-          child: LanguageBottomSheet(
+          child: LanguageSelector(
             selectedCode: language.code,
             onSelect: (Language lang) {
               setState(() {
@@ -40,304 +89,193 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightBackground,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-          child: Column(
-            children: [
-              Align(
-                alignment: Alignment.centerRight,
-                child: MainTextButton(text: 'Skip', onPressed: () {
-                  // TODO: Navigate to next screen or skip
-                })
-              ),
+      body: Stack(
+        children: [
 
-              const SizedBox(height: 40),
+            // PageView with full-screen images
+            PageView.builder(
+              controller: _pageController,
+              onPageChanged: (index) {
+                setState(() => _currentPage = index);
+              },
+              itemCount: _pages.length,
+              itemBuilder: (context, index) {
+                final page = _pages[index];
 
-              // SNAP DEMO SECTION (camera frame + generated image)
-              SizedBox(
-                height: 320,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Image.asset(
-                      AppImages.voice,
-                      fit: BoxFit.contain,
-                      width: 280,
-                      height: 280,
+                if (page.type == OnboardingPageType.content) {
+                  return OnboardingWidget(
+                    data: page.data!,
+                    currentPage: index,
+                    totalPages: _pages.length,
+                  );
+                } else {
+                  return page.customWidget!;
+                }
+              },
+            ),
+
+          // Top Navigation Bar
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  
+                  // Back button (hidden on first screen or always visible)
+                  if (_currentPage != 0)
+                    IconButton(
+                      icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+                      onPressed: () {
+                        if (_currentPage > 0) {
+                          _pageController.previousPage(
+                            duration: const Duration(milliseconds: 400),
+                            curve: Curves.easeInOut,
+                          );
+                        } else {
+                          context.pop();
+                        }
+                      },
+                    )
+                  else
+                    const SizedBox.shrink(),
+
+                  // Skip button
+                  TextButton(
+                    onPressed: () => context.go('/home'), // adjust route
+                    child: const Text(
+                      "Skip",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-
-              const SizedBox(height: 40),
-
-              // Title
-              Text(
-                'Where Did My Money Go?',
-                style: TextStyle(
-                  fontSize: AppFontSize.xxxl,
-                  fontWeight: FontWeight.w800,
-                  color: AppColors.lightText,
-                  height: 1.1,
-                ),
-                textAlign: TextAlign.center,
-              ),
-
-              const SizedBox(height: 12),
-
-              // Description
-
-              Text(
-                'Electra shows you exactly where it goes. Stop guessing. Start knowing.',
-                style: TextStyle(
-                  fontSize: AppFontSize.xl,
-                  color: AppColors.lightTextSecondary,
-                  height: 1.3,
-                ),
-                textAlign: TextAlign.center,
-              ),
-
-              const Spacer(),
-
-              // Main CTA Button with bounce effect
-              MainButton(
-                text: language.code.toUpperCase(),
-                width: 100,
-                rounded: true,
-                isActive: false,
-                size: ButtonSize.small,
-                icon: Text(language.flag, style: const TextStyle(fontSize: 20)),
-                onPressed: _openLanguageSheet,
-              ),
-
-              const SizedBox(height: 16),
-
-              MainButton(
-                text: "Get Started",
-                size: ButtonSize.large,
-                onPressed: () {
-                  // For now: show feedback. Later you can navigate to home or next onboarding
-                  // context.goNamed('home'); // or your actual route name
-                },
-              ),
-
-              const SizedBox(height: 20),
-            ],
+            ),
           ),
-        ),
+
+          // Bottom Overlay Content
+          ...(_pages[_currentPage].type == OnboardingPageType.content
+              ? [
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.42,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Colors.transparent,
+                            Colors.black.withValues(alpha: 0.85),
+                            Colors.black.withValues(alpha: 0.95),
+                          ],
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(24, 40, 24, 40),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Title + Language Selector Row
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    _pages[_currentPage].data!.title,
+                                    style: const TextStyle(
+                                      fontSize: 32,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                      height: 1.1,
+                                    ),
+                                  ),
+                                ),
+                                IconButton(
+                                  icon: const Icon(Icons.more_vert, color: Colors.white),
+                                  onPressed: _showLanguageSelector,
+                                ),
+                              ],
+                            ),
+
+                            const SizedBox(height: 16),
+
+                            // Description
+                            Text(
+                              _pages[_currentPage].data!.description,
+                              style: TextStyle(
+                                fontSize: AppFontSize.md,
+                                color: Colors.white.withValues(alpha: 0.9),
+                                height: 1.4,
+                              ),
+                            ),
+
+                            const Spacer(),
+
+                            // Bottom Bar: @electra + Next Button
+                            Row(
+                              children: [
+                                const Text(
+                                  "@electra",
+                                  style: TextStyle(
+                                    color: Colors.white70,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                const Spacer(),
+                                ElevatedButton(
+                                  onPressed: _nextPage,
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: AppColors.primary,
+                                    foregroundColor: Colors.white,
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 32,
+                                      vertical: 16,
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        _currentPage == _pages.length - 1
+                                            ? "Add First Expense"
+                                            : "Next",
+                                        style: const TextStyle(
+                                          fontSize: AppFontSize.buttonText,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      const Icon(Icons.arrow_forward, size: 20),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ]
+              : [_pages[_currentPage].customWidget!]),
+          
+        ],
       ),
     );
   }
 }
-
-// import 'package:electra/common/widgets/buttons/main_button.dart';
-// import 'package:electra/core/assets/app_images.dart';
-// import 'package:electra/core/configs/fonts.dart';
-// import 'package:electra/core/configs/theme/app_colors.dart';
-// import 'package:flutter/material.dart';
-
-// class OnboardingScreen extends StatefulWidget {
-//   const OnboardingScreen({super.key});
-
-//   @override
-//   State<OnboardingScreen> createState() => _OnboardingScreenState();
-// }
-
-// class _OnboardingScreenState extends State<OnboardingScreen> {
-//   final PageController _pageController = PageController();
-//   int currentPage = 0;
-
-//   final List<_OnboardingPage> _pages = [
-//     _OnboardingPage(
-//       image: AppImages.voice,
-//       title: "Snap receipts instantly",
-//       subtitle: "Discover effortless expense tracking",
-//       description: "Photo of a receipt — Electra reads every line and auto-categorizes each expense in seconds.",
-//     ),
-//     _OnboardingPage(
-//       image: AppImages.voice,
-//       title: "Clear spending insights",
-//       subtitle: "See where your money goes at a glance",
-//       description: "Monthly summaries, category breakdowns, and smart trends — all built automatically from your data.",
-//     ),
-//     _OnboardingPage(
-//       image: AppImages.voice,
-//       title: "Your AI spending copilot",
-//       subtitle: "Ask anything about your finances",
-//       description: "Questions like \"How much did I spend on food last month?\" get instant answers in plain language.",
-//     ),
-//   ];
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: SafeArea(
-//         child: Column(
-//           children: [
-//             // Top logo
-//             Padding(
-//               padding: const EdgeInsets.only(top: 20, left: 24, right: 24),
-//               child: Row(
-//                 mainAxisAlignment: MainAxisAlignment.center,
-//                 children: [
-//                   Text(
-//                     "Electra",
-//                     style: TextStyle(
-//                       fontSize: 28,
-//                       fontWeight: FontWeight.bold,
-//                       color: AppColors.lightText,
-//                     ),
-//                     textAlign: TextAlign.center,
-//                   ),
-//                 ],
-//               ),
-//             ),
-
-//             Expanded(
-//               child: PageView.builder(
-//                 controller: _pageController,
-//                 onPageChanged: (value) => setState(() => currentPage = value),
-//                 itemCount: _pages.length,
-//                 itemBuilder: (context, index) => _pages[index].build(context),
-//               ),
-//             ),
-
-//             // Page indicators
-//             Row(
-//               mainAxisAlignment: MainAxisAlignment.center,
-//               children: List.generate(
-//                 _pages.length,
-//                 (index) => AnimatedContainer(
-//                   duration: const Duration(milliseconds: 300),
-//                   margin: const EdgeInsets.symmetric(horizontal: 4),
-//                   width: currentPage == index ? 28 : 8,
-//                   height: 8,
-//                   decoration: BoxDecoration(
-//                     color: currentPage == index
-//                         ? AppColors.primary
-//                         : AppColors.lightTextSecondary.withValues(alpha: 0.3),
-//                     borderRadius: BorderRadius.circular(999),
-//                   ),
-//                 ),
-//               ),
-//             ),
-
-//             const SizedBox(height: 10),
-
-//             // Next button (matches mobilanc style)
-//             Padding(
-//               padding: const EdgeInsets.symmetric(horizontal: 24),
-//               child: MainButton(
-//                 text: "Next",
-//                 onPressed: () {
-//                   if (currentPage < _pages.length - 1) {
-//                     _pageController.nextPage(
-//                       duration: const Duration(milliseconds: 450),
-//                       curve: Curves.easeInOut,
-//                     );
-//                   } else {
-//                     // TODO: Navigate to account setup or home
-//                     // context.goNamed(RouteNames.accountSetup);
-//                   }
-//                 },
-//               ),
-//             ),
-
-//             const SizedBox(height: 10),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// class _OnboardingPage {
-//   final String image;
-//   final String title;
-//   final String subtitle;
-//   final String description;
-
-//   _OnboardingPage({
-//     required this.image,
-//     required this.title,
-//     required this.subtitle,
-//     required this.description,
-//   });
-
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.symmetric(horizontal: 24),
-//       child: Column(
-//         children: [
-//           const SizedBox(height: 20),
-
-//           // Hero image with premium shadow + overlap effect
-//           Container(
-//             decoration: BoxDecoration(
-//               borderRadius: BorderRadius.circular(24),
-//               boxShadow: [
-//                 BoxShadow(
-//                   color: Colors.black.withValues(alpha: 0.12),
-//                   blurRadius: 30,
-//                   offset: const Offset(0, 15),
-//                 ),
-//               ],
-//             ),
-//             child: ClipRRect(
-//               borderRadius: BorderRadius.circular(24),
-//               child: Image.asset(
-//                 image,
-//                 fit: BoxFit.contain,
-//                 height: 380,
-//               ),
-//             ),
-//           ),
-
-//           const SizedBox(height: 50),
-
-//           Text(
-//             subtitle,
-//             style: TextStyle(
-//               fontSize: AppFontSize.xxxl,
-//               fontWeight: FontWeight.w800,
-//               color: AppColors.lightText,
-//               height: 1.05,
-//             ),
-//             textAlign: TextAlign.center,
-//           ),
-
-//           const SizedBox(height: 12),
-
-//           Text(
-//             title,
-//             style: TextStyle(
-//               fontSize: AppFontSize.lg,
-//               fontWeight: FontWeight.w600,
-//               color: AppColors.primary,
-//             ),
-//             textAlign: TextAlign.center,
-//           ),
-
-//           const SizedBox(height: 20),
-
-//           Text(
-//             description,
-//             style: TextStyle(
-//               fontSize: AppFontSize.md,
-//               color: AppColors.lightTextSecondary,
-//               height: 1.4,
-//             ),
-//             textAlign: TextAlign.center,
-//           ),
-
-//           const Spacer(),
-//         ],
-//       ),
-//     );
-//   }
-// }

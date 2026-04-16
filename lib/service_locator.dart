@@ -1,3 +1,4 @@
+import 'package:electra/core/utils/storage/secure_storage.dart';
 import 'package:electra/data/repository/auth/auth_repository_impl.dart';
 import 'package:electra/data/repository/user/user_repository_impl.dart';
 import 'package:electra/data/source/auth/auth_datasource.dart';
@@ -20,18 +21,19 @@ Future<void> init() async {
   final dioClient = DioClient();
   sl.registerLazySingleton(() => dioClient.dio);
   sl.registerLazySingleton(() => ApiClient(sl()));
+  /// Storage
+  sl.registerLazySingleton(() => SecureStorage());
 
   /// DataSources
   sl.registerLazySingleton(() => AuthRemoteDataSource(sl()));
   sl.registerLazySingleton(() => UserRemoteDataSource(sl()));
 
   /// Repository
-  sl.registerLazySingleton<AuthRepository>(
-    () => AuthRepositoryImpl(sl()),
-  );
-  sl.registerLazySingleton<UserRepository>(
-    () => UserRepositoryImpl(sl()),
-  );
+  sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(sl()));
+  sl.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(sl()));
+
+  
+  
 
   /// Auth Usecases
   sl.registerLazySingleton(() => LoginUser(sl()));

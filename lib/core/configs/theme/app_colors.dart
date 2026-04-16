@@ -3,6 +3,11 @@ import 'package:flutter/material.dart';
 class AppColors {
   // Primary theme color (the one you specifically love)
   static const Color primary = Color(0xFF22C55E); // Color(0xFF4F46E5);
+  static const Color primaryDark = Color(0xFF16A34A);
+
+  // Secondary colors
+  static const Color secondary = Color(0xFF6B7280);
+  static const Color secondaryDark = Color(0xFF4B5563);
 
   // Neutral colors extracted from screenshots (used for fine-tuning if needed)
   static const Color darkBackground = Color(0xFF121212);

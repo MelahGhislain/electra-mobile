@@ -54,7 +54,7 @@ class _MainTextButtonState extends State<MainTextButton> {
             child: Text(
               widget.text,
               style: const TextStyle(
-                fontSize: AppFontSize.lg,
+                fontSize: AppFontSize.md,
                 fontWeight: FontWeight.w600,
                 color: AppColors.lightTextSecondary,
               ),
