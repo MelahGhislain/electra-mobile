@@ -7,9 +7,10 @@ class AuthTokensModel extends AuthTokens {
   });
 
   factory AuthTokensModel.fromJson(Map<String, dynamic> json) {
+    final data = json['data'] as Map<String, dynamic>;
     return AuthTokensModel(
-      accessToken: json['accessToken'],
-      refreshToken: json['refreshToken'],
+      accessToken: data['accessToken'] as String,
+      refreshToken: data['refreshToken'] as String,
     );
   }
 }

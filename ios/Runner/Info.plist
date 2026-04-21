@@ -66,5 +66,11 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Your microphone is used to let you log expenses quickly using voice input, making tracking faster and easier.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>We use your camera to scan and extract information from receipts.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We access your photos so you can upload existing receipts for processing.</string>
 </dict>
 </plist>

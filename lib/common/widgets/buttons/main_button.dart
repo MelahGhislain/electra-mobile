@@ -12,6 +12,7 @@ class MainButton extends StatefulWidget {
   final bool? isActive;
   final double? width;
   final bool? rounded;
+  final bool isLoading;
 
   const MainButton({
     super.key,
@@ -22,6 +23,7 @@ class MainButton extends StatefulWidget {
     this.isActive = true,
     this.width,
     this.rounded = false,
+    this.isLoading = false,
   });
 
   @override
@@ -81,7 +83,16 @@ class _MainButtonState extends State<MainButton> {
         scale: _scale,
         duration: const Duration(milliseconds: 120),
         curve: Curves.easeOut,
-        child: isFullWidth
+        child: widget.isLoading
+            ? const SizedBox(
+                width: 22,
+                height: 22,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2.5,
+                  color: Colors.white,
+                ),
+              )
+            : isFullWidth
             ? _buildButton()
             : IntrinsicWidth(
                 child: _buildButton(),

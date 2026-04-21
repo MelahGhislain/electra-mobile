@@ -48,6 +48,9 @@ dependencies:
   
   # HTTP client
   dio: ^5.9.2
+
+  
+  dartz: ^0.10.1
   
   # Dependency injection
   get_it: ^9.2.1
@@ -57,9 +60,17 @@ dependencies:
 
   # Secure storage
   flutter_secure_storage: ^10.0.0
+  
+  # Local storage
+  shared_preferences: ^2.5.5
 
   # Internationalization
   intl: ^0.20.2
+
+  # Social login
+  google_sign_in: ^7.2.0
+  sign_in_with_apple: ^7.0.1
+  crypto: ^3.0.7
 
   # Glassmorphism
   glassmorphism: ^3.0.0

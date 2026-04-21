@@ -1,6 +1,8 @@
 import 'package:electra/core/configs/theme/app_colors.dart';
+import 'package:electra/core/router/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:glassmorphism/glassmorphism.dart';
+import 'package:go_router/go_router.dart';
 
 class CustomBottomNav extends StatelessWidget {
   final int selectedIndex;
@@ -50,18 +52,23 @@ class CustomBottomNav extends StatelessWidget {
 
             // Center Camera Button
             GestureDetector(
-              onTap: () => onDestinationSelected(2),
+              onTap: () => context.pushNamed(RouteNames.expenseRecorder),
               child: Container(
                 width: 60,
                 height: 60,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFF22D3EE), Color(0xFF06B6D4)],
+                  gradient: LinearGradient(
+                    // colors: [Color(0xFF22D3EE), Color(0xFF06B6D4)],
+                    colors: [
+                      AppColors.primary.withValues(alpha: 0.6),
+                      AppColors.primary.withValues(alpha: 0.7),
+                    ],
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFF22D3EE).withValues(alpha: 0.6),
+                      // color: const Color(0xFF22D3EE).withValues(alpha: 0.6),
+                      color: AppColors.primary.withValues(alpha: 0.2),
                       blurRadius: 20,
                       spreadRadius: 4,
                     ),
@@ -69,7 +76,7 @@ class CustomBottomNav extends StatelessWidget {
                 ),
                 child: const Icon(
                   Icons.center_focus_weak,
-                  color: Colors.white,
+                  color: AppColors.darkText,
                   size: 32,
                 ),
               ),
@@ -77,13 +84,13 @@ class CustomBottomNav extends StatelessWidget {
 
             _NavItem(
               icon: Icons.receipt_long_outlined,
-              isSelected: selectedIndex == 3,
-              onTap: () => onDestinationSelected(3),
+              isSelected: selectedIndex == 2,
+              onTap: () => onDestinationSelected(2),
             ),
             _NavItem(
               icon: Icons.person_outline_rounded,
-              isSelected: selectedIndex == 4,
-              onTap: () => onDestinationSelected(4),
+              isSelected: selectedIndex == 3,
+              onTap: () => onDestinationSelected(3),
             ),
           ],
         ),

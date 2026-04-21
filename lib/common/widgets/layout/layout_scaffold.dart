@@ -1,4 +1,5 @@
 import 'package:electra/common/widgets/nav/custom_bottom_nav.dart';
+import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -17,7 +18,7 @@ class _LayoutScaffoldState extends State<LayoutScaffold> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppColors.lightBackground,
       body: widget.navigationShell,
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(bottom: 20, left: 16, right: 16),

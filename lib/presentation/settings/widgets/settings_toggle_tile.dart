@@ -32,7 +32,11 @@ class SettingsToggleTile extends StatelessWidget {
           leading: Icon(icon, color: AppColors.primary, size: 26),
           title: Text(
             title,
-            style: const TextStyle(fontSize: 16.5, fontWeight: FontWeight.w500),
+            style: const TextStyle(
+              fontSize: 16.5,
+              fontWeight: FontWeight.w500,
+              color: AppColors.lightText,
+            ),
           ),
           subtitle: Text(
             subtitle,

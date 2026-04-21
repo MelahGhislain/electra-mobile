@@ -4,11 +4,15 @@ import 'package:electra/core/configs/theme/app_colors.dart';
 
 class MainTextButton extends StatefulWidget {
   final String text;
+  final Color? color;
+  final double? fontSize;
   final VoidCallback onPressed;
 
   const MainTextButton({
     super.key,
     required this.text,
+    this.fontSize,
+    this.color,
     required this.onPressed,
   });
 
@@ -53,10 +57,10 @@ class _MainTextButtonState extends State<MainTextButton> {
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
             child: Text(
               widget.text,
-              style: const TextStyle(
-                fontSize: AppFontSize.md,
+              style: TextStyle(
+                fontSize: widget.fontSize ?? AppFontSize.md,
                 fontWeight: FontWeight.w600,
-                color: AppColors.lightTextSecondary,
+                color: widget.color ?? AppColors.lightTextSecondary,
               ),
             ),
           ),

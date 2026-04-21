@@ -1,4 +1,8 @@
+import 'package:electra/common/blocs/receipt/receipt_cubit.dart';
+import 'package:electra/common/blocs/receipt/receipt_state.dart';
+import 'package:electra/core/enums/image_source_enum.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeHeader extends StatelessWidget {
   final String name;
@@ -26,53 +30,50 @@ class HomeHeader extends StatelessWidget {
                 ),
               ),
 
-              /// Notification + Avatar pill
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF1F2937), // dark pill
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: Row(
-                  children: [
-                    /// 🔔 Notification icon
-                    Stack(
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.all(6),
-                          child: Icon(
-                            Icons.notifications_none,
-                            color: Colors.white,
-                            size: 20,
+              /// Scan + Avatar pill
+              Row(
+                children: [
+                  BlocBuilder<ReceiptCubit, ReceiptState>(
+                    builder: (context, state) {
+                      return GestureDetector(
+                        onTap: () {
+                          context.read<ReceiptCubit>().pickImage(
+                            ImageSourceType.camera,
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 4,
+                            vertical: 4,
                           ),
-                        ),
-                        Positioned(
-                          right: 4,
-                          top: 4,
-                          child: Container(
-                            width: 8,
-                            height: 8,
-                            decoration: const BoxDecoration(
-                              color: Colors.red,
-                              shape: BoxShape.circle,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF1F2937), // dark pill
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: const Padding(
+                            padding: EdgeInsets.all(6),
+                            child: Icon(
+                              Icons.crop_free,
+                              color: Colors.white,
+                              size: 20,
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      );
+                    },
+                  ),
 
-                    const SizedBox(width: 6),
+                  const SizedBox(width: 6),
 
-                    /// 👤 Avatar
-                    CircleAvatar(
-                      radius: 14,
-                      backgroundImage: const NetworkImage(
-                        "https://i.pravatar.cc/100", // replace if needed
-                      ),
-                      backgroundColor: Colors.grey.shade200,
+                  /// 👤 Avatar
+                  CircleAvatar(
+                    radius: 20,
+                    backgroundImage: const NetworkImage(
+                      "https://i.pravatar.cc/100", // replace if needed
                     ),
-                  ],
-                ),
+                    backgroundColor: Colors.grey.shade200,
+                  ),
+                ],
               ),
             ],
           ),

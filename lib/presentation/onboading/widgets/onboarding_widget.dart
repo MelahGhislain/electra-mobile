@@ -61,7 +61,7 @@ class OnboardingWidget extends StatelessWidget {
                 height: 8,
                 decoration: BoxDecoration(
                   color: currentPage == index
-                      ? AppColors.primary
+                      ? AppColors.darkSurface
                       : Colors.white38,
                   borderRadius: BorderRadius.circular(4),
                 ),

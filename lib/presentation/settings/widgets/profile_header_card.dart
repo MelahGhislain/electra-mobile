@@ -1,5 +1,4 @@
 import 'package:electra/common/widgets/buttons/animated_icon_button.dart';
-import 'package:electra/common/widgets/buttons/main_button.dart';
 import 'package:electra/core/assets/app_images.dart';
 import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';

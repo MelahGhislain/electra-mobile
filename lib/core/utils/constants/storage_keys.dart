@@ -6,6 +6,6 @@ class StorageKeys {
   static const String onboarding = 'onboarding';
 
   // Auth
-  static const String accessToken = 'accessToken';
-  static const String refreshToken = 'refreshToken';
+  static const String accessToken = 'access_token';
+  static const String refreshToken = 'refresh_token';
 }

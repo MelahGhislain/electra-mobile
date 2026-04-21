@@ -1,3 +1,4 @@
+import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class SettingsSectionHeader extends StatelessWidget {
@@ -15,6 +16,7 @@ class SettingsSectionHeader extends StatelessWidget {
           fontSize: 14,
           fontWeight: FontWeight.w600,
           letterSpacing: 0.5,
+          color: AppColors.lightText,
         ),
       ),
     );

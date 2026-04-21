@@ -1,3 +1,5 @@
+import 'package:electra/core/configs/fonts.dart';
+import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class MonthlySnapshotCard extends StatelessWidget {
@@ -194,13 +196,18 @@ class MonthlySnapshotCard extends StatelessWidget {
             children: [
               Text(
                 'Recently Completed',
-                style: Theme.of(
-                  context,
-                ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600),
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.lightText,
+                  fontSize: AppFontSize.xl,
+                ),
               ),
               TextButton(
                 onPressed: onViewAllPressed,
-                child: const Text('View all'),
+                child: Text(
+                  'View all',
+                  style: TextStyle(color: AppColors.lightText),
+                ),
               ),
             ],
           ),

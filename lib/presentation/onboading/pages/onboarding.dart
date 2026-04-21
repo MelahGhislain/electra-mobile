@@ -1,11 +1,13 @@
 import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
+import 'package:electra/core/router/route_names.dart';
+import 'package:electra/core/utils/storage/onboarding_storage.dart';
 import 'package:electra/data/models/onboarding/onboarding.dart';
 import 'package:electra/domain/entities/user/language.dart';
-import 'package:electra/presentation/onboading/pages/account_setup.dart';
 import 'package:electra/presentation/onboading/widgets/language/language_selector.dart';
 import 'package:electra/presentation/onboading/widgets/onboarding_page.dart';
 import 'package:electra/presentation/onboading/widgets/onboarding_widget.dart';
+import 'package:electra/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -67,26 +69,32 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             "Beautiful pie chart and spending insights dashboard floating over a scenic snowy mountain view, elegant data visualization, premium finance app aesthetic, cinematic lighting",
       ),
     ),
-    OnboardingPage.content(
-      OnboardingData(
-        title: "You’re Ready 🎉",
-        description:
-            "Choose your currency & preferences.\nEnable mic & camera for the best experience.\nStart tracking your first expense now.",
-        imagePrompt:
-            "Happy person celebrating with phone in hand on a snowy mountain peak at sunrise, confetti and success vibe, inspiring and motivational, high resolution realistic photo",
-      ),
-    ),
-    OnboardingPage.custom(const AccountSetupScreen()),
+    // OnboardingPage.content(
+    //   OnboardingData(
+    //     title: "You’re Ready 🎉",
+    //     description:
+    //         "Choose your currency & preferences.\nEnable mic & camera for the best experience.\nStart tracking your first expense now.",
+    //     imagePrompt:
+    //         "Happy person celebrating with phone in hand on a snowy mountain peak at sunrise, confetti and success vibe, inspiring and motivational, high resolution realistic photo",
+    //   ),
+    // ),
+    // OnboardingPage.custom(const AccountSetupScreen()),
   ];
 
-  void _nextPage() {
+  Future<void> _onOnboardingComplete(BuildContext context) async {
+    await sl<OnboardingStorage>().markOnboardingSeen();
+    if (!context.mounted) return;
+    context.goNamed(RouteNames.signIn);
+  }
+
+  Future<void> _nextPage() async {
     if (_currentPage < _pages.length - 1) {
       _pageController.nextPage(
         duration: const Duration(milliseconds: 400),
         curve: Curves.easeInOut,
       );
     } else {
-      context.go('/home'); // adjust route as needed
+      _onOnboardingComplete(context);
     }
   }
 
@@ -116,6 +124,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.lightBackground,
       body: Stack(
         children: [
           // PageView with full-screen images
@@ -152,7 +161,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     IconButton(
                       icon: const Icon(
                         Icons.arrow_back_ios,
-                        color: Colors.white,
+                        color: AppColors.lightText,
                       ),
                       onPressed: () {
                         if (_currentPage > 0) {
@@ -170,11 +179,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
                   // Skip button
                   TextButton(
-                    onPressed: () => context.go('/home'), // adjust route
-                    child: const Text(
+                    onPressed: () =>
+                        context.goNamed(RouteNames.home), // adjust route
+                    child: Text(
                       "Skip",
                       style: TextStyle(
-                        color: Colors.white,
+                        color: AppColors.lightText,
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                       ),
@@ -200,8 +210,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           end: Alignment.bottomCenter,
                           colors: [
                             Colors.transparent,
+                            Colors.black.withValues(alpha: 0.75),
                             Colors.black.withValues(alpha: 0.85),
-                            Colors.black.withValues(alpha: 0.95),
                           ],
                         ),
                       ),
@@ -264,8 +274,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 ElevatedButton(
                                   onPressed: _nextPage,
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: AppColors.primary,
-                                    foregroundColor: Colors.white,
+                                    backgroundColor: AppColors.lightSurface,
+                                    foregroundColor: AppColors.lightText,
                                     padding: const EdgeInsets.symmetric(
                                       horizontal: 32,
                                       vertical: 16,
