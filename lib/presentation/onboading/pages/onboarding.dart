@@ -69,22 +69,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             "Beautiful pie chart and spending insights dashboard floating over a scenic snowy mountain view, elegant data visualization, premium finance app aesthetic, cinematic lighting",
       ),
     ),
-    // OnboardingPage.content(
-    //   OnboardingData(
-    //     title: "You’re Ready 🎉",
-    //     description:
-    //         "Choose your currency & preferences.\nEnable mic & camera for the best experience.\nStart tracking your first expense now.",
-    //     imagePrompt:
-    //         "Happy person celebrating with phone in hand on a snowy mountain peak at sunrise, confetti and success vibe, inspiring and motivational, high resolution realistic photo",
-    //   ),
-    // ),
     // OnboardingPage.custom(const AccountSetupScreen()),
   ];
 
   Future<void> _onOnboardingComplete(BuildContext context) async {
     await sl<OnboardingStorage>().markOnboardingSeen();
     if (!context.mounted) return;
-    context.goNamed(RouteNames.signIn);
+    // context.goNamed(RouteNames.signIn);
+    context.goNamed(RouteNames.home);
   }
 
   Future<void> _nextPage() async {

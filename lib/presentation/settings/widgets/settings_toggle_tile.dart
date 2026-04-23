@@ -47,6 +47,8 @@ class SettingsToggleTile extends StatelessWidget {
             onChanged: onChanged,
             activeThumbColor: AppColors.lightSurface,
             activeTrackColor: AppColors.primary,
+            inactiveTrackColor: AppColors.dividerLight,
+            
           ),
         ),
         if (showDivider)

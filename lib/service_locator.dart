@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:electra/common/blocs/auth/app_auth_cubit.dart';
+import 'package:electra/core/network/auth_interceptor.dart';
 import 'package:electra/core/utils/storage/auth_storage.dart';
 import 'package:electra/core/utils/storage/onboarding_storage.dart';
 import 'package:electra/core/utils/storage/secure_storage.dart';
@@ -15,7 +16,6 @@ import 'package:electra/data/source/purchase/purchase_remote_datasource.dart';
 import 'package:electra/data/source/receipt/receipt_data_source.dart';
 import 'package:electra/data/source/user/user_datasource.dart';
 import 'package:electra/data/source/voice/voice_stream_service.dart';
-import 'package:electra/domain/repository/auth/auth_repository.dart';
 import 'package:electra/domain/repository/purchase/purchase_repository.dart';
 import 'package:electra/domain/repository/receipt/receipt_repository.dart';
 import 'package:electra/domain/repository/user/user_repository.dart';
@@ -57,7 +57,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => AuthStorage(sl<SecureStorage>()));
 
   // Cubits
-  sl.registerFactory(() => PurchaseCubit(sl()));
+  sl.registerLazySingleton(() => PurchaseCubit(sl()));
 
   // Global auth state
   // AppAuthCubit now needs AuthRepository too
@@ -98,6 +98,12 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<PurchaseRepository>(
     () => PurchaseRepositoryImpl(sl<PurchaseRemoteDataSourceImpl>()),
+  );
+
+  /// ================ INTERCEPTORS ======================
+  // ✅ THIS is the missing call — runs after storage + repository are ready
+  dioClient.addAuthInterceptor(
+    AuthInterceptor(storage: sl<AuthStorage>(), dio: sl<Dio>()),
   );
 
   // =============== USECASES ======================

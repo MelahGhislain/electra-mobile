@@ -161,6 +161,7 @@ class MonthlySnapshotCard extends StatelessWidget {
                                 Text(
                                   "${(progress * 100).toInt()}%",
                                   style: const TextStyle(
+                                    color: AppColors.lightText,
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
                                   ),

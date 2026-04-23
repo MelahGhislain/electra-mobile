@@ -1,16 +1,16 @@
 import 'package:dio/dio.dart';
-import 'package:electra/core/network/api_client.dart';
+import 'package:electra/core/errors/api_error.dart';
+import 'package:electra/core/network/api_endpoints.dart';
 import 'package:electra/core/utils/storage/auth_storage.dart';
-import 'package:electra/domain/repository/auth/auth_repository.dart';
+import 'package:flutter/widgets.dart';
 
 class AuthInterceptor extends Interceptor {
   final AuthStorage storage;
-  final AuthRepository repository;
-  final ApiClient apiClient;
+  final Dio dio;
 
   bool _isRefreshing = false;
 
-  AuthInterceptor(this.storage, this.repository, this.apiClient);
+  AuthInterceptor({required this.storage, required this.dio});
 
   @override
   void onRequest(
@@ -18,72 +18,116 @@ class AuthInterceptor extends Interceptor {
     RequestInterceptorHandler handler,
   ) async {
     final token = await storage.accessToken;
-
-    // Always attach if we have a token — even on non-401 paths
     if (token != null && token.isNotEmpty) {
       options.headers['Authorization'] = 'Bearer $token';
     }
-
     handler.next(options);
   }
 
+  // ✅ onError catches 401/400 that Dio routes as exceptions
   @override
-  void onError(DioException err, ErrorInterceptorHandler handler) async {
+  void onError(
+    DioException err,
+    ErrorInterceptorHandler handler,
+  ) async {
+    debugPrint('🔴 onError fired: ${err.response?.statusCode}');
     final status = err.response?.statusCode;
+    final isAuthError = status == 401 ||
+        (status == 400 && _isMissingAuthHeaderFromResponse(err.response));
 
-    // Treat 400 validation-missing-auth AND 401 as auth failures
-    final isAuthError =
-        status == 401 || (status == 400 && _isMissingAuthHeader(err.response));
+    if (!isAuthError) return handler.next(err);
 
-    if (isAuthError && !_isRefreshing) {
-      _isRefreshing = true;
+    await _handleAuthError(
+      requestOptions: err.requestOptions,
+      onResolve: handler.resolve,
+      onReject: handler.next,
+    );
+  }
 
-      try {
-        final refreshToken = await storage.refreshToken;
+  /// Shared refresh + retry logic used by both onResponse and onError
+  Future<void> _handleAuthError({
+    required RequestOptions requestOptions,
+    required Function(Response) onResolve,
+    required Function(DioException) onReject,
+  }) async {
+    if (_isRefreshing) {
+      return onReject(DioException(
+        requestOptions: requestOptions,
+        type: DioExceptionType.badResponse,
+      ));
+    }
 
-        if (refreshToken == null || refreshToken.isEmpty) {
-          await storage.clearTokens();
-          return handler.next(err);
-        }
+    final refreshToken = await storage.refreshToken;
+    if (refreshToken == null || refreshToken.isEmpty) {
+      await storage.clearTokens();
+      return onReject(DioException(
+        requestOptions: requestOptions,
+        type: DioExceptionType.badResponse,
+      ));
+    }
 
-        final result = await repository.refresh(refreshToken: refreshToken);
+    _isRefreshing = true;
+    try {
+      // Clear interceptors to make raw refresh call without triggering this interceptor
+      final existingInterceptors = List<Interceptor>.from(dio.interceptors);
+      dio.interceptors.clear();
 
-        final newTokens = result.fold((failure) => null, (tokens) => tokens);
+      final refreshResponse = await dio.post(
+        ApiEndpoints.refresh,
+        data: {'refreshToken': refreshToken},
+      );
 
-        if (newTokens == null) {
-          await storage.clearTokens();
-          return handler.next(err);
-        }
+      // Restore interceptors
+      dio.interceptors.addAll(existingInterceptors);
 
-        // Retry with fresh token
-        err.requestOptions.headers['Authorization'] =
-            'Bearer ${newTokens.accessToken}';
-        final clonedRequest = await apiClient.dio.fetch(err.requestOptions);
-        return handler.resolve(clonedRequest);
-      } catch (_) {
+      final body = refreshResponse.data as Map<String, dynamic>;
+      if (body['success'] != true) {
         await storage.clearTokens();
-        handler.next(err);
-      } finally {
-        _isRefreshing = false;
+        return onReject(DioException(
+          requestOptions: requestOptions,
+          type: DioExceptionType.badResponse,
+        ));
       }
-    } else {
-      handler.next(err);
+
+      final data = body['data'] as Map<String, dynamic>;
+      final newAccessToken = data['accessToken'] as String;
+      final newRefreshToken = data['refreshToken'] as String;
+
+      await storage.saveTokens(
+        access: newAccessToken,
+        refresh: newRefreshToken,
+      );
+
+      // Retry original request with new token
+      requestOptions.headers['Authorization'] = 'Bearer $newAccessToken';
+      final cloned = await dio.fetch(requestOptions);
+      return onResolve(cloned);
+    } catch (e) {
+      await storage.clearTokens();
+      return onReject(DioException(
+        requestOptions: requestOptions,
+        type: DioExceptionType.unknown,
+        error: e,
+      ));
+    } finally {
+      _isRefreshing = false;
     }
   }
 
-  /// Detects Fastify's FST_ERR_VALIDATION for missing authorization header
-  bool _isMissingAuthHeader(Response? response) {
-    if (response == null) return false;
+  bool _isMissingAuthHeader(Response response) {
     try {
-      final data = response.data;
-      if (data is Map<String, dynamic>) {
-        final error = data['error'];
-        if (error is Map<String, dynamic>) {
-          return error['code'] == 'FST_ERR_VALIDATION' &&
-              (error['message'] as String? ?? '').contains('authorization');
-        }
-      }
-    } catch (_) {}
-    return false;
+      final apiError = ApiError.fromJson(
+        response.data as Map<String, dynamic>,
+      );
+      return apiError.code == 'FST_ERR_VALIDATION' &&
+          apiError.message.toLowerCase().contains('authorization');
+    } catch (_) {
+      return false;
+    }
+  }
+
+  bool _isMissingAuthHeaderFromResponse(Response? response) {
+    if (response?.data == null) return false;
+    return _isMissingAuthHeader(response!);
   }
 }

@@ -9,6 +9,7 @@ class SettingsTile extends StatelessWidget {
   final String? subtitle;
   final bool showDivider;
   final bool showChevron;
+  final VoidCallback? onTap; 
 
   const SettingsTile({
     super.key,
@@ -18,6 +19,7 @@ class SettingsTile extends StatelessWidget {
     this.iconColor,
     this.showDivider = false,
     this.showChevron = false,
+    this.onTap,
   });
 
   @override
@@ -25,6 +27,7 @@ class SettingsTile extends StatelessWidget {
     return Column(
       children: [
         ListTile(
+          onTap: onTap,
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 16,
             vertical: 6,
@@ -47,7 +50,7 @@ class SettingsTile extends StatelessWidget {
           trailing: showChevron
               ? AnimatedIconButton(
                   icon: Icon(Icons.chevron_right, size: 26),
-                  onTap: () {},
+                  onTap: onTap ?? () {},
                 )
               : null,
         ),

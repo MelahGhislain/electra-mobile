@@ -12,9 +12,16 @@ Failure mapDioError(DioException e) {
 
     case DioExceptionType.badResponse:
       final statusCode = e.response?.statusCode;
+
+      // Explicit auth failures
       if (statusCode == 401) return const UnauthorisedFailure();
 
-      // Parse your backend's error body
+      // Fastify missing-auth header comes back as 400
+      if (statusCode == 400 && _isMissingAuth(e.response)) {
+        return const UnauthorisedFailure();
+      }
+
+      // All other server errors — parse the body
       try {
         final data = e.response?.data as Map<String, dynamic>?;
         if (data != null) {
@@ -30,6 +37,17 @@ Failure mapDioError(DioException e) {
       return UnknownFailure();
 
     default:
-      return const UnknownFailure();
+      return UnknownFailure();
+  }
+}
+
+bool _isMissingAuth(Response? response) {
+  if (response?.data == null) return false;
+  try {
+    final apiError = ApiError.fromJson(response!.data as Map<String, dynamic>);
+    return apiError.code == 'FST_ERR_VALIDATION' &&
+        apiError.message.toLowerCase().contains('authorization');
+  } catch (_) {
+    return false;
   }
 }

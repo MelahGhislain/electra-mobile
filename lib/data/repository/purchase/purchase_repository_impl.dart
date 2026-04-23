@@ -5,6 +5,7 @@ import 'package:electra/core/errors/failures.dart';
 import 'package:electra/domain/entities/purchase/purchase.dart';
 import 'package:electra/domain/repository/purchase/purchase_repository.dart';
 import 'package:electra/data/source/purchase/purchase_remote_datasource.dart';
+import 'package:flutter/foundation.dart';
 
 class PurchaseRepositoryImpl implements PurchaseRepository {
   final PurchaseRemoteDataSource remoteDataSource;
@@ -28,8 +29,10 @@ class PurchaseRepositoryImpl implements PurchaseRepository {
       final purchases = await remoteDataSource.getPurchases();
       return Right(purchases.map((p) => p.toEntity()).toList());
     } on DioException catch (e) {
+      debugPrint('DioException: ${e.message}');
       return Left(mapDioError(e));
     } catch (e) {
+      debugPrint('Unknown error: $e');
       return Left(UnknownFailure());
     }
   }

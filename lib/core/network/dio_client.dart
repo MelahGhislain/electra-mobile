@@ -14,11 +14,10 @@ class DioClient {
         headers: {"Content-Type": "application/json"},
       ),
     );
-
-    dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
   }
 
   void addAuthInterceptor(AuthInterceptor interceptor) {
     dio.interceptors.add(interceptor);
+    dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
   }
 }

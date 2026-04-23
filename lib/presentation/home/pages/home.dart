@@ -1,3 +1,4 @@
+import 'package:electra/common/blocs/auth/app_auth_cubit.dart';
 import 'package:electra/common/widgets/popups/blurred_popup.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/core/router/route_names.dart';
@@ -6,6 +7,7 @@ import 'package:electra/presentation/home/model/task.dart';
 import 'package:electra/presentation/home/widgets/home_header.dart';
 import 'package:electra/presentation/home/widgets/monthly_snapshot_card.dart';
 import 'package:electra/presentation/home/widgets/recently_completed.dart';
+import 'package:electra/presentation/home/widgets/shimmer/home_shimmer.dart';
 import 'package:electra/presentation/purchase/blocs/purchase/purchase_cubit.dart';
 import 'package:electra/presentation/purchase/blocs/purchase/purchase_state.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     // Fetch once — cubit caches the result for the session
     context.read<PurchaseCubit>().loadPurchases();
+    print('🏠 HomeScreen cubit hashCode: ${context.read<PurchaseCubit>().hashCode}');
   }
 
   void _showSignInPopup() {
@@ -39,8 +42,73 @@ class _HomeScreenState extends State<HomeScreen> {
         if (state is PurchaseLoaded && state.isEmpty) {
           context.goNamed(RouteNames.expenseRecorder);
         }
+        // If purchases fail with auth error → force logout
+        if (state is PurchaseFailure) {
+          final message = state.message.toLowerCase();
+          final isAuthError = message.contains('session expired') ||
+              message.contains('unauthori');
+
+          if (isAuthError) {
+            context.read<AppAuthCubit>().onLogout();
+          }
+        }
       },
       builder: (context, state) {
+        // ── Loading ───────────────────────────────────────────────────────
+        if (state is PurchaseLoading || state is PurchaseInitial) {
+          return const HomeShimmer();
+        }
+
+        // ── Error ─────────────────────────────────────────────────────────
+        if (state is PurchaseFailure) {
+          return Scaffold(
+            backgroundColor: AppColors.lightBackground,
+            body: SafeArea(
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 32),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.wifi_off_rounded,
+                        size: 56,
+                        color: Colors.grey.shade400,
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        state.message,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.grey.shade600,
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                      FilledButton(
+                        onPressed: () =>
+                            context.read<PurchaseCubit>().loadPurchases(),
+                        style: FilledButton.styleFrom(
+                          backgroundColor: const Color(0xFF1F2937),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 32,
+                            vertical: 14,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: const Text('Try Again'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        }
+
+        // ── Loaded ────────────────────────────────────────────────────────
         return Scaffold(
           backgroundColor: AppColors.lightBackground,
           body: SafeArea(

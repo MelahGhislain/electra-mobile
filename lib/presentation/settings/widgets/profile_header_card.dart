@@ -52,6 +52,7 @@ class ProfileHeaderCard extends StatelessWidget {
                   style: TextStyle(
                     fontSize: AppFontSize.lg,
                     fontWeight: FontWeight.bold,
+                    color: AppColors.lightText,
                   ),
                   overflow: TextOverflow.ellipsis, // 👈 prevents overflow
                 ),
@@ -68,7 +69,10 @@ class ProfileHeaderCard extends StatelessWidget {
             ),
           ),
 
-          AnimatedIconButton(icon: const Icon(Icons.edit), onTap: () {}),
+          AnimatedIconButton(
+            icon: const Icon(Icons.edit, color: AppColors.lightText),
+            onTap: onEditPressed ?? () {},
+          ),
         ],
       ),
     );

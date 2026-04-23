@@ -9,4 +9,6 @@ class OnboardingStorage {
   Future<bool> get hasSeenOnboarding async => _prefs.getBool(_key) ?? false;
 
   Future<void> markOnboardingSeen() => _prefs.setBool(_key, true);
+  
+  Future<void> resetOnboarding() => _prefs.setBool(_key, false);
 }

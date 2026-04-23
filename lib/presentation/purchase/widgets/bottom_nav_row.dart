@@ -7,12 +7,14 @@ class BottomNavRow extends StatefulWidget {
   final Widget centerWidget;
   final VoidCallback? onHome;
   final VoidCallback? onChat;
+  final bool? hasPurchase;
 
   const BottomNavRow({
     super.key,
     required this.centerWidget,
     this.onHome,
     this.onChat,
+    this.hasPurchase = false,
   });
 
   @override
@@ -25,7 +27,7 @@ class _BottomNavRowState extends State<BottomNavRow> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        ActionButton(icon: Icons.home, onTap: widget.onHome),
+        ActionButton(icon: widget.hasPurchase == true ? Icons.home : Icons.settings, onTap: widget.onHome),
         widget.centerWidget,
         ActionButton(
           icon: Icons.center_focus_weak,

@@ -2,6 +2,9 @@ import 'package:electra/common/blocs/receipt/receipt_cubit.dart';
 import 'package:electra/common/blocs/receipt/receipt_state.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/core/enums/image_source_enum.dart';
+import 'package:electra/core/router/route_names.dart';
+import 'package:electra/presentation/purchase/blocs/purchase/purchase_cubit.dart';
+import 'package:electra/presentation/purchase/blocs/purchase/purchase_state.dart';
 import 'package:electra/presentation/purchase/widgets/animated_orb.dart';
 import 'package:electra/presentation/purchase/widgets/bottom_nav_row.dart';
 import 'package:electra/presentation/purchase/widgets/mic_button.dart';
@@ -59,16 +62,26 @@ class ExpenseRecorderScreen extends StatelessWidget {
               const SizedBox(height: 10),
 
               // ── Bottom row: home · [timer] · chat ──────────────────────
-              BlocBuilder<ReceiptCubit, ReceiptState>(
-                builder: (context, state) {
-                  return BottomNavRow(
-                    centerWidget: SizedBox.shrink(), // timer is above
-                    onHome: () {
-                      context.pop();
-                    },
-                    onChat: () {
-                      context.read<ReceiptCubit>().pickImage(
-                        ImageSourceType.camera,
+              BlocBuilder<PurchaseCubit, PurchaseState>(
+                builder: (context, purchaseState) {
+                  final hasPurchase = purchaseState is PurchaseLoaded && !purchaseState.isEmpty;
+                  return BlocBuilder<ReceiptCubit, ReceiptState>(
+                    builder: (context, receiptState) {
+                      return BottomNavRow(
+                        hasPurchase: hasPurchase,
+                        centerWidget: SizedBox.shrink(), // timer is above
+                        onHome: () {
+                          if (hasPurchase) {
+                            context.pop();
+                          } else {
+                            context.pushNamed(RouteNames.settings);
+                          }
+                        },
+                        onChat: () {
+                          context.read<ReceiptCubit>().pickImage(
+                            ImageSourceType.camera,
+                          );
+                        },
                       );
                     },
                   );

@@ -25,23 +25,27 @@ class AppAuthCubit extends Cubit<AppAuthState> {
         return;
       }
 
-      // Has an access token — treat as authenticated
-      // The AuthInterceptor will silently refresh if a 401 comes back
-      if (accessToken != null) {
+      // Has access token — mark authenticated optimistically.
+      // If it's expired the interceptor will refresh on first 401.
+      if (accessToken != null && accessToken.isNotEmpty) {
         emit(const AppAuthState.authenticated());
         return;
       }
 
-      // Has refresh token but no access token — try to get a new access token
-      final result = await _authRepository.refresh(refreshToken: refreshToken!);
+      // Has refresh token only — proactively refresh before hitting any endpoint
+      if (refreshToken != null && refreshToken.isNotEmpty) {
+        final result = await _authRepository.refresh(
+          refreshToken: refreshToken,
+        );
+        result.fold((failure) {
+          _storage.clearTokens();
+          emit(const AppAuthState.unauthenticated());
+        }, (_) => emit(const AppAuthState.authenticated()));
+        return;
+      }
 
-      result.fold((failure) {
-        // Refresh failed — session is dead, clear everything
-        _storage.clearTokens();
-        emit(const AppAuthState.unauthenticated());
-      }, (_) => emit(const AppAuthState.authenticated()));
+      emit(const AppAuthState.unauthenticated());
     } catch (_) {
-      // Any unexpected error — treat as unauthenticated to be safe
       await _storage.clearTokens();
       emit(const AppAuthState.unauthenticated());
     }

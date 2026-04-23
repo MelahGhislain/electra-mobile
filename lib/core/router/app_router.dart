@@ -95,7 +95,10 @@ class AppRouter {
           parentNavigatorKey: _rootNavigatorKey,
           pageBuilder: (context, state) => CustomTransitionPage(
             key: state.pageKey,
-            child: const ExpenseRecorderScreen(),
+            child: BlocProvider.value(
+              value: sl<PurchaseCubit>(),
+              child: const ExpenseRecorderScreen(),
+            ),
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) =>
                     SlideTransition(
@@ -110,8 +113,8 @@ class AppRouter {
 
         // ── Protected: bottom nav shell ───────────────────────────────────
         StatefulShellRoute.indexedStack(
-          builder: (context, state, navigationShell) => BlocProvider(
-            create: (_) => sl<PurchaseCubit>(),
+          builder: (context, state, navigationShell) => BlocProvider.value(
+            value: sl<PurchaseCubit>(),
             child: LayoutScaffold(navigationShell: navigationShell),
           ),
           branches: [
