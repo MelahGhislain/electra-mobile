@@ -27,7 +27,10 @@ class _BottomNavRowState extends State<BottomNavRow> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        ActionButton(icon: widget.hasPurchase == true ? Icons.home : Icons.settings, onTap: widget.onHome),
+        ActionButton(
+          icon: widget.hasPurchase == true ? Icons.home : Icons.settings,
+          onTap: widget.onHome,
+        ),
         widget.centerWidget,
         ActionButton(
           icon: Icons.center_focus_weak,

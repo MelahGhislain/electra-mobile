@@ -32,7 +32,7 @@ class _RadioOptionListState<T> extends State<RadioOptionList<T>> {
       shrinkWrap: true,
       padding: const EdgeInsets.symmetric(horizontal: 8),
       itemCount: widget.options.length,
-      separatorBuilder: (_, __) => const SizedBox(height: 4),
+      separatorBuilder: (_, _) => const SizedBox(height: 4),
       itemBuilder: (context, index) {
         final option = widget.options[index];
         final isSelected = option.value == _selected;
@@ -48,7 +48,7 @@ class _RadioOptionListState<T> extends State<RadioOptionList<T>> {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
             decoration: BoxDecoration(
               color: isSelected
-                  ? AppColors.primary.withOpacity(0.08)
+                  ? AppColors.primary.withValues(alpha: 0.08)
                   : Colors.transparent,
               borderRadius: BorderRadius.circular(12),
             ),

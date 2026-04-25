@@ -1,9 +1,7 @@
-import 'package:electra/common/blocs/auth/app_auth_cubit.dart';
 import 'package:electra/common/widgets/buttons/main_button.dart';
 import 'package:electra/common/widgets/text_fields/text_field.dart';
 import 'package:electra/core/router/route_names.dart';
 import 'package:electra/core/utils/auth/auth_navigation.dart';
-import 'package:electra/domain/usecases/purchase/check_has_purchases_usecase.dart';
 import 'package:electra/presentation/auth/bloc/auth_cubit.dart';
 import 'package:electra/presentation/auth/bloc/auth_state.dart';
 import 'package:electra/presentation/auth/widgets/auth_divider.dart';
@@ -131,8 +129,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             controller: _emailController,
                             keyboardType: TextInputType.emailAddress,
                             validator: (v) {
-                              if (v == null || v.isEmpty)
+                              if (v == null || v.isEmpty) {
                                 return 'Email is required';
+                              }
                               if (!RegExp(
                                 r'^[\w-.]+@([\w-]+\.)+[\w]{2,}$',
                               ).hasMatch(v)) {
@@ -149,8 +148,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             controller: _passwordController,
                             isPassword: true,
                             validator: (v) {
-                              if (v == null || v.isEmpty)
+                              if (v == null || v.isEmpty) {
                                 return 'Password is required';
+                              }
                               if (v.length < 8) return 'Minimum 8 characters';
                               return null;
                             },

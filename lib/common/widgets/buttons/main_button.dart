@@ -83,25 +83,16 @@ class _MainButtonState extends State<MainButton> {
         scale: _scale,
         duration: const Duration(milliseconds: 120),
         curve: Curves.easeOut,
-        child: widget.isLoading
-            ? const SizedBox(
-                width: 22,
-                height: 22,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2.5,
-                  color: Colors.white,
-                ),
-              )
-            : isFullWidth
-            ? _buildButton()
+        child: isFullWidth
+            ? _buildButton(widget.isLoading)
             : IntrinsicWidth(
-                child: _buildButton(),
+                child: _buildButton(widget.isLoading),
               ), // ✅ fit content if not full
       ),
     );
   }
 
-  Widget _buildButton() {
+  Widget _buildButton(bool? isloading) {
     return Container(
       width: widget.width,
       height: _height,
@@ -128,23 +119,32 @@ class _MainButtonState extends State<MainButton> {
       child: AnimatedOpacity(
         duration: const Duration(milliseconds: 120),
         opacity: _opacity,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            widget.icon ?? const SizedBox.shrink(),
-            const SizedBox(width: 8),
-            Text(
-              widget.text,
-              style: TextStyle(
-                fontSize: _fontSize,
-                fontWeight: FontWeight.bold,
-                color: widget.isActive == true
-                    ? AppColors.darkText
-                    : AppColors.lightText,
+        child: widget.isLoading
+            ? const SizedBox(
+                width: 22,
+                height: 22,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2.5,
+                  color: Colors.white,
+                ),
+              )
+            : Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  widget.icon ?? const SizedBox.shrink(),
+                  const SizedBox(width: 8),
+                  Text(
+                    widget.text,
+                    style: TextStyle(
+                      fontSize: _fontSize,
+                      fontWeight: FontWeight.bold,
+                      color: widget.isActive == true
+                          ? AppColors.darkText
+                          : AppColors.lightText,
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
       ),
     );
   }

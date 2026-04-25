@@ -4,10 +4,7 @@ import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class ThemeBottomSheet {
-  static Future<ThemeMode?> show(
-    BuildContext context,
-    ThemeMode current,
-  ) {
+  static Future<ThemeMode?> show(BuildContext context, ThemeMode current) {
     return AppBottomSheet.show<ThemeMode>(
       context,
       title: 'Theme',

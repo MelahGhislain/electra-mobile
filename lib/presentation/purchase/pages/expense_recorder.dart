@@ -64,7 +64,8 @@ class ExpenseRecorderScreen extends StatelessWidget {
               // ── Bottom row: home · [timer] · chat ──────────────────────
               BlocBuilder<PurchaseCubit, PurchaseState>(
                 builder: (context, purchaseState) {
-                  final hasPurchase = purchaseState is PurchaseLoaded && !purchaseState.isEmpty;
+                  final hasPurchase =
+                      purchaseState is PurchaseLoaded && !purchaseState.isEmpty;
                   return BlocBuilder<ReceiptCubit, ReceiptState>(
                     builder: (context, receiptState) {
                       return BottomNavRow(

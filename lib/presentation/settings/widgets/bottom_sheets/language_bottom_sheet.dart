@@ -41,10 +41,7 @@ extension AppLanguageExtension on AppLanguage {
 }
 
 class LanguageBottomSheet {
-  static Future<AppLanguage?> show(
-    BuildContext context,
-    AppLanguage current,
-  ) {
+  static Future<AppLanguage?> show(BuildContext context, AppLanguage current) {
     return AppBottomSheet.show<AppLanguage>(
       context,
       title: 'Language',

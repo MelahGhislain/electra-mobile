@@ -1,6 +1,6 @@
 import 'package:electra/common/blocs/auth/app_auth_cubit.dart';
-import 'package:electra/common/blocs/language_cubit.dart';
 import 'package:electra/common/blocs/theme_cubit.dart';
+import 'package:electra/common/widgets/buttons/main_icon_button.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/core/router/route_names.dart';
 import 'package:electra/core/services/app_info_service.dart';
@@ -120,23 +120,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           ),
           elevation: 0,
-          leading: const BackButton(color: AppColors.lightText),
           actions: [
             BlocBuilder<AuthCubit, AuthState>(
               builder: (context, state) {
                 final isLoading = state is AuthLoading;
-                return IconButton(
-                  icon: isLoading
-                      ? const SizedBox(
-                          width: 20,
-                          height: 20,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: AppColors.lightText,
-                          ),
-                        )
-                      : const Icon(Icons.logout, color: AppColors.lightText),
-                  onPressed: isLoading ? null : () => _showLogoutDialog(context),
+                return 
+                Padding(
+                padding: const EdgeInsets.only(right: 16),
+                child: MainIconButton(
+                  icon: Icon(Icons.logout, color: AppColors.lightText, size: 18,), 
+                  onTap: isLoading
+                      ? null
+                      : () => _showLogoutDialog(context),)
                 );
               },
             ),

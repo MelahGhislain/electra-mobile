@@ -1,6 +1,3 @@
-import 'package:electra/data/repository/auth/auth_repository_impl.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:electra/common/blocs/auth/app_auth_cubit.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +21,10 @@ class LogoutConfirmationDialog extends StatelessWidget {
       backgroundColor: AppColors.lightBackground,
       title: const Text(
         'Logout',
-        style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.darkText),
+        style: TextStyle(
+          fontWeight: FontWeight.w600,
+          color: AppColors.lightText,
+        ),
       ),
       content: const Text(
         'Are you sure you want to logout of your account?',

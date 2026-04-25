@@ -9,7 +9,7 @@ class SettingsTile extends StatelessWidget {
   final String? subtitle;
   final bool showDivider;
   final bool showChevron;
-  final VoidCallback? onTap; 
+  final VoidCallback? onTap;
 
   const SettingsTile({
     super.key,

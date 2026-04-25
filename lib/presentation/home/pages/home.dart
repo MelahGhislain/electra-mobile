@@ -29,7 +29,6 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     // Fetch once — cubit caches the result for the session
     context.read<PurchaseCubit>().loadPurchases();
-    print('🏠 HomeScreen cubit hashCode: ${context.read<PurchaseCubit>().hashCode}');
   }
 
   void _showSignInPopup() {
@@ -47,7 +46,8 @@ class _HomeScreenState extends State<HomeScreen> {
         // If purchases fail with auth error → force logout
         if (state is PurchaseFailure) {
           final message = state.message.toLowerCase();
-          final isAuthError = message.contains('session expired') ||
+          final isAuthError =
+              message.contains('session expired') ||
               message.contains('unauthori');
 
           if (isAuthError) {
@@ -130,14 +130,26 @@ class _HomeScreenState extends State<HomeScreen> {
                 SliverToBoxAdapter(
                   child: SpendingBreakdownCard(
                     categories: [
-                      SpendingCategory(label: 'Groceries', amount: 550, color: Color(0xFFEF4444)),
-                      SpendingCategory(label: 'Lunch', amount: 350, color: Color(0xFFF97316)),
-                      SpendingCategory(label: 'Uber', amount: 180, color: Color(0xFF8B5CF6)),
+                      SpendingCategory(
+                        label: 'Groceries',
+                        amount: 550,
+                        color: Color(0xFFEF4444),
+                      ),
+                      SpendingCategory(
+                        label: 'Lunch',
+                        amount: 350,
+                        color: Color(0xFFF97316),
+                      ),
+                      SpendingCategory(
+                        label: 'Uber',
+                        amount: 180,
+                        color: Color(0xFF8B5CF6),
+                      ),
                       // ... add more from your purchases
                     ],
                   ),
                 ),
-                
+
                 // 2. MonthlySnapshotCard - Pinned at the top
                 SliverPersistentHeader(
                   pinned: true,

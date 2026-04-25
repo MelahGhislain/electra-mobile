@@ -1,27 +1,26 @@
-enum PurchaseSortOption {
-  newest,
-  oldest,
-  mostExpensive,
-  cheapest,
-  byName,
-}
+enum PurchaseSortOption { newest, oldest, mostExpensive, cheapest, byName }
 
 extension PurchaseSortOptionLabel on PurchaseSortOption {
   String get label {
     switch (this) {
-      case PurchaseSortOption.newest:       return 'Newest First';
-      case PurchaseSortOption.oldest:       return 'Oldest First';
-      case PurchaseSortOption.mostExpensive: return 'Most Expensive';
-      case PurchaseSortOption.cheapest:     return 'Cheapest';
-      case PurchaseSortOption.byName:       return 'By Name';
+      case PurchaseSortOption.newest:
+        return 'Newest First';
+      case PurchaseSortOption.oldest:
+        return 'Oldest First';
+      case PurchaseSortOption.mostExpensive:
+        return 'Most Expensive';
+      case PurchaseSortOption.cheapest:
+        return 'Cheapest';
+      case PurchaseSortOption.byName:
+        return 'By Name';
     }
   }
 }
 
 class PurchaseFilter {
   final String? searchQuery;
-  final String? category;       // e.g. "Meat", "Groceries"
-  final String? merchant;       // normalized merchant name
+  final String? category; // e.g. "Meat", "Groceries"
+  final String? merchant; // normalized merchant name
   final DateTime? dateFrom;
   final DateTime? dateTo;
   final PurchaseSortOption sort;

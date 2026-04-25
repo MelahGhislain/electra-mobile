@@ -24,6 +24,7 @@ import 'package:electra/domain/usecases/auth/logout_user.dart';
 import 'package:electra/domain/usecases/auth/refresh_token.dart';
 import 'package:electra/domain/usecases/auth/social_login_usecase.dart';
 import 'package:electra/domain/usecases/purchase/check_has_purchases_usecase.dart';
+import 'package:electra/domain/usecases/purchase/get_purchase_detail_usecase.dart';
 import 'package:electra/domain/usecases/purchase/get_purchases_usecase.dart';
 import 'package:electra/domain/usecases/receipt/pick_receipt_image.dart';
 import 'package:electra/domain/usecases/user/get_user.dart';
@@ -128,4 +129,5 @@ Future<void> init() async {
   /// Purchase Usecases
   sl.registerLazySingleton(() => CheckHasPurchasesUseCase(sl()));
   sl.registerLazySingleton(() => GetPurchasesUseCase(sl()));
+  sl.registerLazySingleton(() => GetPurchaseDetailUseCase(sl()));
 }

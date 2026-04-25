@@ -251,8 +251,12 @@ class PurchaseModel extends Equatable {
       id: (json['id'] ?? json['_id'])?.toString() ?? '',
       userId: json['userId']?.toString() ?? '',
       merchant: _parseSubModel(json['merchant'], MerchantModel.fromJson),
-      payment: _parseSubModel(json['payment'], PaymentModel.fromJson) ?? const PaymentModel(),
-      totals: _parseSubModel(json['totals'], TotalsModel.fromJson) ?? TotalsModel(amount: 0, currency: 'USD', itemCount: 0),
+      payment:
+          _parseSubModel(json['payment'], PaymentModel.fromJson) ??
+          const PaymentModel(),
+      totals:
+          _parseSubModel(json['totals'], TotalsModel.fromJson) ??
+          TotalsModel(amount: 0, currency: 'USD', itemCount: 0),
       purchaseDate: json['purchaseDate'] != null
           ? DateTime.parse(json['purchaseDate'])
           : DateTime.now(),
@@ -261,13 +265,20 @@ class PurchaseModel extends Equatable {
           .map((e) => PurchaseItemModel.fromJson(e as Map<String, dynamic>))
           .toList(),
       isDeleted: json['isDeleted'] ?? false,
-      createdAt: json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
-      updatedAt: json['updatedAt'] != null ? DateTime.parse(json['updatedAt']) : null,
+      createdAt: json['createdAt'] != null
+          ? DateTime.parse(json['createdAt'])
+          : null,
+      updatedAt: json['updatedAt'] != null
+          ? DateTime.parse(json['updatedAt'])
+          : null,
     );
   }
 
   /// ✅ Treats both null AND empty {} as null
-  static T? _parseSubModel<T>(dynamic raw, T Function(Map<String, dynamic>) parser) {
+  static T? _parseSubModel<T>(
+    dynamic raw,
+    T Function(Map<String, dynamic>) parser,
+  ) {
     if (raw == null) return null;
     if (raw is Map && raw.isEmpty) return null;
     return parser(raw as Map<String, dynamic>);
@@ -301,16 +312,28 @@ class PurchaseModel extends Equatable {
 
   static DataSource _mapDataSource(String? value) {
     switch (value) {
-      case 'receipt': return DataSource.receipt;
-      case 'voice':   return DataSource.voice;
-      default:        return DataSource.manual;
+      case 'receipt':
+        return DataSource.receipt;
+      case 'voice':
+        return DataSource.voice;
+      default:
+        return DataSource.manual;
     }
   }
 
   @override
   List<Object?> get props => [
-    id, userId, merchant, payment, totals,
-    purchaseDate, dataSource, items, isDeleted, createdAt, updatedAt,
+    id,
+    userId,
+    merchant,
+    payment,
+    totals,
+    purchaseDate,
+    dataSource,
+    items,
+    isDeleted,
+    createdAt,
+    updatedAt,
   ];
 }
 
@@ -358,9 +381,12 @@ class PaymentModel {
 
   static PaymentMethod _mapMethod(String? value) {
     switch (value) {
-      case 'card': return PaymentMethod.card;
-      case 'cash': return PaymentMethod.cash;
-      default:     return PaymentMethod.other;
+      case 'card':
+        return PaymentMethod.card;
+      case 'cash':
+        return PaymentMethod.cash;
+      default:
+        return PaymentMethod.other;
     }
   }
 }
@@ -379,9 +405,9 @@ class TotalsModel {
   });
 
   factory TotalsModel.fromJson(Map<String, dynamic> json) => TotalsModel(
-    amount:       (json['amount'] as num?)?.toDouble() ?? 0.0,
-    currency:     json['currency']?.toString() ?? 'USD',
-    itemCount:    (json['itemCount'] as num?)?.toInt() ?? 0,
+    amount: (json['amount'] as num?)?.toDouble() ?? 0.0,
+    currency: json['currency']?.toString() ?? 'USD',
+    itemCount: (json['itemCount'] as num?)?.toInt() ?? 0,
     avgItemPrice: (json['avgItemPrice'] as num?)?.toDouble(),
   );
 

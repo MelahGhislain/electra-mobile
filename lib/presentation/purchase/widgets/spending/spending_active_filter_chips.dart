@@ -1,11 +1,12 @@
 import 'package:electra/presentation/purchase/pages/purchase_filter.dart';
 import 'package:flutter/material.dart';
+import 'package:electra/core/configs/theme/app_colors.dart';
 
-class ActiveFilterChips extends StatelessWidget {
+class SpendingActiveFilterChips extends StatelessWidget {
   final PurchaseFilter filter;
   final ValueChanged<PurchaseFilter> onFilterChanged;
 
-  const ActiveFilterChips({
+  const SpendingActiveFilterChips({
     super.key,
     required this.filter,
     required this.onFilterChanged,
@@ -18,61 +19,66 @@ class ActiveFilterChips extends StatelessWidget {
     final chips = <Widget>[];
 
     if (filter.sort != PurchaseSortOption.newest) {
-      chips.add(_ActiveChip(
-        label: filter.sort.label,
-        onRemove: () => onFilterChanged(
-            filter.copyWith(sort: PurchaseSortOption.newest)),
-      ));
+      chips.add(
+        _Chip(
+          label: filter.sort.label,
+          onRemove: () =>
+              onFilterChanged(filter.copyWith(sort: PurchaseSortOption.newest)),
+        ),
+      );
     }
-
     if (filter.category != null) {
-      chips.add(_ActiveChip(
-        label: filter.category!,
-        onRemove: () =>
-            onFilterChanged(filter.copyWith(clearCategory: true)),
-      ));
+      chips.add(
+        _Chip(
+          label: filter.category!,
+          onRemove: () => onFilterChanged(filter.copyWith(clearCategory: true)),
+        ),
+      );
     }
-
     if (filter.merchant != null) {
-      chips.add(_ActiveChip(
-        label: filter.merchant!,
-        onRemove: () =>
-            onFilterChanged(filter.copyWith(clearMerchant: true)),
-      ));
+      chips.add(
+        _Chip(
+          label: filter.merchant!,
+          onRemove: () => onFilterChanged(filter.copyWith(clearMerchant: true)),
+        ),
+      );
     }
-
     if (filter.dateFrom != null) {
-      chips.add(_ActiveChip(
-        label: 'Date range',
-        onRemove: () => onFilterChanged(filter.copyWith(clearDate: true)),
-      ));
+      chips.add(
+        _Chip(
+          label: 'Date range',
+          onRemove: () => onFilterChanged(filter.copyWith(clearDate: true)),
+        ),
+      );
     }
 
     return SizedBox(
       height: 34,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         itemCount: chips.length,
-        separatorBuilder: (_, __) => const SizedBox(width: 8),
+        separatorBuilder: (_, _) => const SizedBox(width: 8),
         itemBuilder: (_, i) => chips[i],
       ),
     );
   }
 }
 
-class _ActiveChip extends StatelessWidget {
+class _Chip extends StatelessWidget {
   final String label;
   final VoidCallback onRemove;
 
-  const _ActiveChip({required this.label, required this.onRemove});
+  const _Chip({required this.label, required this.onRemove});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: const Color(0xFF1F2937),
+        color: AppColors.primary.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: AppColors.primary.withValues(alpha: 0.3)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -82,7 +88,7 @@ class _ActiveChip extends StatelessWidget {
             style: const TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w500,
-              color: Colors.white,
+              color: AppColors.primaryDark,
             ),
           ),
           const SizedBox(width: 6),
@@ -91,7 +97,7 @@ class _ActiveChip extends StatelessWidget {
             child: const Icon(
               Icons.close_rounded,
               size: 13,
-              color: Colors.white70,
+              color: AppColors.primaryDark,
             ),
           ),
         ],

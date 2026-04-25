@@ -26,13 +26,11 @@ class AuthInterceptor extends Interceptor {
 
   // ✅ onError catches 401/400 that Dio routes as exceptions
   @override
-  void onError(
-    DioException err,
-    ErrorInterceptorHandler handler,
-  ) async {
+  void onError(DioException err, ErrorInterceptorHandler handler) async {
     debugPrint('🔴 onError fired: ${err.response?.statusCode}');
     final status = err.response?.statusCode;
-    final isAuthError = status == 401 ||
+    final isAuthError =
+        status == 401 ||
         (status == 400 && _isMissingAuthHeaderFromResponse(err.response));
 
     if (!isAuthError) return handler.next(err);
@@ -51,19 +49,23 @@ class AuthInterceptor extends Interceptor {
     required Function(DioException) onReject,
   }) async {
     if (_isRefreshing) {
-      return onReject(DioException(
-        requestOptions: requestOptions,
-        type: DioExceptionType.badResponse,
-      ));
+      return onReject(
+        DioException(
+          requestOptions: requestOptions,
+          type: DioExceptionType.badResponse,
+        ),
+      );
     }
 
     final refreshToken = await storage.refreshToken;
     if (refreshToken == null || refreshToken.isEmpty) {
       await storage.clearTokens();
-      return onReject(DioException(
-        requestOptions: requestOptions,
-        type: DioExceptionType.badResponse,
-      ));
+      return onReject(
+        DioException(
+          requestOptions: requestOptions,
+          type: DioExceptionType.badResponse,
+        ),
+      );
     }
 
     _isRefreshing = true;
@@ -83,10 +85,12 @@ class AuthInterceptor extends Interceptor {
       final body = refreshResponse.data as Map<String, dynamic>;
       if (body['success'] != true) {
         await storage.clearTokens();
-        return onReject(DioException(
-          requestOptions: requestOptions,
-          type: DioExceptionType.badResponse,
-        ));
+        return onReject(
+          DioException(
+            requestOptions: requestOptions,
+            type: DioExceptionType.badResponse,
+          ),
+        );
       }
 
       final data = body['data'] as Map<String, dynamic>;
@@ -104,11 +108,13 @@ class AuthInterceptor extends Interceptor {
       return onResolve(cloned);
     } catch (e) {
       await storage.clearTokens();
-      return onReject(DioException(
-        requestOptions: requestOptions,
-        type: DioExceptionType.unknown,
-        error: e,
-      ));
+      return onReject(
+        DioException(
+          requestOptions: requestOptions,
+          type: DioExceptionType.unknown,
+          error: e,
+        ),
+      );
     } finally {
       _isRefreshing = false;
     }
@@ -116,9 +122,7 @@ class AuthInterceptor extends Interceptor {
 
   bool _isMissingAuthHeader(Response response) {
     try {
-      final apiError = ApiError.fromJson(
-        response.data as Map<String, dynamic>,
-      );
+      final apiError = ApiError.fromJson(response.data as Map<String, dynamic>);
       return apiError.code == 'FST_ERR_VALIDATION' &&
           apiError.message.toLowerCase().contains('authorization');
     } catch (_) {

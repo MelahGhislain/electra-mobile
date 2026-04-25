@@ -38,13 +38,41 @@ class SpendingBreakdownCard extends StatefulWidget {
   factory SpendingBreakdownCard.demo() {
     return SpendingBreakdownCard(
       categories: [
-        SpendingCategory(label: 'Groceries', amount: 550, color: const Color(0xFFEF4444)),
-        SpendingCategory(label: 'Grocery', amount: 1200, color: const Color(0xFF22C55E)),
-        SpendingCategory(label: 'Lunch', amount: 350, color: const Color(0xFFF97316)),
-        SpendingCategory(label: 'Uber', amount: 180, color: const Color(0xFF8B5CF6)),
-        SpendingCategory(label: 'CNG', amount: 150, color: const Color(0xFF06B6D4)),
-        SpendingCategory(label: 'Movie Ticket', amount: 600, color: const Color(0xFFA855F7)),
-        SpendingCategory(label: 'Dinner', amount: 400, color: const Color(0xFF92400E)),
+        SpendingCategory(
+          label: 'Groceries',
+          amount: 550,
+          color: const Color(0xFFEF4444),
+        ),
+        SpendingCategory(
+          label: 'Grocery',
+          amount: 1200,
+          color: const Color(0xFF22C55E),
+        ),
+        SpendingCategory(
+          label: 'Lunch',
+          amount: 350,
+          color: const Color(0xFFF97316),
+        ),
+        SpendingCategory(
+          label: 'Uber',
+          amount: 180,
+          color: const Color(0xFF8B5CF6),
+        ),
+        SpendingCategory(
+          label: 'CNG',
+          amount: 150,
+          color: const Color(0xFF06B6D4),
+        ),
+        SpendingCategory(
+          label: 'Movie Ticket',
+          amount: 600,
+          color: const Color(0xFFA855F7),
+        ),
+        SpendingCategory(
+          label: 'Dinner',
+          amount: 400,
+          color: const Color(0xFF92400E),
+        ),
       ],
     );
   }
@@ -67,7 +95,10 @@ class _SpendingBreakdownCardState extends State<SpendingBreakdownCard>
       duration: const Duration(milliseconds: 900),
     );
     _selectedIndex = 0;
-    _animation = CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic);
+    _animation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeOutCubic,
+    );
     _controller.forward();
   }
 
@@ -77,8 +108,7 @@ class _SpendingBreakdownCardState extends State<SpendingBreakdownCard>
     super.dispose();
   }
 
-  double get _total =>
-      widget.categories.fold(0, (sum, c) => sum + c.amount);
+  double get _total => widget.categories.fold(0, (sum, c) => sum + c.amount);
 
   @override
   Widget build(BuildContext context) {
@@ -162,13 +192,16 @@ class _SpendingBreakdownCardState extends State<SpendingBreakdownCard>
                         final cat = entry.value;
                         final isSelected = _selectedIndex == i;
                         return GestureDetector(
-                          onTap: () => setState(() =>
-                              _selectedIndex = isSelected ? null : i),
+                          onTap: () => setState(
+                            () => _selectedIndex = isSelected ? null : i,
+                          ),
                           child: AnimatedContainer(
                             duration: const Duration(milliseconds: 180),
                             margin: const EdgeInsets.only(bottom: 2),
                             padding: const EdgeInsets.symmetric(
-                                vertical: 5, horizontal: 0),
+                              vertical: 5,
+                              horizontal: 0,
+                            ),
                             decoration: BoxDecoration(
                               color: isSelected
                                   ? cat.color.withValues(alpha: 0.08)
@@ -247,7 +280,8 @@ class _SpendingBreakdownCardState extends State<SpendingBreakdownCard>
                                         fontSize: 13,
                                         fontWeight: FontWeight.w700,
                                         color: widget
-                                            .categories[_selectedIndex!].color,
+                                            .categories[_selectedIndex!]
+                                            .color,
                                       ),
                                     ),
                                     Text(
@@ -349,8 +383,8 @@ class _DonutChartPainter extends CustomPainter {
       paint.color = isSelected
           ? cat.color
           : (selectedIndex != null
-              ? cat.color.withValues(alpha: 0.35)
-              : cat.color);
+                ? cat.color.withValues(alpha: 0.35)
+                : cat.color);
       paint.strokeWidth = isSelected ? strokeWidth + 6 : strokeWidth;
 
       canvas.drawArc(

@@ -1,10 +1,11 @@
+import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
-class PurchaseEmptyState extends StatelessWidget {
+class SpendingEmptyState extends StatelessWidget {
   final bool isFiltered;
   final VoidCallback? onClearFilters;
 
-  const PurchaseEmptyState({
+  const SpendingEmptyState({
     super.key,
     this.isFiltered = false,
     this.onClearFilters,
@@ -22,7 +23,6 @@ class PurchaseEmptyState extends StatelessWidget {
               width: 72,
               height: 72,
               decoration: BoxDecoration(
-                color: const Color(0xFFF1F5F9),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Icon(
@@ -30,7 +30,7 @@ class PurchaseEmptyState extends StatelessWidget {
                     ? Icons.filter_list_off_rounded
                     : Icons.receipt_long_rounded,
                 size: 32,
-                color: Colors.grey.shade400,
+                color: AppColors.lightTextSecondary,
               ),
             ),
             const SizedBox(height: 16),
@@ -39,7 +39,7 @@ class PurchaseEmptyState extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
-                color: Color(0xFF1F2937),
+                color: AppColors.lightText,
               ),
             ),
             const SizedBox(height: 6),
@@ -48,9 +48,9 @@ class PurchaseEmptyState extends StatelessWidget {
                   ? 'Try adjusting your filters or search query'
                   : 'Your purchase history will appear here',
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 13,
-                color: Colors.grey.shade500,
+                color: AppColors.lightTextSecondary,
               ),
             ),
             if (isFiltered && onClearFilters != null) ...[
@@ -58,18 +58,20 @@ class PurchaseEmptyState extends StatelessWidget {
               OutlinedButton(
                 onPressed: onClearFilters,
                 style: OutlinedButton.styleFrom(
-                  side: const BorderSide(color: Color(0xFF1F2937)),
+                  side: const BorderSide(color: AppColors.darkBackground),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 24, vertical: 10),
+                    horizontal: 24,
+                    vertical: 10,
+                  ),
                 ),
                 child: const Text(
                   'Clear Filters',
                   style: TextStyle(
-                    color: Color(0xFF1F2937),
-                    fontWeight: FontWeight.w500,
+                    color: AppColors.darkBackground,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),

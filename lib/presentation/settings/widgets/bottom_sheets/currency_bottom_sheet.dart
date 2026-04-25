@@ -52,10 +52,7 @@ extension AppCurrencyExtension on AppCurrency {
 }
 
 class CurrencyBottomSheet {
-  static Future<AppCurrency?> show(
-    BuildContext context,
-    AppCurrency current,
-  ) {
+  static Future<AppCurrency?> show(BuildContext context, AppCurrency current) {
     return AppBottomSheet.show<AppCurrency>(
       context,
       title: 'Currency',

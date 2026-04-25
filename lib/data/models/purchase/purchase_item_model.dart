@@ -230,7 +230,8 @@ class PurchaseItemModel extends Equatable {
       quantity: (json['quantity'] as num?)?.toInt() ?? 0,
       unitPrice: (json['unitPrice'] as num?)?.toDouble() ?? 0.0,
       totalPrice: (json['totalPrice'] as num?)?.toDouble() ?? 0.0,
-      category: (json['category'] != null && (json['category'] as Map).isNotEmpty)
+      category:
+          (json['category'] != null && (json['category'] as Map).isNotEmpty)
           ? ItemCategoryModel.fromJson(json['category'])
           : const ItemCategoryModel(name: 'Unknown', normalizedName: 'unknown'),
       ai: ai,
@@ -267,8 +268,16 @@ class PurchaseItemModel extends Equatable {
 
   @override
   List<Object?> get props => [
-    id, name, normalizedName, quantity, unitPrice,
-    totalPrice, category, ai, isEdited, isDeleted,
+    id,
+    name,
+    normalizedName,
+    quantity,
+    unitPrice,
+    totalPrice,
+    category,
+    ai,
+    isEdited,
+    isDeleted,
   ];
 }
 

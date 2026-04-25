@@ -36,4 +36,18 @@ class PurchaseRepositoryImpl implements PurchaseRepository {
       return Left(UnknownFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, Purchase>> getPurchaseById(String id) async {
+    try {
+      final model = await remoteDataSource.getPurchaseById(id);
+      return Right(model.toEntity());
+    } on DioException catch (e) {
+      debugPrint('DioException: ${e.message}');
+      return Left(mapDioError(e));
+    } catch (e) {
+      debugPrint('Unknown error: $e');
+      return Left(UnknownFailure());
+    }
+  }
 }

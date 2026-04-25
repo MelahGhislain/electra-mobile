@@ -5,8 +5,6 @@ import 'package:electra/core/router/app_router.dart';
 import 'package:electra/common/blocs/theme_cubit.dart';
 import 'package:electra/common/blocs/receipt/receipt_cubit.dart';
 import 'package:electra/presentation/auth/bloc/auth_cubit.dart';
-import 'package:electra/presentation/purchase/blocs/voice/voice_cubit.dart';
-import 'package:electra/presentation/onboading/bloc/onboarding_cubit.dart';
 import 'package:electra/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,20 +28,20 @@ class _MainAppState extends State<MainApp> {
   void initState() {
     super.initState();
     _authCubit = sl<AppAuthCubit>();
-    _themeCubit = ThemeCubit();                    // HydratedBloc restores persisted state
+    _themeCubit = ThemeCubit(); // HydratedBloc restores persisted state
     _languageCubit = LanguageCubit();
-    _router = AppRouter.createRouter(_authCubit);  // created once, never recreated
+    _router = AppRouter.createRouter(
+      _authCubit,
+    ); // created once, never recreated
   }
 
   @override
   Widget build(BuildContext context) {
-
     return MultiBlocProvider(
       providers: [
         BlocProvider.value(value: _authCubit),
         BlocProvider.value(value: _themeCubit),
         BlocProvider.value(value: _languageCubit),
-        BlocProvider<OnboardingCubit>(create: (_) => OnboardingCubit()),
         BlocProvider<AuthCubit>(
           create: (_) => AuthCubit(
             loginUseCase: sl(),
@@ -53,15 +51,7 @@ class _MainAppState extends State<MainApp> {
             repository: sl(),
           ),
         ),
-        BlocProvider<ReceiptCubit>(create: (_) => ReceiptCubit(sl())),
-        BlocProvider<VoiceCubit>(
-          create: (_) => VoiceCubit(
-            startVoiceStream: sl(),
-            stopVoiceStream: sl(),
-            listenVoiceStream: sl(),
-            repository: sl(),
-          ),
-        ),
+        BlocProvider<ReceiptCubit>(create: (_) => ReceiptCubit(sl())), // Used both in recorder and home screens
       ],
       child: BlocBuilder<ThemeCubit, ThemeMode>(
         builder: (context, themeMode) {
