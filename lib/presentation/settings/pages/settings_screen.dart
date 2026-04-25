@@ -47,9 +47,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
     if (mounted) setState(() => _version = version);
   }
 
-  Future<void> _showLogoutDialog() async {
+  Future<void> _showLogoutDialog(BuildContext context) async {
     final confirmed = await LogoutConfirmationDialog.show(context);
-    if (confirmed && mounted) context.read<AuthCubit>().logout();
+    if (confirmed && context.mounted) {
+      context.read<AuthCubit>().logout();
+      context.read<AppAuthCubit>().onLogout();
+    }
   }
 
   Future<void> _openThemeSheet() async {
@@ -133,7 +136,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                         )
                       : const Icon(Icons.logout, color: AppColors.lightText),
-                  onPressed: isLoading ? null : _showLogoutDialog,
+                  onPressed: isLoading ? null : () => _showLogoutDialog(context),
                 );
               },
             ),

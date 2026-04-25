@@ -8,11 +8,13 @@ import 'package:electra/presentation/home/widgets/home_header.dart';
 import 'package:electra/presentation/home/widgets/monthly_snapshot_card.dart';
 import 'package:electra/presentation/home/widgets/recently_completed.dart';
 import 'package:electra/presentation/home/widgets/shimmer/home_shimmer.dart';
+import 'package:electra/presentation/home/widgets/spending_break_down_card.dart';
 import 'package:electra/presentation/purchase/blocs/purchase/purchase_cubit.dart';
 import 'package:electra/presentation/purchase/blocs/purchase/purchase_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -120,11 +122,22 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: const EdgeInsets.fromLTRB(20, 16, 20, 12),
                     child: HomeHeader(
                       name: "Ghislain",
-                      date: "October 14, 2025",
+                      date: DateFormat('MMMM d, yyyy').format(DateTime.now()),
                     ),
                   ),
                 ),
 
+                SliverToBoxAdapter(
+                  child: SpendingBreakdownCard(
+                    categories: [
+                      SpendingCategory(label: 'Groceries', amount: 550, color: Color(0xFFEF4444)),
+                      SpendingCategory(label: 'Lunch', amount: 350, color: Color(0xFFF97316)),
+                      SpendingCategory(label: 'Uber', amount: 180, color: Color(0xFF8B5CF6)),
+                      // ... add more from your purchases
+                    ],
+                  ),
+                ),
+                
                 // 2. MonthlySnapshotCard - Pinned at the top
                 SliverPersistentHeader(
                   pinned: true,

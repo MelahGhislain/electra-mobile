@@ -1,7 +1,7 @@
+import 'package:electra/data/repository/auth/auth_repository_impl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:electra/common/blocs/auth/app_auth_cubit.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
-import 'package:electra/domain/repository/auth/auth_repository.dart';
 import 'package:flutter/material.dart';
 
 class LogoutConfirmationDialog extends StatelessWidget {
@@ -17,25 +17,17 @@ class LogoutConfirmationDialog extends StatelessWidget {
     return confirmed ?? false;
   }
 
-  Future<void> _logout(BuildContext context) async {
-    await context.read<AuthRepository>().logout(); // clears tokens
-    if (!context.mounted) return;
-    context
-        .read<AppAuthCubit>()
-        .onLogout(); // triggers GoRouter redirect → /sign-in
-  }
-
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       backgroundColor: AppColors.lightBackground,
       title: const Text(
-        'Log out',
-        style: TextStyle(fontWeight: FontWeight.w600),
+        'Logout',
+        style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.darkText),
       ),
       content: const Text(
-        'Are you sure you want to log out of your account?',
+        'Are you sure you want to logout of your account?',
         style: TextStyle(color: AppColors.lightTextSecondary),
       ),
       actions: [
@@ -47,14 +39,15 @@ class LogoutConfirmationDialog extends StatelessWidget {
           ),
         ),
         FilledButton(
-          onPressed: () => _logout(context),
+          onPressed: () => Navigator.of(context).pop(true),
           style: FilledButton.styleFrom(
             backgroundColor: AppColors.darkBackground,
+            foregroundColor: AppColors.darkText,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),
           ),
-          child: const Text('Log out'),
+          child: const Text('Logout'),
         ),
       ],
     );

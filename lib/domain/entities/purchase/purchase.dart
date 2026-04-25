@@ -42,7 +42,7 @@ class Payment extends Equatable {
 
 class Totals extends Equatable {
   final double amount;
-  final String currency;
+  final String? currency;
 
   final int itemCount;
   final double? avgItemPrice;

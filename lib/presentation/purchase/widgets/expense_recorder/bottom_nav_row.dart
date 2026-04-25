@@ -1,4 +1,4 @@
-import 'package:electra/presentation/purchase/widgets/action_button.dart';
+import 'package:electra/presentation/purchase/widgets/expense_recorder/action_button.dart';
 import 'package:flutter/material.dart';
 
 /// Row with home button on the left and chat button on the right,

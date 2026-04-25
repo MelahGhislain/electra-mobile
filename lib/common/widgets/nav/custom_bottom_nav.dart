@@ -45,7 +45,7 @@ class CustomBottomNav extends StatelessWidget {
               onTap: () => onDestinationSelected(0),
             ),
             _NavItem(
-              icon: Icons.insert_chart_outlined,
+              icon: Icons.receipt_long_outlined,
               isSelected: selectedIndex == 1,
               onTap: () => onDestinationSelected(1),
             ),
@@ -83,7 +83,7 @@ class CustomBottomNav extends StatelessWidget {
             ),
 
             _NavItem(
-              icon: Icons.receipt_long_outlined,
+              icon: Icons.insert_chart_outlined,
               isSelected: selectedIndex == 2,
               onTap: () => onDestinationSelected(2),
             ),
