@@ -10,7 +10,7 @@ class AppBottomSheet {
     IconData? icon,
     required Widget child,
     bool isDismissible = true,
-    double? maxHeight,
+    double? maxHeightPct,
   }) {
     return showModalBottomSheet<T>(
       context: context,
@@ -20,7 +20,9 @@ class AppBottomSheet {
       builder: (_) => _AppBottomSheetContent(
         title: title,
         icon: icon,
-        maxHeight: maxHeight ?? MediaQuery.of(context).size.height * 0.75,
+        maxHeight: maxHeightPct != null
+            ? MediaQuery.of(context).size.height * maxHeightPct
+            : MediaQuery.of(context).size.height * 0.75,
         child: child,
       ),
     );

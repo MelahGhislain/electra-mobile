@@ -14,7 +14,7 @@ class PurchaseFilterSheet {
       context,
       title: 'Filter & Sort',
       icon: Icons.tune_rounded,
-      maxHeight: MediaQuery.of(context).size.height * 0.72,
+      maxHeightPct: 0.72,
       child: _PurchaseFilterContent(
         current: current,
         availableCategories: categories,
@@ -304,14 +304,10 @@ class _FilterChip extends StatelessWidget {
         duration: const Duration(milliseconds: 150),
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
         decoration: BoxDecoration(
-          color: selected
-              ? AppColors.darkBackground
-              : AppColors.lightSurface,
+          color: selected ? AppColors.darkBackground : AppColors.lightSurface,
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
-            color: selected
-                ? AppColors.darkBackground
-                : AppColors.dividerLight,
+            color: selected ? AppColors.darkBackground : AppColors.dividerLight,
           ),
         ),
         child: Text(

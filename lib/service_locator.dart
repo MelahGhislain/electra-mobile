@@ -5,6 +5,7 @@ import 'package:electra/core/utils/storage/auth_storage.dart';
 import 'package:electra/core/utils/storage/onboarding_storage.dart';
 import 'package:electra/core/utils/storage/secure_storage.dart';
 import 'package:electra/data/repository/auth/auth_repository_impl.dart';
+import 'package:electra/data/repository/insights/insights_repository_impl.dart';
 import 'package:electra/data/repository/purchase/purchase_repository_impl.dart';
 import 'package:electra/data/repository/receipt/receipt_repository_impl.dart';
 import 'package:electra/data/repository/user/user_repository_impl.dart';
@@ -12,10 +13,12 @@ import 'package:electra/data/repository/voice/voice_repository_impl.dart';
 import 'package:electra/data/source/auth/apple_auth_datasource.dart';
 import 'package:electra/data/source/auth/auth_remote_datasource.dart';
 import 'package:electra/data/source/auth/google_auth_datasource.dart';
+import 'package:electra/data/source/insights/insights_remote_datasource.dart';
 import 'package:electra/data/source/purchase/purchase_remote_datasource.dart';
 import 'package:electra/data/source/receipt/receipt_data_source.dart';
 import 'package:electra/data/source/user/user_datasource.dart';
 import 'package:electra/data/source/voice/voice_stream_service.dart';
+import 'package:electra/domain/repository/insights/insights_repository.dart';
 import 'package:electra/domain/repository/purchase/purchase_repository.dart';
 import 'package:electra/domain/repository/receipt/receipt_repository.dart';
 import 'package:electra/domain/repository/user/user_repository.dart';
@@ -23,9 +26,12 @@ import 'package:electra/domain/repository/voice/voice_repository.dart';
 import 'package:electra/domain/usecases/auth/logout_user.dart';
 import 'package:electra/domain/usecases/auth/refresh_token.dart';
 import 'package:electra/domain/usecases/auth/social_login_usecase.dart';
+import 'package:electra/domain/usecases/insights/get_insights_usecase.dart';
 import 'package:electra/domain/usecases/purchase/check_has_purchases_usecase.dart';
 import 'package:electra/domain/usecases/purchase/get_purchase_detail_usecase.dart';
 import 'package:electra/domain/usecases/purchase/get_purchases_usecase.dart';
+import 'package:electra/domain/usecases/purchase/purchase_item_usecases.dart';
+import 'package:electra/domain/usecases/purchase/purchase_usecases.dart';
 import 'package:electra/domain/usecases/receipt/pick_receipt_image.dart';
 import 'package:electra/domain/usecases/user/get_user.dart';
 import 'package:electra/domain/usecases/auth/login_user.dart';
@@ -34,6 +40,7 @@ import 'package:electra/domain/usecases/voice/listen_voice_stream.dart';
 import 'package:electra/domain/usecases/voice/start_voice_stream.dart';
 import 'package:electra/domain/usecases/voice/stop_voice_stream.dart';
 import 'package:electra/presentation/purchase/blocs/purchase/purchase_cubit.dart';
+import 'package:electra/presentation/purchase/blocs/purchase_detail/purchase_detail_cubit.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -58,7 +65,23 @@ Future<void> init() async {
   sl.registerLazySingleton(() => AuthStorage(sl<SecureStorage>()));
 
   // Cubits
-  sl.registerLazySingleton(() => PurchaseCubit(sl()));
+  sl.registerLazySingleton(
+    () => PurchaseCubit(
+      getPurchases: sl(),
+      createPurchase: sl(),
+      updatePurchase: sl(),
+      deletePurchase: sl(),
+    ),
+  );
+  sl.registerLazySingleton(
+    () => PurchaseDetailCubit(
+      getPurchaseDetail: sl(),
+      createItem: sl(),
+      updateItem: sl(),
+      deleteItem: sl(),
+      purchaseCubit: sl<PurchaseCubit>(),
+    ),
+  );
 
   // Global auth state
   // AppAuthCubit now needs AuthRepository too
@@ -75,6 +98,7 @@ Future<void> init() async {
   sl.registerLazySingleton<PurchaseRemoteDataSourceImpl>(
     () => PurchaseRemoteDataSourceImpl(sl()),
   );
+  sl.registerLazySingleton(() => InsightsRemoteDataSourceImpl(sl<ApiClient>()));
 
   // =============== REPOSITORIES ======================
   /// Repository
@@ -99,6 +123,9 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<PurchaseRepository>(
     () => PurchaseRepositoryImpl(sl<PurchaseRemoteDataSourceImpl>()),
+  );
+  sl.registerLazySingleton<InsightsRepository>(
+    () => InsightsRepositoryImpl(sl<InsightsRemoteDataSourceImpl>()),
   );
 
   /// ================ INTERCEPTORS ======================
@@ -129,5 +156,16 @@ Future<void> init() async {
   /// Purchase Usecases
   sl.registerLazySingleton(() => CheckHasPurchasesUseCase(sl()));
   sl.registerLazySingleton(() => GetPurchasesUseCase(sl()));
+  sl.registerLazySingleton(() => CreatePurchaseUseCase(sl()));
+  sl.registerLazySingleton(() => UpdatePurchaseUseCase(sl()));
+  sl.registerLazySingleton(() => DeletePurchaseUseCase(sl()));
+
+  // Purchase Detail Usecases
   sl.registerLazySingleton(() => GetPurchaseDetailUseCase(sl()));
+  sl.registerLazySingleton(() => CreatePurchaseItemUseCase(sl()));
+  sl.registerLazySingleton(() => UpdatePurchaseItemUseCase(sl()));
+  sl.registerLazySingleton(() => DeletePurchaseItemUseCase(sl()));
+
+  /// Insights Usecases
+  sl.registerLazySingleton(() => GetInsightsUseCase(sl()));
 }

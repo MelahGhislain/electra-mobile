@@ -2,6 +2,7 @@ import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/domain/entities/purchase/purchase.dart';
 import 'package:electra/presentation/purchase/widgets/spending/category_meta.dart';
 import 'package:flutter/material.dart';
+import 'package:electra/common/helpers/average.dart';
 
 class SpendingDetailHeroCard extends StatelessWidget {
   final Purchase purchase;
@@ -31,7 +32,7 @@ class SpendingDetailHeroCard extends StatelessWidget {
 
   String _avgPrice() {
     if (purchase.items.isEmpty) return '0.00';
-    return (purchase.totals.amount / purchase.totals.itemCount).toStringAsFixed(2);
+    return average(purchase.totals.amount, purchase.totals.itemCount);
   }
 
   String _paymentLabel() {
@@ -217,10 +218,7 @@ class _SummaryCell extends StatelessWidget {
           const SizedBox(height: 2),
           Text(
             label,
-            style: const TextStyle(
-              fontSize: 12,
-              color: AppColors.lightText,
-            ),
+            style: const TextStyle(fontSize: 12, color: AppColors.lightText),
           ),
         ],
       ),

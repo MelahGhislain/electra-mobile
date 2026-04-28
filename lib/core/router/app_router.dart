@@ -3,10 +3,11 @@ import 'package:electra/common/widgets/layout/layout_scaffold.dart';
 import 'package:electra/core/router/go_router_refresh_stream.dart';
 import 'package:electra/core/router/route_names.dart';
 import 'package:electra/domain/usecases/purchase/get_purchase_detail_usecase.dart';
-import 'package:electra/presentation/analytic/pages/analytic.dart';
 import 'package:electra/presentation/auth/pages/signin_page.dart';
 import 'package:electra/presentation/auth/pages/signup_page.dart';
 import 'package:electra/presentation/home/pages/home.dart';
+import 'package:electra/presentation/insights/bloc/insights_cubit.dart';
+import 'package:electra/presentation/insights/pages/insights_screen.dart';
 import 'package:electra/presentation/onboading/bloc/onboarding_cubit.dart';
 import 'package:electra/presentation/onboading/pages/onboarding.dart';
 import 'package:electra/presentation/purchase/blocs/purchase/purchase_cubit.dart';
@@ -140,10 +141,26 @@ class AppRouter {
 
             return CustomTransitionPage(
               key: state.pageKey,
-              child: BlocProvider(
-                create: (_) =>
-                    PurchaseDetailCubit(sl<GetPurchaseDetailUseCase>())
-                      ..loadPurchase(id),
+              child: MultiBlocProvider(
+                providers: [
+                  BlocProvider<PurchaseDetailCubit>(
+                    create: (_) => PurchaseDetailCubit(
+                      getPurchaseDetail: sl(),
+                      createItem: sl(),
+                      updateItem: sl(),
+                      deleteItem: sl(),
+                      purchaseCubit: sl<PurchaseCubit>(),
+                    )..loadPurchase(id),
+                  ),
+                  BlocProvider<PurchaseCubit>(
+                    create: (_) => PurchaseCubit(
+                      getPurchases: sl(),
+                      createPurchase: sl(),
+                      updatePurchase: sl(),
+                      deletePurchase: sl(),
+                    ),
+                  ),
+                ],
                 child: SpendingDetailScreen(purchaseId: id),
               ),
               transitionsBuilder:
@@ -187,9 +204,12 @@ class AppRouter {
             StatefulShellBranch(
               routes: [
                 GoRoute(
-                  path: '/analytic',
-                  name: RouteNames.analytic,
-                  builder: (context, state) => const AnalyticScreen(),
+                  path: '/insights',
+                  name: RouteNames.insights,
+                  builder: (context, state) => BlocProvider(
+                    create: (_) => InsightsCubit(sl()),
+                    child: const InsightsScreen(),
+                  ),
                 ),
               ],
             ),

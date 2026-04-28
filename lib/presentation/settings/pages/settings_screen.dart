@@ -124,14 +124,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
             BlocBuilder<AuthCubit, AuthState>(
               builder: (context, state) {
                 final isLoading = state is AuthLoading;
-                return 
-                Padding(
-                padding: const EdgeInsets.only(right: 16),
-                child: MainIconButton(
-                  icon: Icon(Icons.logout, color: AppColors.lightText, size: 18,), 
-                  onTap: isLoading
-                      ? null
-                      : () => _showLogoutDialog(context),)
+                return Padding(
+                  padding: const EdgeInsets.only(right: 16),
+                  child: MainIconButton(
+                    icon: Icon(
+                      Icons.logout,
+                      color: AppColors.lightText,
+                      size: 18,
+                    ),
+                    onTap: isLoading ? null : () => _showLogoutDialog(context),
+                  ),
                 );
               },
             ),

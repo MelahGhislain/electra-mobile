@@ -26,7 +26,7 @@ class ApiEndpoints {
   static const deletePurchase = "/purchases/{id}";
 
   // Purchase Items endpoints
-  static const createPurchaseItem = "/purchase/{purchaseId}/items";
-  static const updatePurchaseItem = "/purchase/{purchaseId}/items/{itemId}";
-  static const deletePurchaseItem = "/purchase/{purchaseId}/items/{itemId}";
+  static const createPurchaseItem = "/purchases/{purchaseId}/items";
+  static const updatePurchaseItem = "/purchases/{purchaseId}/items/{itemId}";
+  static const deletePurchaseItem = "/purchases/{purchaseId}/items/{itemId}";
 }

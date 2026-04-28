@@ -39,9 +39,7 @@ class MainIconButton extends StatelessWidget {
             decoration: BoxDecoration(
               color: backgroundColor ?? AppColors.lightSurface,
               borderRadius: BorderRadius.circular(borderRadius),
-              border: Border.all(
-                color: borderColor ?? AppColors.dividerLight,
-              ),
+              border: Border.all(color: borderColor ?? AppColors.dividerLight),
             ),
             child: Center(child: icon),
           ),
