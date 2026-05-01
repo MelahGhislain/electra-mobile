@@ -22,6 +22,17 @@ class User extends Equatable {
     required this.updatedAt,
   });
 
+  User toEntity() => User(
+    id: id,
+    email: email,
+    name: name,
+    provider: provider,
+    providerId: providerId,
+    settings: settings?.toEntity(),
+    createdAt: createdAt,
+    updatedAt: updatedAt,
+  );
+
   @override
   List<Object?> get props => [
     id,

@@ -33,9 +33,10 @@ import 'package:electra/domain/usecases/purchase/get_purchases_usecase.dart';
 import 'package:electra/domain/usecases/purchase/purchase_item_usecases.dart';
 import 'package:electra/domain/usecases/purchase/purchase_usecases.dart';
 import 'package:electra/domain/usecases/receipt/pick_receipt_image.dart';
-import 'package:electra/domain/usecases/user/get_user.dart';
 import 'package:electra/domain/usecases/auth/login_user.dart';
 import 'package:electra/domain/usecases/auth/register_user.dart';
+import 'package:electra/domain/usecases/user/setting_usecase.dart';
+import 'package:electra/domain/usecases/user/user_usecase.dart';
 import 'package:electra/domain/usecases/voice/listen_voice_stream.dart';
 import 'package:electra/domain/usecases/voice/start_voice_stream.dart';
 import 'package:electra/domain/usecases/voice/stop_voice_stream.dart';
@@ -92,7 +93,7 @@ Future<void> init() async {
   // =============== DATASOURCES/SERVICES (API calls) ======================
   /// DataSources
   sl.registerLazySingleton(() => AuthRemoteDataSourceImpl(sl<ApiClient>()));
-  sl.registerLazySingleton(() => UserRemoteDataSource(sl<ApiClient>()));
+  sl.registerLazySingleton(() => UserRemoteDataSourceImpl(sl<ApiClient>()));
   sl.registerLazySingleton(() => ReceiptDataSource(ImagePicker()));
   sl.registerLazySingleton(() => VoiceStreamService());
   sl.registerLazySingleton<PurchaseRemoteDataSourceImpl>(
@@ -112,8 +113,8 @@ Future<void> init() async {
       appleAuthDataSource: sl<AppleAuthDataSourceImpl>(),
     ),
   );
-  sl.registerLazySingleton<UserRepository>(
-    () => UserRepositoryImpl(sl<UserRemoteDataSource>()),
+  sl.registerLazySingleton<UserRepositoryImpl>(
+    () => UserRepositoryImpl(sl<UserRemoteDataSourceImpl>()),
   );
   sl.registerLazySingleton<VoiceRepository>(
     () => VoiceRepositoryImpl(sl<VoiceStreamService>()),
@@ -143,7 +144,14 @@ Future<void> init() async {
   sl.registerLazySingleton(() => SocialLoginUseCase(sl<AuthRepositoryImpl>()));
 
   /// User Usecases
-  sl.registerLazySingleton(() => GetCurrentUser(sl<UserRepositoryImpl>()));
+  sl.registerLazySingleton(
+    () => GetCurrentUserUsecase(sl<UserRepositoryImpl>()),
+  );
+  sl.registerLazySingleton(() => UpdateUserUsecase(sl<UserRepositoryImpl>()));
+  sl.registerLazySingleton(() => DeleteUserUsecase(sl<UserRepositoryImpl>()));
+  sl.registerLazySingleton(
+    () => UpdateUserSettingUsecase(sl<UserRepositoryImpl>()),
+  );
 
   /// Voice Usecases
   sl.registerLazySingleton(() => StartVoiceStream(sl<VoiceRepository>()));

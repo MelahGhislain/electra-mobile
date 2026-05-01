@@ -1,9 +1,10 @@
 import 'package:electra/common/widgets/buttons/main_icon_button.dart';
+import 'package:electra/common/widgets/dialogs/app_confirm_dialog.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/domain/entities/purchase/purchase.dart';
+import 'package:electra/presentation/purchase/blocs/purchase/purchase_cubit.dart';
 import 'package:electra/presentation/purchase/blocs/purchase_detail/purchase_detail_cubit.dart';
 import 'package:electra/presentation/purchase/blocs/purchase_detail/purchase_detail_state.dart';
-import 'package:electra/presentation/purchase/widgets/spending_detail/spending_detail_action_bar.dart';
 import 'package:electra/presentation/purchase/widgets/spending_detail/spending_detail_error_state.dart';
 import 'package:electra/presentation/purchase/widgets/spending_detail/spending_detail_hero_card.dart';
 import 'package:electra/presentation/purchase/widgets/spending_detail/spending_detail_items_section.dart';
@@ -70,19 +71,10 @@ class _SpendingDetailView extends StatelessWidget {
               backgroundColor: AppColors.lightBackground,
               appBar: _buildAppBar(context, state),
               body: _buildBody(context, state, purchase),
-              bottomNavigationBar: purchase != null
-                  ? SpendingDetailActionBar(
-                      onEdit: () {
-                        // TODO: navigate to edit screen
-                      },
-                      onDelete: () => _confirmDelete(context, purchase),
-                    )
-                  : null,
             ),
 
             // ── Mutation loading overlay ───────────────────────────────
-            if (mutating)
-              const _MutationLoadingOverlay(),
+            if (mutating) const _MutationLoadingOverlay(),
           ],
         );
       },
@@ -137,7 +129,12 @@ class _SpendingDetailView extends StatelessWidget {
                 color: AppColors.lightText,
                 size: 18,
               ),
-              onTap: () => _showOptionsMenu(context),
+              onTap: () {
+                final purchase = _purchaseFrom(state);
+                if (purchase != null) {
+                  _showOptionsMenu(context, purchase);
+                }
+              },
             ),
           ),
       ],
@@ -181,7 +178,7 @@ class _SpendingDetailView extends StatelessWidget {
 
   // ── Options menu ───────────────────────────────────────────────────────────
 
-  void _showOptionsMenu(BuildContext context) {
+  void _showOptionsMenu(BuildContext context, Purchase purchase) {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
@@ -205,72 +202,53 @@ class _SpendingDetailView extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
+
+            _OptionTile(
+              icon: Icons.edit_rounded,
+              label: 'Edit purchase',
+              onTap: () {
+                Navigator.pop(context);
+                // TODO: navigate to edit
+              },
+            ),
+
             _OptionTile(
               icon: Icons.share_rounded,
               label: 'Share',
               onTap: () => Navigator.pop(context),
             ),
+
             _OptionTile(
               icon: Icons.download_rounded,
               label: 'Export',
               onTap: () => Navigator.pop(context),
             ),
+
             const Divider(height: 1, color: AppColors.dividerLight),
+
             _OptionTile(
-              icon: Icons.flag_rounded,
-              label: 'Report issue',
+              icon: Icons.delete_outline_rounded,
+              label: 'Delete purchase',
               color: const Color(0xFFEF4444),
-              onTap: () => Navigator.pop(context),
+              onTap: () {
+                Navigator.pop(context); // close the options sheet first
+                AppConfirmDialog.show(
+                  context,
+                  title: 'Delete purchase?',
+                  description: 'This action cannot be undone.',
+                  confirmText: 'Delete',
+                  isDestructive: true,
+                  onConfirm: () {
+                    context.read<PurchaseCubit>().deletePurchase(purchase.id);
+                    Navigator.of(context).pop(); // pop the detail screen
+                  },
+                );
+              },
             ),
+
             const SizedBox(height: 8),
           ],
         ),
-      ),
-    );
-  }
-
-  // ── Delete confirmation ────────────────────────────────────────────────────
-
-  void _confirmDelete(BuildContext context, Purchase purchase) {
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: const Text(
-          'Delete purchase?',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: AppColors.lightText,
-          ),
-        ),
-        content: const Text(
-          'This action cannot be undone.',
-          style: TextStyle(color: AppColors.lightTextSecondary),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text(
-              'Cancel',
-              style: TextStyle(color: AppColors.lightTextSecondary),
-            ),
-          ),
-          FilledButton(
-            onPressed: () {
-              Navigator.pop(context);
-              Navigator.pop(context);
-              // TODO: call delete use case
-            },
-            style: FilledButton.styleFrom(
-              backgroundColor: const Color(0xFFEF4444),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
-            child: const Text('Delete'),
-          ),
-        ],
       ),
     );
   }
@@ -310,7 +288,7 @@ class _MutationLoadingOverlay extends StatelessWidget {
                   width: 45,
                   height: 50,
                   child: CircularProgressIndicator(
-                    color: AppColors.primary,
+                    color: AppColors.darkBackground,
                     strokeWidth: 3,
                   ),
                 ),

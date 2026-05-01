@@ -47,6 +47,7 @@ class PurchaseCubit extends Cubit<PurchaseState> {
         // Prepend the new purchase and notify created so the UI can navigate.
         emit(PurchaseCreated(purchase));
         emit(PurchaseLoaded([purchase, ...current]));
+        loadPurchases();
       },
     );
   }
@@ -65,6 +66,7 @@ class PurchaseCubit extends Cubit<PurchaseState> {
       (updated) {
         final refreshed = current.map((p) => p.id == id ? updated : p).toList();
         emit(PurchaseLoaded(refreshed));
+        loadPurchases();
       },
     );
   }
@@ -83,6 +85,7 @@ class PurchaseCubit extends Cubit<PurchaseState> {
       (_) {
         emit(const PurchaseDeleted());
         emit(PurchaseLoaded(current.where((p) => p.id != id).toList()));
+        loadPurchases();
       },
     );
   }

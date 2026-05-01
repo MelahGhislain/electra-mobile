@@ -15,6 +15,14 @@ class UserSettings extends Equatable {
     this.monthlyBudget,
   });
 
+  UserSettings toEntity() => UserSettings(
+    currency: currency,
+    locale: locale,
+    pushNotification: pushNotification,
+    accountMode: accountMode,
+    monthlyBudget: monthlyBudget,
+  );
+
   @override
   List<Object?> get props => [
     currency,

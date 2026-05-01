@@ -200,11 +200,16 @@ class _SpendingScreenState extends State<SpendingScreen> {
 
                   // ── Insight banner ─────────────────────────────────────
                   if (!isFiltered && allPurchases.isNotEmpty)
-                    const SliverToBoxAdapter(
+                    SliverToBoxAdapter(
                       child: Padding(
                         padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
-                        child: SpendingInsightBanner(
-                          message: 'You spent 18% more on food this week',
+                        child: GestureDetector(
+                          onTap: () {
+                            context.pushNamed(RouteNames.insights);
+                          },
+                          child: SpendingInsightBanner(
+                            message: 'You spent 18% more on food this week',
+                          ),
                         ),
                       ),
                     ),

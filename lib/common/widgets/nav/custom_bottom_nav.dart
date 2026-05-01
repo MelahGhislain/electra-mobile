@@ -25,8 +25,8 @@ class CustomBottomNav extends StatelessWidget {
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
         colors: [
-          AppColors.secondaryDark.withAlpha(64),
-          AppColors.secondaryDark.withAlpha(64),
+          AppColors.lightSurface, //.withAlpha(64),
+          AppColors.lightSurface, //.withAlpha(64),
         ],
       ),
       borderGradient: const LinearGradient(
@@ -42,11 +42,13 @@ class CustomBottomNav extends StatelessWidget {
             _NavItem(
               icon: Icons.home_rounded,
               isSelected: selectedIndex == 0,
+              label: 'Home',
               onTap: () => onDestinationSelected(0),
             ),
             _NavItem(
               icon: Icons.receipt_long_outlined,
               isSelected: selectedIndex == 1,
+              label: 'Spending',
               onTap: () => onDestinationSelected(1),
             ),
 
@@ -54,8 +56,8 @@ class CustomBottomNav extends StatelessWidget {
             GestureDetector(
               onTap: () => context.pushNamed(RouteNames.expenseRecorder),
               child: Container(
-                width: 60,
-                height: 60,
+                width: 50,
+                height: 50,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   gradient: LinearGradient(
@@ -77,7 +79,7 @@ class CustomBottomNav extends StatelessWidget {
                 child: const Icon(
                   Icons.center_focus_weak,
                   color: AppColors.darkText,
-                  size: 32,
+                  size: 28,
                 ),
               ),
             ),
@@ -85,11 +87,13 @@ class CustomBottomNav extends StatelessWidget {
             _NavItem(
               icon: Icons.insert_chart_outlined,
               isSelected: selectedIndex == 2,
+              label: 'Insights',
               onTap: () => onDestinationSelected(2),
             ),
             _NavItem(
               icon: Icons.person_outline_rounded,
               isSelected: selectedIndex == 3,
+              label: 'Profile',
               onTap: () => onDestinationSelected(3),
             ),
           ],
@@ -102,11 +106,13 @@ class CustomBottomNav extends StatelessWidget {
 class _NavItem extends StatelessWidget {
   final IconData icon;
   final bool isSelected;
+  final String label;
   final VoidCallback onTap;
 
   const _NavItem({
     required this.icon,
     required this.isSelected,
+    required this.label,
     required this.onTap,
   });
 
@@ -114,10 +120,29 @@ class _NavItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Icon(
-        icon,
-        size: 28,
-        color: isSelected ? AppColors.primary : Colors.white60,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(
+            icon,
+            size: 28,
+            color: isSelected
+                ? AppColors.primary
+                : AppColors.lightTextSecondary,
+          ),
+          const SizedBox(height: 1),
+          Text(
+            label,
+            style: TextStyle(
+              color: isSelected
+                  ? AppColors.primary
+                  : AppColors.lightTextSecondary,
+              fontSize: 10,
+            ),
+          ),
+        ],
       ),
     );
   }

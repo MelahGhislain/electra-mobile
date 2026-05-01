@@ -1,8 +1,9 @@
 import 'package:electra/common/widgets/bottom_sheets/app_bottom_sheet.dart';
+import 'package:electra/common/widgets/dialogs/app_confirm_dialog.dart';
 import 'package:electra/common/widgets/text_fields/text_field.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/domain/entities/purchase/purchase_item.dart';
-import 'package:electra/presentation/purchase/widgets/spending/category_meta.dart';
+import 'package:electra/core/utils/category_meta.dart';
 import 'package:electra/presentation/purchase/widgets/spending_detail/category_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -362,113 +363,15 @@ Future<bool?> showDeleteItemConfirmation(
   BuildContext context, {
   required PurchaseItem item,
 }) {
-  return showDialog<bool>(
-    context: context,
-    barrierColor: Colors.black.withValues(alpha: 0.4),
-    builder: (_) => _DeleteConfirmationDialog(item: item),
+  return AppConfirmDialog.show(
+    context,
+    title: 'Delete item?',
+    description:
+        '"${item.name}" will be permanently removed from this purchase.',
+    confirmText: 'Delete',
+    isDestructive: true,
+    onConfirm: () => Navigator.pop(context, true),
   );
-}
-
-class _DeleteConfirmationDialog extends StatelessWidget {
-  final PurchaseItem item;
-  const _DeleteConfirmationDialog({required this.item});
-
-  @override
-  Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      backgroundColor: Colors.white,
-      insetPadding: const EdgeInsets.symmetric(horizontal: 32),
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 56,
-              height: 56,
-              decoration: BoxDecoration(
-                color: const Color(0xFFFEE2E2),
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: const Icon(
-                Icons.delete_outline_rounded,
-                color: Color(0xFFDC2626),
-                size: 28,
-              ),
-            ),
-            const SizedBox(height: 16),
-            const Text(
-              'Delete item?',
-              style: TextStyle(
-                fontSize: 17,
-                fontWeight: FontWeight.w800,
-                color: AppColors.lightText,
-                letterSpacing: -0.3,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              '"${item.name}" will be permanently removed from this purchase.',
-              style: const TextStyle(
-                fontSize: 13,
-                color: AppColors.lightTextSecondary,
-                height: 1.45,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 24),
-            Row(
-              children: [
-                Expanded(
-                  child: OutlinedButton(
-                    onPressed: () => Navigator.pop(context, false),
-                    style: OutlinedButton.styleFrom(
-                      side: const BorderSide(color: AppColors.darkBackground),
-                      foregroundColor: AppColors.lightText,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 13),
-                    ),
-                    child: const Text(
-                      'Cancel',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () => Navigator.pop(context, true),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFDC2626),
-                      foregroundColor: Colors.white,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 13),
-                    ),
-                    child: const Text(
-                      'Delete',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }
 
 // ─────────────────────────────────────────────────────────────────────────────

@@ -1,7 +1,7 @@
 import 'package:electra/common/widgets/bottom_sheets/app_bottom_sheet.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/domain/entities/purchase/purchase_item.dart';
-import 'package:electra/presentation/purchase/widgets/spending/category_meta.dart';
+import 'package:electra/core/utils/category_meta.dart';
 import 'package:electra/presentation/purchase/widgets/spending_detail/item_form_sheet.dart';
 import 'package:flutter/material.dart';
 
@@ -79,7 +79,6 @@ class SpendingDetailItemRow extends StatelessWidget {
               ),
             ),
             onTap: () async {
-              Navigator.pop(context);
               final confirmed = await showDeleteItemConfirmation(
                 context,
                 item: item,

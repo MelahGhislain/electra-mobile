@@ -5,7 +5,7 @@ import 'package:electra/domain/entities/purchase/purchase.dart';
 import 'package:electra/domain/entities/purchase/purchase_item.dart';
 import 'package:electra/presentation/purchase/blocs/purchase_detail/purchase_detail_cubit.dart';
 import 'package:electra/presentation/purchase/blocs/purchase_detail/purchase_detail_state.dart';
-import 'package:electra/presentation/purchase/widgets/spending/category_meta.dart';
+import 'package:electra/core/utils/category_meta.dart';
 import 'package:electra/presentation/purchase/widgets/spending_detail/item_form_sheet.dart';
 import 'package:electra/presentation/purchase/widgets/spending_detail/spending_detail_item_row.dart';
 import 'package:flutter/material.dart';
@@ -94,8 +94,11 @@ class _SpendingDetailItemsSectionState
               ),
             ),
             trailing: selected
-                ? const Icon(Icons.check_rounded,
-                    color: AppColors.primary, size: 18)
+                ? const Icon(
+                    Icons.check_rounded,
+                    color: AppColors.primary,
+                    size: 18,
+                  )
                 : null,
             onTap: () => Navigator.pop(context, opt),
           );
@@ -166,8 +169,28 @@ class _SpendingDetailItemsSectionState
                       letterSpacing: -0.3,
                     ),
                   ),
+
+                  const SizedBox(width: 10),
+
+                  // ── Sort control ─────────────────────────────────────────────
+                  if (_view == _ItemView.list)
+                    GestureDetector(
+                      onTap: isMutating ? null : _showSortPicker,
+                      child: Row(
+                        children: [
+                          const Icon(Icons.sort_rounded, size: 16),
+                          const SizedBox(width: 4),
+                          Text(
+                            _sort.label,
+                            style: const TextStyle(fontSize: 12),
+                          ),
+                        ],
+                      ),
+                    ),
+
                   const Spacer(),
-                  // Disable add button while a mutation is in flight
+
+                  // // Disable add button while a mutation is in flight
                   GestureDetector(
                     onTap: isMutating ? null : () => _mutateItem(context, null),
                     child: AnimatedOpacity(
@@ -184,8 +207,11 @@ class _SpendingDetailItemsSectionState
                         ),
                         child: const Row(
                           children: [
-                            Icon(Icons.add_circle_outline_rounded,
-                                size: 18, color: AppColors.darkText),
+                            Icon(
+                              Icons.add_circle_outline_rounded,
+                              size: 18,
+                              color: AppColors.darkText,
+                            ),
                             SizedBox(width: 4),
                             Text(
                               'Add item',
@@ -200,53 +226,6 @@ class _SpendingDetailItemsSectionState
                       ),
                     ),
                   ),
-                ],
-              ),
-            ),
-
-            // ── Sort control ─────────────────────────────────────────────
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 12),
-              child: Row(
-                children: [
-                  const Spacer(),
-                  if (_view == _ItemView.list)
-                    GestureDetector(
-                      onTap: isMutating ? null : _showSortPicker,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 5, vertical: 5),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(9),
-                          border:
-                              Border.all(color: const Color(0xFFE5E7EB)),
-                        ),
-                        child: Row(
-                          children: [
-                            const Icon(Icons.sort_rounded,
-                                size: 22, color: AppColors.lightText),
-                            const SizedBox(width: 4),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text('Sort',
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        color: AppColors.lightTextSecondary)),
-                                Text(_sort.label,
-                                    style: const TextStyle(
-                                        fontSize: 12,
-                                        color: AppColors.lightText)),
-                              ],
-                            ),
-                            const SizedBox(width: 4),
-                            const Icon(Icons.keyboard_arrow_down_rounded,
-                                size: 18, color: AppColors.lightText),
-                          ],
-                        ),
-                      ),
-                    ),
                 ],
               ),
             ),
@@ -266,38 +245,36 @@ class _SpendingDetailItemsSectionState
                     child: Text(
                       'No items recorded',
                       style: TextStyle(
-                          color: AppColors.lightTextSecondary, fontSize: 14),
+                        color: AppColors.lightTextSecondary,
+                        fontSize: 14,
+                      ),
                     ),
                   ),
                 )
               else
-                ...activeItems.map(
-                  (item) {
-                    // Show a localised spinner on the specific item being mutated.
-                    final isThisItemMutating = isMutating &&
-                        state.itemId == item.id;
+                ...activeItems.map((item) {
+                  // Show a localised spinner on the specific item being mutated.
+                  final isThisItemMutating =
+                      isMutating && state.itemId == item.id;
 
-                    return SpendingDetailItemRow(
-                      key: ValueKey(item.id),
-                      item: item,
-                      purchaseTotal: purchase.totals.amount,
-                      average: average(
-                        purchase.totals.amount,
-                        purchase.totals.itemCount,
-                      ),
-                      isMutating: isThisItemMutating,
-                      onEdit: isMutating
-                          ? null
-                          : (item) async {
-                              Navigator.pop(context);
-                              await _mutateItem(context, item);
-                            },
-                      onDelete: isMutating
-                          ? null
-                          : (id) => _deleteItem(id),
-                    );
-                  },
-                ),
+                  return SpendingDetailItemRow(
+                    key: ValueKey(item.id),
+                    item: item,
+                    purchaseTotal: purchase.totals.amount,
+                    average: average(
+                      purchase.totals.amount,
+                      purchase.totals.itemCount,
+                    ),
+                    isMutating: isThisItemMutating,
+                    onEdit: isMutating
+                        ? null
+                        : (item) async {
+                            Navigator.pop(context);
+                            await _mutateItem(context, item);
+                          },
+                    onDelete: isMutating ? null : (id) => _deleteItem(id),
+                  );
+                }),
             ] else ...[
               _GroupView(purchase: purchase),
             ],
@@ -331,8 +308,10 @@ class _GroupView extends StatelessWidget {
       return const Padding(
         padding: EdgeInsets.all(24),
         child: Center(
-          child: Text('No category data available',
-              style: TextStyle(color: AppColors.lightTextSecondary)),
+          child: Text(
+            'No category data available',
+            style: TextStyle(color: AppColors.lightTextSecondary),
+          ),
         ),
       );
     }
@@ -341,8 +320,10 @@ class _GroupView extends StatelessWidget {
       children: grouped.entries.map((entry) {
         final meta = CategoryMeta.fromKey(entry.key);
         final categoryItems = entry.value;
-        final catTotal =
-            categoryItems.fold<double>(0, (s, i) => s + i.totalPrice);
+        final catTotal = categoryItems.fold<double>(
+          0,
+          (s, i) => s + i.totalPrice,
+        );
         final pct = total > 0 ? (catTotal / total) * 100 : 0.0;
 
         return Container(
@@ -378,8 +359,10 @@ class _GroupView extends StatelessWidget {
                     Expanded(
                       child: Text(
                         '${categoryItems.length} item${categoryItems.length == 1 ? '' : 's'}',
-                        style:
-                            TextStyle(fontSize: 12, color: Colors.grey.shade400),
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey.shade400,
+                        ),
                       ),
                     ),
                     Column(
@@ -388,16 +371,18 @@ class _GroupView extends StatelessWidget {
                         Text(
                           '\$${catTotal.toStringAsFixed(2)}',
                           style: const TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w700,
-                              color: AppColors.lightText),
+                            fontSize: 15,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.lightText,
+                          ),
                         ),
                         Text(
                           '${pct.toStringAsFixed(1)}%',
                           style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              color: meta.color),
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            color: meta.color,
+                          ),
                         ),
                       ],
                     ),
@@ -413,44 +398,59 @@ class _GroupView extends StatelessWidget {
                     minHeight: 4,
                     backgroundColor: Colors.grey.shade100,
                     valueColor: AlwaysStoppedAnimation<Color>(
-                        meta.color.withValues(alpha: 0.6)),
+                      meta.color.withValues(alpha: 0.6),
+                    ),
                   ),
                 ),
               ),
               const SizedBox(height: 8),
-              ...categoryItems.map((item) => Column(
-                    children: [
-                      const Divider(
-                          height: 1, color: Color(0xFFF1F5F9), indent: 14),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 14, vertical: 10),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Text(item.name,
-                                  style: const TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w500,
-                                      color: AppColors.lightText)),
-                            ),
-                            Text('${item.quantity}×',
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.grey.shade400)),
-                            const SizedBox(width: 8),
-                            Text(
-                              '\$${item.totalPrice.toStringAsFixed(2)}',
-                              style: const TextStyle(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.lightText),
-                            ),
-                          ],
-                        ),
+              ...categoryItems.map(
+                (item) => Column(
+                  children: [
+                    const Divider(
+                      height: 1,
+                      color: Color(0xFFF1F5F9),
+                      indent: 14,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 10,
                       ),
-                    ],
-                  )),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              item.name,
+                              style: const TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.lightText,
+                              ),
+                            ),
+                          ),
+                          Text(
+                            '${item.quantity}×',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey.shade400,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            '\$${item.totalPrice.toStringAsFixed(2)}',
+                            style: const TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.lightText,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               const SizedBox(height: 4),
             ],
           ),
@@ -499,9 +499,11 @@ class _ViewTab extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Icon(icon,
-                size: 14,
-                color: selected ? AppColors.primary : Colors.grey.shade400),
+            Icon(
+              icon,
+              size: 14,
+              color: selected ? AppColors.primary : Colors.grey.shade400,
+            ),
             const SizedBox(width: 5),
             Text(
               label,

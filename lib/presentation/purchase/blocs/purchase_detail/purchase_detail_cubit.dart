@@ -66,7 +66,7 @@ class PurchaseDetailCubit extends Cubit<PurchaseDetailState> {
         ]);
         emit(PurchaseDetailItemCreated(purchase: updated, item: newItem));
         emit(PurchaseDetailLoaded(updated));
-        
+
         // 2. Reload the full purchases list in the background so the
         //    spending screen shows correct totals when the user goes back.
         //    This runs fire-and-forget — the detail screen is already updated.
@@ -97,7 +97,7 @@ class PurchaseDetailCubit extends Cubit<PurchaseDetailState> {
             .toList();
         final updated = _purchaseWithItems(purchase, updatedItems);
         emit(PurchaseDetailLoaded(updated));
-        
+
         // 2. Reload the full purchases list in the background so the
         //    spending screen shows correct totals when the user goes back.
         //    This runs fire-and-forget — the detail screen is already updated.
@@ -128,7 +128,7 @@ class PurchaseDetailCubit extends Cubit<PurchaseDetailState> {
             .toList();
         final updated = _purchaseWithItems(purchase, updatedItems);
         emit(PurchaseDetailLoaded(updated));
-        
+
         // 2. Reload the full purchases list in the background so the
         //    spending screen shows correct totals when the user goes back.
         //    This runs fire-and-forget — the detail screen is already updated.

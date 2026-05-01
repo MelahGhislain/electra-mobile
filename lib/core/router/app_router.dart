@@ -2,7 +2,6 @@ import 'package:electra/common/blocs/auth/app_auth_cubit.dart';
 import 'package:electra/common/widgets/layout/layout_scaffold.dart';
 import 'package:electra/core/router/go_router_refresh_stream.dart';
 import 'package:electra/core/router/route_names.dart';
-import 'package:electra/domain/usecases/purchase/get_purchase_detail_usecase.dart';
 import 'package:electra/presentation/auth/pages/signin_page.dart';
 import 'package:electra/presentation/auth/pages/signup_page.dart';
 import 'package:electra/presentation/home/pages/home.dart';
