@@ -142,6 +142,7 @@ class _SpendingScreenState extends State<SpendingScreen> {
           backgroundColor: AppColors.lightBackground,
           body: SafeArea(
             child: RefreshIndicator(
+              backgroundColor: AppColors.lightBackground,
               color: AppColors.darkBackground,
               onRefresh: () => context.read<PurchaseCubit>().loadPurchases(),
               child: CustomScrollView(

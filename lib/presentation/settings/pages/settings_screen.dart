@@ -5,9 +5,14 @@ import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/core/router/route_names.dart';
 import 'package:electra/core/services/app_info_service.dart';
 import 'package:electra/core/utils/storage/onboarding_storage.dart';
+import 'package:electra/domain/entities/user/user.dart';
+import 'package:electra/domain/entities/user/user_settings.dart';
 import 'package:electra/presentation/auth/bloc/auth_cubit.dart';
 import 'package:electra/presentation/auth/bloc/auth_state.dart';
+import 'package:electra/presentation/settings/widgets/bottom_sheets/budget_bottom_sheet.dart';
 import 'package:electra/presentation/settings/widgets/bottom_sheets/currency_bottom_sheet.dart';
+import 'package:electra/presentation/settings/widgets/bottom_sheets/delete_account_dialog.dart';
+import 'package:electra/presentation/settings/widgets/bottom_sheets/edit_profile_bottom_sheet.dart';
 import 'package:electra/presentation/settings/widgets/bottom_sheets/language_bottom_sheet.dart';
 import 'package:electra/presentation/settings/widgets/bottom_sheets/theme_bottom_sheet.dart';
 import 'package:electra/presentation/settings/widgets/logout_confirmation_dialog.dart';
@@ -15,6 +20,8 @@ import 'package:electra/presentation/settings/widgets/profile_header_card.dart';
 import 'package:electra/presentation/settings/widgets/settings_section_header.dart';
 import 'package:electra/presentation/settings/widgets/settings_tile.dart';
 import 'package:electra/presentation/settings/widgets/settings_toggle_tile.dart';
+import 'package:electra/presentation/user/bloc/user_cubit.dart';
+import 'package:electra/presentation/user/bloc/user_state.dart';
 import 'package:electra/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,23 +36,21 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   String _version = 'Loading...';
-
-  // Local state — will be replaced by cubit/API later
   ThemeMode _themeMode = ThemeMode.light;
-  AppLanguage _language = AppLanguage.systemDefault;
-  AppCurrency _currency = AppCurrency.usd;
-  bool _pushNotifications = false;
 
   @override
   void initState() {
     super.initState();
     _loadVersion();
+    context.read<UserCubit>().loadUser();
   }
 
   Future<void> _loadVersion() async {
-    final version = await AppInfoService.getVersion();
-    if (mounted) setState(() => _version = version);
+    final v = await AppInfoService.getVersion();
+    if (mounted) setState(() => _version = v);
   }
+
+  // ── Auth ──────────────────────────────────────────────────────────────────
 
   Future<void> _showLogoutDialog(BuildContext context) async {
     final confirmed = await LogoutConfirmationDialog.show(context);
@@ -55,6 +60,61 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
+  // ── Helpers ───────────────────────────────────────────────────────────────
+
+  /// Extracts the live User from whichever state is current.
+  /// Includes UserFailure so the screen NEVER wipes on error.
+  User? _user(UserState state) {
+    if (state is UserLoaded) return state.user;
+    if (state is UserSaving) return state.user;
+    if (state is UserUpdated) return state.user;
+    if (state is UserFailure) return state.user; // ← key fix
+    return null;
+  }
+
+  UserSettings? _settings(UserState state) => _user(state)?.settings;
+
+  String _themeLabel(ThemeMode mode) => switch (mode) {
+        ThemeMode.system => 'System',
+        ThemeMode.light => 'Light',
+        ThemeMode.dark => 'Dark',
+      };
+
+  String _currencyLabel(UserSettings? settings) {
+    if (settings == null) return 'USD';
+    try {
+      final match = AppCurrency.values.firstWhere(
+        (c) => c.code.toLowerCase() == settings.currency.toLowerCase(),
+        orElse: () => AppCurrency.usd,
+      );
+      return match.code;
+    } catch (_) {
+      return settings.currency.toUpperCase();
+    }
+  }
+
+  String _languageLabel(UserSettings? settings) {
+    if (settings == null) return 'System Default';
+    try {
+      final match = AppLanguage.values.firstWhere(
+        (l) => l.name.toLowerCase() == settings.locale.toLowerCase(),
+        orElse: () => AppLanguage.systemDefault,
+      );
+      return match.label;
+    } catch (_) {
+      return settings.locale;
+    }
+  }
+
+  String _budgetLabel(UserSettings? settings) {
+    if (settings?.monthlyBudget == null || settings!.monthlyBudget! <= 0) {
+      return 'Not set';
+    }
+    return '\$${settings.monthlyBudget!.toStringAsFixed(0)} / month';
+  }
+
+  // ── Sheet openers ─────────────────────────────────────────────────────────
+
   Future<void> _openThemeSheet() async {
     final result = await ThemeBottomSheet.show(context, _themeMode);
     if (result != null && mounted) {
@@ -63,19 +123,64 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
-  Future<void> _openLanguageSheet() async {
-    final result = await LanguageBottomSheet.show(context, _language);
+  Future<void> _openLanguageSheet(User user) async {
+    AppLanguage current = AppLanguage.systemDefault;
+    try {
+      current = AppLanguage.values.firstWhere(
+        (l) =>
+            l.name.toLowerCase() ==
+            (user.settings?.locale ?? '').toLowerCase(),
+        orElse: () => AppLanguage.systemDefault,
+      );
+    } catch (_) {}
+    final result = await LanguageBottomSheet.show(context, current);
     if (result != null && mounted) {
-      setState(() => _language = result);
-      // context.read<LanguageCubit>().changeLanguage(result);
+      await context
+          .read<UserCubit>()
+          .updateUserSetting(user.id, {'locale': result.name});
     }
   }
 
-  Future<void> _openCurrencySheet() async {
-    final result = await CurrencyBottomSheet.show(context, _currency);
+  Future<void> _openCurrencySheet(User user) async {
+    AppCurrency current = AppCurrency.usd;
+    try {
+      current = AppCurrency.values.firstWhere(
+        (c) =>
+            c.code.toLowerCase() ==
+            (user.settings?.currency ?? '').toLowerCase(),
+        orElse: () => AppCurrency.usd,
+      );
+    } catch (_) {}
+    final result = await CurrencyBottomSheet.show(context, current);
     if (result != null && mounted) {
-      setState(() => _currency = result);
-      // Wire to SettingsCubit later
+      await context
+          .read<UserCubit>()
+          .updateUserSetting(user.id, {'currency': result.code});
+    }
+  }
+
+  Future<void> _toggleNotifications(User user, bool value) async {
+    await context
+        .read<UserCubit>()
+        .updateUserSetting(user.id, {'pushNotification': value});
+  }
+
+  Future<void> _openBudgetSheet(User user) async {
+    await BudgetBottomSheet.show(
+      context,
+      userId: user.id,
+      currentBudget: user.settings?.monthlyBudget,
+    );
+  }
+
+  Future<void> _openEditProfile(User user) async {
+    await EditProfileBottomSheet.show(context, user);
+  }
+
+  Future<void> _openDeleteAccount(User user) async {
+    final deleted = await DeleteAccountDialog.show(context, user.id);
+    if (deleted && mounted) {
+      context.read<AppAuthCubit>().onLogout();
     }
   }
 
@@ -85,209 +190,287 @@ class _SettingsScreenState extends State<SettingsScreen> {
     context.goNamed(RouteNames.onboarding);
   }
 
-  String get _themeLabel {
-    return switch (_themeMode) {
-      ThemeMode.system => 'System',
-      ThemeMode.light => 'Light',
-      ThemeMode.dark => 'Dark',
-    };
+  void _showErrorSnackbar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.red.shade700,
+        behavior: SnackBarBehavior.floating,
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        margin: const EdgeInsets.all(16),
+      ),
+    );
   }
+
+  // ── Build ─────────────────────────────────────────────────────────────────
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthCubit, AuthState>(
-      listener: (context, state) {
-        if (state is AuthLoggedOut) {
-          context.read<AppAuthCubit>().onLogout();
-        } else if (state is AuthFailure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.message),
-              backgroundColor: Colors.red.shade700,
-            ),
-          );
-        }
-      },
-      child: Scaffold(
-        backgroundColor: AppColors.lightBackground,
-        appBar: AppBar(
-          backgroundColor: AppColors.lightBackground,
-          title: const Text(
-            'Settings',
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              color: AppColors.lightText,
-            ),
-          ),
-          elevation: 0,
-          actions: [
-            BlocBuilder<AuthCubit, AuthState>(
-              builder: (context, state) {
-                final isLoading = state is AuthLoading;
-                return Padding(
-                  padding: const EdgeInsets.only(right: 16),
-                  child: MainIconButton(
-                    icon: Icon(
-                      Icons.logout,
-                      color: AppColors.lightText,
-                      size: 18,
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<AuthCubit, AuthState>(
+          listener: (context, state) {
+            if (state is AuthLoggedOut) {
+              context.read<AppAuthCubit>().onLogout();
+            } else if (state is AuthFailure) {
+              _showErrorSnackbar(context, state.message);
+            }
+          },
+        ),
+        BlocListener<UserCubit, UserState>(
+          listener: (context, state) {
+            if (state is UserFailure) {
+              _showErrorSnackbar(context, state.message);
+            }
+            if (state is UserDeleted) {
+              context.read<AppAuthCubit>().onLogout();
+            }
+          },
+        ),
+      ],
+      child: BlocBuilder<UserCubit, UserState>(
+        builder: (context, userState) {
+          final user = _user(userState);
+          final settings = _settings(userState);
+          final isSaving = userState is UserSaving;
+          final isLoading =
+              userState is UserLoading || userState is UserInitial;
+
+          return Scaffold(
+            backgroundColor: AppColors.lightBackground,
+            appBar: AppBar(
+              backgroundColor: AppColors.lightBackground,
+              elevation: 0,
+              title: const Text(
+                'Settings',
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 20,
+                  color: AppColors.lightText,
+                ),
+              ),
+              actions: [
+                // Non-blocking save indicator
+                if (isSaving)
+                  const Padding(
+                    padding: EdgeInsets.only(right: 8),
+                    child: Center(
+                      child: SizedBox(
+                        width: 18,
+                        height: 18,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: AppColors.primary,
+                        ),
+                      ),
                     ),
-                    onTap: isLoading ? null : () => _showLogoutDialog(context),
                   ),
-                );
-              },
+
+                // Logout button
+                BlocBuilder<AuthCubit, AuthState>(
+                  builder: (context, authState) {
+                    final isAuthLoading = authState is AuthLoading;
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 16),
+                      child: MainIconButton(
+                        icon: const Icon(
+                          Icons.logout_rounded,
+                          color: AppColors.lightText,
+                          size: 20,
+                        ),
+                        onTap: isAuthLoading
+                            ? null
+                            : () => _showLogoutDialog(context),
+                      ),
+                    );
+                  },
+                ),
+              ],
             ),
-          ],
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ProfileHeaderCard(
-                name: "Ethan Cole",
-                email: "ethancoleux@gmail.com",
-                onEditPressed: () {
-                  // Navigate to edit profile or show dialog
-                },
-              ),
 
-              // ── GENERAL ────────────────────────────────────────────────
-              const SettingsSectionHeader(title: 'General'),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 16),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: AppColors.dividerLight),
-                ),
-                child: Column(
-                  children: [
-                    SettingsTile(
-                      icon: Icons.palette_outlined,
-                      title: 'Theme',
-                      subtitle: _themeLabel,
-                      showDivider: true,
-                      showChevron: true,
-                      onTap: _openThemeSheet,
+            body: isLoading
+                ? const Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.darkBackground,
                     ),
-                    SettingsTile(
-                      icon: Icons.language,
-                      title: 'Language',
-                      subtitle: _language.label,
-                      showDivider: true,
-                      showChevron: true,
-                      onTap: _openLanguageSheet,
-                    ),
-                    SettingsTile(
-                      icon: Icons.folder_outlined,
-                      title: 'Currency',
-                      subtitle: _currency.code,
-                      showChevron: true,
-                      showDivider: true,
-                      onTap: _openCurrencySheet,
-                    ),
-                    SettingsToggleTile(
-                      icon: Icons.notifications_outlined,
-                      title: 'Push Notifications',
-                      subtitle: 'Get reminders and updates',
-                      value: _pushNotifications,
-                      showDivider: true,
-                      onChanged: (val) =>
-                          setState(() => _pushNotifications = val),
-                    ),
-                    SettingsTile(
-                      icon: Icons.wallet,
-                      title: 'Budget & Income',
-                      subtitle: 'Manage your budget and income',
-                      showChevron: true,
-                      onTap: () {
-                        // Navigate to budget screen later
-                      },
-                    ),
-                  ],
-                ),
-              ),
+                  )
+                : RefreshIndicator(
+                    backgroundColor: AppColors.lightBackground,
+                    color: AppColors.darkBackground,
+                    onRefresh: () => context.read<UserCubit>().loadUser(),
+                    child: SingleChildScrollView(
+                      // Required so pull-to-refresh fires even on short content
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 8),
 
-              // ── HELP ───────────────────────────────────────────────────
-              const SettingsSectionHeader(title: 'Help'),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 16),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: AppColors.dividerLight),
-                ),
-                child: Column(
-                  children: [
-                    SettingsTile(
-                      icon: Icons.mail_outline,
-                      title: 'Support',
-                      subtitle: 'Contact our support team',
-                      showDivider: true,
-                      showChevron: true,
-                      onTap: () {},
-                    ),
-                    SettingsTile(
-                      icon: Icons.language,
-                      title: 'Documentation',
-                      subtitle: 'Learn how to use the app',
-                      showDivider: true,
-                      showChevron: true,
-                      onTap: () {},
-                    ),
-                    SettingsTile(
-                      icon: Icons.wallet,
-                      title: 'Suggest Product Improvement',
-                      subtitle: 'Share your feedback to help us improve',
-                      showChevron: true,
-                      onTap: () {},
-                    ),
-                  ],
-                ),
-              ),
+                          // ── Profile header ────────────────────────────
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16),
+                            child: ProfileHeaderCard(
+                              name: user?.name ?? '—',
+                              email: user?.email ?? '—',
+                              onEditPressed: user != null
+                                  ? () => _openEditProfile(user)
+                                  : null,
+                            ),
+                          ),
 
-              // ── ABOUT ──────────────────────────────────────────────────
-              const SettingsSectionHeader(title: 'About'),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 16),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: AppColors.dividerLight),
-                ),
-                child: Column(
-                  children: [
-                    SettingsTile(
-                      icon: Icons.info_outline,
-                      title: 'Version',
-                      subtitle: _version,
-                      showDivider: true,
-                    ),
-                    SettingsTile(
-                      icon: Icons.map_outlined,
-                      title: 'Setup Guide',
-                      subtitle: 'New here? Start with this',
-                      showDivider: true,
-                      showChevron: true,
-                      onTap: () => _resetOnboarding(context),
-                    ),
-                    SettingsTile(
-                      icon: Icons.delete,
-                      title: 'Delete Account',
-                      subtitle: 'Permanently remove your account',
-                      iconColor: Colors.red,
-                      showChevron: true,
-                      onTap: () {},
-                    ),
-                  ],
-                ),
-              ),
+                          // ── ACCOUNT ───────────────────────────────────
+                          const SettingsSectionHeader(title: 'Account'),
+                          _SettingsGroup(
+                            children: [
+                              SettingsTile(
+                                icon: Icons.wallet_rounded,
+                                title: 'Budget & Income',
+                                subtitle: _budgetLabel(settings),
+                                showChevron: true,
+                                onTap: user != null
+                                    ? () => _openBudgetSheet(user)
+                                    : null,
+                              ),
+                            ],
+                          ),
 
-              const SizedBox(height: 100),
-            ],
-          ),
-        ),
+                          // ── GENERAL ───────────────────────────────────
+                          const SettingsSectionHeader(title: 'General'),
+                          _SettingsGroup(
+                            children: [
+                              SettingsTile(
+                                icon: Icons.palette_outlined,
+                                title: 'Theme',
+                                subtitle: _themeLabel(_themeMode),
+                                showDivider: true,
+                                showChevron: true,
+                                onTap: _openThemeSheet,
+                              ),
+                              SettingsTile(
+                                icon: Icons.language_rounded,
+                                title: 'Language',
+                                subtitle: _languageLabel(settings),
+                                showDivider: true,
+                                showChevron: true,
+                                onTap: user != null
+                                    ? () => _openLanguageSheet(user)
+                                    : null,
+                              ),
+                              SettingsTile(
+                                icon: Icons.attach_money_rounded,
+                                title: 'Currency',
+                                subtitle: _currencyLabel(settings),
+                                showDivider: true,
+                                showChevron: true,
+                                onTap: user != null
+                                    ? () => _openCurrencySheet(user)
+                                    : null,
+                              ),
+                              SettingsToggleTile(
+                                icon: Icons.notifications_outlined,
+                                title: 'Push Notifications',
+                                subtitle: 'Get reminders and spending alerts',
+                                value: settings?.pushNotification ?? false,
+                                onChanged: user != null
+                                    ? (val) =>
+                                        _toggleNotifications(user, val)
+                                    : null,
+                              ),
+                            ],
+                          ),
+
+                          // ── HELP ──────────────────────────────────────
+                          const SettingsSectionHeader(title: 'Help'),
+                          _SettingsGroup(
+                            children: [
+                              SettingsTile(
+                                icon: Icons.mail_outline_rounded,
+                                title: 'Support',
+                                subtitle: 'Contact our support team',
+                                showDivider: true,
+                                showChevron: true,
+                                onTap: () {},
+                              ),
+                              SettingsTile(
+                                icon: Icons.menu_book_rounded,
+                                title: 'Documentation',
+                                subtitle: 'Learn how to use the app',
+                                showDivider: true,
+                                showChevron: true,
+                                onTap: () {},
+                              ),
+                              SettingsTile(
+                                icon: Icons.lightbulb_outline_rounded,
+                                title: 'Suggest an Improvement',
+                                subtitle: 'Share your feedback to help us',
+                                showChevron: true,
+                                onTap: () {},
+                              ),
+                            ],
+                          ),
+
+                          // ── ABOUT ─────────────────────────────────────
+                          const SettingsSectionHeader(title: 'About'),
+                          _SettingsGroup(
+                            children: [
+                              SettingsTile(
+                                icon: Icons.info_outline_rounded,
+                                title: 'Version',
+                                subtitle: _version,
+                                showDivider: true,
+                              ),
+                              SettingsTile(
+                                icon: Icons.map_outlined,
+                                title: 'Setup Guide',
+                                subtitle: 'New here? Start with this',
+                                showDivider: true,
+                                showChevron: true,
+                                onTap: () => _resetOnboarding(context),
+                              ),
+                              SettingsTile(
+                                icon: Icons.delete_outline_rounded,
+                                title: 'Delete Account',
+                                subtitle: 'Permanently remove your account',
+                                iconColor: Colors.red.shade600,
+                                showChevron: true,
+                                onTap: user != null
+                                    ? () => _openDeleteAccount(user)
+                                    : null,
+                              ),
+                            ],
+                          ),
+
+                          const SizedBox(height: 100),
+                        ],
+                      ),
+                    ),
+                  ),
+          );
+        },
       ),
+    );
+  }
+}
+
+// ── Reusable grouped container ────────────────────────────────────────────────
+
+class _SettingsGroup extends StatelessWidget {
+  final List<Widget> children;
+
+  const _SettingsGroup({required this.children});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.dividerLight),
+      ),
+      child: Column(children: children),
     );
   }
 }

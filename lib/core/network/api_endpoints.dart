@@ -14,8 +14,8 @@ class ApiEndpoints {
   static const getMe = "/users/me";
   static const updateUser = "/users/{id}";
   static const deleteUser = "/users/{id}";
-  static const getSettings = "/users/{id}/settings";
-  static const updateSettings = "/users/{id}/settings";
+  static const getSettings = "/users/{id}/setting";
+  static const updateSettings = "/users/{id}/setting";
 
   // Purchase endpoints
   static const getAllPurchases = "/purchases";

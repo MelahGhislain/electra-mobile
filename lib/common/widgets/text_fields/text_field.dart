@@ -9,6 +9,7 @@ class AppTextField extends StatefulWidget {
   final bool isPassword;
   final TextInputType keyboardType;
   final String? prefixText;
+  final Widget? suffixIcon;
   final TextInputAction textInputAction;
   final List<TextInputFormatter>? inputFormatters;
   final TextCapitalization textCapitalization;
@@ -24,6 +25,7 @@ class AppTextField extends StatefulWidget {
     this.keyboardType = TextInputType.text,
     this.prefixText,
     this.validator,
+    this.suffixIcon,
     this.textInputAction = TextInputAction.next,
     this.textCapitalization = TextCapitalization.none,
     this.onChanged,
@@ -66,6 +68,7 @@ class _AppTextFieldState extends State<AppTextField> {
             style: const TextStyle(fontSize: 15, color: Color(0xFF111827)),
             decoration: InputDecoration(
               hintText: widget.hint,
+
               hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 15),
               filled: true,
               fillColor: _isFocused ? Colors.white : const Color(0xFFE8E8E8),
@@ -105,7 +108,7 @@ class _AppTextFieldState extends State<AppTextField> {
                       ),
                       onPressed: () => setState(() => _obscure = !_obscure),
                     )
-                  : null,
+                  : widget.suffixIcon,
             ),
           ),
         ),

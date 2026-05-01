@@ -3,13 +3,7 @@ import 'package:electra/core/network/api_endpoints.dart';
 import 'package:electra/data/models/user/user_model.dart';
 import 'package:electra/data/models/user/user_settings_model.dart';
 
-// static const updateUser = "/users/{id}";
-// static const deleteUser = "/users/{id}";
-// static const getSettings = "/users/{id}/settings";
-// static const updateSettings = "/users/{id}/settings";
-
 abstract class UserRemoteDataSource {
-  // ── User ──────────────────────────────────────────────────────────────
   Future<UserModel> getUser();
   Future<UserModel> updateUser(String id, Map<String, dynamic> body);
   Future<void> deleteUser(String id);
@@ -25,19 +19,19 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
 
   UserRemoteDataSourceImpl(this.apiClient);
 
+  // ── User ──────────────────────────────────────────────────────────────────
+
   @override
   Future<UserModel> getUser() async {
     final response = await apiClient.get(ApiEndpoints.getMe);
-
-    return UserModel.fromJson(response.data);
+    return UserModel.fromJson(_unwrap(response.data));
   }
 
   @override
   Future<UserModel> updateUser(String id, Map<String, dynamic> body) async {
     final endpoint = ApiEndpoints.updateUser.replaceAll('{id}', id);
     final response = await apiClient.patch(endpoint, data: body);
-
-    return UserModel.fromJson(response.data);
+    return UserModel.fromJson(_unwrap(response.data));
   }
 
   @override
@@ -50,8 +44,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   Future<UserSettingsModel> getSettings(String id) async {
     final endpoint = ApiEndpoints.getSettings.replaceAll('{id}', id);
     final response = await apiClient.get(endpoint);
-
-    return UserSettingsModel.fromJson(response.data);
+    return UserSettingsModel.fromJson(_unwrap(response.data));
   }
 
   @override
@@ -61,7 +54,19 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   ) async {
     final endpoint = ApiEndpoints.updateSettings.replaceAll('{id}', id);
     final response = await apiClient.patch(endpoint, data: body);
+    return UserSettingsModel.fromJson(_unwrap(response.data));
+  }
 
-    return UserSettingsModel.fromJson(response.data);
+  // ── Helpers ──────────────────────────────────────────────────────────────
+  Map<String, dynamic> _unwrap(dynamic responseData) {
+    if (responseData is Map<String, dynamic>) {
+      // Already the inner object (some endpoints return data directly)
+      if (responseData.containsKey('data') &&
+          responseData['data'] is Map<String, dynamic>) {
+        return responseData['data'] as Map<String, dynamic>;
+      }
+      return responseData;
+    }
+    throw Exception('Unexpected response format: $responseData');
   }
 }

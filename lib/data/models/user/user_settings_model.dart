@@ -11,10 +11,10 @@ class UserSettingsModel extends UserSettings {
 
   factory UserSettingsModel.fromJson(Map<String, dynamic> json) {
     return UserSettingsModel(
-      currency: json['currency'],
-      locale: json['locale'] ?? 'en-US',
-      pushNotification: json['pushNotification'] ?? false,
-      accountMode: json['accountMode'],
+      currency: json['currency']?.toString() ?? 'USD',
+      locale: json['locale']?.toString() ?? 'en-US',
+      pushNotification: json['pushNotification'] as bool? ?? false,
+      accountMode: json['accountMode']?.toString() ?? 'expenses_only',
       monthlyBudget: json['monthlyBudget'] != null
           ? (json['monthlyBudget'] as num).toDouble()
           : null,
@@ -23,11 +23,11 @@ class UserSettingsModel extends UserSettings {
 
   Map<String, dynamic> toJson() {
     return {
-      "currency": currency,
-      "locale": locale,
-      "pushNotification": pushNotification,
-      "accountMode": accountMode,
-      "monthlyBudget": monthlyBudget,
+      'currency': currency,
+      'locale': locale,
+      'pushNotification': pushNotification,
+      'accountMode': accountMode,
+      if (monthlyBudget != null) 'monthlyBudget': monthlyBudget,
     };
   }
 }
