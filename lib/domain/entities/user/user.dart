@@ -22,6 +22,26 @@ class User extends Equatable {
     required this.updatedAt,
   });
 
+  User copyWith({
+    String? id,
+    String? email,
+    String? name,
+    String? provider,
+    String? providerId,
+    UserSettings? settings,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) => User(
+    id: id ?? this.id,
+    email: email ?? this.email,
+    name: name ?? this.name,
+    provider: provider ?? this.provider,
+    providerId: providerId ?? this.providerId,
+    settings: settings ?? this.settings,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+
   User toEntity() => User(
     id: id,
     email: email,

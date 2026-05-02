@@ -20,10 +20,7 @@ class BudgetBottomSheet {
       maxHeightPct: 0.85,
       child: BlocProvider.value(
         value: context.read<UserCubit>(),
-        child: _BudgetSheetBody(
-          userId: userId,
-          currentBudget: currentBudget,
-        ),
+        child: _BudgetSheetBody(userId: userId, currentBudget: currentBudget),
       ),
     );
     return result ?? false;
@@ -65,16 +62,16 @@ class _BudgetSheetBodyState extends State<_BudgetSheetBody> {
   Future<void> _save(BuildContext context) async {
     if (!_formKey.currentState!.validate()) return;
     final amount = double.tryParse(_budgetCtrl.text.trim()) ?? 0;
-    await context
-        .read<UserCubit>()
-        .updateUserSetting(widget.userId, {'monthlyBudget': amount});
+    await context.read<UserCubit>().updateUserSetting(widget.userId, {
+      'monthlyBudget': amount,
+    });
     if (context.mounted) Navigator.of(context).pop(true);
   }
 
   Future<void> _removeBudget(BuildContext context) async {
-    await context
-        .read<UserCubit>()
-        .updateUserSetting(widget.userId, {'monthlyBudget': null});
+    await context.read<UserCubit>().updateUserSetting(widget.userId, {
+      'monthlyBudget': null,
+    });
     if (context.mounted) Navigator.of(context).pop(true);
   }
 
@@ -89,7 +86,8 @@ class _BudgetSheetBodyState extends State<_BudgetSheetBody> {
               backgroundColor: Colors.red.shade700,
               behavior: SnackBarBehavior.floating,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
+                borderRadius: BorderRadius.circular(10),
+              ),
               margin: const EdgeInsets.all(16),
             ),
           );
@@ -130,11 +128,11 @@ class _BudgetSheetBodyState extends State<_BudgetSheetBody> {
               const SizedBox(height: 8),
               TextFormField(
                 controller: _budgetCtrl,
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
                 inputFormatters: [
-                  FilteringTextInputFormatter.allow(
-                      RegExp(r'^\d+\.?\d{0,2}')),
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
                 ],
                 style: const TextStyle(
                   fontSize: 22,
@@ -157,7 +155,9 @@ class _BudgetSheetBodyState extends State<_BudgetSheetBody> {
                   filled: true,
                   fillColor: const Color(0xFFF9FAFB),
                   contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 16, vertical: 16),
+                    horizontal: 16,
+                    vertical: 16,
+                  ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(14),
                     borderSide: const BorderSide(color: AppColors.dividerLight),
@@ -168,8 +168,10 @@ class _BudgetSheetBodyState extends State<_BudgetSheetBody> {
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(14),
-                    borderSide:
-                        const BorderSide(color: AppColors.primary, width: 1.5),
+                    borderSide: const BorderSide(
+                      color: AppColors.primary,
+                      width: 1.5,
+                    ),
                   ),
                   errorBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(14),
@@ -177,8 +179,10 @@ class _BudgetSheetBodyState extends State<_BudgetSheetBody> {
                   ),
                   focusedErrorBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(14),
-                    borderSide:
-                        BorderSide(color: Colors.red.shade400, width: 1.5),
+                    borderSide: BorderSide(
+                      color: Colors.red.shade400,
+                      width: 1.5,
+                    ),
                   ),
                 ),
                 validator: (v) {
@@ -220,7 +224,9 @@ class _BudgetSheetBodyState extends State<_BudgetSheetBody> {
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 150),
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 14, vertical: 8),
+                        horizontal: 14,
+                        vertical: 8,
+                      ),
                       decoration: BoxDecoration(
                         color: isSelected
                             ? AppColors.primary
@@ -228,7 +234,8 @@ class _BudgetSheetBodyState extends State<_BudgetSheetBody> {
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
                           color: AppColors.primary.withValues(
-                              alpha: isSelected ? 1.0 : 0.2),
+                            alpha: isSelected ? 1.0 : 0.2,
+                          ),
                         ),
                       ),
                       child: Text(

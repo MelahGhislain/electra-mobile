@@ -92,6 +92,7 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       await remoteDataSource.logout();
       await storage.clearTokens();
+      await googleAuthDataSource.signOut();
       return const Right(null);
     } on DioException catch (e) {
       return Left(mapDioError(e));

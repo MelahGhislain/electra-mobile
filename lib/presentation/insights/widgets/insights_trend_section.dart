@@ -181,7 +181,7 @@ class InsightsTrendSection extends StatelessWidget {
                       dotData: const FlDotData(show: false),
                       belowBarData: BarAreaData(
                         show: true,
-                        color: const Color(0xFF7C3AED).withOpacity(0.08),
+                        color: const Color(0xFF7C3AED).withValues(alpha: 0.08),
                       ),
                     ),
                   // Previous period — dashed grey
@@ -190,7 +190,7 @@ class InsightsTrendSection extends StatelessWidget {
                       spots: previousSpots,
                       isCurved: true,
                       curveSmoothness: 0.3,
-                      color: AppColors.lightTextSecondary.withOpacity(0.45),
+                      color: AppColors.lightTextSecondary.withValues(alpha: 0.45),
                       barWidth: 1.5,
                       dashArray: [4, 4],
                       dotData: const FlDotData(show: false),

@@ -199,7 +199,7 @@ class _CategoryPickerSheetState extends State<_CategoryPickerSheet> {
                     padding: const EdgeInsets.only(bottom: 8),
                     shrinkWrap: true,
                     itemCount: filtered.length,
-                    separatorBuilder: (_, __) => const Divider(
+                    separatorBuilder: (_, _) => const Divider(
                       height: 1,
                       color: AppColors.dividerLight,
                       indent: 20,

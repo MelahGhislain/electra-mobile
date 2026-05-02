@@ -21,6 +21,7 @@ class AuthCubit extends Cubit<AuthState> {
     required this.repository,
   }) : super(const AuthInitial());
 
+  // ── Email / Password ───────────────────────────────────────────────────────
   Future<void> login({required String email, required String password}) async {
     emit(const AuthLoading());
     final result = await loginUseCase(email: email, password: password);

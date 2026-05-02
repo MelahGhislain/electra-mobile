@@ -68,13 +68,12 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   Future<AuthTokensModel> loginWithSocial(
     SocialAuthCredential credential,
   ) async {
+    // POST /auth/oauth  →  { "provider": "google"|"apple", "token": "<idToken>" }
     final res = await apiClient.post(
-      ApiEndpoints.register, // your backend uses /auth/register for social too
+      ApiEndpoints.oauth,
       data: {
-        'name': credential.name ?? '',
-        'email': credential.email ?? '',
         'provider': credential.provider.name, // 'google' | 'apple'
-        'providerId': credential.providerId,
+        'token': credential.providerId,       // idToken from Google / Apple
       },
     );
     return AuthTokensModel.fromJson(res.data as Map<String, dynamic>);

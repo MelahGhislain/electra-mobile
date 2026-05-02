@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:electra/core/configs/env.dart';
 import 'package:electra/domain/entities/auth/social_auth_credential.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -27,6 +29,7 @@ class GoogleAuthDataSourceImpl implements GoogleAuthDataSource {
       serverClientId: Env.googleServerClientId,
       // iOS client ID — only needed on iOS without GoogleService-Info.plist
       // clientId: const String.fromEnvironment('GOOGLE_IOS_CLIENT_ID'),
+      clientId: Platform.isAndroid ? Env.googleServerClientId : Env.googleIosClientId,
     );
     _initialized = true;
 

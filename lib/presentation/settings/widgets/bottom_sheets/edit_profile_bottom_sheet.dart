@@ -53,13 +53,10 @@ class _EditProfileBodyState extends State<_EditProfileBody> {
 
   Future<void> _save(BuildContext context) async {
     if (!_formKey.currentState!.validate()) return;
-    await context.read<UserCubit>().updateUser(
-      widget.user.id,
-      {
-        'name': _nameCtrl.text.trim(),
-        'email': _emailCtrl.text.trim(),
-      },
-    );
+    await context.read<UserCubit>().updateUser(widget.user.id, {
+      'name': _nameCtrl.text.trim(),
+      'email': _emailCtrl.text.trim(),
+    });
     if (context.mounted) Navigator.of(context).pop(true);
   }
 
@@ -74,7 +71,8 @@ class _EditProfileBodyState extends State<_EditProfileBody> {
               backgroundColor: Colors.red.shade700,
               behavior: SnackBarBehavior.floating,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
+                borderRadius: BorderRadius.circular(10),
+              ),
               margin: const EdgeInsets.all(16),
             ),
           );
@@ -99,8 +97,9 @@ class _EditProfileBodyState extends State<_EditProfileBody> {
                   children: [
                     CircleAvatar(
                       radius: 40,
-                      backgroundImage:
-                          const NetworkImage('https://i.pravatar.cc/100'),
+                      backgroundImage: const NetworkImage(
+                        'https://i.pravatar.cc/100',
+                      ),
                       backgroundColor: AppColors.lightSurface,
                     ),
                     Positioned(
@@ -151,8 +150,9 @@ class _EditProfileBodyState extends State<_EditProfileBody> {
                   if (v == null || v.trim().isEmpty) {
                     return 'Email cannot be empty';
                   }
-                  if (!RegExp(r'^[\w-.]+@([\w-]+\.)+[\w]{2,}$')
-                      .hasMatch(v.trim())) {
+                  if (!RegExp(
+                    r'^[\w-.]+@([\w-]+\.)+[\w]{2,}$',
+                  ).hasMatch(v.trim())) {
                     return 'Enter a valid email address';
                   }
                   return null;

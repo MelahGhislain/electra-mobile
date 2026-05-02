@@ -11,6 +11,10 @@ class Env {
 
   static String get googleServerClientId =>
       dotenv.env['GOOGLE_SERVER_CLIENT_ID'] ?? '';
+  static String get googleIosClientId =>
+      dotenv.env['GOOGLE_IOS_CLIENT_ID'] ?? '';
+  static String get googleAndroidClientId =>
+      dotenv.env['GOOGLE_ANDROID_CLIENT_ID'] ?? '';
 
   // Helper to check environment
   static bool get isDevelopment => appEnv == 'development';

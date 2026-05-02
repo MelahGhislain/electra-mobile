@@ -1,5 +1,5 @@
-import 'package:electra/data/models/user/user_settings_model.dart';
 import 'package:electra/domain/entities/user/user.dart';
+import 'package:electra/domain/entities/user/user_settings.dart';
 import 'package:electra/domain/usecases/user/setting_usecase.dart';
 import 'package:electra/domain/usecases/user/user_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,19 +22,18 @@ class UserCubit extends Cubit<UserState> {
        _updateUserSetting = updateUserSetting,
        super(const UserInitial());
 
-  // ── Read ──────────────────────────────────────────────────────────────────
+  // ── Read ───────────────────────────────────────────────────────────────────
 
   Future<void> loadUser() async {
     emit(const UserLoading());
     final result = await _getUser();
     result.fold(
-      // No previous user available on initial load failure
       (failure) => emit(UserFailure(failure.message)),
       (user) => emit(UserLoaded(user)),
     );
   }
 
-  // ── Update profile (name / avatar) ────────────────────────────────────────
+  // ── Update profile ─────────────────────────────────────────────────────────
 
   Future<void> updateUser(String id, Map<String, dynamic> body) async {
     final previous = _currentUser();
@@ -45,10 +44,7 @@ class UserCubit extends Cubit<UserState> {
     final result = await _updateUser(id, body);
     result.fold(
       (failure) {
-        // Restore previous data AND surface the error in one state.
-        // UserFailure now carries the user so the UI never wipes.
         emit(UserFailure(failure.message, user: previous));
-        // Settle back to loaded so subsequent rebuilds show the data.
         emit(UserLoaded(previous));
       },
       (updated) {
@@ -58,7 +54,7 @@ class UserCubit extends Cubit<UserState> {
     );
   }
 
-  // ── Update settings ───────────────────────────────────────────────────────
+  // ── Update settings ────────────────────────────────────────────────────────
 
   Future<void> updateUserSetting(String id, Map<String, dynamic> body) async {
     final previous = _currentUser();
@@ -66,27 +62,24 @@ class UserCubit extends Cubit<UserState> {
 
     emit(UserSaving(previous));
 
-// Merge existing settings with the new fields so no data is lost
-  final existingSettings = previous.settings != null
-      ? (previous.settings as UserSettingsModel).toJson()
-      : <String, dynamic>{};
-
-  final merged = {...existingSettings, ...body};
+    // Build the base map from the entity fields directly — no model cast needed.
+    final existingSettings = _settingsToMap(previous.settings);
+    final merged = {...existingSettings, ...body};
 
     final result = await _updateUserSetting(id, merged);
     result.fold(
       (failure) {
         emit(UserFailure(failure.message, user: previous));
-        emit(UserLoaded(previous)); // rollback — UI keeps previous data
+        emit(UserLoaded(previous));
       },
-      (_) {
+      (settings) {
         emit(const UserSettingUpdated());
-        loadUser(); // re-fetch to stay in sync with server
+        emit(UserLoaded(previous.copyWith(settings: settings)));
       },
     );
   }
 
-  // ── Delete account ────────────────────────────────────────────────────────
+  // ── Delete account ─────────────────────────────────────────────────────────
 
   Future<void> deleteAccount(String id) async {
     final previous = _currentUser();
@@ -95,7 +88,6 @@ class UserCubit extends Cubit<UserState> {
     final result = await _deleteUser(id);
     result.fold(
       (failure) {
-        // Restore previous state so the screen doesn't go blank
         if (previous != null) {
           emit(UserFailure(failure.message, user: previous));
           emit(UserLoaded(previous));
@@ -107,10 +99,8 @@ class UserCubit extends Cubit<UserState> {
     );
   }
 
-  // ── Helpers ───────────────────────────────────────────────────────────────
+  // ── Helpers ────────────────────────────────────────────────────────────────
 
-  /// Extracts the current User from whatever state we are in,
-  /// including UserFailure so rollback always has data to restore.
   User? _currentUser() {
     final s = state;
     if (s is UserLoaded) return s.user;
@@ -118,6 +108,19 @@ class UserCubit extends Cubit<UserState> {
     if (s is UserUpdated) return s.user;
     if (s is UserFailure) return s.user;
     return null;
+  }
+
+  /// Converts a UserSettings entity to a plain map without any model cast.
+  Map<String, dynamic> _settingsToMap(UserSettings? settings) {
+    if (settings == null) return {};
+    return {
+      'currency': settings.currency,
+      'locale': settings.locale,
+      'pushNotification': settings.pushNotification,
+      'accountMode': settings.accountMode,
+      if (settings.monthlyBudget != null)
+        'monthlyBudget': settings.monthlyBudget,
+    };
   }
 
   bool get isSaving => state is UserSaving;

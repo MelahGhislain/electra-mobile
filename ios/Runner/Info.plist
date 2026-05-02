@@ -72,5 +72,23 @@
 	<string>We use your camera to scan and extract information from receipts.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We access your photos so you can upload existing receipts for processing.</string>
+
+	<!-- ios/Runner/Info.plist -->
+	<key>GIDClientID</key>
+	<string>948773190113-lv31uuccuibqn80mdhec97s2ocehmn4t.apps.googleusercontent.com</string>
+
+	<!-- Also required: URL scheme so Google can redirect back to your app -->
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.948773190113-lv31uuccuibqn80mdhec97s2ocehmn4t</string>
+				<!-- Example: com.googleusercontent.apps.123456789-abcdef -->
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

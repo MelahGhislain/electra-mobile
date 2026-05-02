@@ -175,14 +175,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           const AuthDivider(),
                           const SizedBox(height: 16),
 
-                          AuthSocialButton(
-                            label: 'Continue With Apple',
-                            icon: const Icon(Icons.apple, size: 22),
-                            isLoading: isLoading,
-                            onPressed: () =>
-                                context.read<AuthCubit>().signInWithApple(),
-                          ),
-                          const SizedBox(height: 12),
+                          // AuthSocialButton(
+                          //   label: 'Continue With Apple',
+                          //   icon: const Icon(Icons.apple, size: 22),
+                          //   isLoading: isLoading,
+                          //   onPressed: () =>
+                          //       context.read<AuthCubit>().signInWithApple(),
+                          // ),
+                          // const SizedBox(height: 12),
 
                           AuthSocialButton(
                             label: 'Continue With Google',

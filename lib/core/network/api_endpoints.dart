@@ -6,6 +6,7 @@ class ApiEndpoints {
   // Auth endpoints
   static const login = "/auth/login";
   static const register = "/auth/register";
+  static const oauth = "/auth/oauth";
   static const refresh = "/auth/refresh";
   static const logout = "/auth/logout";
   static const voiceStream = "/voice/stream";

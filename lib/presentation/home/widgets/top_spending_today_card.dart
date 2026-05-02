@@ -203,7 +203,7 @@ class _TopSpendingTodayCardState extends State<TopSpendingTodayCard>
                 // Donut chart
                 AnimatedBuilder(
                   animation: _anim,
-                  builder: (_, __) => SizedBox(
+                  builder: (_, _) => SizedBox(
                     width: 115,
                     height: 115,
                     child: CustomPaint(

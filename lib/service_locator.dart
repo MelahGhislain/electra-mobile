@@ -21,7 +21,6 @@ import 'package:electra/data/source/voice/voice_stream_service.dart';
 import 'package:electra/domain/repository/insights/insights_repository.dart';
 import 'package:electra/domain/repository/purchase/purchase_repository.dart';
 import 'package:electra/domain/repository/receipt/receipt_repository.dart';
-import 'package:electra/domain/repository/user/user_repository.dart';
 import 'package:electra/domain/repository/voice/voice_repository.dart';
 import 'package:electra/domain/usecases/auth/logout_user.dart';
 import 'package:electra/domain/usecases/auth/refresh_token.dart';
@@ -104,6 +103,7 @@ Future<void> init() async {
   // =============== REPOSITORIES ======================
   /// Repository
   sl.registerLazySingleton(() => GoogleAuthDataSourceImpl());
+  await sl<GoogleAuthDataSourceImpl>().initialize();
   sl.registerLazySingleton(() => AppleAuthDataSourceImpl());
   sl.registerLazySingleton(
     () => AuthRepositoryImpl(

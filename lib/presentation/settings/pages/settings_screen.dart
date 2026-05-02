@@ -75,10 +75,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
   UserSettings? _settings(UserState state) => _user(state)?.settings;
 
   String _themeLabel(ThemeMode mode) => switch (mode) {
-        ThemeMode.system => 'System',
-        ThemeMode.light => 'Light',
-        ThemeMode.dark => 'Dark',
-      };
+    ThemeMode.system => 'System',
+    ThemeMode.light => 'Light',
+    ThemeMode.dark => 'Dark',
+  };
 
   String _currencyLabel(UserSettings? settings) {
     if (settings == null) return 'USD';
@@ -128,16 +128,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
     try {
       current = AppLanguage.values.firstWhere(
         (l) =>
-            l.name.toLowerCase() ==
-            (user.settings?.locale ?? '').toLowerCase(),
+            l.name.toLowerCase() == (user.settings?.locale ?? '').toLowerCase(),
         orElse: () => AppLanguage.systemDefault,
       );
     } catch (_) {}
     final result = await LanguageBottomSheet.show(context, current);
     if (result != null && mounted) {
-      await context
-          .read<UserCubit>()
-          .updateUserSetting(user.id, {'locale': result.name});
+      await context.read<UserCubit>().updateUserSetting(user.id, {
+        'locale': result.name,
+      });
     }
   }
 
@@ -153,16 +152,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
     } catch (_) {}
     final result = await CurrencyBottomSheet.show(context, current);
     if (result != null && mounted) {
-      await context
-          .read<UserCubit>()
-          .updateUserSetting(user.id, {'currency': result.code});
+      await context.read<UserCubit>().updateUserSetting(user.id, {
+        'currency': result.code,
+      });
     }
   }
 
   Future<void> _toggleNotifications(User user, bool value) async {
-    await context
-        .read<UserCubit>()
-        .updateUserSetting(user.id, {'pushNotification': value});
+    await context.read<UserCubit>().updateUserSetting(user.id, {
+      'pushNotification': value,
+    });
   }
 
   Future<void> _openBudgetSheet(User user) async {
@@ -196,8 +195,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         content: Text(message),
         backgroundColor: Colors.red.shade700,
         behavior: SnackBarBehavior.floating,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         margin: const EdgeInsets.all(16),
       ),
     );
@@ -289,7 +287,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ],
             ),
 
-            body: isLoading
+            body: isLoading && !isSaving
                 ? const Center(
                     child: CircularProgressIndicator(
                       color: AppColors.darkBackground,
@@ -309,8 +307,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                           // ── Profile header ────────────────────────────
                           Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 16),
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
                             child: ProfileHeaderCard(
                               name: user?.name ?? '—',
                               email: user?.email ?? '—',
@@ -374,8 +371,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 subtitle: 'Get reminders and spending alerts',
                                 value: settings?.pushNotification ?? false,
                                 onChanged: user != null
-                                    ? (val) =>
-                                        _toggleNotifications(user, val)
+                                    ? (val) => _toggleNotifications(user, val)
                                     : null,
                               ),
                             ],
