@@ -29,7 +29,9 @@ class GoogleAuthDataSourceImpl implements GoogleAuthDataSource {
       serverClientId: Env.googleServerClientId,
       // iOS client ID — only needed on iOS without GoogleService-Info.plist
       // clientId: const String.fromEnvironment('GOOGLE_IOS_CLIENT_ID'),
-      clientId: Platform.isAndroid ? Env.googleServerClientId : Env.googleIosClientId,
+      clientId: Platform.isAndroid
+          ? Env.googleServerClientId
+          : Env.googleIosClientId,
     );
     _initialized = true;
 

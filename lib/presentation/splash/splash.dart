@@ -1,5 +1,4 @@
 import 'package:electra/common/blocs/auth/app_auth_cubit.dart';
-import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/core/router/route_names.dart';
 import 'package:electra/core/utils/storage/onboarding_storage.dart';
 import 'package:electra/service_locator.dart';
@@ -24,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _bootstrap() async {
     await Future.wait([
       context.read<AppAuthCubit>().checkAuthStatus(), // local only, no network
-      Future.delayed(const Duration(seconds: 2)),
+      Future.delayed(const Duration(seconds: 3)),
     ]);
 
     if (!mounted) return;
@@ -49,25 +48,41 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightBackground,
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const FlutterLogo(size: 72),
-            const SizedBox(height: 24),
-            Text(
-              'Electra',
-              style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-                color: AppColors.lightText,
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/splash/splash.png',
+              fit: BoxFit.cover,
+            ),
+          ),
+
+          Positioned(
+            bottom: 135,
+            right: 130,
+            child: Container(
+              height: 10,
+              width: 160,
+              color: Color.fromARGB(255, 0, 0, 0),
+            ),
+          ),
+
+          /// ✅ Light overlay (important for readability)
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.white.withValues(alpha: 0.2),
+                    Colors.white.withValues(alpha: 0.2),
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
               ),
             ),
-            const SizedBox(height: 40),
-            const CircularProgressIndicator(strokeWidth: 2),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

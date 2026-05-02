@@ -1,6 +1,7 @@
 import 'package:electra/common/helpers/average.dart';
 import 'package:electra/common/widgets/bottom_sheets/app_bottom_sheet.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
+import 'package:electra/core/utils/helpers.dart';
 import 'package:electra/domain/entities/purchase/purchase.dart';
 import 'package:electra/domain/entities/purchase/purchase_item.dart';
 import 'package:electra/presentation/purchase/blocs/purchase_detail/purchase_detail_cubit.dart';
@@ -120,8 +121,8 @@ class _SpendingDetailItemsSectionState
       'unitPrice': result.unitPrice,
       'totalPrice': result.unitPrice * result.quantity,
       'category': {
-        'name': result.name,
-        'normalizedName': result.name.toLowerCase(),
+        'name': capitalize(result.categoryNormalizedName),
+        'normalizedName': result.categoryNormalizedName.toLowerCase(),
       },
     };
 

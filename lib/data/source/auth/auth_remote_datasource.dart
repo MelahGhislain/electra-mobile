@@ -73,7 +73,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       ApiEndpoints.oauth,
       data: {
         'provider': credential.provider.name, // 'google' | 'apple'
-        'token': credential.providerId,       // idToken from Google / Apple
+        'token': credential.providerId, // idToken from Google / Apple
       },
     );
     return AuthTokensModel.fromJson(res.data as Map<String, dynamic>);

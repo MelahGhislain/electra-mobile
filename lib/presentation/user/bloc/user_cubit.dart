@@ -86,17 +86,14 @@ class UserCubit extends Cubit<UserState> {
     emit(UserLoading());
 
     final result = await _deleteUser(id);
-    result.fold(
-      (failure) {
-        if (previous != null) {
-          emit(UserFailure(failure.message, user: previous));
-          emit(UserLoaded(previous));
-        } else {
-          emit(UserFailure(failure.message));
-        }
-      },
-      (_) => emit(const UserDeleted()),
-    );
+    result.fold((failure) {
+      if (previous != null) {
+        emit(UserFailure(failure.message, user: previous));
+        emit(UserLoaded(previous));
+      } else {
+        emit(UserFailure(failure.message));
+      }
+    }, (_) => emit(const UserDeleted()));
   }
 
   // ── Helpers ────────────────────────────────────────────────────────────────

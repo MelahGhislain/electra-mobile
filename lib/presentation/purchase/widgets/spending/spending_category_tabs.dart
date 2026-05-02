@@ -96,10 +96,12 @@ class _CategoryTab extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.primary : AppColors.lightSurface,
+          color: isSelected ? AppColors.darkBackground : AppColors.lightSurface,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isSelected ? AppColors.primary : AppColors.dividerLight,
+            color: isSelected
+                ? AppColors.darkBackground
+                : AppColors.dividerLight,
           ),
         ),
         child: Row(

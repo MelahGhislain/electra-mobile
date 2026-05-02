@@ -169,7 +169,6 @@ class _SignInScreenState extends State<SignInScreen> {
                         //       context.read<AuthCubit>().signInWithApple(),
                         // ),
                         // const SizedBox(height: 12),
-
                         AuthSocialButton(
                           label: 'Continue With Google',
                           icon: _GoogleIcon(),

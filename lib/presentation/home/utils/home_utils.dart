@@ -92,7 +92,6 @@ class RawSpendingHelper {
     int maxRows = 6,
   }) {
     final Map<String, double> totals = {};
-
     for (final p in purchases) {
       for (final item in p.activeItems) {
         final key = item.category.normalizedName.trim().toLowerCase();

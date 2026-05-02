@@ -190,7 +190,9 @@ class InsightsTrendSection extends StatelessWidget {
                       spots: previousSpots,
                       isCurved: true,
                       curveSmoothness: 0.3,
-                      color: AppColors.lightTextSecondary.withValues(alpha: 0.45),
+                      color: AppColors.lightTextSecondary.withValues(
+                        alpha: 0.45,
+                      ),
                       barWidth: 1.5,
                       dashArray: [4, 4],
                       dotData: const FlDotData(show: false),

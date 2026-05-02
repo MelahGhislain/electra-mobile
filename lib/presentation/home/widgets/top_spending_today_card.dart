@@ -51,7 +51,6 @@ class _TopSpendingTodayCardState extends State<TopSpendingTodayCard>
     if (widget.rows.isEmpty) return const SizedBox.shrink();
 
     final total = _total;
-    final biggest = widget.rows.first; // already sorted desc
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 0),

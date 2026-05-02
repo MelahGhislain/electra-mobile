@@ -1,17 +1,17 @@
 import 'package:electra/core/configs/theme/app_colors.dart';
-import 'package:electra/core/router/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:glassmorphism/glassmorphism.dart';
-import 'package:go_router/go_router.dart';
 
 class CustomBottomNav extends StatelessWidget {
   final int selectedIndex;
   final ValueChanged<int> onDestinationSelected;
+  final VoidCallback onAddTapped;
 
   const CustomBottomNav({
     super.key,
     required this.selectedIndex,
     required this.onDestinationSelected,
+    required this.onAddTapped,
   });
 
   @override
@@ -24,10 +24,7 @@ class CustomBottomNav extends StatelessWidget {
       linearGradient: LinearGradient(
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
-        colors: [
-          AppColors.lightSurface, //.withAlpha(64),
-          AppColors.lightSurface, //.withAlpha(64),
-        ],
+        colors: [AppColors.lightSurface, AppColors.lightSurface],
       ),
       borderGradient: const LinearGradient(
         colors: [Colors.white24, Colors.transparent],
@@ -54,30 +51,23 @@ class CustomBottomNav extends StatelessWidget {
 
             // Center Camera Button
             GestureDetector(
-              onTap: () => context.pushNamed(RouteNames.expenseRecorder),
+              onTap: onAddTapped,
               child: Container(
                 width: 50,
                 height: 50,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  gradient: LinearGradient(
-                    // colors: [Color(0xFF22D3EE), Color(0xFF06B6D4)],
-                    colors: [
-                      AppColors.primary.withValues(alpha: 0.6),
-                      AppColors.primary.withValues(alpha: 0.7),
-                    ],
-                  ),
+                  color: AppColors.darkBackground,
                   boxShadow: [
                     BoxShadow(
-                      // color: const Color(0xFF22D3EE).withValues(alpha: 0.6),
-                      color: AppColors.primary.withValues(alpha: 0.2),
+                      color: AppColors.darkBackground.withValues(alpha: 0.2),
                       blurRadius: 20,
                       spreadRadius: 4,
                     ),
                   ],
                 ),
                 child: const Icon(
-                  Icons.center_focus_weak,
+                  Icons.add,
                   color: AppColors.darkText,
                   size: 28,
                 ),

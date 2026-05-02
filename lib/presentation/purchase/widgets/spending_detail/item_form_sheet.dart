@@ -1,5 +1,6 @@
 import 'package:electra/common/widgets/bottom_sheets/app_bottom_sheet.dart';
 import 'package:electra/common/widgets/dialogs/app_confirm_dialog.dart';
+import 'package:electra/common/widgets/text_fields/catetory_selector.dart';
 import 'package:electra/common/widgets/text_fields/text_field.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/domain/entities/purchase/purchase_item.dart';
@@ -142,7 +143,7 @@ class _ItemFormSheetBodyState extends State<_ItemFormSheetBody> {
               // ── 2. Category ──────────────────────────────────────────
               const _FieldLabel(label: 'Category'),
               const SizedBox(height: 6),
-              _CategorySelectField(
+              CategorySelectField(
                 selected: _selectedCategory,
                 onTap: _pickCategory,
               ),
@@ -184,61 +185,6 @@ class _ItemFormSheetBodyState extends State<_ItemFormSheetBody> {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// CATEGORY SELECT FIELD
-// ─────────────────────────────────────────────────────────────────────────────
-
-class _CategorySelectField extends StatelessWidget {
-  final CategoryMeta selected;
-  final VoidCallback onTap;
-
-  const _CategorySelectField({required this.selected, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-        decoration: BoxDecoration(
-          color: const Color(0xFFE8E8E8),
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: AppColors.dividerLight),
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: 30,
-              height: 30,
-              decoration: BoxDecoration(
-                color: selected.color.withValues(alpha: 0.12),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Icon(selected.icon, size: 16, color: selected.color),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Text(
-                selected.label,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.lightText,
-                ),
-              ),
-            ),
-            const Icon(
-              Icons.keyboard_arrow_down_rounded,
-              size: 20,
-              color: AppColors.lightTextSecondary,
-            ),
-          ],
         ),
       ),
     );
