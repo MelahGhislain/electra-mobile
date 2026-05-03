@@ -196,7 +196,7 @@ class _ReceiptPresent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-  
+
     return Padding(
       padding: const EdgeInsets.all(14),
       child: Row(
@@ -212,7 +212,7 @@ class _ReceiptPresent extends StatelessWidget {
             child: Icon(
               Icons.receipt_outlined,
               size: 22,
-              color: theme.iconTheme.color
+              color: theme.iconTheme.color,
             ),
           ),
           const SizedBox(width: 12),
@@ -230,9 +230,7 @@ class _ReceiptPresent extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   _formatUploadDate(receipt.uploadedAt),
-                  style: const TextStyle(
-                    fontSize: AppFontSize.xs,
-                  ),
+                  style: const TextStyle(fontSize: AppFontSize.xs),
                 ),
               ],
             ),
@@ -290,10 +288,7 @@ class _ReceiptAbsent extends StatelessWidget {
               borderRadius: BorderRadius.circular(11),
               border: Border.all(color: theme.dividerColor),
             ),
-            child: const Icon(
-              Icons.receipt_long_outlined,
-              size: 22,
-            ),
+            child: const Icon(Icons.receipt_long_outlined, size: 22),
           ),
           const SizedBox(width: 12),
           const Expanded(

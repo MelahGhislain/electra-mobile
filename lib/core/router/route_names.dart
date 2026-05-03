@@ -9,4 +9,5 @@ class RouteNames {
   static const String insights = 'insights';
   static const String expenseRecorder = 'expense_recorder';
   static const String settings = 'settings';
+  static const String subscription = 'subscription';
 }

@@ -221,7 +221,7 @@ class _AddPurchaseBodyState extends State<_AddPurchaseBody> {
         : CategoryMeta.fromKey('other');
     _paymentMethod = p != null
         ? p.payment.method.name[0].toUpperCase() +
-            p.payment.method.name.substring(1)
+              p.payment.method.name.substring(1)
         : 'Card';
   }
 
@@ -280,8 +280,9 @@ class _AddPurchaseBodyState extends State<_AddPurchaseBody> {
               label: 'Title',
               hint: 'e.g. Santa lucia',
               textCapitalization: TextCapitalization.words,
-              validator: (v) =>
-                  (v == null || v.trim().isEmpty) ? 'Please enter a name' : null,
+              validator: (v) => (v == null || v.trim().isEmpty)
+                  ? 'Please enter a name'
+                  : null,
             ),
 
             const SizedBox(height: 16),
@@ -320,9 +321,8 @@ class _AddPurchaseBodyState extends State<_AddPurchaseBody> {
                     keyboardType: const TextInputType.numberWithOptions(
                       decimal: true,
                     ),
-                    validator: (v) => (v == null || v.trim().isEmpty)
-                        ? 'Enter amount'
-                        : null,
+                    validator: (v) =>
+                        (v == null || v.trim().isEmpty) ? 'Enter amount' : null,
                   ),
                 ),
                 const SizedBox(width: 10),

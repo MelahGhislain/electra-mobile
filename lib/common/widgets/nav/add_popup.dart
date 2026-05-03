@@ -1,8 +1,8 @@
-// Inside layout_scaffold.dart or extracted to its own file
-
 import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
+import 'package:electra/core/router/route_names.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class AddPopup extends StatelessWidget {
   final Animation<double> animation;
@@ -138,7 +138,9 @@ class _PopupRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: !isLocked
+          ? onTap
+          : () => context.pushNamed(RouteNames.subscription),
       borderRadius: BorderRadius.circular(12),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),

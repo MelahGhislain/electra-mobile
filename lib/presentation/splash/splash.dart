@@ -66,22 +66,6 @@ class _SplashScreenState extends State<SplashScreen> {
               color: Color.fromARGB(255, 0, 0, 0),
             ),
           ),
-
-          /// ✅ Light overlay (important for readability)
-          Positioned.fill(
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Colors.white.withValues(alpha: 0.2),
-                    Colors.white.withValues(alpha: 0.2),
-                  ],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                ),
-              ),
-            ),
-          ),
         ],
       ),
     );

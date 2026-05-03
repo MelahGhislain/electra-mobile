@@ -211,10 +211,7 @@ class _SpendingDetailView extends StatelessWidget {
               label: 'Edit purchase',
               onTap: () {
                 Navigator.pop(context);
-                AddPurchaseBottomSheet.show(
-                  context,
-                  purchase: purchase
-                );
+                AddPurchaseBottomSheet.show(context, purchase: purchase);
               },
             ),
 
@@ -364,7 +361,7 @@ class _SpendingDetailContent extends StatelessWidget {
           const SpendingDetailItemsSection(),
 
           const SpendingDetailSectionHeader(title: 'Receipt'),
-          
+
           SpendingDetailReceiptSection(
             receipt: purchase.receipt,
             onView: () {

@@ -52,10 +52,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   // ── Auth ──────────────────────────────────────────────────────────────────
 
-  Future<void> _showLogoutDialog(BuildContext context) async {
+  Future<void> _showLogoutDialog(BuildContext context, User? user) async {
     final confirmed = await LogoutConfirmationDialog.show(context);
     if (confirmed && context.mounted) {
-      context.read<AuthCubit>().logout();
+      context.read<AuthCubit>().logout(user);
       context.read<AppAuthCubit>().onLogout();
     }
   }
@@ -273,7 +273,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                         onTap: isAuthLoading
                             ? null
-                            : () => _showLogoutDialog(context),
+                            : () => _showLogoutDialog(context, user),
                       ),
                     );
                   },

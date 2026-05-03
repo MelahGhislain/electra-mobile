@@ -99,111 +99,118 @@ class _InsightsContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final insights = state.insights;
 
-    return SingleChildScrollView(
-      physics: const BouncingScrollPhysics(),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // ── Period selector + navigation ──────────────────────────────
-          InsightsHeader(
-            period: state.period,
-            label: insights.meta.label,
-            onPrevious: () => context.read<InsightsCubit>().previousPeriod(),
-            onNext: () => context.read<InsightsCubit>().nextPeriod(),
-            onPeriodChanged: (p) => context.read<InsightsCubit>().setPeriod(p),
-          ),
-
-          const SizedBox(height: 12),
-
-          // ── Total + budget card ───────────────────────────────────────
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: InsightsTotalsCard(
-              totals: insights.totals,
-              budget: insights.budget,
-              periodLabel: insights.meta.label,
+    return RefreshIndicator(
+      backgroundColor: AppColors.lightBackground,
+      color: AppColors.darkBackground,
+      onRefresh: () => context.read<InsightsCubit>().load(),
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // ── Period selector + navigation ──────────────────────────────
+            InsightsHeader(
+              period: state.period,
+              label: insights.meta.label,
+              onPrevious: () => context.read<InsightsCubit>().previousPeriod(),
+              onNext: () => context.read<InsightsCubit>().nextPeriod(),
+              onPeriodChanged: (p) =>
+                  context.read<InsightsCubit>().setPeriod(p),
             ),
-          ),
 
-          const SizedBox(height: 20),
+            const SizedBox(height: 12),
 
-          // ── Spending overview (donut) ──────────────────────────────────
-          _SectionHeader(
-            title: 'Spending overview',
-            trailing: 'View by categories',
-          ),
-          const SizedBox(height: 12),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: InsightsSpendingOverview(
-              categories: insights.categoryBreakdown,
-              total: insights.totals.amount,
-              currency: insights.totals.currency,
-            ),
-          ),
-
-          const SizedBox(height: 24),
-
-          // ── Key insights (2×2 grid) ────────────────────────────────────
-          _SectionHeader(title: 'Key insights'),
-          const SizedBox(height: 12),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: InsightsKeyInsightsGrid(insights: insights.keyInsights),
-          ),
-
-          const SizedBox(height: 24),
-
-          // ── Top spending categories ────────────────────────────────────
-          _SectionHeader(
-            title: 'Top spending categories',
-            trailing: 'View all',
-          ),
-          const SizedBox(height: 12),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: InsightsTopCategories(
-              categories: insights.categoryBreakdown,
-            ),
-          ),
-
-          const SizedBox(height: 24),
-
-          // ── Spending trend (line chart) ───────────────────────────────
-          _SectionHeader(
-            title: 'Spending trend',
-            trailing: 'vs ${_previousLabel(insights.meta.label, state.period)}',
-          ),
-          const SizedBox(height: 12),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: InsightsTrendSection(trend: insights.trend),
-          ),
-
-          const SizedBox(height: 24),
-
-          // ── Payment methods + Merchant breakdown ──────────────────────
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: InsightsBottomRow(
-              paymentMethods: insights.paymentMethods,
-              merchants: insights.topMerchants,
-            ),
-          ),
-
-          const SizedBox(height: 16),
-
-          // ── Savings opportunity ───────────────────────────────────────
-          if (insights.savingsOpportunity != null)
+            // ── Total + budget card ───────────────────────────────────────
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: InsightsSavingsCard(
-                opportunity: insights.savingsOpportunity!,
+              child: InsightsTotalsCard(
+                totals: insights.totals,
+                budget: insights.budget,
+                periodLabel: insights.meta.label,
               ),
             ),
 
-          const SizedBox(height: 32),
-        ],
+            const SizedBox(height: 20),
+
+            // ── Spending overview (donut) ──────────────────────────────────
+            _SectionHeader(
+              title: 'Spending overview',
+              trailing: 'View by categories',
+            ),
+            const SizedBox(height: 12),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: InsightsSpendingOverview(
+                categories: insights.categoryBreakdown,
+                total: insights.totals.amount,
+                currency: insights.totals.currency,
+              ),
+            ),
+
+            const SizedBox(height: 24),
+
+            // ── Key insights (2×2 grid) ────────────────────────────────────
+            _SectionHeader(title: 'Key insights'),
+            const SizedBox(height: 12),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: InsightsKeyInsightsGrid(insights: insights.keyInsights),
+            ),
+
+            const SizedBox(height: 24),
+
+            // ── Top spending categories ────────────────────────────────────
+            _SectionHeader(
+              title: 'Top spending categories',
+              trailing: 'View all',
+            ),
+            const SizedBox(height: 12),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: InsightsTopCategories(
+                categories: insights.categoryBreakdown,
+              ),
+            ),
+
+            const SizedBox(height: 24),
+
+            // ── Spending trend (line chart) ───────────────────────────────
+            _SectionHeader(
+              title: 'Spending trend',
+              trailing:
+                  'vs ${_previousLabel(insights.meta.label, state.period)}',
+            ),
+            const SizedBox(height: 12),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: InsightsTrendSection(trend: insights.trend),
+            ),
+
+            const SizedBox(height: 24),
+
+            // ── Payment methods + Merchant breakdown ──────────────────────
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: InsightsBottomRow(
+                paymentMethods: insights.paymentMethods,
+                merchants: insights.topMerchants,
+              ),
+            ),
+
+            const SizedBox(height: 16),
+
+            // ── Savings opportunity ───────────────────────────────────────
+            if (insights.savingsOpportunity != null)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: InsightsSavingsCard(
+                  opportunity: insights.savingsOpportunity!,
+                ),
+              ),
+
+            const SizedBox(height: 32),
+          ],
+        ),
       ),
     );
   }

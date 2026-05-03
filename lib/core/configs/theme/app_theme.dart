@@ -23,6 +23,8 @@ class AppTheme {
         backgroundColor: AppColors.lightBackground,
         foregroundColor: AppColors.lightText,
         elevation: 0,
+        scrolledUnderElevation: 0, // ✅
+        surfaceTintColor: Colors.transparent, // ✅
         centerTitle: false,
       ),
 
@@ -113,6 +115,8 @@ class AppTheme {
         backgroundColor: AppColors.darkBackground,
         foregroundColor: AppColors.darkText,
         elevation: 0,
+        scrolledUnderElevation: 0, // ✅
+        surfaceTintColor: Colors.transparent, // ✅
         centerTitle: false,
       ),
 

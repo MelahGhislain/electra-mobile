@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:electra/core/enums/auth_provider_enum.dart';
 import 'package:electra/core/errors/dio_error_mapper.dart';
 import 'package:electra/core/errors/failures.dart';
 import 'package:electra/core/utils/storage/auth_storage.dart';
@@ -88,11 +89,13 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Either<Failure, void>> logout() async {
+  Future<Either<Failure, void>> logout(AuthProviderEnum? authProvider) async {
     try {
       await remoteDataSource.logout();
       await storage.clearTokens();
-      await googleAuthDataSource.signOut();
+      if (authProvider == AuthProviderEnum.google){
+        await googleAuthDataSource.signOut();
+      }
       return const Right(null);
     } on DioException catch (e) {
       return Left(mapDioError(e));

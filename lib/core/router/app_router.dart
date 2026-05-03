@@ -17,6 +17,7 @@ import 'package:electra/presentation/purchase/pages/spending_detail_screen.dart'
 import 'package:electra/presentation/purchase/pages/spending_screen.dart';
 import 'package:electra/presentation/settings/pages/settings_screen.dart';
 import 'package:electra/presentation/splash/splash.dart';
+import 'package:electra/presentation/subscription/pages/subcription_screen.dart';
 import 'package:electra/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -173,6 +174,12 @@ class AppRouter {
                       ),
             );
           },
+        ),
+
+        GoRoute(
+          path: '/subscription',
+          name: RouteNames.subscription,
+          builder: (context, state) => const SubscriptionScreen(),
         ),
 
         // ── Protected: bottom nav shell ───────────────────────────────────

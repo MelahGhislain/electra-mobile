@@ -1,3 +1,4 @@
+import 'package:electra/core/enums/auth_provider_enum.dart';
 import 'package:electra/domain/repository/auth/auth_repository.dart';
 
 import 'package:dartz/dartz.dart';
@@ -8,7 +9,7 @@ class LogoutUser {
 
   LogoutUser(this.repository);
 
-  Future<Either<Failure, void>> call() async {
-    return repository.logout();
+  Future<Either<Failure, void>> call(AuthProviderEnum? authProvider) async {
+    return repository.logout(authProvider);
   }
 }

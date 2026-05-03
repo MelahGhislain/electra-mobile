@@ -1,4 +1,6 @@
+import 'package:electra/core/enums/auth_provider_enum.dart';
 import 'package:electra/data/repository/auth/auth_repository_impl.dart';
+import 'package:electra/domain/entities/user/user.dart';
 import 'package:electra/domain/usecases/auth/login_user.dart';
 import 'package:electra/domain/usecases/auth/logout_user.dart';
 import 'package:electra/domain/usecases/auth/register_user.dart';
@@ -48,9 +50,9 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-  Future<void> logout() async {
+  Future<void> logout(User? user) async {
     emit(const AuthLoading());
-    final result = await logoutUseCase();
+    final result = await logoutUseCase(_mapProvider(user?.provider));
     result.fold(
       (failure) => emit(AuthFailure(failure.message)),
       (_) => emit(const AuthLoggedOut()),
@@ -84,4 +86,17 @@ class AuthCubit extends Cubit<AuthState> {
   // ── Helpers ────────────────────────────────────────────────────────────────
 
   void reset() => emit(const AuthInitial());
+
+  AuthProviderEnum? _mapProvider(String? provider) {
+  switch (provider) {
+    case 'google':
+      return AuthProviderEnum.google;
+    case 'apple':
+      return AuthProviderEnum.apple;
+    case 'email':
+      return AuthProviderEnum.email;
+    default:
+      return null;
+  }
+}
 }
