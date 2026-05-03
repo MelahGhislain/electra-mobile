@@ -1,3 +1,4 @@
+import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/presentation/home/utils/home_utils.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class RecentActivityCard extends StatelessWidget {
     if (items.isEmpty) return const SizedBox.shrink();
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
+      padding: const EdgeInsets.fromLTRB(16, 20, 18, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -28,19 +29,18 @@ class RecentActivityCard extends StatelessWidget {
               const Text(
                 'Recent Activity',
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: AppFontSize.lg,
                   fontWeight: FontWeight.w700,
-                  color: Color(0xFF111827),
                 ),
               ),
               GestureDetector(
                 onTap: onViewAll,
-                child: const Text(
+                child: Text(
                   'View all',
                   style: TextStyle(
-                    fontSize: 12,
+                    fontSize: AppFontSize.md,
                     fontWeight: FontWeight.w400,
-                    color: AppColors.primary,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
               ),
@@ -57,13 +57,7 @@ class RecentActivityCard extends StatelessWidget {
             return Column(
               children: [
                 _ActivityRow(item: item),
-                if (!isLast)
-                  Divider(
-                    height: 1,
-                    thickness: 1,
-                    color: Colors.grey.shade100,
-                    indent: 72,
-                  ),
+                if (!isLast) Divider(height: 1, thickness: 1, indent: 72),
               ],
             );
           }),
@@ -99,9 +93,8 @@ class _ActivityRow extends StatelessWidget {
                 Text(
                   item.title,
                   style: const TextStyle(
-                    fontSize: 15,
+                    fontSize: AppFontSize.lg,
                     fontWeight: FontWeight.w600,
-                    color: Color(0xFF111827),
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -109,10 +102,7 @@ class _ActivityRow extends StatelessWidget {
                   children: [
                     Text(
                       RecentActivityHelper.formatRelativeTime(item.date),
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: Color(0xFF9CA3AF),
-                      ),
+                      style: const TextStyle(fontSize: AppFontSize.sm),
                     ),
                     const SizedBox(width: 6),
                     _CategoryChip(
@@ -131,16 +121,15 @@ class _ActivityRow extends StatelessWidget {
           Text(
             '-\$${item.amount.toStringAsFixed(2)}',
             style: const TextStyle(
-              fontSize: 15,
+              fontSize: AppFontSize.lg,
               fontWeight: FontWeight.w500,
-              color: Color(0xFF111827),
             ),
           ),
           const SizedBox(width: 4),
-          const Icon(
+          Icon(
             Icons.chevron_right_rounded,
-            size: 18,
-            color: AppColors.lightTextSecondary,
+            size: 20,
+            color: Theme.of(context).iconTheme.color,
           ),
         ],
       ),
@@ -192,7 +181,7 @@ class _CategoryChip extends StatelessWidget {
       child: Text(
         label,
         style: TextStyle(
-          fontSize: 11,
+          fontSize: AppFontSize.sm,
           fontWeight: FontWeight.w600,
           color: color,
         ),

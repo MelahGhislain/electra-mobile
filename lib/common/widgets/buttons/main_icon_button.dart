@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:electra/core/configs/theme/app_colors.dart';
 
 class MainIconButton extends StatelessWidget {
   final VoidCallback? onTap;
@@ -35,11 +34,12 @@ class MainIconButton extends StatelessWidget {
           child: Container(
             width: size,
             height: size,
-            padding: padding,
             decoration: BoxDecoration(
-              color: backgroundColor ?? AppColors.lightSurface,
+              color: backgroundColor ?? Theme.of(context).colorScheme.onSurface,
               borderRadius: BorderRadius.circular(borderRadius),
-              border: Border.all(color: borderColor ?? AppColors.dividerLight),
+              border: Border.all(
+                color: borderColor ?? Theme.of(context).dividerColor,
+              ),
             ),
             child: Center(child: icon),
           ),

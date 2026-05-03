@@ -1,3 +1,4 @@
+import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:glassmorphism/glassmorphism.dart';
@@ -16,6 +17,8 @@ class CustomBottomNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
+
     return GlassmorphicContainer(
       width: double.infinity,
       height: 70,
@@ -24,12 +27,23 @@ class CustomBottomNav extends StatelessWidget {
       linearGradient: LinearGradient(
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
-        colors: [AppColors.lightSurface, AppColors.lightSurface],
+        colors: isDarkTheme
+            ? [
+                AppColors.darkSurfaceAlt.withValues(alpha: 0.5),
+                AppColors.darkSurfaceAlt.withValues(alpha: 0.5),
+              ]
+            : [
+                AppColors.lightSurface.withValues(alpha: 0.5),
+                AppColors.lightSurface.withValues(alpha: 0.5),
+              ],
       ),
-      borderGradient: const LinearGradient(
-        colors: [Colors.white24, Colors.transparent],
+      borderGradient: LinearGradient(
+        colors: [
+          Theme.of(context).dividerColor,
+          Theme.of(context).dividerColor,
+        ],
       ),
-      border: 1.5,
+      border: 1,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: Row(
@@ -108,6 +122,10 @@ class _NavItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
+    final textColor = isDarkTheme
+        ? AppColors.darkText
+        : AppColors.lightTextSecondary;
     return GestureDetector(
       onTap: onTap,
       child: Column(
@@ -117,19 +135,19 @@ class _NavItem extends StatelessWidget {
         children: [
           Icon(
             icon,
-            size: 28,
+            size: isSelected ? 32 : 28,
             color: isSelected
-                ? AppColors.primary
-                : AppColors.lightTextSecondary,
+                ? Theme.of(context).colorScheme.primary
+                : textColor,
           ),
           const SizedBox(height: 1),
           Text(
             label,
             style: TextStyle(
               color: isSelected
-                  ? AppColors.primary
-                  : AppColors.lightTextSecondary,
-              fontSize: 10,
+                  ? Theme.of(context).colorScheme.primary
+                  : textColor,
+              fontSize: isSelected ? 12 : 10,
             ),
           ),
         ],

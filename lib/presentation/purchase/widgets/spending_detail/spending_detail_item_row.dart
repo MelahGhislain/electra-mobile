@@ -1,5 +1,5 @@
 import 'package:electra/common/widgets/bottom_sheets/app_bottom_sheet.dart';
-import 'package:electra/core/configs/theme/app_colors.dart';
+import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/domain/entities/purchase/purchase_item.dart';
 import 'package:electra/core/utils/category_meta.dart';
 import 'package:electra/presentation/purchase/widgets/spending_detail/item_form_sheet.dart';
@@ -48,17 +48,14 @@ class SpendingDetailItemRow extends StatelessWidget {
         children: [
           ListTile(
             contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-            leading: const Icon(
+            leading: Icon(
               Icons.edit_rounded,
-              color: AppColors.primary,
+              color: Theme.of(context).iconTheme.color,
               size: 20,
             ),
             title: const Text(
               'Edit item',
-              style: TextStyle(
-                color: AppColors.lightText,
-                fontWeight: FontWeight.w500,
-              ),
+              style: TextStyle(fontWeight: FontWeight.w500),
             ),
             onTap: () {
               onEdit?.call(item);
@@ -66,15 +63,15 @@ class SpendingDetailItemRow extends StatelessWidget {
           ),
           ListTile(
             contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-            leading: const Icon(
+            leading: Icon(
               Icons.delete_outline_rounded,
-              color: Color(0xFFEF4444),
+              color: Theme.of(context).colorScheme.error,
               size: 20,
             ),
-            title: const Text(
+            title: Text(
               'Delete item',
               style: TextStyle(
-                color: Color(0xFFEF4444),
+                color: Theme.of(context).colorScheme.error,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -93,18 +90,20 @@ class SpendingDetailItemRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     final meta = CategoryMeta.fromKey(item.category.normalizedName);
     final pct = _percentOfTotal;
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.cardTheme.color,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFEEF0F3)),
+        border: Border.all(color: theme.dividerColor),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
+            color: theme.primaryColor.withValues(alpha: 0.06),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -137,9 +136,8 @@ class SpendingDetailItemRow extends StatelessWidget {
                       Text(
                         item.name,
                         style: const TextStyle(
-                          fontSize: 16,
+                          fontSize: AppFontSize.md,
                           fontWeight: FontWeight.w700,
-                          color: AppColors.lightText,
                           letterSpacing: -0.2,
                         ),
                       ),
@@ -156,7 +154,7 @@ class SpendingDetailItemRow extends StatelessWidget {
                         child: Text(
                           item.category.name,
                           style: TextStyle(
-                            fontSize: 11,
+                            fontSize: AppFontSize.sm,
                             fontWeight: FontWeight.w600,
                             color: meta.color,
                           ),
@@ -165,10 +163,7 @@ class SpendingDetailItemRow extends StatelessWidget {
                       const SizedBox(height: 4),
                       Text(
                         '${item.quantity} × \$${item.unitPrice.toStringAsFixed(2)}',
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: AppColors.lightText,
-                        ),
+                        style: const TextStyle(fontSize: AppFontSize.xs),
                       ),
                     ],
                   ),
@@ -180,19 +175,15 @@ class SpendingDetailItemRow extends StatelessWidget {
                     Text(
                       '\$${item.totalPrice.toStringAsFixed(2)}',
                       style: const TextStyle(
-                        fontSize: 16,
+                        fontSize: AppFontSize.md,
                         fontWeight: FontWeight.w800,
-                        color: AppColors.lightText,
                         letterSpacing: -0.3,
                       ),
                     ),
                     const SizedBox(height: 3),
                     Text(
                       '${pct.toStringAsFixed(1)}% of total',
-                      style: const TextStyle(
-                        fontSize: 13,
-                        color: AppColors.lightTextSecondary,
-                      ),
+                      style: const TextStyle(fontSize: AppFontSize.sm),
                     ),
                   ],
                 ),
@@ -203,11 +194,7 @@ class SpendingDetailItemRow extends StatelessWidget {
                   onTap: () => _showItemOptions(context),
                   child: const Padding(
                     padding: EdgeInsets.only(left: 4, top: 2),
-                    child: Icon(
-                      Icons.more_vert_rounded,
-                      size: 18,
-                      color: AppColors.lightText,
-                    ),
+                    child: Icon(Icons.more_vert_rounded, size: AppFontSize.lg),
                   ),
                 ),
               ],
@@ -219,17 +206,15 @@ class SpendingDetailItemRow extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
               decoration: BoxDecoration(
-                color: const Color(0xFFF8FAFC),
+                color: theme.listTileTheme.iconColor?.withValues(alpha: 0.09),
+                border: Border.all(color: theme.dividerColor, width: 0.5),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Row(
                 children: [
                   Text(
                     _itemInsights(),
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: AppColors.lightText,
-                    ),
+                    style: const TextStyle(fontSize: AppFontSize.xs),
                   ),
                   const SizedBox(width: 14),
                   if (item.isEdited) ...[

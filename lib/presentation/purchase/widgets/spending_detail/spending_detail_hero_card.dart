@@ -1,3 +1,4 @@
+import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/domain/entities/purchase/purchase.dart';
 import 'package:electra/core/utils/category_meta.dart';
@@ -59,6 +60,9 @@ class SpendingDetailHeroCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     final categoryKey = purchase.items.isNotEmpty
         ? purchase.items.first.category.normalizedName
         : 'other';
@@ -68,9 +72,15 @@ class SpendingDetailHeroCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.fromLTRB(20, 16, 20, 0),
       decoration: BoxDecoration(
-        color: meta.color.withValues(alpha: 0.06),
+        color: !isDark
+            ? meta.color.withValues(alpha: 0.06)
+            : meta.color.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: meta.color.withValues(alpha: 0.15)),
+        border: Border.all(
+          color: !isDark
+              ? meta.color.withValues(alpha: 0.15)
+              : meta.color.withValues(alpha: 0.25),
+        ),
       ),
       child: Column(
         children: [
@@ -84,7 +94,6 @@ class SpendingDetailHeroCard extends StatelessWidget {
                   width: 52,
                   height: 52,
                   decoration: BoxDecoration(
-                    color: AppColors.lightSurface,
                     borderRadius: BorderRadius.circular(14),
                     border: Border.all(
                       color: meta.color.withValues(alpha: 0.2),
@@ -100,19 +109,15 @@ class SpendingDetailHeroCard extends StatelessWidget {
                       Text(
                         merchantName,
                         style: const TextStyle(
-                          fontSize: 20,
+                          fontSize: AppFontSize.xl,
                           fontWeight: FontWeight.bold,
-                          color: AppColors.lightText,
                           letterSpacing: -0.3,
                         ),
                       ),
                       const SizedBox(height: 3),
                       Text(
                         _formatDateTime(purchase.purchaseDate),
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: AppColors.lightText,
-                        ),
+                        style: const TextStyle(fontSize: AppFontSize.sm),
                       ),
                     ],
                   ),
@@ -122,16 +127,13 @@ class SpendingDetailHeroCard extends StatelessWidget {
                   children: [
                     const Text(
                       'Total',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: AppColors.lightText,
-                      ),
+                      style: TextStyle(fontSize: AppFontSize.sm),
                     ),
                     const SizedBox(height: 2),
                     Text(
                       '\$${purchase.totals.amount.toStringAsFixed(2)}',
                       style: TextStyle(
-                        fontSize: 22,
+                        fontSize: AppFontSize.xl,
                         fontWeight: FontWeight.bold,
                         color: meta.color,
                         letterSpacing: -0.5,
@@ -144,12 +146,7 @@ class SpendingDetailHeroCard extends StatelessWidget {
           ),
 
           // Divider
-          Divider(
-            height: 1,
-            color: meta.color.withValues(alpha: 0.15),
-            indent: 16,
-            endIndent: 16,
-          ),
+          Divider(height: 1, indent: 16, endIndent: 16),
 
           // Summary row: items | avg price | payment
           Padding(
@@ -209,17 +206,13 @@ class _SummaryCell extends StatelessWidget {
           Text(
             value,
             style: const TextStyle(
-              fontSize: 14,
+              fontSize: AppFontSize.sm,
               fontWeight: FontWeight.w600,
-              color: AppColors.lightText,
             ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 2),
-          Text(
-            label,
-            style: const TextStyle(fontSize: 12, color: AppColors.lightText),
-          ),
+          Text(label, style: const TextStyle(fontSize: 12)),
         ],
       ),
     );

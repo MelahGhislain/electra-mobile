@@ -1,5 +1,4 @@
 import 'package:electra/common/blocs/auth/app_auth_cubit.dart';
-import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/core/router/route_names.dart';
 import 'package:electra/domain/entities/purchase/purchase.dart';
 import 'package:electra/presentation/home/utils/home_summary.dart';
@@ -108,7 +107,6 @@ class _HomeScreenState extends State<HomeScreen> {
               );
 
               return Scaffold(
-                backgroundColor: AppColors.lightBackground,
                 body: SafeArea(
                   child: CustomScrollView(
                     slivers: [
@@ -198,7 +196,6 @@ class _ErrorScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightBackground,
       body: SafeArea(
         child: Center(
           child: Padding(
@@ -209,7 +206,7 @@ class _ErrorScreen extends StatelessWidget {
                 Icon(
                   Icons.wifi_off_rounded,
                   size: 56,
-                  color: Colors.grey.shade400,
+                  color: Theme.of(context).iconTheme.color,
                 ),
                 const SizedBox(height: 16),
                 Text(

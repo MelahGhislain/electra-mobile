@@ -1,5 +1,6 @@
 import 'package:electra/common/helpers/average.dart';
 import 'package:electra/common/widgets/bottom_sheets/app_bottom_sheet.dart';
+import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/core/utils/helpers.dart';
 import 'package:electra/domain/entities/purchase/purchase.dart';
@@ -164,9 +165,8 @@ class _SpendingDetailItemsSectionState
                   Text(
                     'Items (${activeItems.length})',
                     style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w800,
-                      color: AppColors.lightText,
+                      fontSize: AppFontSize.lg,
+                      fontWeight: FontWeight.w600,
                       letterSpacing: -0.3,
                     ),
                   ),
@@ -179,11 +179,11 @@ class _SpendingDetailItemsSectionState
                       onTap: isMutating ? null : _showSortPicker,
                       child: Row(
                         children: [
-                          const Icon(Icons.sort_rounded, size: 16),
+                          const Icon(Icons.sort_rounded, size: AppFontSize.md),
                           const SizedBox(width: 4),
                           Text(
                             _sort.label,
-                            style: const TextStyle(fontSize: 12),
+                            style: const TextStyle(fontSize: AppFontSize.sm),
                           ),
                         ],
                       ),
@@ -210,14 +210,14 @@ class _SpendingDetailItemsSectionState
                           children: [
                             Icon(
                               Icons.add_circle_outline_rounded,
-                              size: 18,
+                              size: AppFontSize.lg,
                               color: AppColors.darkText,
                             ),
                             SizedBox(width: 4),
                             Text(
                               'Add item',
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: AppFontSize.md,
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.darkText,
                               ),
@@ -245,10 +245,7 @@ class _SpendingDetailItemsSectionState
                   child: const Center(
                     child: Text(
                       'No items recorded',
-                      style: TextStyle(
-                        color: AppColors.lightTextSecondary,
-                        fontSize: 14,
-                      ),
+                      style: TextStyle(fontSize: AppFontSize.sm),
                     ),
                   ),
                 )
@@ -279,8 +276,6 @@ class _SpendingDetailItemsSectionState
             ] else ...[
               _GroupView(purchase: purchase),
             ],
-
-            const SizedBox(height: 16),
           ],
         );
       },
@@ -408,11 +403,7 @@ class _GroupView extends StatelessWidget {
               ...categoryItems.map(
                 (item) => Column(
                   children: [
-                    const Divider(
-                      height: 1,
-                      color: Color(0xFFF1F5F9),
-                      indent: 14,
-                    ),
+                    const Divider(height: 1, indent: 14),
                     Padding(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 14,
@@ -457,66 +448,6 @@ class _GroupView extends StatelessWidget {
           ),
         );
       }).toList(),
-    );
-  }
-}
-
-// ─────────────────────────────────────────
-// VIEW TAB
-// ─────────────────────────────────────────
-
-class _ViewTab extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final bool selected;
-  final VoidCallback onTap;
-
-  const _ViewTab({
-    required this.icon,
-    required this.label,
-    required this.selected,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 160),
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
-        decoration: BoxDecoration(
-          color: selected ? Colors.white : Colors.transparent,
-          borderRadius: BorderRadius.circular(9),
-          boxShadow: selected
-              ? [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.06),
-                    blurRadius: 6,
-                    offset: const Offset(0, 1),
-                  ),
-                ]
-              : [],
-        ),
-        child: Row(
-          children: [
-            Icon(
-              icon,
-              size: 14,
-              color: selected ? AppColors.primary : Colors.grey.shade400,
-            ),
-            const SizedBox(width: 5),
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
-                color: selected ? AppColors.lightText : Colors.grey.shade500,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

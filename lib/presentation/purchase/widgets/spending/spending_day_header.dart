@@ -1,5 +1,5 @@
+import 'package:electra/core/configs/fonts.dart';
 import 'package:flutter/material.dart';
-import 'package:electra/core/configs/theme/app_colors.dart';
 
 class SpendingDayHeader extends StatelessWidget {
   final DateTime date;
@@ -54,12 +54,10 @@ class SpendingDayHeader extends StatelessWidget {
           Text(
             _formatLabel(),
             style: const TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w600,
-              color: AppColors.lightText,
+              fontSize: AppFontSize.md,
+              fontWeight: FontWeight.w500,
             ),
           ),
-          // const Spacer(),
         ],
       ),
     );

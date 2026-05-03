@@ -193,7 +193,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
-        backgroundColor: Colors.red.shade700,
+        backgroundColor: Theme.of(context).colorScheme.error,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         margin: const EdgeInsets.all(16),
@@ -236,22 +236,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
               userState is UserLoading || userState is UserInitial;
 
           return Scaffold(
-            backgroundColor: AppColors.lightBackground,
             appBar: AppBar(
-              backgroundColor: AppColors.lightBackground,
               elevation: 0,
               title: const Text(
                 'Settings',
-                style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 20,
-                  color: AppColors.lightText,
-                ),
+                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
               ),
               actions: [
                 // Non-blocking save indicator
                 if (isSaving)
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.only(right: 8),
                     child: Center(
                       child: SizedBox(
@@ -259,7 +253,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         height: 18,
                         child: CircularProgressIndicator(
                           strokeWidth: 2,
-                          color: AppColors.primary,
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
                     ),
@@ -272,9 +266,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     return Padding(
                       padding: const EdgeInsets.only(right: 16),
                       child: MainIconButton(
-                        icon: const Icon(
+                        icon: Icon(
                           Icons.logout_rounded,
-                          color: AppColors.lightText,
+                          color: Theme.of(context).textTheme.titleLarge!.color,
                           size: 20,
                         ),
                         onTap: isAuthLoading
@@ -429,7 +423,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 icon: Icons.delete_outline_rounded,
                                 title: 'Delete Account',
                                 subtitle: 'Permanently remove your account',
-                                iconColor: Colors.red.shade600,
+                                iconColor: Theme.of(context).colorScheme.error,
                                 showChevron: true,
                                 onTap: user != null
                                     ? () => _openDeleteAccount(user)
@@ -462,9 +456,9 @@ class _SettingsGroup extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardTheme.color,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.dividerLight),
+        border: Border.all(color: Theme.of(context).dividerColor, width: 1),
       ),
       child: Column(children: children),
     );

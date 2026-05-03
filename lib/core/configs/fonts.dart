@@ -6,6 +6,7 @@ class AppFontSize {
   static const double xl = 20.0;
   static const double xxl = 24.0;
   static const double xxxl = 32.0;
+  static const double xxxxl = 36.0;
 
   // Semantic helpers (use these in most places)
   static const double buttonTextSmall = md; // 14

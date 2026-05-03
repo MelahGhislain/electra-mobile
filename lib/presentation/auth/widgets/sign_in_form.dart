@@ -107,12 +107,12 @@ class _SignInFormState extends State<SignInForm> {
           // OR Divider
           Row(
             children: [
-              Expanded(child: Divider(color: Colors.grey[300])),
+              Expanded(child: Divider()),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 child: Text('OR', style: TextStyle(color: Colors.grey)),
               ),
-              Expanded(child: Divider(color: Colors.grey[300])),
+              Expanded(child: Divider()),
             ],
           ),
 

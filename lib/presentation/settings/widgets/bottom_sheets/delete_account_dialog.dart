@@ -1,3 +1,4 @@
+import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/presentation/user/bloc/user_cubit.dart';
 import 'package:electra/presentation/user/bloc/user_state.dart';
@@ -51,6 +52,9 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return BlocListener<UserCubit, UserState>(
       listener: (context, state) {
         if (state is UserFailure) {
@@ -58,14 +62,14 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.message),
-              backgroundColor: Colors.red.shade700,
+              backgroundColor: theme.colorScheme.error,
             ),
           );
         }
       },
       child: AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        backgroundColor: Colors.white,
+        backgroundColor: theme.cardTheme.color,
         contentPadding: const EdgeInsets.fromLTRB(24, 20, 24, 0),
         actionsPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
         title: Row(
@@ -74,22 +78,22 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
               width: 36,
               height: 36,
               decoration: BoxDecoration(
-                color: Colors.red.shade50,
+                color: theme.cardTheme.color,
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 Icons.delete_forever_rounded,
-                color: Colors.red.shade600,
-                size: 20,
+                color: theme.colorScheme.error,
+                size: 24,
               ),
             ),
             const SizedBox(width: 10),
-            const Text(
+            Text(
               'Delete Account',
               style: TextStyle(
-                fontSize: 17,
+                fontSize: AppFontSize.xxl,
                 fontWeight: FontWeight.w700,
-                color: AppColors.lightText,
+                color: theme.textTheme.titleLarge?.color,
               ),
             ),
           ],
@@ -98,13 +102,13 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'This action is permanent and cannot be undone. '
               'All your data, purchases, and settings will be deleted.',
               style: TextStyle(
-                fontSize: 14,
-                color: AppColors.lightTextSecondary,
+                fontSize: AppFontSize.md,
                 height: 1.5,
+                color: theme.textTheme.bodySmall!.color!,
               ),
             ),
             const SizedBox(height: 20),
@@ -122,7 +126,7 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
                 children: [
                   Icon(
                     Icons.warning_amber_rounded,
-                    size: 16,
+                    size: 20,
                     color: Colors.red.shade600,
                   ),
                   const SizedBox(width: 8),
@@ -130,7 +134,7 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
                     child: Text(
                       'Type DELETE below to confirm you understand this is irreversible.',
                       style: TextStyle(
-                        fontSize: 12,
+                        fontSize: AppFontSize.sm,
                         color: Colors.red.shade700,
                         height: 1.4,
                       ),
@@ -145,17 +149,18 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
             TextField(
               controller: _ctrl,
               autocorrect: false,
+              cursorColor: Colors.red.shade700,
               style: TextStyle(
-                fontSize: 14,
+                fontSize: AppFontSize.sm,
                 fontWeight: FontWeight.w600,
                 color: Colors.red.shade700,
                 letterSpacing: 1,
               ),
               decoration: InputDecoration(
                 hintText: 'Type DELETE here',
-                hintStyle: const TextStyle(
+                hintStyle: TextStyle(
                   color: AppColors.lightTextSecondary,
-                  fontSize: 14,
+                  fontSize: AppFontSize.sm,
                   fontWeight: FontWeight.w400,
                   letterSpacing: 0,
                 ),
@@ -186,65 +191,73 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
           ],
         ),
         actions: [
-          Row(
-            children: [
-              Expanded(
-                child: OutlinedButton(
-                  onPressed: () => Navigator.of(context).pop(false),
-                  style: OutlinedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 13),
-                    side: BorderSide(color: Colors.grey.shade300),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: const Text(
-                    'Cancel',
-                    style: TextStyle(
-                      color: AppColors.lightText,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: BlocBuilder<UserCubit, UserState>(
-                  builder: (context, state) {
-                    final isDeleting = state is UserLoading;
-                    return FilledButton(
-                      onPressed: (_confirmed && !isDeleting)
-                          ? () => _delete(context)
-                          : null,
-                      style: FilledButton.styleFrom(
-                        backgroundColor: Colors.red.shade600,
-                        disabledBackgroundColor: Colors.red.shade200,
-                        padding: const EdgeInsets.symmetric(vertical: 13),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: () => Navigator.of(context).pop(false),
+                    style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 13),
+                      side: BorderSide(
+                        color: theme.colorScheme.outline,
+                        width: 1,
                       ),
-                      child: isDeleting
-                          ? const SizedBox(
-                              width: 18,
-                              height: 18,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                color: Colors.white,
-                              ),
-                            )
-                          : const Text(
-                              'Delete',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white,
-                              ),
-                            ),
-                    );
-                  },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: Text(
+                      'Cancel',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: isDark
+                            ? AppColors.darkText
+                            : AppColors.lightText,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ],
+                const SizedBox(width: 10),
+                Expanded(
+                  child: BlocBuilder<UserCubit, UserState>(
+                    builder: (context, state) {
+                      final isDeleting = state is UserLoading;
+                      return FilledButton(
+                        onPressed: (_confirmed && !isDeleting)
+                            ? () => _delete(context)
+                            : null,
+                        style: FilledButton.styleFrom(
+                          backgroundColor: Colors.red.shade600,
+                          disabledBackgroundColor: Colors.red.shade200,
+                          padding: const EdgeInsets.symmetric(vertical: 13),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: isDeleting
+                            ? const SizedBox(
+                                width: 18,
+                                height: 18,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: Colors.white,
+                                ),
+                              )
+                            : const Text(
+                                'Delete',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                ),
+                              ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),

@@ -11,6 +11,8 @@ class AppConfirmDialog {
     bool isDestructive = false,
     VoidCallback? onConfirm,
   }) {
+    final theme = Theme.of(context);
+
     return showDialog<bool>(
       context: context,
       barrierDismissible: true,
@@ -19,18 +21,15 @@ class AppConfirmDialog {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
-          backgroundColor: AppColors.lightSurface,
+          backgroundColor: theme.cardTheme.color,
           title: Text(
             title,
-            style: const TextStyle(
+            style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: AppColors.lightText,
+              color: theme.textTheme.titleLarge!.color,
             ),
           ),
-          content: Text(
-            description,
-            style: const TextStyle(color: AppColors.lightTextSecondary),
-          ),
+          content: Text(description),
           actionsPadding: const EdgeInsets.symmetric(
             horizontal: 12,
             vertical: 10,
@@ -40,7 +39,7 @@ class AppConfirmDialog {
               onPressed: () => Navigator.pop(context, false),
               child: Text(
                 cancelText,
-                style: const TextStyle(color: AppColors.lightTextSecondary),
+                style: TextStyle(color: theme.textTheme.titleLarge!.color),
               ),
             ),
             FilledButton(
@@ -50,13 +49,16 @@ class AppConfirmDialog {
               },
               style: FilledButton.styleFrom(
                 backgroundColor: isDestructive
-                    ? const Color(0xFFEF4444)
-                    : AppColors.darkBackground,
+                    ? theme.colorScheme.error
+                    : theme.primaryColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              child: Text(confirmText),
+              child: Text(
+                confirmText,
+                style: TextStyle(color: AppColors.darkText),
+              ),
             ),
           ],
         );

@@ -11,7 +11,6 @@ class HomeShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightBackground,
       body: SafeArea(
         // Single ShimmerWrapper here — ALL skeleton children share
         // the exact same sweeping gradient phase simultaneously

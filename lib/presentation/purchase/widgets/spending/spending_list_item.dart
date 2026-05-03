@@ -1,3 +1,4 @@
+import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/domain/entities/purchase/purchase.dart';
 import 'package:electra/core/utils/category_meta.dart';
@@ -40,12 +41,12 @@ class SpendingListItem extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.only(bottom: 10),
         decoration: BoxDecoration(
-          color: AppColors.lightSurface,
+          color: Theme.of(context).cardTheme.color,
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: const Color(0xFFF1F5F9)),
+          border: Border.all(color: Theme.of(context).dividerColor),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.04),
+              color: Theme.of(context).primaryColor.withValues(alpha: 0.06),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -84,9 +85,8 @@ class SpendingListItem extends StatelessWidget {
                         Text(
                           merchantName,
                           style: const TextStyle(
-                            fontSize: 16,
+                            fontSize: AppFontSize.md,
                             fontWeight: FontWeight.w600,
-                            color: AppColors.lightText,
                             letterSpacing: -0.2,
                           ),
                           overflow: TextOverflow.ellipsis,
@@ -95,10 +95,7 @@ class SpendingListItem extends StatelessWidget {
                         //  ===== Item name =====
                         Text(
                           _itemsPreview(),
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: AppColors.lightText,
-                          ),
+                          style: const TextStyle(fontSize: AppFontSize.sm),
                           overflow: TextOverflow.ellipsis,
                         ),
                         const SizedBox(height: 4),
@@ -106,16 +103,13 @@ class SpendingListItem extends StatelessWidget {
                           children: [
                             Icon(
                               Icons.access_time_rounded,
-                              size: 14,
-                              color: AppColors.lightText,
+                              size: AppFontSize.sm,
+                              color: Theme.of(context).iconTheme.color,
                             ),
                             const SizedBox(width: 3),
                             Text(
                               _formatTime(purchase.purchaseDate),
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: AppColors.lightText,
-                              ),
+                              style: TextStyle(fontSize: AppFontSize.sm),
                             ),
                             const SizedBox(width: 8),
                             if (purchase.items.isNotEmpty)
@@ -131,7 +125,7 @@ class SpendingListItem extends StatelessWidget {
                                 child: Text(
                                   purchase.items.first.category.name,
                                   style: TextStyle(
-                                    fontSize: 12,
+                                    fontSize: AppFontSize.sm,
                                     fontWeight: FontWeight.w600,
                                     color: meta.color,
                                   ),
@@ -152,27 +146,23 @@ class SpendingListItem extends StatelessWidget {
                       Text(
                         '\$${purchase.totals.amount.toStringAsFixed(2)}',
                         style: const TextStyle(
-                          fontSize: 18,
+                          fontSize: AppFontSize.lg,
                           fontWeight: FontWeight.w700,
-                          color: AppColors.lightText,
                           letterSpacing: -0.3,
                         ),
                       ),
                       const SizedBox(height: 2),
                       Text(
                         '${purchase.totals.itemCount} item${purchase.totals.itemCount == 1 ? '' : 's'}',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: AppColors.lightText,
-                        ),
+                        style: TextStyle(fontSize: AppFontSize.md),
                       ),
                     ],
                   ),
                   const SizedBox(width: 4),
                   Icon(
                     Icons.chevron_right_rounded,
-                    size: 18,
-                    color: AppColors.dividerDark,
+                    size: AppFontSize.xl,
+                    color: Theme.of(context).iconTheme.color,
                   ),
                 ],
               ),

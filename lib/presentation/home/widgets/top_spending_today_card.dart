@@ -1,5 +1,5 @@
 import 'dart:math' as math;
-import 'package:electra/core/configs/theme/app_colors.dart';
+import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/utils/category_meta.dart';
 import 'package:flutter/material.dart';
 
@@ -56,11 +56,12 @@ class _TopSpendingTodayCardState extends State<TopSpendingTodayCard>
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 0),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).cardTheme.color,
           borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: Theme.of(context).dividerColor),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.06),
+              color: Theme.of(context).primaryColor.withValues(alpha: 0.06),
               blurRadius: 16,
               offset: const Offset(0, 4),
             ),
@@ -78,19 +79,18 @@ class _TopSpendingTodayCardState extends State<TopSpendingTodayCard>
                 const Text(
                   'Top Spending Today',
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: AppFontSize.lg,
                     fontWeight: FontWeight.w600,
-                    color: AppColors.lightText,
                   ),
                 ),
                 GestureDetector(
                   onTap: widget.onViewAll,
-                  child: const Text(
+                  child: Text(
                     'View all',
                     style: TextStyle(
-                      fontSize: 12,
+                      fontSize: AppFontSize.md,
                       fontWeight: FontWeight.w500,
-                      color: AppColors.primary,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
                 ),
@@ -153,13 +153,11 @@ class _TopSpendingTodayCardState extends State<TopSpendingTodayCard>
                                 child: Text(
                                   row.label,
                                   style: TextStyle(
-                                    fontSize: 14,
+                                    fontSize: AppFontSize.sm,
                                     fontWeight: isSelected
                                         ? FontWeight.w700
                                         : FontWeight.w500,
-                                    color: isSelected
-                                        ? row.color
-                                        : const Color(0xFF374151),
+                                    color: isSelected ? row.color : null,
                                   ),
                                 ),
                               ),
@@ -168,11 +166,9 @@ class _TopSpendingTodayCardState extends State<TopSpendingTodayCard>
                               Text(
                                 '\$${row.amount.toStringAsFixed(2)}',
                                 style: TextStyle(
-                                  fontSize: 14,
+                                  fontSize: AppFontSize.md,
                                   fontWeight: FontWeight.w600,
-                                  color: isSelected
-                                      ? row.color
-                                      : const Color(0xFF111827),
+                                  color: isSelected ? row.color : null,
                                 ),
                               ),
                               const SizedBox(width: 6),
@@ -184,8 +180,7 @@ class _TopSpendingTodayCardState extends State<TopSpendingTodayCard>
                                   '$pct%',
                                   textAlign: TextAlign.end,
                                   style: const TextStyle(
-                                    fontSize: 13,
-                                    color: Color(0xFF9CA3AF),
+                                    fontSize: AppFontSize.sm,
                                   ),
                                 ),
                               ),
@@ -220,17 +215,13 @@ class _TopSpendingTodayCardState extends State<TopSpendingTodayCard>
                               '\$${total.toStringAsFixed(2)}',
                               textAlign: TextAlign.center,
                               style: const TextStyle(
-                                fontSize: 13,
+                                fontSize: AppFontSize.sm,
                                 fontWeight: FontWeight.w700,
-                                color: Color(0xFF111827),
                               ),
                             ),
                             const Text(
                               'Total',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Color(0xFF9CA3AF),
-                              ),
+                              style: TextStyle(fontSize: AppFontSize.xs),
                             ),
                           ],
                         ),
@@ -276,7 +267,7 @@ class _DonutPainter extends CustomPainter {
       Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = sw
-        ..color = const Color(0xFFF3F4F6),
+        ..color = const Color.fromARGB(134, 243, 244, 246),
     );
 
     final paint = Paint()

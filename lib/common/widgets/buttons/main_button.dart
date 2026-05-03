@@ -1,6 +1,6 @@
+import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:electra/core/configs/fonts.dart';
-import 'package:electra/core/configs/theme/app_colors.dart';
 
 enum ButtonSize { small, medium, large }
 
@@ -97,19 +97,13 @@ class _MainButtonState extends State<MainButton> {
       width: widget.width,
       height: _height,
       decoration: BoxDecoration(
-        color: widget.isActive == true
-            ? AppColors.lightText
-            : AppColors.darkText,
+        color: AppColors.darkBackground,
         borderRadius: widget.rounded == true
             ? BorderRadius.circular(999)
             : BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color:
-                (widget.isActive == true
-                        ? AppColors.lightBackground
-                        : AppColors.darkBackground)
-                    .withValues(alpha: 0.06),
+            color: AppColors.darkBackground.withValues(alpha: 0.06),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -137,10 +131,8 @@ class _MainButtonState extends State<MainButton> {
                     widget.text,
                     style: TextStyle(
                       fontSize: _fontSize,
-                      fontWeight: FontWeight.bold,
-                      color: widget.isActive == true
-                          ? AppColors.darkText
-                          : AppColors.lightText,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.darkText,
                     ),
                   ),
                 ],

@@ -1,10 +1,12 @@
 import 'package:electra/common/widgets/buttons/main_icon_button.dart';
 import 'package:electra/common/widgets/dialogs/app_confirm_dialog.dart';
+import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/domain/entities/purchase/purchase.dart';
 import 'package:electra/presentation/purchase/blocs/purchase/purchase_cubit.dart';
 import 'package:electra/presentation/purchase/blocs/purchase_detail/purchase_detail_cubit.dart';
 import 'package:electra/presentation/purchase/blocs/purchase_detail/purchase_detail_state.dart';
+import 'package:electra/presentation/purchase/widgets/bottom_sheet/add_purchase_bottom_sheet.dart';
 import 'package:electra/presentation/purchase/widgets/spending_detail/spending_detail_error_state.dart';
 import 'package:electra/presentation/purchase/widgets/spending_detail/spending_detail_hero_card.dart';
 import 'package:electra/presentation/purchase/widgets/spending_detail/spending_detail_items_section.dart';
@@ -43,6 +45,9 @@ class _SpendingDetailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return BlocConsumer<PurchaseDetailCubit, PurchaseDetailState>(
       // Show a SnackBar when a mutation fails, then keep the screen alive.
       listenWhen: (_, current) => current is PurchaseDetailItemMutationFailure,
@@ -51,7 +56,7 @@ class _SpendingDetailView extends StatelessWidget {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.message),
-              backgroundColor: const Color(0xFFEF4444),
+              backgroundColor: colorScheme.error,
               behavior: SnackBarBehavior.floating,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -68,7 +73,6 @@ class _SpendingDetailView extends StatelessWidget {
           children: [
             // ── Main scaffold ──────────────────────────────────────────
             Scaffold(
-              backgroundColor: AppColors.lightBackground,
               appBar: _buildAppBar(context, state),
               body: _buildBody(context, state, purchase),
             ),
@@ -87,34 +91,28 @@ class _SpendingDetailView extends StatelessWidget {
     BuildContext context,
     PurchaseDetailState state,
   ) {
+    final theme = Theme.of(context);
     final hasPurchase = _purchaseFrom(state) != null;
 
     return AppBar(
-      backgroundColor: AppColors.lightBackground,
       elevation: 0,
       scrolledUnderElevation: 0,
-      leading: GestureDetector(
-        onTap: () => Navigator.of(context).pop(),
-        child: Container(
-          margin: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: AppColors.lightSurface,
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: AppColors.dividerLight),
-          ),
-          child: const Icon(
-            Icons.arrow_back_rounded,
-            size: 20,
-            color: AppColors.lightText,
-          ),
+      leading: MainIconButton(
+        margin: EdgeInsets.all(8),
+        size: 16,
+        icon: Icon(
+          Icons.arrow_back_rounded,
+          color: theme.iconTheme.color,
+          size: 20,
         ),
+        onTap: () => Navigator.of(context).pop(),
       ),
+
       title: const Text(
         'Spending details',
         style: TextStyle(
-          fontSize: 24,
+          fontSize: AppFontSize.xxxl,
           fontWeight: FontWeight.bold,
-          color: AppColors.lightText,
           letterSpacing: -0.3,
         ),
       ),
@@ -124,9 +122,9 @@ class _SpendingDetailView extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 16),
             child: MainIconButton(
-              icon: const Icon(
+              icon: Icon(
                 Icons.more_horiz_rounded,
-                color: AppColors.lightText,
+                color: theme.iconTheme.color,
                 size: 18,
               ),
               onTap: () {
@@ -148,11 +146,13 @@ class _SpendingDetailView extends StatelessWidget {
     PurchaseDetailState state,
     Purchase? purchase,
   ) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     // Initial full-screen load
     if (state is PurchaseDetailLoading || state is PurchaseDetailInitial) {
-      return const Center(
+      return Center(
         child: CircularProgressIndicator(
-          color: AppColors.darkBackground,
+          color: isDark ? AppColors.lightBackground : AppColors.darkBackground,
           strokeWidth: 2,
         ),
       );
@@ -179,6 +179,8 @@ class _SpendingDetailView extends StatelessWidget {
   // ── Options menu ───────────────────────────────────────────────────────────
 
   void _showOptionsMenu(BuildContext context, Purchase purchase) {
+    final theme = Theme.of(context);
+
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
@@ -186,8 +188,9 @@ class _SpendingDetailView extends StatelessWidget {
         margin: const EdgeInsets.only(top: 16),
         padding: const EdgeInsets.only(bottom: 20),
         decoration: BoxDecoration(
-          color: AppColors.lightSurface,
+          color: theme.cardTheme.color,
           borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: theme.dividerColor),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -197,7 +200,7 @@ class _SpendingDetailView extends StatelessWidget {
               width: 36,
               height: 4,
               decoration: BoxDecoration(
-                color: AppColors.dividerLight,
+                color: theme.dividerColor,
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
@@ -208,7 +211,10 @@ class _SpendingDetailView extends StatelessWidget {
               label: 'Edit purchase',
               onTap: () {
                 Navigator.pop(context);
-                // TODO: navigate to edit
+                AddPurchaseBottomSheet.show(
+                  context,
+                  purchase: purchase
+                );
               },
             ),
 
@@ -224,12 +230,12 @@ class _SpendingDetailView extends StatelessWidget {
               onTap: () => Navigator.pop(context),
             ),
 
-            const Divider(height: 1, color: AppColors.dividerLight),
+            const Divider(height: 1),
 
             _OptionTile(
               icon: Icons.delete_outline_rounded,
               label: 'Delete purchase',
-              color: const Color(0xFFEF4444),
+              color: theme.colorScheme.error,
               onTap: () {
                 Navigator.pop(context); // close the options sheet first
                 AppConfirmDialog.show(
@@ -327,12 +333,12 @@ class _OptionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final c = color ?? AppColors.lightText;
+    final theme = Theme.of(context);
     return ListTile(
-      leading: Icon(icon, color: c, size: 20),
+      leading: Icon(icon, color: color ?? theme.iconTheme.color, size: 20),
       title: Text(
         label,
-        style: TextStyle(color: c, fontWeight: FontWeight.w500),
+        style: TextStyle(color: color, fontWeight: FontWeight.w500),
       ),
       onTap: onTap,
     );
@@ -356,7 +362,9 @@ class _SpendingDetailContent extends StatelessWidget {
           SpendingDetailHeroCard(purchase: purchase),
           // Items section reads from the cubit directly (see fix below)
           const SpendingDetailItemsSection(),
+
           const SpendingDetailSectionHeader(title: 'Receipt'),
+          
           SpendingDetailReceiptSection(
             receipt: purchase.receipt,
             onView: () {

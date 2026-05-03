@@ -32,24 +32,20 @@ class SettingsTile extends StatelessWidget {
             horizontal: 16,
             vertical: 6,
           ),
-          leading: Icon(icon, color: iconColor ?? AppColors.primary, size: 26),
-          title: Text(
-            title,
-            style: const TextStyle(
-              fontSize: 16.5,
-              fontWeight: FontWeight.w500,
-              color: AppColors.lightText,
-            ),
+          leading: Icon(
+            icon,
+            color: iconColor ?? Theme.of(context).iconTheme.color,
+            size: 26,
           ),
-          subtitle: subtitle != null
-              ? Text(
-                  subtitle!,
-                  style: TextStyle(fontSize: 14.5, color: Colors.grey[700]),
-                )
-              : null,
+          title: Text(title),
+          subtitle: subtitle != null ? Text(subtitle!) : null,
           trailing: showChevron
               ? AnimatedIconButton(
-                  icon: Icon(Icons.chevron_right, size: 26),
+                  icon: Icon(
+                    Icons.chevron_right,
+                    size: 26,
+                    color: Theme.of(context).iconTheme.color,
+                  ),
                   onTap: onTap ?? () {},
                 )
               : null,
@@ -60,7 +56,6 @@ class SettingsTile extends StatelessWidget {
             thickness: 1,
             indent: 22, // Starts from after the icon
             endIndent: 22,
-            color: AppColors.dividerLight,
           ),
       ],
     );

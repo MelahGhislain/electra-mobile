@@ -1,119 +1,180 @@
-// lib/core/theme/app_theme.dart
-
 import 'package:flutter/material.dart';
 import 'app_colors.dart';
 
 class AppTheme {
-  /// Light theme - matches the second screenshot exactly
   static ThemeData get lightTheme {
-    final colorScheme = ColorScheme.fromSeed(
-      seedColor: AppColors.lightBackground,
-      brightness: Brightness.light,
+    final colorScheme = ColorScheme.light(
+      primary: AppColors.primary,
+      secondary: AppColors.info,
+      surface: AppColors.lightBackground,
+      onSurface: AppColors.lightSurface,
+
+      error: AppColors.danger,
     );
 
     return ThemeData(
       useMaterial3: true,
       colorScheme: colorScheme,
       scaffoldBackgroundColor: AppColors.lightBackground,
+      dividerColor: AppColors.lightBorder,
+      primaryColor: AppColors.lightBackground,
+
       appBarTheme: const AppBarTheme(
         backgroundColor: AppColors.lightBackground,
         foregroundColor: AppColors.lightText,
         elevation: 0,
         centerTitle: false,
       ),
+
+      iconTheme: IconThemeData(color: AppColors.lightText),
+
       cardTheme: CardThemeData(
         color: AppColors.lightSurface,
         elevation: 0,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      ),
-      textButtonTheme: TextButtonThemeData(
-        style: TextButton.styleFrom(
-          foregroundColor: AppColors.darkTextSecondary,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+          side: const BorderSide(color: AppColors.lightBorder),
         ),
       ),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(backgroundColor: AppColors.lightText),
-      ),
-      switchTheme: SwitchThemeData(
-        thumbColor: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.selected)) {
-            return colorScheme.primary;
-          }
-          return null;
-        }),
-        trackColor: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.selected)) {
-            return colorScheme.primary.withValues(alpha: 0.4);
-          }
-          return null;
-        }),
-      ),
+
       listTileTheme: const ListTileThemeData(
-        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        iconColor: AppColors.lightSurfaceAlt,
+        titleTextStyle: TextStyle(
+          color: AppColors.lightText,
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+        ),
+        subtitleTextStyle: TextStyle(
+          color: AppColors.lightTextSecondary,
+          fontSize: 13,
+        ),
+        minLeadingWidth: 0,
+        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       ),
-      dividerTheme: DividerThemeData(
-        color: AppColors.dividerLight,
-        thickness: 1,
+
+      switchTheme: SwitchThemeData(
+        thumbColor: WidgetStateProperty.resolveWith(
+          (states) => states.contains(WidgetState.selected)
+              ? Colors.white
+              : Colors.white,
+        ),
+        trackColor: WidgetStateProperty.resolveWith(
+          (states) => states.contains(WidgetState.selected)
+              ? AppColors.primary
+              : AppColors.lightBorder,
+        ),
+        trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
       ),
-      textTheme: ThemeData.light().textTheme.apply(
-        bodyColor: AppColors.lightText,
-        displayColor: AppColors.lightText,
+
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.primary,
+          foregroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        ),
+      ),
+
+      textTheme: const TextTheme(
+        titleLarge: TextStyle(
+          color: AppColors.lightText,
+          fontWeight: FontWeight.w600,
+        ),
+        bodyMedium: TextStyle(color: AppColors.lightText),
+        bodySmall: TextStyle(color: AppColors.lightTextSecondary),
+      ),
+
+      dividerTheme: const DividerThemeData(
+        color: AppColors.lightBorder,
+        thickness: 0.5,
       ),
     );
   }
 
-  /// Dark theme - matches the first screenshot exactly
   static ThemeData get darkTheme {
-    final colorScheme = ColorScheme.fromSeed(
-      seedColor: AppColors.darkBackground,
-      brightness: Brightness.dark,
+    final colorScheme = ColorScheme.dark(
+      primary: AppColors.primary,
+      secondary: AppColors.info,
+      surface: AppColors.darkBackground,
+      onSurface: AppColors.darkSurfaceAlt,
+      error: AppColors.danger,
     );
 
     return ThemeData(
       useMaterial3: true,
       colorScheme: colorScheme,
       scaffoldBackgroundColor: AppColors.darkBackground,
+      dividerColor: AppColors.darkBorder,
+      primaryColor: AppColors.darkBackground,
+
       appBarTheme: const AppBarTheme(
         backgroundColor: AppColors.darkBackground,
         foregroundColor: AppColors.darkText,
         elevation: 0,
         centerTitle: false,
       ),
+
+      iconTheme: IconThemeData(color: AppColors.darkText),
+
       cardTheme: CardThemeData(
         color: AppColors.darkSurface,
         elevation: 0,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+          side: const BorderSide(color: AppColors.darkBorder),
+        ),
       ),
-      textButtonTheme: TextButtonThemeData(
-        style: TextButton.styleFrom(foregroundColor: AppColors.darkText),
-      ),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(backgroundColor: AppColors.darkText),
-      ),
-      switchTheme: SwitchThemeData(
-        thumbColor: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.selected)) {
-            return colorScheme.primary;
-          }
-          return null;
-        }),
-        trackColor: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.selected)) {
-            return colorScheme.primary.withValues(alpha: 0.4);
-          }
-          return null;
-        }),
-      ),
+
       listTileTheme: const ListTileThemeData(
-        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        iconColor: AppColors.darkSurfaceAlt,
+        titleTextStyle: TextStyle(
+          color: AppColors.darkText,
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+        ),
+        subtitleTextStyle: TextStyle(
+          color: AppColors.darkTextSecondary,
+          fontSize: 13,
+        ),
+        minLeadingWidth: 0,
+        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       ),
-      dividerTheme: DividerThemeData(
-        color: AppColors.dividerDark,
+
+      switchTheme: SwitchThemeData(
+        thumbColor: WidgetStateProperty.resolveWith((states) => Colors.white),
+        trackColor: WidgetStateProperty.resolveWith(
+          (states) => states.contains(WidgetState.selected)
+              ? AppColors.primary
+              : AppColors.darkSurfaceAlt,
+        ),
+        trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
+      ),
+
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.primary,
+          foregroundColor: Colors.black,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        ),
+      ),
+
+      textTheme: const TextTheme(
+        titleLarge: TextStyle(
+          color: AppColors.darkText,
+          fontWeight: FontWeight.w600,
+        ),
+        bodyMedium: TextStyle(color: AppColors.darkText),
+        bodySmall: TextStyle(color: AppColors.darkTextSecondary),
+      ),
+
+      dividerTheme: const DividerThemeData(
+        color: AppColors.darkBorder,
         thickness: 1,
-      ),
-      textTheme: ThemeData.dark().textTheme.apply(
-        bodyColor: AppColors.darkText,
-        displayColor: AppColors.darkText,
       ),
     );
   }

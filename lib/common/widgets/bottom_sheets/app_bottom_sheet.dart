@@ -1,4 +1,4 @@
-import 'package:electra/core/configs/theme/app_colors.dart';
+import 'package:electra/core/configs/fonts.dart';
 import 'package:flutter/material.dart';
 
 class AppBottomSheet {
@@ -44,11 +44,14 @@ class _AppBottomSheetContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Container(
       constraints: BoxConstraints(maxHeight: maxHeight),
-      decoration: const BoxDecoration(
-        color: AppColors.lightBackground,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      decoration: BoxDecoration(
+        color: theme.cardTheme.color,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        border: Border.all(color: theme.dividerColor),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -59,7 +62,7 @@ class _AppBottomSheetContent extends StatelessWidget {
             width: 40,
             height: 4,
             decoration: BoxDecoration(
-              color: Colors.grey.shade300,
+              color: theme.dividerColor,
               borderRadius: BorderRadius.circular(2),
             ),
           ),
@@ -71,16 +74,19 @@ class _AppBottomSheetContent extends StatelessWidget {
             child: Row(
               children: [
                 if (icon != null) ...[
-                  Icon(icon, color: AppColors.primary, size: 24),
+                  Icon(
+                    icon,
+                    color: Theme.of(context).iconTheme.color,
+                    size: 24,
+                  ),
                   const SizedBox(width: 10),
                 ],
                 if (title != null) ...[
                   Text(
                     title!,
                     style: const TextStyle(
-                      fontSize: 18,
+                      fontSize: AppFontSize.lg,
                       fontWeight: FontWeight.bold,
-                      color: AppColors.lightText,
                     ),
                   ),
                 ],
@@ -92,7 +98,7 @@ class _AppBottomSheetContent extends StatelessWidget {
           ),
 
           const SizedBox(height: 16),
-          const Divider(height: 1, color: AppColors.dividerLight),
+          const Divider(height: 0.5),
           const SizedBox(height: 8),
 
           // Content

@@ -1,5 +1,5 @@
 import 'dart:math' as math;
-import 'package:electra/core/configs/theme/app_colors.dart';
+import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/presentation/home/utils/home_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -48,11 +48,12 @@ class TodaySpendingCard extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 0),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).cardTheme.color,
           borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: Theme.of(context).dividerColor),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.06),
+              color: Theme.of(context).primaryColor.withValues(alpha: 0.06),
               blurRadius: 16,
               offset: const Offset(0, 4),
             ),
@@ -75,9 +76,8 @@ class TodaySpendingCard extends StatelessWidget {
                       const Text(
                         "Today's Spending",
                         style: TextStyle(
-                          fontSize: 14,
+                          fontSize: AppFontSize.lg,
                           fontWeight: FontWeight.w500,
-                          color: AppColors.lightText,
                         ),
                       ),
                       const SizedBox(height: 8),
@@ -86,9 +86,8 @@ class TodaySpendingCard extends StatelessWidget {
                       Text(
                         '\$${todaySummary.todayTotal.toStringAsFixed(2)}',
                         style: const TextStyle(
-                          fontSize: 36,
+                          fontSize: AppFontSize.xxxxl,
                           fontWeight: FontWeight.w600,
-                          color: AppColors.lightText,
                           letterSpacing: -1.5,
                           height: 1.0,
                         ),
@@ -105,18 +104,18 @@ class TodaySpendingCard extends StatelessWidget {
                                   : Icons.arrow_upward_rounded,
                               size: 15,
                               color: pct <= 0
-                                  ? const Color(0xFF22C55E)
-                                  : const Color(0xFFEF4444),
+                                  ? Theme.of(context).colorScheme.primary
+                                  : Theme.of(context).colorScheme.error,
                             ),
                             const SizedBox(width: 3),
                             Text(
                               '${pct.abs().toStringAsFixed(0)}% vs yesterday',
                               style: TextStyle(
-                                fontSize: 14,
+                                fontSize: AppFontSize.sm,
                                 fontWeight: FontWeight.w600,
                                 color: pct <= 0
-                                    ? const Color(0xFF22C55E)
-                                    : const Color(0xFFEF4444),
+                                    ? Theme.of(context).colorScheme.primary
+                                    : Theme.of(context).colorScheme.error,
                               ),
                             ),
                           ],
@@ -126,10 +125,7 @@ class TodaySpendingCard extends StatelessWidget {
                           todaySummary.hasTodayPurchases
                               ? 'No data for yesterday'
                               : 'Most recent purchase',
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: AppColors.lightTextSecondary,
-                          ),
+                          style: const TextStyle(fontSize: AppFontSize.sm),
                         ),
                     ],
                   ),
@@ -156,9 +152,8 @@ class TodaySpendingCard extends StatelessWidget {
                           Text(
                             '$_progressPct%',
                             style: TextStyle(
-                              fontSize: 14,
+                              fontSize: AppFontSize.sm,
                               fontWeight: FontWeight.w800,
-                              color: AppColors.lightText,
                               letterSpacing: -0.5,
                             ),
                           ),
@@ -166,8 +161,7 @@ class TodaySpendingCard extends StatelessWidget {
                             'of daily\nbudget',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: 10,
-                              color: AppColors.lightText,
+                              fontSize: AppFontSize.xs,
                               height: 1.1,
                             ),
                           ),
@@ -182,7 +176,7 @@ class TodaySpendingCard extends StatelessWidget {
             // ── Daily budget row + progress bar ─────────────────────────
             const SizedBox(height: 1),
 
-            const Divider(color: AppColors.dividerLight),
+            const Divider(),
 
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -194,8 +188,7 @@ class TodaySpendingCard extends StatelessWidget {
                     Text(
                       'Daily budget',
                       style: TextStyle(
-                        fontSize: 12,
-                        color: AppColors.lightTextSecondary,
+                        fontSize: AppFontSize.sm,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
@@ -205,7 +198,7 @@ class TodaySpendingCard extends StatelessWidget {
                         Text(
                           '\$${todaySummary.todayTotal.toStringAsFixed(2)}',
                           style: TextStyle(
-                            fontSize: 12,
+                            fontSize: AppFontSize.sm,
                             fontWeight: FontWeight.w600,
                             color: accentColor,
                           ),
@@ -213,9 +206,8 @@ class TodaySpendingCard extends StatelessWidget {
                         Text(
                           ' / \$${_dailyBudget.toStringAsFixed(2)}',
                           style: TextStyle(
-                            fontSize: 12,
+                            fontSize: AppFontSize.sm,
                             fontWeight: FontWeight.w600,
-                            color: AppColors.lightTextSecondary,
                           ),
                         ),
                       ],

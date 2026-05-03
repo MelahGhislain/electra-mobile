@@ -1,3 +1,4 @@
+import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -38,24 +39,25 @@ class AppTextField extends StatefulWidget {
 
 class _AppTextFieldState extends State<AppTextField> {
   bool _obscure = true;
-  bool _isFocused = false;
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final isDark = theme.brightness == Brightness.dark;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           widget.label,
-          style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            color: Color(0xFF111827),
+          style: theme.textTheme.bodyMedium?.copyWith(
+            fontWeight: FontWeight.w400,
+            fontSize: AppFontSize.md,
           ),
         ),
         const SizedBox(height: 6),
         Focus(
-          onFocusChange: (focused) => setState(() => _isFocused = focused),
           child: TextFormField(
             controller: widget.controller,
             obscureText: widget.isPassword && _obscure,
@@ -65,36 +67,40 @@ class _AppTextFieldState extends State<AppTextField> {
             validator: widget.validator,
             onChanged: widget.onChanged,
             inputFormatters: widget.inputFormatters,
-            style: const TextStyle(fontSize: 15, color: Color(0xFF111827)),
+            cursorColor: isDark
+                ? AppColors.dividerLight
+                : AppColors.dividerDark,
+            style: theme.textTheme.bodyMedium?.copyWith(fontSize: 15),
             decoration: InputDecoration(
               hintText: widget.hint,
-
-              hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 15),
+              hintStyle: theme.textTheme.bodyMedium?.copyWith(
+                fontSize: AppFontSize.sm,
+              ),
               filled: true,
-              fillColor: _isFocused ? Colors.white : const Color(0xFFE8E8E8),
+              fillColor: isDark ? colorScheme.onSurface : colorScheme.surface,
               contentPadding: const EdgeInsets.symmetric(
-                horizontal: 16,
+                horizontal: 14,
                 vertical: 14,
               ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(color: AppColors.dividerLight),
+                borderSide: BorderSide(color: theme.dividerColor),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(color: AppColors.dividerLight),
+                borderSide: BorderSide(color: theme.dividerColor),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(color: AppColors.primary),
+                borderSide: BorderSide(color: theme.dividerColor),
               ),
               errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
-                borderSide: const BorderSide(color: Colors.red, width: 1.5),
+                borderSide: BorderSide(color: colorScheme.error, width: 1.5),
               ),
               focusedErrorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
-                borderSide: const BorderSide(color: Colors.red, width: 1.5),
+                borderSide: BorderSide(color: colorScheme.error, width: 1.5),
               ),
               prefixText: widget.prefixText,
               suffixIcon: widget.isPassword
@@ -103,7 +109,7 @@ class _AppTextFieldState extends State<AppTextField> {
                         _obscure
                             ? Icons.visibility_off_outlined
                             : Icons.visibility_outlined,
-                        color: Colors.grey.shade400,
+                        color: colorScheme.onSurfaceVariant,
                         size: 20,
                       ),
                       onPressed: () => setState(() => _obscure = !_obscure),

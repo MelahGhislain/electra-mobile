@@ -141,9 +141,8 @@ class _ItemFormSheetBodyState extends State<_ItemFormSheetBody> {
               const SizedBox(height: 16),
 
               // ── 2. Category ──────────────────────────────────────────
-              const _FieldLabel(label: 'Category'),
-              const SizedBox(height: 6),
               CategorySelectField(
+                label: 'Category',
                 selected: _selectedCategory,
                 onTap: _pickCategory,
               ),

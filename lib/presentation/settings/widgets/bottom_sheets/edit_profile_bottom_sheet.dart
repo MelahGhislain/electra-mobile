@@ -62,13 +62,15 @@ class _EditProfileBodyState extends State<_EditProfileBody> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return BlocListener<UserCubit, UserState>(
       listener: (context, state) {
         if (state is UserFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.message),
-              backgroundColor: Colors.red.shade700,
+              backgroundColor: theme.colorScheme.error,
               behavior: SnackBarBehavior.floating,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
@@ -91,39 +93,6 @@ class _EditProfileBodyState extends State<_EditProfileBody> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Avatar
-              Center(
-                child: Stack(
-                  children: [
-                    CircleAvatar(
-                      radius: 40,
-                      backgroundImage: const NetworkImage(
-                        'https://i.pravatar.cc/100',
-                      ),
-                      backgroundColor: AppColors.lightSurface,
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: Container(
-                        width: 26,
-                        height: 26,
-                        decoration: const BoxDecoration(
-                          color: AppColors.primary,
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(
-                          Icons.edit_rounded,
-                          size: 14,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 24),
-
               // Name field
               AppTextField(
                 label: 'Full Name',

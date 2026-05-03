@@ -119,6 +119,7 @@
 //   }
 // }
 
+import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/domain/entities/purchase/purchase.dart';
 import 'package:flutter/material.dart';
@@ -152,12 +153,13 @@ class SpendingDetailReceiptSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.cardTheme.color,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFEEF0F3)),
+        border: Border.all(color: theme.dividerColor),
       ),
       child: _hasReceipt
           ? _ReceiptPresent(receipt: receipt!, onView: onView)
@@ -193,6 +195,8 @@ class _ReceiptPresent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+  
     return Padding(
       padding: const EdgeInsets.all(14),
       child: Row(
@@ -201,13 +205,14 @@ class _ReceiptPresent extends StatelessWidget {
             width: 44,
             height: 44,
             decoration: BoxDecoration(
-              color: const Color(0xFFF1F5F9),
+              color: theme.cardTheme.color,
               borderRadius: BorderRadius.circular(11),
+              border: Border.all(color: theme.dividerColor),
             ),
-            child: const Icon(
+            child: Icon(
               Icons.receipt_outlined,
               size: 22,
-              color: AppColors.lightTextSecondary,
+              color: theme.iconTheme.color
             ),
           ),
           const SizedBox(width: 12),
@@ -218,17 +223,15 @@ class _ReceiptPresent extends StatelessWidget {
                 Text(
                   receipt.name ?? 'Receipt',
                   style: const TextStyle(
-                    fontSize: 14,
+                    fontSize: AppFontSize.sm,
                     fontWeight: FontWeight.w600,
-                    color: AppColors.lightText,
                   ),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   _formatUploadDate(receipt.uploadedAt),
                   style: const TextStyle(
-                    fontSize: 12,
-                    color: AppColors.lightTextSecondary,
+                    fontSize: AppFontSize.xs,
                   ),
                 ),
               ],
@@ -248,14 +251,14 @@ class _ReceiptPresent extends StatelessWidget {
                 children: const [
                   Icon(
                     Icons.visibility_outlined,
-                    size: 14,
+                    size: AppFontSize.sm,
                     color: AppColors.primary,
                   ),
                   SizedBox(width: 5),
                   Text(
                     'View',
                     style: TextStyle(
-                      fontSize: 13,
+                      fontSize: AppFontSize.sm,
                       fontWeight: FontWeight.w600,
                       color: AppColors.primary,
                     ),
@@ -273,6 +276,8 @@ class _ReceiptPresent extends StatelessWidget {
 class _ReceiptAbsent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Padding(
       padding: const EdgeInsets.all(14),
       child: Row(
@@ -281,13 +286,13 @@ class _ReceiptAbsent extends StatelessWidget {
             width: 44,
             height: 44,
             decoration: BoxDecoration(
-              color: const Color(0xFFF1F5F9),
+              color: theme.cardTheme.color,
               borderRadius: BorderRadius.circular(11),
+              border: Border.all(color: theme.dividerColor),
             ),
             child: const Icon(
               Icons.receipt_long_outlined,
               size: 22,
-              color: AppColors.lightTextSecondary,
             ),
           ),
           const SizedBox(width: 12),
@@ -295,8 +300,7 @@ class _ReceiptAbsent extends StatelessWidget {
             child: Text(
               'No receipt added',
               style: TextStyle(
-                fontSize: 14,
-                color: AppColors.lightTextSecondary,
+                fontSize: AppFontSize.sm,
                 fontStyle: FontStyle.italic,
               ),
             ),

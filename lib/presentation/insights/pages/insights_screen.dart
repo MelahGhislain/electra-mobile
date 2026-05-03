@@ -31,9 +31,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightBackground,
       appBar: AppBar(
-        backgroundColor: AppColors.lightBackground,
         elevation: 0,
         scrolledUnderElevation: 0,
         title: const Text(

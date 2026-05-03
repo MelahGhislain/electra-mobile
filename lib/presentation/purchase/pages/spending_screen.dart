@@ -1,3 +1,5 @@
+import 'package:electra/common/widgets/text_fields/search_bar.dart';
+import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/core/router/route_names.dart';
 import 'package:electra/domain/entities/purchase/purchase.dart';
@@ -11,7 +13,6 @@ import 'package:electra/presentation/purchase/widgets/spending/spending_day_head
 import 'package:electra/presentation/purchase/widgets/spending/spending_empty_state.dart';
 import 'package:electra/presentation/purchase/widgets/spending/spending_insight_banner.dart';
 import 'package:electra/presentation/purchase/widgets/spending/spending_list_item.dart';
-import 'package:electra/presentation/purchase/widgets/spending/spending_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -139,7 +140,6 @@ class _SpendingScreenState extends State<SpendingScreen> {
             (_filter.searchQuery?.isNotEmpty ?? false);
 
         return Scaffold(
-          backgroundColor: AppColors.lightBackground,
           body: SafeArea(
             child: RefreshIndicator(
               backgroundColor: AppColors.lightBackground,
@@ -160,7 +160,8 @@ class _SpendingScreenState extends State<SpendingScreen> {
                   SliverToBoxAdapter(
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
-                      child: SpendingSearchBar(
+                      child: AppSearchBar(
+                        hintText: 'Search merchant, item or category...',
                         initialValue: _filter.searchQuery,
                         onChanged: (q) => setState(
                           () => _filter = _filter.copyWith(searchQuery: q),
@@ -305,6 +306,14 @@ class _SpendingHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final filterColor = isDark
+        ? AppColors.darkSurfaceAlt
+        : AppColors.lightSurface;
+    final filterBorderColor = isDark
+        ? AppColors.darkBorder
+        : AppColors.lightBorder;
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
       child: Row(
@@ -316,19 +325,15 @@ class _SpendingHeader extends StatelessWidget {
               Text(
                 'Spending',
                 style: TextStyle(
-                  fontSize: 28,
+                  fontSize: AppFontSize.xxxl,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.lightText,
                   letterSpacing: -0.5,
                 ),
               ),
               SizedBox(height: 2),
               Text(
                 'Track your spending, stay in control',
-                style: TextStyle(
-                  fontSize: 13,
-                  color: AppColors.lightTextSecondary,
-                ),
+                style: TextStyle(fontSize: AppFontSize.md),
               ),
             ],
           ),
@@ -340,15 +345,9 @@ class _SpendingHeader extends StatelessWidget {
               width: 44,
               height: 44,
               decoration: BoxDecoration(
-                color: filterCount > 0
-                    ? AppColors.primary
-                    : AppColors.lightSurface,
+                color: filterColor,
                 borderRadius: BorderRadius.circular(13),
-                border: Border.all(
-                  color: filterCount > 0
-                      ? AppColors.primary
-                      : AppColors.dividerLight,
-                ),
+                border: Border.all(color: filterBorderColor),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withValues(alpha: 0.05),
@@ -363,7 +362,7 @@ class _SpendingHeader extends StatelessWidget {
                   Icon(
                     Icons.tune_rounded,
                     size: 20,
-                    color: filterCount > 0 ? Colors.white : AppColors.lightText,
+                    color: isDark ? AppColors.darkText : AppColors.lightText,
                   ),
                   if (filterCount > 0)
                     Positioned(
@@ -372,8 +371,10 @@ class _SpendingHeader extends StatelessWidget {
                       child: Container(
                         width: 7,
                         height: 7,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
+                        decoration: BoxDecoration(
+                          color: isDark
+                              ? AppColors.lightBackground
+                              : AppColors.darkBackground,
                           shape: BoxShape.circle,
                         ),
                       ),

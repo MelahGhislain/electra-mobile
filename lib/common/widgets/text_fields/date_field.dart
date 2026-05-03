@@ -1,4 +1,3 @@
-import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class DateField extends StatelessWidget {
@@ -13,12 +12,14 @@ class DateField extends StatelessWidget {
     required this.onTap,
   });
 
-  String _format(DateTime date) {
-    return '${date.day}/${date.month}/${date.year}';
-  }
+  String _format(DateTime date) => '${date.day}/${date.month}/${date.year}';
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final isDark = theme.brightness == Brightness.dark;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -26,16 +27,12 @@ class DateField extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: 8),
           child: Text(
             label,
-            style: const TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w700,
-              color: Colors.grey,
-              letterSpacing: 0.4,
+            style: theme.textTheme.bodyMedium?.copyWith(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ),
-
-        /// ✅ Field
         Material(
           color: Colors.transparent,
           child: InkWell(
@@ -43,27 +40,30 @@ class DateField extends StatelessWidget {
             onTap: onTap,
             child: Container(
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
+              padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: isDark ? colorScheme.onSurface : colorScheme.surface,
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.grey.shade200),
+                border: Border.all(color: theme.dividerColor),
               ),
               child: Row(
                 children: [
-                  const Icon(
+                  Icon(
                     Icons.calendar_today_outlined,
                     size: 16,
-                    color: AppColors.darkBackground,
+                    color: theme.iconTheme.color,
                   ),
                   const SizedBox(width: 10),
-
-                  Text(_format(value), style: const TextStyle(fontSize: 14)),
-
+                  Text(
+                    _format(value),
+                    style: theme.textTheme.bodyMedium?.copyWith(fontSize: 14),
+                  ),
                   const Spacer(),
-
-                  /// 🔥 subtle affordance (UX improvement)
-                  const Icon(Icons.chevron_right, size: 16, color: Colors.grey),
+                  Icon(
+                    Icons.keyboard_arrow_down_rounded,
+                    size: 16,
+                    color: theme.iconTheme.color,
+                  ),
                 ],
               ),
             ),

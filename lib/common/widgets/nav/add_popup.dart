@@ -1,5 +1,6 @@
 // Inside layout_scaffold.dart or extracted to its own file
 
+import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -21,6 +22,10 @@ class AddPopup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final notchColor = Theme.of(context).brightness == Brightness.dark
+        ? AppColors.darkBorder
+        : Colors.white;
+
     return ScaleTransition(
       scale: animation,
       alignment: Alignment.bottomCenter,
@@ -29,13 +34,14 @@ class AddPopup extends StatelessWidget {
         children: [
           // Card
           Container(
-            width: 290,
+            width: 320,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).cardTheme.color,
               borderRadius: BorderRadius.circular(18),
+              border: Border.all(color: Theme.of(context).dividerColor),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.12),
+                  color: Theme.of(context).primaryColor.withValues(alpha: 0.12),
                   blurRadius: 24,
                   offset: const Offset(0, 8),
                 ),
@@ -78,7 +84,10 @@ class AddPopup extends StatelessWidget {
             ),
           ),
           // Notch pointing down toward the FAB
-          CustomPaint(size: const Size(20, 10), painter: _NotchPainter()),
+          CustomPaint(
+            size: const Size(20, 10),
+            painter: _NotchPainter(color: notchColor),
+          ),
         ],
       ),
     );
@@ -86,9 +95,13 @@ class AddPopup extends StatelessWidget {
 }
 
 class _NotchPainter extends CustomPainter {
+  final Color color;
+
+  const _NotchPainter({this.color = Colors.white});
+
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()..color = Colors.white;
+    final paint = Paint()..color = color;
     final path = Path()
       ..moveTo(0, 0)
       ..lineTo(size.width / 2, size.height)
@@ -98,7 +111,7 @@ class _NotchPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_) => false;
+  bool shouldRepaint(_NotchPainter old) => old.color != color;
 }
 
 class _PopupRow extends StatelessWidget {
@@ -148,10 +161,10 @@ class _PopupRow extends StatelessWidget {
                   Row(
                     children: [
                       SizedBox(
-                        width: 108,
+                        width: 120,
                         child: Text(
                           title,
-                          style: const TextStyle(fontSize: 14),
+                          style: const TextStyle(fontSize: AppFontSize.md),
                         ),
                       ),
                       if (isPremium) ...[
@@ -161,43 +174,34 @@ class _PopupRow extends StatelessWidget {
                             vertical: 2,
                           ),
                           decoration: BoxDecoration(
-                            color: AppColors.darkBackground.withValues(
-                              alpha: 0.8,
-                            ),
+                            color: Theme.of(
+                              context,
+                            ).primaryColor.withValues(alpha: 0.8),
                             borderRadius: BorderRadius.circular(5),
                           ),
                           child: const Text(
                             'Premium',
-                            style: TextStyle(
-                              fontSize: 11,
-                              color: AppColors.darkText,
-                            ),
+                            style: TextStyle(fontSize: AppFontSize.sm),
                           ),
                         ),
                       ],
                     ],
                   ),
-                  Text(
-                    subtitle,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: AppColors.lightTextSecondary,
-                    ),
-                  ),
+                  Text(subtitle, style: TextStyle(fontSize: 12)),
                 ],
               ),
             ),
             if (isLocked)
-              const Icon(
+              Icon(
                 Icons.lock_outline,
                 size: 16,
-                color: AppColors.lightTextSecondary,
+                color: Theme.of(context).iconTheme.color,
               )
             else
-              const Icon(
+              Icon(
                 Icons.chevron_right,
                 size: 16,
-                color: AppColors.lightTextSecondary,
+                color: Theme.of(context).iconTheme.color,
               ),
           ],
         ),

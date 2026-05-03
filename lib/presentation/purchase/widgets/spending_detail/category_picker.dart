@@ -1,3 +1,5 @@
+import 'package:electra/common/widgets/text_fields/search_bar.dart';
+import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/core/utils/category_meta.dart';
 import 'package:flutter/material.dart';
@@ -61,14 +63,16 @@ class _CategoryPickerSheetState extends State<_CategoryPickerSheet> {
   @override
   Widget build(BuildContext context) {
     final filtered = _filtered;
+    final theme = Theme.of(context);
 
     return Container(
       constraints: BoxConstraints(
         maxHeight: MediaQuery.of(context).size.height * 0.75,
       ),
-      decoration: const BoxDecoration(
-        color: AppColors.lightBackground,
+      decoration: BoxDecoration(
+        color: theme.cardTheme.color,
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+        border: Border.all(color: theme.dividerColor),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -79,7 +83,7 @@ class _CategoryPickerSheetState extends State<_CategoryPickerSheet> {
             width: 40,
             height: 4,
             decoration: BoxDecoration(
-              color: Colors.grey.shade300,
+              color: theme.dividerColor,
               borderRadius: BorderRadius.circular(2),
             ),
           ),
@@ -90,18 +94,17 @@ class _CategoryPickerSheetState extends State<_CategoryPickerSheet> {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
               children: [
-                const Icon(
+                Icon(
                   Icons.grid_view_rounded,
-                  color: AppColors.primary,
-                  size: 22,
+                  color: theme.iconTheme.color,
+                  size: AppFontSize.xl,
                 ),
                 const SizedBox(width: 10),
                 const Text(
                   'Select category',
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: AppFontSize.lg,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.lightText,
                   ),
                 ),
               ],
@@ -109,65 +112,24 @@ class _CategoryPickerSheetState extends State<_CategoryPickerSheet> {
           ),
 
           const SizedBox(height: 16),
-          const Divider(height: 1, color: AppColors.dividerLight),
+          const Divider(height: 1),
           const SizedBox(height: 16),
 
           // ── Search field ─────────────────────────────────────────────
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: TextField(
-              controller: _searchCtrl,
+            child: AppSearchBar(
+              hintText: 'Search categories...',
+              initialValue: _searchCtrl.text,
               onChanged: (v) => setState(() => _query = v),
-              style: const TextStyle(fontSize: 14, color: AppColors.lightText),
-              decoration: InputDecoration(
-                hintText: 'Search categories...',
-                hintStyle: const TextStyle(
-                  fontSize: 14,
-                  color: AppColors.lightTextSecondary,
-                ),
-                prefixIcon: const Icon(
-                  Icons.search_rounded,
-                  size: 20,
-                  color: AppColors.lightTextSecondary,
-                ),
-                suffixIcon: _query.isNotEmpty
-                    ? GestureDetector(
-                        onTap: () {
-                          _searchCtrl.clear();
-                          setState(() => _query = '');
-                        },
-                        child: const Icon(
-                          Icons.close_rounded,
-                          size: 18,
-                          color: AppColors.lightTextSecondary,
-                        ),
-                      )
-                    : null,
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 14,
-                  vertical: 11,
-                ),
-                filled: true,
-                fillColor: AppColors.lightSurface,
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: AppColors.dividerLight),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(
-                    color: AppColors.primary,
-                    width: 1.5,
-                  ),
-                ),
-              ),
+              onClear: () => setState(() => _query = ''),
             ),
           ),
 
           const SizedBox(height: 12),
 
           // ── List ─────────────────────────────────────────────────────
-          Flexible(
+          Expanded(
             child: filtered.isEmpty
                 ? Padding(
                     padding: const EdgeInsets.all(32),
@@ -184,10 +146,7 @@ class _CategoryPickerSheetState extends State<_CategoryPickerSheet> {
                         const SizedBox(height: 12),
                         Text(
                           'No categories found for "$_query"',
-                          style: const TextStyle(
-                            fontSize: 13,
-                            color: AppColors.lightTextSecondary,
-                          ),
+                          style: const TextStyle(fontSize: AppFontSize.sm),
                           textAlign: TextAlign.center,
                         ),
                       ],
@@ -197,12 +156,8 @@ class _CategoryPickerSheetState extends State<_CategoryPickerSheet> {
                     padding: const EdgeInsets.only(bottom: 8),
                     shrinkWrap: true,
                     itemCount: filtered.length,
-                    separatorBuilder: (_, _) => const Divider(
-                      height: 1,
-                      color: AppColors.dividerLight,
-                      indent: 20,
-                      endIndent: 20,
-                    ),
+                    separatorBuilder: (_, _) =>
+                        const Divider(height: 1, indent: 20, endIndent: 20),
                     itemBuilder: (_, i) {
                       final meta = filtered[i];
                       final isSelected =
@@ -225,20 +180,19 @@ class _CategoryPickerSheetState extends State<_CategoryPickerSheet> {
                         title: Text(
                           meta.label,
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: isSelected
+                                ? AppFontSize.md
+                                : AppFontSize.sm,
                             fontWeight: isSelected
-                                ? FontWeight.w700
+                                ? FontWeight.w800
                                 : FontWeight.w500,
-                            color: isSelected
-                                ? AppColors.primary
-                                : AppColors.lightText,
                           ),
                         ),
                         trailing: isSelected
-                            ? const Icon(
+                            ? Icon(
                                 Icons.check_rounded,
-                                color: AppColors.primary,
-                                size: 20,
+                                color: theme.iconTheme.color,
+                                size: AppFontSize.xxl,
                               )
                             : null,
                         onTap: () => Navigator.pop(context, meta),

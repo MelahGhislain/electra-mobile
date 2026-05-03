@@ -1,5 +1,8 @@
 import 'package:electra/common/widgets/bottom_sheets/app_bottom_sheet.dart';
 import 'package:electra/common/widgets/buttons/main_button.dart';
+import 'package:electra/common/widgets/text_fields/chip_selector.dart';
+import 'package:electra/common/widgets/text_fields/text_field.dart';
+import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/presentation/user/bloc/user_cubit.dart';
 import 'package:electra/presentation/user/bloc/user_state.dart';
@@ -77,13 +80,17 @@ class _BudgetSheetBodyState extends State<_BudgetSheetBody> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final isDark = theme.brightness == Brightness.dark;
+
     return BlocListener<UserCubit, UserState>(
       listener: (context, state) {
         if (state is UserFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.message),
-              backgroundColor: Colors.red.shade700,
+              backgroundColor: theme.colorScheme.error,
               behavior: SnackBarBehavior.floating,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
@@ -109,24 +116,13 @@ class _BudgetSheetBodyState extends State<_BudgetSheetBody> {
               // Subtitle
               const Text(
                 'Set a monthly spending limit to stay on track.',
-                style: TextStyle(
-                  fontSize: 13,
-                  color: AppColors.lightTextSecondary,
-                ),
+                style: TextStyle(fontSize: AppFontSize.sm),
               ),
               const SizedBox(height: 24),
 
-              // Budget input
-              const Text(
-                'Budget Amount',
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.lightText,
-                ),
-              ),
-              const SizedBox(height: 8),
-              TextFormField(
+              AppTextField(
+                label: 'Budget Amount',
+                hint: 'Enter budget amount',
                 controller: _budgetCtrl,
                 keyboardType: const TextInputType.numberWithOptions(
                   decimal: true,
@@ -134,57 +130,7 @@ class _BudgetSheetBodyState extends State<_BudgetSheetBody> {
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
                 ],
-                style: const TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.lightText,
-                ),
-                decoration: InputDecoration(
-                  prefixText: '\$  ',
-                  prefixStyle: const TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.primary,
-                  ),
-                  hintText: '0',
-                  hintStyle: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.grey.shade300,
-                  ),
-                  filled: true,
-                  fillColor: const Color(0xFFF9FAFB),
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 16,
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(14),
-                    borderSide: const BorderSide(color: AppColors.dividerLight),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(14),
-                    borderSide: const BorderSide(color: AppColors.dividerLight),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(14),
-                    borderSide: const BorderSide(
-                      color: AppColors.primary,
-                      width: 1.5,
-                    ),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(14),
-                    borderSide: BorderSide(color: Colors.red.shade400),
-                  ),
-                  focusedErrorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(14),
-                    borderSide: BorderSide(
-                      color: Colors.red.shade400,
-                      width: 1.5,
-                    ),
-                  ),
-                ),
+                prefixText: '\$  ',
                 validator: (v) {
                   if (v == null || v.trim().isEmpty) {
                     return 'Please enter a budget amount';
@@ -203,52 +149,17 @@ class _BudgetSheetBodyState extends State<_BudgetSheetBody> {
               const SizedBox(height: 16),
 
               // Quick-select chips
-              const Text(
-                'Quick select',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.lightTextSecondary,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Wrap(
-                spacing: 8,
-                runSpacing: 8,
-                children: _quickAmounts.map((amount) {
-                  final isSelected =
-                      _budgetCtrl.text.trim() == amount.toString();
-                  return GestureDetector(
-                    onTap: () =>
-                        setState(() => _budgetCtrl.text = amount.toString()),
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 150),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 14,
-                        vertical: 8,
-                      ),
-                      decoration: BoxDecoration(
-                        color: isSelected
-                            ? AppColors.primary
-                            : AppColors.primary.withValues(alpha: 0.06),
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                          color: AppColors.primary.withValues(
-                            alpha: isSelected ? 1.0 : 0.2,
-                          ),
-                        ),
-                      ),
-                      child: Text(
-                        '\$$amount',
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600,
-                          color: isSelected ? Colors.white : AppColors.primary,
-                        ),
-                      ),
-                    ),
-                  );
-                }).toList(),
+              ChipSelector<String>(
+                label: 'Quick select',
+                selected: _budgetCtrl.text.trim(),
+                options: ['500', '1000', '1500', '2000', '2500', '3000', '5000']
+                    .map(
+                      (amount) =>
+                          ChipSelectorOption(value: amount, label: '\$$amount'),
+                    )
+                    .toList(),
+                onSelected: (amount) =>
+                    setState(() => _budgetCtrl.text = amount.toString()),
               ),
 
               const SizedBox(height: 32),

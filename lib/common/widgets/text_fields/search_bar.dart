@@ -1,23 +1,26 @@
-import 'package:flutter/material.dart';
+import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
+import 'package:flutter/material.dart';
 
-class SpendingSearchBar extends StatefulWidget {
+class AppSearchBar extends StatefulWidget {
   final String? initialValue;
+  final String? hintText;
   final ValueChanged<String> onChanged;
   final VoidCallback onClear;
 
-  const SpendingSearchBar({
+  const AppSearchBar({
     super.key,
     this.initialValue,
+    this.hintText,
     required this.onChanged,
     required this.onClear,
   });
 
   @override
-  State<SpendingSearchBar> createState() => _SpendingSearchBarState();
+  State<AppSearchBar> createState() => _AppSearchBarState();
 }
 
-class _SpendingSearchBarState extends State<SpendingSearchBar> {
+class _AppSearchBarState extends State<AppSearchBar> {
   late final TextEditingController _controller;
 
   @override
@@ -35,12 +38,16 @@ class _SpendingSearchBarState extends State<SpendingSearchBar> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final isDark = theme.brightness == Brightness.dark;
+
     return Container(
       height: 48,
       decoration: BoxDecoration(
-        color: AppColors.lightSurface,
+        color: colorScheme.onSurface,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.dividerLight),
+        border: Border.all(color: theme.dividerColor),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.04),
@@ -52,13 +59,16 @@ class _SpendingSearchBarState extends State<SpendingSearchBar> {
       child: TextField(
         controller: _controller,
         onChanged: widget.onChanged,
-        style: const TextStyle(fontSize: 14, color: AppColors.lightText),
+        style: theme.textTheme.bodyMedium?.copyWith(fontSize: 14),
+        cursorColor: isDark ? AppColors.dividerLight : AppColors.dividerDark,
         decoration: InputDecoration(
-          hintText: 'Search merchant, item or category...',
-          hintStyle: TextStyle(fontSize: 14, color: Colors.grey.shade400),
+          hintText: widget.hintText,
+          hintStyle: theme.textTheme.bodyMedium?.copyWith(
+            fontSize: AppFontSize.sm,
+          ),
           prefixIcon: Icon(
             Icons.search_rounded,
-            color: Colors.grey.shade400,
+            color: theme.iconTheme.color,
             size: 20,
           ),
           suffixIcon: _controller.text.isNotEmpty
@@ -69,7 +79,7 @@ class _SpendingSearchBarState extends State<SpendingSearchBar> {
                   },
                   child: Icon(
                     Icons.cancel_rounded,
-                    color: Colors.grey.shade400,
+                    color: theme.iconTheme.color,
                     size: 18,
                   ),
                 )

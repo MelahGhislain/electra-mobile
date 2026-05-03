@@ -57,7 +57,6 @@ class _LayoutScaffoldState extends State<LayoutScaffold>
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      backgroundColor: AppColors.lightBackground,
       body: Stack(
         children: [
           /// ✅ Main content

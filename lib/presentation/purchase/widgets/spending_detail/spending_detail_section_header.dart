@@ -1,3 +1,4 @@
+import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -20,9 +21,8 @@ class SpendingDetailSectionHeader extends StatelessWidget {
           Text(
             title,
             style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: AppColors.lightText,
+              fontSize: AppFontSize.lg,
+              fontWeight: FontWeight.w500,
               letterSpacing: -0.2,
             ),
           ),
