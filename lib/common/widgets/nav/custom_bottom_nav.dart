@@ -134,7 +134,7 @@ class _NavItem extends StatelessWidget {
         children: [
           Icon(
             icon,
-            size: isSelected ? 32 : 28,
+            size: isSelected ? 32 : 24,
             color: isSelected
                 ? Theme.of(context).colorScheme.primary
                 : textColor,

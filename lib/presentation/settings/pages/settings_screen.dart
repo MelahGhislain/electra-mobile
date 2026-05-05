@@ -43,6 +43,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     super.initState();
     _loadVersion();
     context.read<UserCubit>().loadUser();
+    _themeMode = context.read<ThemeCubit>().state;
   }
 
   Future<void> _loadVersion() async {

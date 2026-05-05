@@ -1,5 +1,7 @@
 import 'package:electra/common/widgets/buttons/main_icon_button.dart';
+import 'package:electra/core/router/route_names.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeHeader extends StatelessWidget {
   final String name;
@@ -70,12 +72,17 @@ class HomeHeader extends StatelessWidget {
 
                   const SizedBox(width: 10),
                   // Avatar
-                  CircleAvatar(
-                    radius: 22,
-                    backgroundImage: const NetworkImage(
-                      'https://i.pravatar.cc/100',
+                  GestureDetector(
+                    onTap: () {
+                      context.goNamed(RouteNames.settings);
+                    },
+                    child: CircleAvatar(
+                      radius: 22,
+                      backgroundImage: const NetworkImage(
+                        'https://i.pravatar.cc/100',
+                      ),
+                      backgroundColor: Colors.grey.shade200,
                     ),
-                    backgroundColor: Colors.grey.shade200,
                   ),
                 ],
               ),

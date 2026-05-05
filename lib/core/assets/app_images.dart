@@ -8,4 +8,5 @@ class AppImages {
   static const String bell = '$basePath/bell.png';
 
   static const String splash = '$basePath/splash/splash.png';
+  static const String splashLight = '$basePath/splash/splash_light.png';
 }

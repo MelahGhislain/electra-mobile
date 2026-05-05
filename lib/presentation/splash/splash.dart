@@ -48,20 +48,28 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Scaffold(
       body: Stack(
         children: [
           Positioned.fill(
-            child: Image.asset(AppImages.splash, fit: BoxFit.cover),
+            child: Image.asset(
+              isDark ? AppImages.splash : AppImages.splashLight,
+              fit: BoxFit.cover,
+            ),
           ),
 
           Positioned(
-            bottom: 135,
+            bottom: isDark ? 135 : 147,
             right: 130,
             child: Container(
               height: 10,
               width: 160,
-              color: Color.fromARGB(255, 0, 0, 0),
+              color: isDark
+                  ? Color.fromARGB(255, 0, 0, 0)
+                  : Color.fromARGB(255, 255, 255, 255),
             ),
           ),
         ],

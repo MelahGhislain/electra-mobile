@@ -36,11 +36,7 @@ class SpendingEmptyState extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               isFiltered ? 'No results found' : 'No purchases yet',
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: AppColors.lightText,
-              ),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 6),
             Text(
