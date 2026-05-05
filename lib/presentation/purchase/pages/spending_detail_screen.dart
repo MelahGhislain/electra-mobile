@@ -2,6 +2,7 @@ import 'package:electra/common/widgets/buttons/main_icon_button.dart';
 import 'package:electra/common/widgets/dialogs/app_confirm_dialog.dart';
 import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
+import 'package:electra/core/router/route_names.dart';
 import 'package:electra/domain/entities/purchase/purchase.dart';
 import 'package:electra/presentation/purchase/blocs/purchase/purchase_cubit.dart';
 import 'package:electra/presentation/purchase/blocs/purchase_detail/purchase_detail_cubit.dart';
@@ -14,6 +15,7 @@ import 'package:electra/presentation/purchase/widgets/spending_detail/spending_d
 import 'package:electra/presentation/purchase/widgets/spending_detail/spending_detail_section_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class SpendingDetailScreen extends StatelessWidget {
   final String purchaseId;
@@ -218,13 +220,19 @@ class _SpendingDetailView extends StatelessWidget {
             _OptionTile(
               icon: Icons.share_rounded,
               label: 'Share',
-              onTap: () => Navigator.pop(context),
+              isLocked: true,
+              onTap: () {
+                // Navigator.pop(context);
+              },
             ),
 
             _OptionTile(
               icon: Icons.download_rounded,
               label: 'Export',
-              onTap: () => Navigator.pop(context),
+              isLocked: true,
+              onTap: () {
+                // Navigator.pop(context);
+              },
             ),
 
             const Divider(height: 1),
@@ -319,12 +327,14 @@ class _OptionTile extends StatelessWidget {
   final IconData icon;
   final String label;
   final Color? color;
+  final bool? isLocked;
   final VoidCallback onTap;
 
   const _OptionTile({
     required this.icon,
     required this.label,
     required this.onTap,
+    this.isLocked,
     this.color,
   });
 
@@ -337,7 +347,15 @@ class _OptionTile extends StatelessWidget {
         label,
         style: TextStyle(color: color, fontWeight: FontWeight.w500),
       ),
-      onTap: onTap,
+      subtitle: isLocked == true ? Text(
+        'Premium feature',
+        style: TextStyle(fontSize: AppFontSize.xs),
+      ) : null,
+      trailing: isLocked == true ? Icon(Icons.lock_outline, color: theme.iconTheme.color, size: 20) : null,
+      onTap: isLocked == true ? () {
+        Navigator.pop(context);
+        context.pushNamed(RouteNames.subscription);
+      } : onTap,
     );
   }
 }
