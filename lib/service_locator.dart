@@ -8,6 +8,7 @@ import 'package:electra/data/repository/auth/auth_repository_impl.dart';
 import 'package:electra/data/repository/insights/insights_repository_impl.dart';
 import 'package:electra/data/repository/purchase/purchase_repository_impl.dart';
 import 'package:electra/data/repository/receipt/receipt_repository_impl.dart';
+import 'package:electra/data/repository/subscription/subscription_repository_impl.dart';
 import 'package:electra/data/repository/user/user_repository_impl.dart';
 import 'package:electra/data/repository/voice/voice_repository_impl.dart';
 import 'package:electra/data/source/auth/apple_auth_datasource.dart';
@@ -16,11 +17,14 @@ import 'package:electra/data/source/auth/google_auth_datasource.dart';
 import 'package:electra/data/source/insights/insights_remote_datasource.dart';
 import 'package:electra/data/source/purchase/purchase_remote_datasource.dart';
 import 'package:electra/data/source/receipt/receipt_data_source.dart';
+import 'package:electra/data/source/subscription/iap_datasource.dart';
+import 'package:electra/data/source/subscription/subscription_remote_datasource.dart';
 import 'package:electra/data/source/user/user_datasource.dart';
 import 'package:electra/data/source/voice/voice_stream_service.dart';
 import 'package:electra/domain/repository/insights/insights_repository.dart';
 import 'package:electra/domain/repository/purchase/purchase_repository.dart';
 import 'package:electra/domain/repository/receipt/receipt_repository.dart';
+import 'package:electra/domain/repository/subscription/subscription_repository.dart';
 import 'package:electra/domain/repository/voice/voice_repository.dart';
 import 'package:electra/domain/usecases/auth/logout_user.dart';
 import 'package:electra/domain/usecases/auth/refresh_token.dart';
@@ -34,6 +38,7 @@ import 'package:electra/domain/usecases/purchase/purchase_usecases.dart';
 import 'package:electra/domain/usecases/receipt/pick_receipt_image.dart';
 import 'package:electra/domain/usecases/auth/login_user.dart';
 import 'package:electra/domain/usecases/auth/register_user.dart';
+import 'package:electra/domain/usecases/subscription/subscription_usecase.dart';
 import 'package:electra/domain/usecases/user/setting_usecase.dart';
 import 'package:electra/domain/usecases/user/user_usecase.dart';
 import 'package:electra/domain/usecases/voice/listen_voice_stream.dart';
@@ -41,6 +46,7 @@ import 'package:electra/domain/usecases/voice/start_voice_stream.dart';
 import 'package:electra/domain/usecases/voice/stop_voice_stream.dart';
 import 'package:electra/presentation/purchase/blocs/purchase/purchase_cubit.dart';
 import 'package:electra/presentation/purchase/blocs/purchase_detail/purchase_detail_cubit.dart';
+import 'package:electra/presentation/subscription/bloc/subscription_cubit.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -54,6 +60,11 @@ Future<void> init() async {
   final prefs = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => prefs);
   sl.registerLazySingleton(() => OnboardingStorage(sl()));
+
+  // ── IAP (In-App Purchase) ──────────────────────────────────────
+  final iapDataSource = IAPDataSource();
+  await iapDataSource.initialize(); // sets up the purchase stream listener
+  sl.registerLazySingleton(() => iapDataSource);
 
   /// Core
   final dioClient = DioClient();
@@ -99,6 +110,10 @@ Future<void> init() async {
     () => PurchaseRemoteDataSourceImpl(sl()),
   );
   sl.registerLazySingleton(() => InsightsRemoteDataSourceImpl(sl<ApiClient>()));
+  // ── Subscription datasource ────────────────────────────────────
+  sl.registerLazySingleton<SubscriptionRemoteDataSource>(
+    () => SubscriptionRemoteDataSourceImpl(sl<ApiClient>()),
+  );
 
   // =============== REPOSITORIES ======================
   /// Repository
@@ -127,6 +142,13 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<InsightsRepository>(
     () => InsightsRepositoryImpl(sl<InsightsRemoteDataSourceImpl>()),
+  );
+  // ── Subscription repository ────────────────────────────────────
+  sl.registerLazySingleton<SubscriptionRepository>(
+    () => SubscriptionRepositoryImpl(
+      remoteDataSource: sl<SubscriptionRemoteDataSource>(),
+      iapDataSource: sl<IAPDataSource>(),
+    ),
   );
 
   /// ================ INTERCEPTORS ======================
@@ -176,4 +198,23 @@ Future<void> init() async {
 
   /// Insights Usecases
   sl.registerLazySingleton(() => GetInsightsUseCase(sl()));
+
+  /// ── Subscription usecases ──────────────────────────────────────
+  sl.registerLazySingleton(() => GetSubscriptionUseCase(sl()));
+  sl.registerLazySingleton(() => VerifySubscriptionUseCase(sl()));
+  sl.registerLazySingleton(() => RestoreSubscriptionUseCase(sl()));
+  sl.registerLazySingleton(() => CancelSubscriptionUseCase(sl()));
+
+  // ── Subscription cubit ─────────────────────────────────────────
+  // Registered as factory (not lazy singleton) because the screen
+  // creates a fresh cubit each time it opens.
+  sl.registerFactory(
+    () => SubscriptionCubit(
+      getSubscription: sl(),
+      verifyPurchase: sl(),
+      restorePurchases: sl(),
+      cancelSubscription: sl(),
+      iap: sl<IAPDataSource>(),
+    ),
+  );
 }

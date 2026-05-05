@@ -34,8 +34,7 @@ class ThisMonthCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Show with hardcoded budget=100 if not set (user asked to hardcode 100)
-    final effectiveBudget = _hasBudget ? summary.budget : 100.0;
+    final effectiveBudget = _hasBudget ? summary.budget : 0.0;
     final effectiveProgress = _hasBudget
         ? summary.progress
         : (summary.spentThisMonth / 100.0).clamp(0.0, 1.0);

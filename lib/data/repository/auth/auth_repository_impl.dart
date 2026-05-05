@@ -93,7 +93,7 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       await remoteDataSource.logout();
       await storage.clearTokens();
-      if (authProvider == AuthProviderEnum.google){
+      if (authProvider == AuthProviderEnum.google) {
         await googleAuthDataSource.signOut();
       }
       return const Right(null);

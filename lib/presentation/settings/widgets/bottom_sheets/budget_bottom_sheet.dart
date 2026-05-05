@@ -3,9 +3,8 @@ import 'package:electra/common/widgets/buttons/main_button.dart';
 import 'package:electra/common/widgets/text_fields/chip_selector.dart';
 import 'package:electra/common/widgets/text_fields/text_field.dart';
 import 'package:electra/core/configs/fonts.dart';
-import 'package:electra/core/configs/theme/app_colors.dart';
-import 'package:electra/presentation/user/bloc/user_cubit.dart';
-import 'package:electra/presentation/user/bloc/user_state.dart';
+import 'package:electra/presentation/settings/blocs/user_cubit.dart';
+import 'package:electra/presentation/settings/blocs/user_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,7 +43,15 @@ class _BudgetSheetBodyState extends State<_BudgetSheetBody> {
   final _formKey = GlobalKey<FormState>();
   late final TextEditingController _budgetCtrl;
 
-  static const _quickAmounts = [500, 1000, 1500, 2000, 3000, 5000];
+  static const _quickAmounts = [
+    '500',
+    '1000',
+    '1500',
+    '2000',
+    '2500',
+    '3000',
+    '5000',
+  ];
 
   @override
   void initState() {
@@ -152,7 +159,7 @@ class _BudgetSheetBodyState extends State<_BudgetSheetBody> {
               ChipSelector<String>(
                 label: 'Quick select',
                 selected: _budgetCtrl.text.trim(),
-                options: ['500', '1000', '1500', '2000', '2500', '3000', '5000']
+                options: _quickAmounts
                     .map(
                       (amount) =>
                           ChipSelectorOption(value: amount, label: '\$$amount'),

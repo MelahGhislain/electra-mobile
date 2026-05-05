@@ -8,15 +8,17 @@ class PlanCard extends StatelessWidget {
   final bool isAnnual;
   final VoidCallback onSubscribe;
   final bool isLoading;
+  final String priceString;
 
   const PlanCard({
     super.key,
     required this.isAnnual,
     required this.onSubscribe,
     this.isLoading = false,
+    required this.priceString,
   });
 
-  String get _price => isAnnual ? '\$4.99' : '\$9.99';
+  String get _price => priceString;
   String get _period => isAnnual ? '/month' : '/month';
   String get _billedAs => isAnnual
       ? 'Billed \$59.88/year — cancel anytime'
@@ -177,7 +179,9 @@ class PlanCard extends StatelessWidget {
                   ..._premiumFeatures.map(
                     (f) => FeatureRow(
                       text: f,
-                      checkColor: !isDark ? AppColors.darkBackground : AppColors.lightBackground,
+                      checkColor: !isDark
+                          ? AppColors.darkBackground
+                          : AppColors.lightBackground,
                     ),
                   ),
 

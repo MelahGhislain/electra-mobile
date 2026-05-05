@@ -1,7 +1,7 @@
 import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
-import 'package:electra/presentation/user/bloc/user_cubit.dart';
-import 'package:electra/presentation/user/bloc/user_state.dart';
+import 'package:electra/presentation/settings/blocs/user_cubit.dart';
+import 'package:electra/presentation/settings/blocs/user_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

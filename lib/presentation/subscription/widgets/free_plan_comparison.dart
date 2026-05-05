@@ -23,8 +23,8 @@ class FreePlanComparison extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: theme.cardTheme.color,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: theme.dividerColor, width: 1),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: theme.dividerColor, width: 1),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,7 +35,9 @@ class FreePlanComparison extends StatelessWidget {
                 width: 32,
                 height: 32,
                 decoration: BoxDecoration(
-                  color: isDark?  AppColors.darkSurfaceAlt : AppColors.lightBorder,
+                  color: isDark
+                      ? AppColors.darkSurfaceAlt
+                      : AppColors.lightBorder,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: const Icon(
@@ -58,7 +60,9 @@ class FreePlanComparison extends StatelessWidget {
                   vertical: 4,
                 ),
                 decoration: BoxDecoration(
-                  color: isDark?  AppColors.darkSurfaceAlt : AppColors.lightBorder,
+                  color: isDark
+                      ? AppColors.darkSurfaceAlt
+                      : AppColors.lightBorder,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: const Text(
@@ -73,7 +77,12 @@ class FreePlanComparison extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           ..._features.map(
-            (f) => FeatureRow(text: f, checkColor: !isDark ? AppColors.darkBackground : AppColors.lightBackground,),
+            (f) => FeatureRow(
+              text: f,
+              checkColor: !isDark
+                  ? AppColors.darkBackground
+                  : AppColors.lightBackground,
+            ),
           ),
         ],
       ),

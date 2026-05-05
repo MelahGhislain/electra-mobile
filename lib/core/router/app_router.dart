@@ -4,6 +4,7 @@ import 'package:electra/core/router/go_router_refresh_stream.dart';
 import 'package:electra/core/router/route_names.dart';
 import 'package:electra/presentation/auth/pages/signin_page.dart';
 import 'package:electra/presentation/auth/pages/signup_page.dart';
+import 'package:electra/presentation/home/bloc/home_cubit.dart';
 import 'package:electra/presentation/home/pages/home.dart';
 import 'package:electra/presentation/insights/bloc/insights_cubit.dart';
 import 'package:electra/presentation/insights/pages/insights_screen.dart';
@@ -17,11 +18,13 @@ import 'package:electra/presentation/purchase/pages/spending_detail_screen.dart'
 import 'package:electra/presentation/purchase/pages/spending_screen.dart';
 import 'package:electra/presentation/settings/pages/settings_screen.dart';
 import 'package:electra/presentation/splash/splash.dart';
+import 'package:electra/presentation/subscription/bloc/subscription_cubit.dart';
 import 'package:electra/presentation/subscription/pages/subcription_screen.dart';
 import 'package:electra/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AppRouter {
   static final _rootNavigatorKey = GlobalKey<NavigatorState>(
@@ -179,7 +182,23 @@ class AppRouter {
         GoRoute(
           path: '/subscription',
           name: RouteNames.subscription,
-          builder: (context, state) => const SubscriptionScreen(),
+          parentNavigatorKey: _rootNavigatorKey,
+          pageBuilder: (context, state) => CustomTransitionPage(
+            key: state.pageKey,
+            child: BlocProvider(
+              create: (_) => sl<SubscriptionCubit>(),
+              child: const SubscriptionScreen(),
+            ),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) =>
+                    SlideTransition(
+                      position: Tween(
+                        begin: const Offset(0, 1),
+                        end: Offset.zero,
+                      ).animate(animation),
+                      child: child,
+                    ),
+          ),
         ),
 
         // ── Protected: bottom nav shell ───────────────────────────────────
@@ -194,7 +213,10 @@ class AppRouter {
                 GoRoute(
                   path: '/home',
                   name: RouteNames.home,
-                  builder: (context, state) => const HomeScreen(),
+                  builder: (context, state) => BlocProvider(
+                    create: (_) => HomeCubit(sl<SharedPreferences>()),
+                    child: const HomeScreen(),
+                  ),
                 ),
               ],
             ),

@@ -20,8 +20,8 @@ import 'package:electra/presentation/settings/widgets/profile_header_card.dart';
 import 'package:electra/presentation/settings/widgets/settings_section_header.dart';
 import 'package:electra/presentation/settings/widgets/settings_tile.dart';
 import 'package:electra/presentation/settings/widgets/settings_toggle_tile.dart';
-import 'package:electra/presentation/user/bloc/user_cubit.dart';
-import 'package:electra/presentation/user/bloc/user_state.dart';
+import 'package:electra/presentation/settings/blocs/user_cubit.dart';
+import 'package:electra/presentation/settings/blocs/user_state.dart';
 import 'package:electra/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -59,20 +59,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
       context.read<AppAuthCubit>().onLogout();
     }
   }
-
-  // ── Helpers ───────────────────────────────────────────────────────────────
-
-  /// Extracts the live User from whichever state is current.
-  /// Includes UserFailure so the screen NEVER wipes on error.
-  User? _user(UserState state) {
-    if (state is UserLoaded) return state.user;
-    if (state is UserSaving) return state.user;
-    if (state is UserUpdated) return state.user;
-    if (state is UserFailure) return state.user; // ← key fix
-    return null;
-  }
-
-  UserSettings? _settings(UserState state) => _user(state)?.settings;
 
   String _themeLabel(ThemeMode mode) => switch (mode) {
     ThemeMode.system => 'System',
@@ -229,8 +215,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ],
       child: BlocBuilder<UserCubit, UserState>(
         builder: (context, userState) {
-          final user = _user(userState);
-          final settings = _settings(userState);
+          final cubit = context.read<UserCubit>();
+          final user = cubit.currentUser;
+          final settings = cubit.currentUserSettings;
           final isSaving = userState is UserSaving;
           final isLoading =
               userState is UserLoading || userState is UserInitial;
@@ -367,6 +354,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 onChanged: user != null
                                     ? (val) => _toggleNotifications(user, val)
                                     : null,
+                              ),
+                            ],
+                          ),
+
+                          // ── DATA ──────────────────────────────────────
+                          const SettingsSectionHeader(title: 'Data'),
+                          _SettingsGroup(
+                            children: [
+                              SettingsTile(
+                                icon: Icons.download,
+                                title: 'Export Data',
+                                subtitle: 'Export your data',
+                                showDivider: true,
+                                showChevron: true,
+                                onTap: () {},
+                              ),
+                              SettingsTile(
+                                icon: Icons.people,
+                                title: 'Shared Account',
+                                subtitle: 'Manage shared account settings',
+                                showChevron: true,
+                                onTap: () {},
                               ),
                             ],
                           ),

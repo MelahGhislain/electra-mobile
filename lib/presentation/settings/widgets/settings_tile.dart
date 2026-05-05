@@ -1,5 +1,4 @@
 import 'package:electra/common/widgets/buttons/animated_icon_button.dart';
-import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class SettingsTile extends StatelessWidget {

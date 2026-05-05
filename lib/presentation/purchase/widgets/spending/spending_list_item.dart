@@ -1,5 +1,4 @@
 import 'package:electra/core/configs/fonts.dart';
-import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/domain/entities/purchase/purchase.dart';
 import 'package:electra/core/utils/category_meta.dart';
 import 'package:flutter/material.dart';

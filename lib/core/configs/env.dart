@@ -16,6 +16,10 @@ class Env {
   static String get googleAndroidClientId =>
       dotenv.env['GOOGLE_ANDROID_CLIENT_ID'] ?? '';
 
+  // IAP Product IDs
+  static String get monthlyProductId => dotenv.env['MONTHLY_PRODUCT_ID'] ?? '';
+  static String get annualProductId => dotenv.env['ANNUAL_PRODUCT_ID'] ?? '';
+
   // Helper to check environment
   static bool get isDevelopment => appEnv == 'development';
   static bool get isStaging => appEnv == 'staging';

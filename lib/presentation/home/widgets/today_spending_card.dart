@@ -19,7 +19,7 @@ class TodaySpendingCard extends StatelessWidget {
   double get _dailyBudget {
     final monthly = (monthlyBudget != null && monthlyBudget! > 0)
         ? monthlyBudget!
-        : 100.0; // hardcoded fallback
+        : 0.0;
     final now = DateTime.now();
     final daysInMonth = DateTime(now.year, now.month + 1, 0).day;
     return monthly / daysInMonth;

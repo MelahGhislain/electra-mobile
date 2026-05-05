@@ -88,15 +88,15 @@ class AuthCubit extends Cubit<AuthState> {
   void reset() => emit(const AuthInitial());
 
   AuthProviderEnum? _mapProvider(String? provider) {
-  switch (provider) {
-    case 'google':
-      return AuthProviderEnum.google;
-    case 'apple':
-      return AuthProviderEnum.apple;
-    case 'email':
-      return AuthProviderEnum.email;
-    default:
-      return null;
+    switch (provider) {
+      case 'google':
+        return AuthProviderEnum.google;
+      case 'apple':
+        return AuthProviderEnum.apple;
+      case 'email':
+        return AuthProviderEnum.email;
+      default:
+        return null;
+    }
   }
-}
 }

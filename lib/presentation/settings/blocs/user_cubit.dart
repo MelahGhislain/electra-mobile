@@ -107,6 +107,11 @@ class UserCubit extends Cubit<UserState> {
     return null;
   }
 
+  User? get currentUser => _currentUser();
+  UserSettings? get currentUserSettings => _currentUser()?.settings;
+  bool get isLoading => state is UserLoading || state is UserInitial;
+  bool get isLoaded => state is UserLoaded;
+
   /// Converts a UserSettings entity to a plain map without any model cast.
   Map<String, dynamic> _settingsToMap(UserSettings? settings) {
     if (settings == null) return {};

@@ -1,4 +1,5 @@
 import 'package:electra/common/blocs/auth/app_auth_cubit.dart';
+import 'package:electra/core/assets/app_images.dart';
 import 'package:electra/core/router/route_names.dart';
 import 'package:electra/core/utils/storage/onboarding_storage.dart';
 import 'package:electra/service_locator.dart';
@@ -51,10 +52,7 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Stack(
         children: [
           Positioned.fill(
-            child: Image.asset(
-              'assets/images/splash/splash.png',
-              fit: BoxFit.cover,
-            ),
+            child: Image.asset(AppImages.splash, fit: BoxFit.cover),
           ),
 
           Positioned(

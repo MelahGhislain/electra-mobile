@@ -81,7 +81,9 @@ class _Tab extends StatelessWidget {
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
                 color: isSelected
-                    ? isDark?AppColors.lightText :  AppColors.darkText
+                    ? isDark
+                          ? AppColors.lightText
+                          : AppColors.darkText
                     : const Color(0xFF8891A8),
               ),
             ),

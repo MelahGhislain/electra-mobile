@@ -318,24 +318,3 @@ Future<bool?> showDeleteItemConfirmation(
     onConfirm: () => Navigator.pop(context, true),
   );
 }
-
-// ─────────────────────────────────────────────────────────────────────────────
-// SHARED SMALL WIDGETS
-// ─────────────────────────────────────────────────────────────────────────────
-
-class _FieldLabel extends StatelessWidget {
-  final String label;
-  const _FieldLabel({required this.label});
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      label,
-      style: const TextStyle(
-        fontSize: 13,
-        fontWeight: FontWeight.w600,
-        color: AppColors.lightText,
-      ),
-    );
-  }
-}

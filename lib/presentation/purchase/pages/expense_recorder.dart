@@ -1,6 +1,5 @@
 import 'package:electra/common/blocs/receipt/receipt_cubit.dart';
 import 'package:electra/common/blocs/receipt/receipt_state.dart';
-import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/core/enums/image_source_enum.dart';
 import 'package:electra/core/router/route_names.dart';
 import 'package:electra/presentation/purchase/blocs/purchase/purchase_cubit.dart';

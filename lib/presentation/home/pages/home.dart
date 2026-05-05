@@ -1,9 +1,11 @@
 import 'package:electra/common/blocs/auth/app_auth_cubit.dart';
 import 'package:electra/core/router/route_names.dart';
 import 'package:electra/domain/entities/purchase/purchase.dart';
+import 'package:electra/presentation/home/bloc/home_cubit.dart';
 import 'package:electra/presentation/home/utils/home_summary.dart';
 import 'package:electra/presentation/home/utils/home_utils.dart';
 import 'package:electra/presentation/home/widgets/home_header.dart';
+import 'package:electra/presentation/home/widgets/home_setup_card.dart';
 import 'package:electra/presentation/home/widgets/recent_activity_card.dart';
 import 'package:electra/presentation/home/widgets/shimmer/home_shimmer.dart';
 import 'package:electra/presentation/home/widgets/this_month_card.dart';
@@ -11,8 +13,8 @@ import 'package:electra/presentation/home/widgets/today_spending_card.dart';
 import 'package:electra/presentation/home/widgets/top_spending_today_card.dart';
 import 'package:electra/presentation/purchase/blocs/purchase/purchase_cubit.dart';
 import 'package:electra/presentation/purchase/blocs/purchase/purchase_state.dart';
-import 'package:electra/presentation/user/bloc/user_cubit.dart';
-import 'package:electra/presentation/user/bloc/user_state.dart';
+import 'package:electra/presentation/settings/blocs/user_cubit.dart';
+import 'package:electra/presentation/settings/blocs/user_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -31,15 +33,17 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     context.read<PurchaseCubit>().loadPurchases();
     context.read<UserCubit>().loadUser();
+
+    final user = context.read<UserCubit>().currentUser;
+    final isLoaded = context.read<UserCubit>().isLoaded;
+    final userId = isLoaded ? user!.id : '';
+    context.read<HomeCubit>().load(userId);
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<PurchaseCubit, PurchaseState>(
       listener: (context, state) {
-        if (state is PurchaseLoaded && state.isEmpty) {
-          context.goNamed(RouteNames.expenseRecorder);
-        }
         if (state is PurchaseFailure) {
           final msg = state.message.toLowerCase();
           if (msg.contains('session expired') || msg.contains('unauthori')) {
@@ -125,6 +129,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
 
                       // ── 2. Today's Spending ───────────────────────────
+                      SliverToBoxAdapter(child: HomeSetupCard()),
+
+                      // ── 3. Today's Spending ───────────────────────────
                       SliverToBoxAdapter(
                         child: TodaySpendingCard(
                           todaySummary: displaySummary,
@@ -132,7 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
 
-                      // ── 3. Top Spending Today ─────────────────────────
+                      // ── 4. Top Spending Today ─────────────────────────
                       if (topRows.isNotEmpty)
                         SliverToBoxAdapter(
                           child: TopSpendingTodayCard(
@@ -142,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
 
-                      // ── 4. This Month ─────────────────────────────────
+                      // ── 5. This Month ─────────────────────────────────
                       SliverToBoxAdapter(
                         child: ThisMonthCard(summary: summary),
                       ),

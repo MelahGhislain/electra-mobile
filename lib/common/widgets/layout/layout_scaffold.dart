@@ -6,7 +6,6 @@ import 'package:electra/presentation/purchase/widgets/bottom_sheet/add_purchase_
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:electra/common/widgets/nav/custom_bottom_nav.dart';
-import 'package:electra/core/configs/theme/app_colors.dart';
 
 class LayoutScaffold extends StatefulWidget {
   const LayoutScaffold({Key? key, required this.navigationShell})

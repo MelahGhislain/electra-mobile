@@ -5,7 +5,7 @@ import 'package:electra/core/router/app_router.dart';
 import 'package:electra/common/blocs/theme_cubit.dart';
 import 'package:electra/common/blocs/receipt/receipt_cubit.dart';
 import 'package:electra/presentation/auth/bloc/auth_cubit.dart';
-import 'package:electra/presentation/user/bloc/user_cubit.dart';
+import 'package:electra/presentation/settings/blocs/user_cubit.dart';
 import 'package:electra/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
