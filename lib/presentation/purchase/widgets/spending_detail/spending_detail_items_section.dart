@@ -1,5 +1,6 @@
 import 'package:electra/common/helpers/average.dart';
 import 'package:electra/common/widgets/bottom_sheets/app_bottom_sheet.dart';
+import 'package:electra/common/widgets/buttons/main_button.dart';
 import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/core/utils/helpers.dart';
@@ -76,7 +77,7 @@ class _SpendingDetailItemsSectionState
 
   // ── Sort picker ────────────────────────────────────────────────────────────
 
-  Future<void> _showSortPicker() async {
+  Future<void> _showSortPicker(ThemeData theme) async {
     final result = await AppBottomSheet.show<_ItemSort>(
       context,
       title: 'Sort items',
@@ -92,7 +93,7 @@ class _SpendingDetailItemsSectionState
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
-                color: selected ? AppColors.primary : AppColors.lightText,
+                color: selected ? AppColors.primary : null,
               ),
             ),
             trailing: selected
@@ -153,6 +154,7 @@ class _SpendingDetailItemsSectionState
 
         final activeItems = _sorted(purchase.activeItems);
         final isMutating = state is PurchaseDetailItemMutating;
+        final isDark = Theme.of(context).brightness == Brightness.dark;
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -176,7 +178,9 @@ class _SpendingDetailItemsSectionState
                   // ── Sort control ─────────────────────────────────────────────
                   if (_view == _ItemView.list)
                     GestureDetector(
-                      onTap: isMutating ? null : _showSortPicker,
+                      onTap: isMutating
+                          ? null
+                          : () => _showSortPicker(Theme.of(context)),
                       child: Row(
                         children: [
                           const Icon(Icons.sort_rounded, size: AppFontSize.md),
@@ -203,15 +207,19 @@ class _SpendingDetailItemsSectionState
                           vertical: 6,
                         ),
                         decoration: BoxDecoration(
-                          color: AppColors.darkBackground,
+                          color: isDark
+                              ? AppColors.lightBackground
+                              : AppColors.darkBackground,
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        child: const Row(
+                        child: Row(
                           children: [
                             Icon(
                               Icons.add_circle_outline_rounded,
                               size: AppFontSize.lg,
-                              color: AppColors.darkText,
+                              color: isDark
+                                  ? AppColors.lightText
+                                  : AppColors.darkText,
                             ),
                             SizedBox(width: 4),
                             Text(
@@ -219,7 +227,9 @@ class _SpendingDetailItemsSectionState
                               style: TextStyle(
                                 fontSize: AppFontSize.md,
                                 fontWeight: FontWeight.w600,
-                                color: AppColors.darkText,
+                                color: isDark
+                                    ? AppColors.lightText
+                                    : AppColors.darkText,
                               ),
                             ),
                           ],
@@ -243,7 +253,9 @@ class _SpendingDetailItemsSectionState
                     border: Border.all(color: Theme.of(context).dividerColor),
                     boxShadow: [
                       BoxShadow(
-                        color: Theme.of(context).primaryColor.withValues(alpha: 0.06),
+                        color: Theme.of(
+                          context,
+                        ).primaryColor.withValues(alpha: 0.06),
                         blurRadius: 16,
                         offset: const Offset(0, 4),
                       ),

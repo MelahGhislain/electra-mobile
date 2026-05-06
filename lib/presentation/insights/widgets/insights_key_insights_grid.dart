@@ -1,4 +1,4 @@
-import 'package:electra/core/configs/theme/app_colors.dart';
+import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/domain/entities/insights/insights.dart';
 import 'package:flutter/material.dart';
 
@@ -9,25 +9,37 @@ class InsightsKeyInsightsGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
-        childAspectRatio: 1.6,
-      ),
-      itemCount: insights.length,
-      itemBuilder: (context, index) =>
-          _KeyInsightCard(insight: insights[index]),
-    );
+    if (insights.isEmpty) return const SizedBox.shrink();
+
+    final rows = <Widget>[];
+
+    for (int i = 0; i < insights.length; i += 2) {
+      rows.add(
+        Row(
+          children: [
+            Expanded(child: _KeyInsightCard(insight: insights[i])),
+
+            const SizedBox(width: 12),
+
+            if (i + 1 < insights.length)
+              Expanded(child: _KeyInsightCard(insight: insights[i + 1]))
+            else
+              const Spacer(),
+          ],
+        ),
+      );
+
+      if (i < insights.length - 1) {
+        rows.add(const SizedBox(height: 12));
+      }
+    }
+
+    return Column(children: rows);
   }
 }
 
 class _KeyInsightCard extends StatelessWidget {
   final KeyInsight insight;
-
   const _KeyInsightCard({required this.insight});
 
   _CardStyle get _style {
@@ -61,14 +73,15 @@ class _KeyInsightCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final s = _style;
 
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
       decoration: BoxDecoration(
-        color: AppColors.lightSurface,
+        color: theme.cardTheme.color,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.dividerLight),
+        border: Border.all(color: theme.dividerColor),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -81,34 +94,40 @@ class _KeyInsightCard extends StatelessWidget {
               color: s.iconBg,
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Icon(s.icon, color: s.iconColor, size: 18),
+            child: Icon(s.icon, color: s.iconColor, size: AppFontSize.lg),
           ),
           const SizedBox(width: 10),
+
+          // Text — matches screenshot: small label on top, big value below
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                // Small label at top (e.g. "You spent", "Shopping increased")
                 Text(
-                  insight.label,
-                  style: const TextStyle(
-                    fontSize: 11,
-                    color: AppColors.lightTextSecondary,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  insight.leadingText,
+                  style: TextStyle(fontSize: AppFontSize.xs),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(height: 3),
+
+                // Prominent value (e.g. "$928 less", "18%")
                 Text(
                   insight.value,
-                  style: const TextStyle(
-                    fontSize: 15,
+                  style: TextStyle(
+                    fontSize: AppFontSize.sm,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.lightText,
                     letterSpacing: -0.3,
                   ),
                   maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+
+                Text(
+                  insight.tailingText,
+                  style: TextStyle(fontSize: AppFontSize.xs),
+                  maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
               ],
@@ -124,7 +143,6 @@ class _CardStyle {
   final IconData icon;
   final Color iconBg;
   final Color iconColor;
-
   const _CardStyle({
     required this.icon,
     required this.iconBg,

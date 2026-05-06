@@ -1,4 +1,5 @@
 import 'package:electra/common/widgets/bottom_sheets/app_bottom_sheet.dart';
+import 'package:electra/common/widgets/buttons/main_button.dart';
 import 'package:electra/common/widgets/dialogs/app_confirm_dialog.dart';
 import 'package:electra/common/widgets/text_fields/catetory_selector.dart';
 import 'package:electra/common/widgets/text_fields/text_field.dart';
@@ -160,27 +161,10 @@ class _ItemFormSheetBodyState extends State<_ItemFormSheetBody> {
               const SizedBox(height: 24),
 
               // ── Save button ──────────────────────────────────────────
-              SizedBox(
+              MainButton(
+                text: _isEdit ? 'Save changes' : 'Add item',
+                onPressed: _submit,
                 width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _submit,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.darkBackground,
-                    foregroundColor: AppColors.darkText,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
-                    ),
-                    padding: const EdgeInsets.symmetric(vertical: 15),
-                  ),
-                  child: Text(
-                    _isEdit ? 'Save changes' : 'Add item',
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
               ),
             ],
           ),
@@ -266,28 +250,19 @@ class _PricingRow extends StatelessWidget {
             children: [
               const Text(
                 'Total',
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.lightText,
-                ),
+                style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 6),
               Container(
                 height: 46,
                 padding: const EdgeInsets.symmetric(horizontal: 14),
-                decoration: BoxDecoration(
-                  // color: AppColors.lightSurface,
-                  // borderRadius: BorderRadius.circular(12),
-                  // border: Border.all(color: AppColors.dividerLight),
-                ),
+                decoration: BoxDecoration(),
                 alignment: Alignment.centerLeft,
                 child: Text(
                   '\$${total.toStringAsFixed(2)}',
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
-                    color: AppColors.lightText,
                     letterSpacing: -0.2,
                   ),
                 ),

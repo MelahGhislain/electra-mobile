@@ -99,7 +99,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                           'Spend Smarter.\nGrow Faster.',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: AppFontSize.xxxl,
+                            fontSize: AppFontSize.xxl,
                             fontWeight: FontWeight.w800,
                             height: 1.15,
                             letterSpacing: -1.2,

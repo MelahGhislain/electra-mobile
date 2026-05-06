@@ -24,7 +24,7 @@ class AuthSocialButton extends StatelessWidget {
         style: OutlinedButton.styleFrom(
           side: BorderSide(color: Colors.grey.shade300),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BorderRadius.circular(20),
           ),
           backgroundColor: Colors.white,
         ),

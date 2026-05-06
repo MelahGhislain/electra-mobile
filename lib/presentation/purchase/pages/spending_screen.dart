@@ -325,7 +325,7 @@ class _SpendingHeader extends StatelessWidget {
               Text(
                 'Spending',
                 style: TextStyle(
-                  fontSize: AppFontSize.xxxl,
+                  fontSize: AppFontSize.xxl,
                   fontWeight: FontWeight.bold,
                   letterSpacing: -0.5,
                 ),

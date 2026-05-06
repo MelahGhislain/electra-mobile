@@ -73,6 +73,8 @@ class _MainButtonState extends State<MainButton> {
   @override
   Widget build(BuildContext context) {
     final isFullWidth = widget.width == double.infinity;
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
 
     return GestureDetector(
       onTapDown: (_) => _onTapDown(),
@@ -84,20 +86,20 @@ class _MainButtonState extends State<MainButton> {
         duration: const Duration(milliseconds: 120),
         curve: Curves.easeOut,
         child: isFullWidth
-            ? _buildButton(widget.isLoading)
+            ? _buildButton(widget.isLoading, isDark)
             : IntrinsicWidth(
-                child: _buildButton(widget.isLoading),
+                child: _buildButton(widget.isLoading, isDark),
               ), // ✅ fit content if not full
       ),
     );
   }
 
-  Widget _buildButton(bool? isloading) {
+  Widget _buildButton(bool? isloading, bool isDark) {
     return Container(
       width: widget.width,
       height: _height,
       decoration: BoxDecoration(
-        color: AppColors.darkBackground,
+        color: isDark ? AppColors.lightBackground : AppColors.darkBackground,
         borderRadius: widget.rounded == true
             ? BorderRadius.circular(999)
             : BorderRadius.circular(20),
@@ -114,12 +116,12 @@ class _MainButtonState extends State<MainButton> {
         duration: const Duration(milliseconds: 120),
         opacity: _opacity,
         child: widget.isLoading
-            ? const SizedBox(
+            ? SizedBox(
                 width: 22,
                 height: 22,
                 child: CircularProgressIndicator(
                   strokeWidth: 2.5,
-                  color: Colors.white,
+                  color: isDark ? AppColors.lightText : AppColors.darkText,
                 ),
               )
             : Row(
@@ -132,7 +134,7 @@ class _MainButtonState extends State<MainButton> {
                     style: TextStyle(
                       fontSize: _fontSize,
                       fontWeight: FontWeight.w500,
-                      color: AppColors.darkText,
+                      color: isDark ? AppColors.lightText : AppColors.darkText,
                     ),
                   ),
                 ],

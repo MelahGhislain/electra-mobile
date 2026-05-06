@@ -1,6 +1,7 @@
 import 'package:electra/common/blocs/auth/app_auth_cubit.dart';
 import 'package:electra/common/blocs/theme_cubit.dart';
 import 'package:electra/common/widgets/buttons/main_icon_button.dart';
+import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/core/router/route_names.dart';
 import 'package:electra/core/services/app_info_service.dart';
@@ -226,9 +227,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
           return Scaffold(
             appBar: AppBar(
               elevation: 0,
-              title: const Text(
+              title: Text(
                 'Settings',
-                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: AppFontSize.xxl,
+                ),
               ),
               actions: [
                 // Non-blocking save indicator

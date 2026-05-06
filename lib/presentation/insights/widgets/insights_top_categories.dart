@@ -1,4 +1,5 @@
-import 'package:electra/core/configs/theme/app_colors.dart';
+import 'package:electra/core/configs/fonts.dart';
+import 'package:electra/core/utils/category_meta.dart';
 import 'package:electra/domain/entities/insights/insights.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -8,59 +9,44 @@ class InsightsTopCategories extends StatelessWidget {
 
   const InsightsTopCategories({super.key, required this.categories});
 
-  static const _palette = [
-    Color(0xFF1E1B4B),
-    Color(0xFFEA580C),
-    Color(0xFF7C3AED),
-    Color(0xFF06B6D4),
-    Color(0xFF22C55E),
-    Color(0xFFF59E0B),
-  ];
-
-  Color _colorFor(int index, CategoryBreakdown cat) {
-    if (cat.color != null) {
-      try {
-        return Color(int.parse(cat.color!.replaceFirst('#', '0xFF')));
-      } catch (_) {}
-    }
-    return _palette[index % _palette.length];
-  }
-
-  IconData _iconFor(String name) {
-    final n = name.toLowerCase();
-    if (n.contains('food') || n.contains('drink'))
-      return Icons.restaurant_rounded;
-    if (n.contains('shop')) return Icons.shopping_bag_outlined;
-    if (n.contains('health')) return Icons.favorite_rounded;
-    if (n.contains('transport') || n.contains('travel'))
-      return Icons.directions_car_rounded;
-    if (n.contains('entertain')) return Icons.movie_outlined;
-    return Icons.category_outlined;
-  }
-
   @override
   Widget build(BuildContext context) {
-    final fmt = NumberFormat.currency(symbol: r'$', decimalDigits: 2);
+    final theme = Theme.of(context);
+    final symbol = r'$';
+    final fmt = NumberFormat.currency(symbol: symbol, decimalDigits: 2);
     final displayed = categories.take(3).toList();
+
+    if (displayed.isEmpty) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 24),
+          child: Text(
+            'No spending data this period',
+            style: TextStyle(fontSize: AppFontSize.md),
+          ),
+        ),
+      );
+    }
 
     return Column(
       children: List.generate(displayed.length, (i) {
         final cat = displayed[i];
-        final color = _colorFor(i, cat);
+        final meta = CategoryMeta.fromKey(cat.normalizedName);
+        final color = meta.color;
 
         return Padding(
           padding: const EdgeInsets.only(bottom: 16),
           child: Row(
             children: [
-              // Icon avatar
+              // Icon avatar — matches screenshot's rounded square with icon
               Container(
-                width: 42,
-                height: 42,
+                width: 44,
+                height: 44,
                 decoration: BoxDecoration(
-                  color: color,
+                  color: color.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Icon(_iconFor(cat.name), color: Colors.white, size: 20),
+                child: Icon(meta.icon, color: color, size: 20),
               ),
               const SizedBox(width: 12),
 
@@ -71,18 +57,17 @@ class InsightsTopCategories extends StatelessWidget {
                   children: [
                     Text(
                       cat.name,
-                      style: const TextStyle(
-                        fontSize: 14,
+                      style: theme.textTheme.bodyMedium?.copyWith(
                         fontWeight: FontWeight.w600,
-                        color: AppColors.lightText,
+                        fontSize: 14,
                       ),
                     ),
                     const SizedBox(height: 6),
                     ClipRRect(
                       borderRadius: BorderRadius.circular(4),
                       child: LinearProgressIndicator(
-                        value: cat.percent / 100,
-                        backgroundColor: AppColors.dividerLight,
+                        value: (cat.percent / 100).clamp(0.0, 1.0),
+                        backgroundColor: theme.dividerColor,
                         valueColor: AlwaysStoppedAnimation(color),
                         minHeight: 4,
                       ),
@@ -93,33 +78,22 @@ class InsightsTopCategories extends StatelessWidget {
 
               const SizedBox(width: 12),
 
-              // Amount + percent
+              // Amount + percent + chevron
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
                     fmt.format(cat.amount),
-                    style: const TextStyle(
+                    style: theme.textTheme.bodyMedium?.copyWith(
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
-                      color: AppColors.lightText,
                     ),
                   ),
                   Text(
                     '${cat.percent.toStringAsFixed(0)}%',
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: AppColors.lightTextSecondary,
-                    ),
+                    style: theme.textTheme.bodySmall?.copyWith(fontSize: 12),
                   ),
                 ],
-              ),
-
-              const SizedBox(width: 4),
-              const Icon(
-                Icons.chevron_right_rounded,
-                size: 18,
-                color: AppColors.lightTextSecondary,
               ),
             ],
           ),

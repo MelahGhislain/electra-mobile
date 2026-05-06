@@ -1,4 +1,5 @@
 import 'package:electra/common/blocs/auth/app_auth_cubit.dart';
+import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/core/router/route_names.dart';
 import 'package:electra/domain/entities/purchase/purchase.dart';
 import 'package:electra/presentation/home/bloc/home_cubit.dart';
@@ -7,7 +8,6 @@ import 'package:electra/presentation/home/utils/home_utils.dart';
 import 'package:electra/presentation/home/widgets/home_header.dart';
 import 'package:electra/presentation/home/widgets/home_setup_card.dart';
 import 'package:electra/presentation/home/widgets/recent_activity_card.dart';
-import 'package:electra/presentation/home/widgets/shimmer/home_shimmer.dart';
 import 'package:electra/presentation/home/widgets/this_month_card.dart';
 import 'package:electra/presentation/home/widgets/today_spending_card.dart';
 import 'package:electra/presentation/home/widgets/top_spending_today_card.dart';
@@ -42,6 +42,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return BlocConsumer<PurchaseCubit, PurchaseState>(
       listener: (context, state) {
         if (state is PurchaseFailure) {
@@ -54,7 +57,14 @@ class _HomeScreenState extends State<HomeScreen> {
       builder: (context, purchaseState) {
         if (purchaseState is PurchaseLoading ||
             purchaseState is PurchaseInitial) {
-          return const HomeShimmer();
+          return Center(
+            child: CircularProgressIndicator(
+              color: isDark
+                  ? AppColors.lightBackground
+                  : AppColors.darkBackground,
+              strokeWidth: 2,
+            ),
+          );
         }
 
         if (purchaseState is PurchaseFailure) {
@@ -154,11 +164,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: ThisMonthCard(summary: summary),
                       ),
 
-                      // // ── 5. Smart Insights ─────────────────────────────
-                      // SliverToBoxAdapter(
-                      //   child: SmartInsightsCard(onViewAll: () {}),
-                      // ),
-
                       // ── 6. Recent Activity ────────────────────────────
                       SliverToBoxAdapter(
                         child: RecentActivityCard(
@@ -202,6 +207,8 @@ class _ErrorScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -225,7 +232,8 @@ class _ErrorScreen extends StatelessWidget {
                 FilledButton(
                   onPressed: onRetry,
                   style: FilledButton.styleFrom(
-                    backgroundColor: const Color(0xFF1F2937),
+                    backgroundColor: theme.appBarTheme.foregroundColor,
+                    foregroundColor: theme.appBarTheme.backgroundColor,
                     padding: const EdgeInsets.symmetric(
                       horizontal: 32,
                       vertical: 14,

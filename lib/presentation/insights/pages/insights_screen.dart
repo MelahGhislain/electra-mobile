@@ -1,3 +1,4 @@
+import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/presentation/insights/bloc/insights_cubit.dart';
 import 'package:electra/presentation/insights/bloc/insights_state.dart';
@@ -5,12 +6,10 @@ import 'package:electra/presentation/insights/widgets/insights_header.dart';
 import 'package:electra/presentation/insights/widgets/insights_totals_card.dart';
 import 'package:electra/presentation/insights/widgets/insights_top_categories.dart';
 import 'package:electra/presentation/insights/widgets/insights_spending_overview.dart';
-import 'package:electra/presentation/insights/widgets/insights_error_state.dart';
-import 'package:electra/presentation/insights/widgets/insights_loading_state.dart';
+import 'package:electra/presentation/insights/widgets/insights_states.dart';
 import 'package:electra/presentation/insights/widgets/insights_key_insights_grid.dart';
 import 'package:electra/presentation/insights/widgets/insights_trend_section.dart';
 import 'package:electra/presentation/insights/widgets/insights_bottom_row.dart';
-import 'package:electra/presentation/insights/widgets/insights_savings_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,42 +24,53 @@ class _InsightsScreenState extends State<InsightsScreen> {
   @override
   void initState() {
     super.initState();
+    _load();
+  }
+
+  // Called every time this branch tab is tapped/selected
+  @override
+  void activate() {
+    super.activate();
+    _load();
+  }
+
+  void _load() {
     context.read<InsightsCubit>().load();
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         scrolledUnderElevation: 0,
-        title: const Text(
+        title: Text(
           'Spending insights',
           style: TextStyle(
-            fontSize: 18,
+            fontSize: AppFontSize.xxl,
             fontWeight: FontWeight.bold,
-            color: AppColors.lightText,
-            letterSpacing: -0.3,
+            letterSpacing: -0.5,
           ),
         ),
         centerTitle: true,
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 16),
+            padding: const EdgeInsets.only(right: 12),
             child: GestureDetector(
               onTap: () {},
               child: Container(
                 width: 36,
                 height: 36,
                 decoration: BoxDecoration(
-                  color: AppColors.lightSurface,
+                  color: theme.cardTheme.color,
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: AppColors.dividerLight),
+                  border: Border.all(color: theme.dividerColor),
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.more_horiz_rounded,
-                  color: AppColors.lightText,
-                  size: 18,
+                  color: theme.iconTheme.color,
+                  size: AppFontSize.lg,
                 ),
               ),
             ),
@@ -72,18 +82,15 @@ class _InsightsScreenState extends State<InsightsScreen> {
           if (state is InsightsLoading || state is InsightsInitial) {
             return const InsightsLoadingState();
           }
-
           if (state is InsightsFailure) {
             return InsightsErrorState(
               message: state.message,
               onRetry: () => context.read<InsightsCubit>().load(),
             );
           }
-
           if (state is InsightsLoaded) {
             return _InsightsContent(state: state);
           }
-
           return const SizedBox.shrink();
         },
       ),
@@ -104,11 +111,11 @@ class _InsightsContent extends StatelessWidget {
       color: AppColors.darkBackground,
       onRefresh: () => context.read<InsightsCubit>().load(),
       child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
+        physics: const AlwaysScrollableScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // ── Period selector + navigation ──────────────────────────────
+            // ── Period selector + navigation ──────────────────────────
             InsightsHeader(
               period: state.period,
               label: insights.meta.label,
@@ -120,7 +127,7 @@ class _InsightsContent extends StatelessWidget {
 
             const SizedBox(height: 12),
 
-            // ── Total + budget card ───────────────────────────────────────
+            // ── Total + budget card ───────────────────────────────────
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: InsightsTotalsCard(
@@ -132,10 +139,11 @@ class _InsightsContent extends StatelessWidget {
 
             const SizedBox(height: 20),
 
-            // ── Spending overview (donut) ──────────────────────────────────
+            // ── Spending overview (donut) ─────────────────────────────
             _SectionHeader(
               title: 'Spending overview',
               trailing: 'View by categories',
+              onTap: () {},
             ),
             const SizedBox(height: 12),
             Padding(
@@ -149,7 +157,7 @@ class _InsightsContent extends StatelessWidget {
 
             const SizedBox(height: 24),
 
-            // ── Key insights (2×2 grid) ────────────────────────────────────
+            // ── Key insights ──────────────────────────────────────────
             _SectionHeader(title: 'Key insights'),
             const SizedBox(height: 12),
             Padding(
@@ -159,10 +167,11 @@ class _InsightsContent extends StatelessWidget {
 
             const SizedBox(height: 24),
 
-            // ── Top spending categories ────────────────────────────────────
+            // ── Top spending categories ───────────────────────────────
             _SectionHeader(
               title: 'Top spending categories',
               trailing: 'View all',
+              hideDropdown: true,
             ),
             const SizedBox(height: 12),
             Padding(
@@ -174,7 +183,7 @@ class _InsightsContent extends StatelessWidget {
 
             const SizedBox(height: 24),
 
-            // ── Spending trend (line chart) ───────────────────────────────
+            // ── Spending trend ────────────────────────────────────────
             _SectionHeader(
               title: 'Spending trend',
               trailing:
@@ -188,27 +197,17 @@ class _InsightsContent extends StatelessWidget {
 
             const SizedBox(height: 24),
 
-            // ── Payment methods + Merchant breakdown ──────────────────────
+            // ── Payment + Merchant + Savings row ──────────────────────
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: InsightsBottomRow(
                 paymentMethods: insights.paymentMethods,
                 merchants: insights.topMerchants,
+                savingsOpportunity: insights.savingsOpportunity,
               ),
             ),
 
-            const SizedBox(height: 16),
-
-            // ── Savings opportunity ───────────────────────────────────────
-            if (insights.savingsOpportunity != null)
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: InsightsSavingsCard(
-                  opportunity: insights.savingsOpportunity!,
-                ),
-              ),
-
-            const SizedBox(height: 32),
+            const SizedBox(height: 100),
           ],
         ),
       ),
@@ -216,7 +215,6 @@ class _InsightsContent extends StatelessWidget {
   }
 
   String _previousLabel(String currentLabel, String period) {
-    // e.g. "April 2026" → "Mar 2026"
     try {
       if (period == 'monthly') {
         final parts = currentLabel.split(' ');
@@ -263,43 +261,53 @@ class _InsightsContent extends StatelessWidget {
 class _SectionHeader extends StatelessWidget {
   final String title;
   final String? trailing;
+  final bool hideDropdown;
+  final VoidCallback? onTap;
 
-  const _SectionHeader({required this.title, this.trailing});
+  const _SectionHeader({
+    required this.title,
+    this.trailing,
+    this.hideDropdown = false,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 18),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             title,
-            style: const TextStyle(
-              fontSize: 16,
+            style: TextStyle(
+              fontSize: AppFontSize.md,
               fontWeight: FontWeight.bold,
-              color: AppColors.lightText,
               letterSpacing: -0.2,
             ),
           ),
           if (trailing != null)
-            Row(
-              children: [
-                Text(
-                  trailing!,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    color: Color(0xFF7C3AED),
-                    fontWeight: FontWeight.w500,
+            GestureDetector(
+              onTap: onTap,
+              child: Row(
+                children: [
+                  Text(
+                    trailing!,
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: theme.colorScheme.primary,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                ),
-                const SizedBox(width: 2),
-                const Icon(
-                  Icons.keyboard_arrow_down_rounded,
-                  color: Color(0xFF7C3AED),
-                  size: 16,
-                ),
-              ],
+                  if (!hideDropdown)
+                    Icon(
+                      Icons.arrow_drop_down_rounded,
+                      size: AppFontSize.xxxxl,
+                      color: theme.colorScheme.primary,
+                    ),
+                ],
+              ),
             ),
         ],
       ),

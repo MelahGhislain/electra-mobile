@@ -1,5 +1,6 @@
 import 'package:electra/common/widgets/buttons/main_button.dart';
 import 'package:electra/common/widgets/text_fields/text_field.dart';
+import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/router/route_names.dart';
 import 'package:electra/core/utils/auth/auth_navigation.dart';
 import 'package:electra/presentation/auth/bloc/auth_cubit.dart';
@@ -45,6 +46,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
@@ -58,7 +61,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.message),
-                backgroundColor: Colors.red.shade600,
+                backgroundColor: theme.colorScheme.error,
                 behavior: SnackBarBehavior.floating,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -90,9 +93,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           child: Text(
                             'Sign Up',
                             style: TextStyle(
-                              fontSize: 17,
+                              fontSize: AppFontSize.xxl,
                               fontWeight: FontWeight.w600,
-                              color: Color(0xFF111827),
                             ),
                           ),
                         ),
@@ -174,14 +176,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           const AuthDivider(),
                           const SizedBox(height: 16),
 
-                          // AuthSocialButton(
-                          //   label: 'Continue With Apple',
-                          //   icon: const Icon(Icons.apple, size: 22),
-                          //   isLoading: isLoading,
-                          //   onPressed: () =>
-                          //       context.read<AuthCubit>().signInWithApple(),
-                          // ),
-                          // const SizedBox(height: 12),
                           AuthSocialButton(
                             label: 'Continue With Google',
                             icon: const Icon(
@@ -204,8 +198,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 text: const TextSpan(
                                   text: 'Do you have an account? ',
                                   style: TextStyle(
-                                    color: Colors.black54,
-                                    fontSize: 14,
+                                    fontSize: AppFontSize.sm,
                                   ),
                                   children: [
                                     TextSpan(

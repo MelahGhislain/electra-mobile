@@ -135,23 +135,33 @@ enum KeyInsightType { savings, categoryChange, dailyAverage, highestDay }
 
 class KeyInsight extends Equatable {
   final KeyInsightType type;
+  final String leadingText;
   final String value;
-  final String label;
+  final String tailingText;
   final TrendDirection? trend;
   final double? numericValue;
   final String? date;
 
   const KeyInsight({
     required this.type,
+    required this.leadingText,
     required this.value,
-    required this.label,
+    required this.tailingText,
     this.trend,
     this.numericValue,
     this.date,
   });
 
   @override
-  List<Object?> get props => [type, value, label, trend, numericValue, date];
+  List<Object?> get props => [
+    type,
+    leadingText,
+    value,
+    tailingText,
+    trend,
+    numericValue,
+    date,
+  ];
 }
 
 // ── Trend ─────────────────────────────────────────────────────────────────────

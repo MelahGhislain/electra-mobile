@@ -113,7 +113,7 @@ class _SpendingDetailView extends StatelessWidget {
       title: const Text(
         'Spending details',
         style: TextStyle(
-          fontSize: AppFontSize.xxxl,
+          fontSize: AppFontSize.xxl,
           fontWeight: FontWeight.bold,
           letterSpacing: -0.3,
         ),
@@ -347,15 +347,18 @@ class _OptionTile extends StatelessWidget {
         label,
         style: TextStyle(color: color, fontWeight: FontWeight.w500),
       ),
-      subtitle: isLocked == true ? Text(
-        'Premium feature',
-        style: TextStyle(fontSize: AppFontSize.xs),
-      ) : null,
-      trailing: isLocked == true ? Icon(Icons.lock_outline, color: theme.iconTheme.color, size: 20) : null,
-      onTap: isLocked == true ? () {
-        Navigator.pop(context);
-        context.pushNamed(RouteNames.subscription);
-      } : onTap,
+      subtitle: isLocked == true
+          ? Text('Premium feature', style: TextStyle(fontSize: AppFontSize.xs))
+          : null,
+      trailing: isLocked == true
+          ? Icon(Icons.lock_outline, color: theme.iconTheme.color, size: 20)
+          : null,
+      onTap: isLocked == true
+          ? () {
+              Navigator.pop(context);
+              context.pushNamed(RouteNames.subscription);
+            }
+          : onTap,
     );
   }
 }

@@ -1,3 +1,6 @@
+// FILE: presentation/insights/widgets/summary/insights_totals_card.dart
+
+import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/domain/entities/insights/insights.dart';
 import 'package:flutter/material.dart';
@@ -17,28 +20,33 @@ class InsightsTotalsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final fmt = NumberFormat.currency(symbol: r'$', decimalDigits: 2);
     final isDown = totals.trend == TrendDirection.down;
+    final isNeutral = totals.trend == TrendDirection.neutral;
     final deltaColor = isDown
-        ? const Color(0xFF22C55E)
-        : const Color(0xFFEF4444);
+        ? theme.colorScheme.error
+        : theme.colorScheme.primary;
     final arrowIcon = isDown
         ? Icons.arrow_downward_rounded
         : Icons.arrow_upward_rounded;
     final absPct = totals.deltaPercent.abs().toStringAsFixed(1);
-    final absDelta = fmt.format(totals.previousAmount);
+    final prevFmt = fmt.format(totals.previousAmount);
+
+    final shortLabel = periodLabel.split(' ').first;
 
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.lightSurface,
+        color: theme.cardTheme.color,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.dividerLight),
+        border: Border.all(color: theme.dividerColor),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
-          // ── Top row: title + budget badge ──────────────────────────────
+          // ── Top row ──────────────────────────────────────────────────
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -49,18 +57,17 @@ class InsightsTotalsCard extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          'Total spent in $periodLabel',
+                          'Total spent in $shortLabel',
                           style: const TextStyle(
-                            fontSize: 13,
-                            color: AppColors.lightTextSecondary,
+                            fontSize: AppFontSize.sm,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
                         const SizedBox(width: 6),
-                        const Icon(
+                        Icon(
                           Icons.remove_red_eye_outlined,
-                          size: 14,
-                          color: AppColors.lightTextSecondary,
+                          size: AppFontSize.sm,
+                          color: theme.iconTheme.color,
                         ),
                       ],
                     ),
@@ -68,33 +75,37 @@ class InsightsTotalsCard extends StatelessWidget {
                     Text(
                       fmt.format(totals.amount),
                       style: const TextStyle(
-                        fontSize: 28,
+                        fontSize: AppFontSize.xxl,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.lightText,
                         letterSpacing: -0.5,
                       ),
                     ),
                     const SizedBox(height: 4),
-                    Row(
-                      children: [
-                        Icon(arrowIcon, size: 14, color: deltaColor),
-                        const SizedBox(width: 2),
-                        Text(
-                          '$absPct% ${isDown ? 'less' : 'more'} than previous ($absDelta)',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: deltaColor,
-                            fontWeight: FontWeight.w500,
+                    if (!isNeutral)
+                      Row(
+                        children: [
+                          Icon(arrowIcon, size: 14, color: deltaColor),
+                          const SizedBox(width: 2),
+                          Flexible(
+                            child: Text(
+                              '$absPct% ${isDown ? 'less' : 'more'} than previous ($prevFmt)',
+                              style: TextStyle(
+                                fontSize: AppFontSize.xs,
+                                color: deltaColor,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
+                        ],
+                      ),
                   ],
                 ),
               ),
 
-              // Budget status badge
-              if (budget != null)
+              // Budget badge
+              if (budget != null) ...[
+                const SizedBox(width: 12),
                 Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 12,
@@ -102,8 +113,8 @@ class InsightsTotalsCard extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     color: budget!.isOnTrack
-                        ? const Color(0xFFDCFCE7)
-                        : const Color(0xFFFEE2E2),
+                        ? theme.colorScheme.primary.withValues(alpha: 0.07)
+                        : theme.colorScheme.error.withValues(alpha: 0.07),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Column(
@@ -113,11 +124,10 @@ class InsightsTotalsCard extends StatelessWidget {
                       Text(
                         'Budget status',
                         style: TextStyle(
-                          fontSize: 11,
+                          fontSize: AppFontSize.xs,
                           color: budget!.isOnTrack
-                              ? const Color(0xFF15803D)
-                              : const Color(0xFFB91C1C),
-                          fontWeight: FontWeight.w500,
+                              ? theme.colorScheme.primary
+                              : theme.colorScheme.error,
                         ),
                       ),
                       const SizedBox(height: 2),
@@ -127,11 +137,11 @@ class InsightsTotalsCard extends StatelessWidget {
                           Text(
                             budget!.isOnTrack ? 'On track' : 'Over budget',
                             style: TextStyle(
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold,
+                              fontSize: AppFontSize.sm,
+                              fontWeight: FontWeight.w500,
                               color: budget!.isOnTrack
-                                  ? const Color(0xFF15803D)
-                                  : const Color(0xFFB91C1C),
+                                  ? theme.colorScheme.primary
+                                  : theme.colorScheme.error,
                             ),
                           ),
                           const SizedBox(width: 4),
@@ -139,52 +149,69 @@ class InsightsTotalsCard extends StatelessWidget {
                             budget!.isOnTrack
                                 ? Icons.check_circle_rounded
                                 : Icons.warning_rounded,
-                            size: 14,
+                            size: AppFontSize.lg,
                             color: budget!.isOnTrack
-                                ? const Color(0xFF15803D)
-                                : const Color(0xFFB91C1C),
+                                ? theme.colorScheme.primary
+                                : theme.colorScheme.error,
                           ),
                         ],
                       ),
                     ],
                   ),
                 ),
+              ],
             ],
           ),
 
+          // ── Budget progress bar ───────────────────────────────────────
           if (budget != null) ...[
             const SizedBox(height: 16),
+            SizedBox(
+              height: 26,
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  // Background bar
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: LinearProgressIndicator(
+                      value: (budget!.progressPercent / 100).clamp(0.0, 1.0),
+                      backgroundColor: AppColors.accentSoft,
+                      valueColor: const AlwaysStoppedAnimation(
+                        AppColors.accent,
+                      ),
+                      minHeight: 26,
+                    ),
+                  ),
 
-            // ── Budget progress bar ────────────────────────────────────
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: LinearProgressIndicator(
-                value: budget!.progressPercent / 100,
-                backgroundColor: const Color(0xFFE9D5FF),
-                valueColor: const AlwaysStoppedAnimation(Color(0xFF7C3AED)),
-                minHeight: 12,
+                  // Labels overlaid on top of the bar
+                  Positioned.fill(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '${budget!.progressPercent.toStringAsFixed(2)}%',
+                            style: const TextStyle(
+                              fontSize: AppFontSize.xs,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.darkBackground,
+                            ),
+                          ),
+                          Text(
+                            'of ${fmt.format(budget!.monthlyBudget)} budget',
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              fontSize: AppFontSize.xs,
+                              color: AppColors.darkBackground,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
-            const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  '${budget!.progressPercent.toStringAsFixed(2)}%',
-                  style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF7C3AED),
-                  ),
-                ),
-                Text(
-                  'of ${fmt.format(budget!.monthlyBudget)} budget',
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: AppColors.lightTextSecondary,
-                  ),
-                ),
-              ],
             ),
           ],
         ],

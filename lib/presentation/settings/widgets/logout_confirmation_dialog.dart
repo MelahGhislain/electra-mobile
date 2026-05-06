@@ -16,33 +16,35 @@ class LogoutConfirmationDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      backgroundColor: AppColors.lightBackground,
-      title: const Text(
+      backgroundColor: theme.cardTheme.color,
+      title: Text(
         'Logout',
         style: TextStyle(
           fontWeight: FontWeight.w600,
-          color: AppColors.lightText,
+          color: theme.textTheme.titleLarge?.color,
         ),
       ),
       content: const Text(
         'Are you sure you want to logout of your account?',
-        style: TextStyle(color: AppColors.lightTextSecondary),
+        style: TextStyle(),
       ),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),
-          child: const Text(
+          child: Text(
             'Cancel',
-            style: TextStyle(color: AppColors.lightTextSecondary),
+            style: TextStyle(color: theme.textTheme.titleLarge?.color),
           ),
         ),
         FilledButton(
           onPressed: () => Navigator.of(context).pop(true),
           style: FilledButton.styleFrom(
-            backgroundColor: AppColors.darkBackground,
-            foregroundColor: AppColors.darkText,
+            backgroundColor: theme.appBarTheme.foregroundColor,
+            foregroundColor: theme.appBarTheme.backgroundColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),

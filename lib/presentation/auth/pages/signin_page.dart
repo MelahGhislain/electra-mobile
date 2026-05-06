@@ -1,5 +1,6 @@
 import 'package:electra/common/widgets/buttons/main_button.dart';
 import 'package:electra/common/widgets/text_fields/text_field.dart';
+import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/router/route_names.dart';
 import 'package:electra/core/utils/auth/auth_navigation.dart';
 import 'package:electra/presentation/auth/bloc/auth_cubit.dart';
@@ -40,6 +41,8 @@ class _SignInScreenState extends State<SignInScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+  
     return Scaffold(
       body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
@@ -53,7 +56,7 @@ class _SignInScreenState extends State<SignInScreen> {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.message),
-                backgroundColor: Colors.red.shade600,
+                backgroundColor: theme.colorScheme.error,
                 behavior: SnackBarBehavior.floating,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -108,17 +111,15 @@ class _SignInScreenState extends State<SignInScreen> {
                         const Text(
                           "Let's Sign you in",
                           style: TextStyle(
-                            fontSize: 28,
+                            fontSize: AppFontSize.xxl,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xFF111827),
                           ),
                         ),
                         const SizedBox(height: 4),
                         Text(
                           'Sign in and start planning.',
                           style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey.shade500,
+                            fontSize: AppFontSize.sm,
                           ),
                         ),
                         const SizedBox(height: 28),
@@ -160,17 +161,13 @@ class _SignInScreenState extends State<SignInScreen> {
                         const AuthDivider(),
                         const SizedBox(height: 16),
 
-                        // AuthSocialButton(
-                        //   label: 'Continue With Apple',
-                        //   icon: const Icon(Icons.apple, size: 22),
-                        //   isLoading: isLoading,
-                        //   onPressed: () =>
-                        //       context.read<AuthCubit>().signInWithApple(),
-                        // ),
-                        // const SizedBox(height: 12),
                         AuthSocialButton(
                           label: 'Continue With Google',
-                          icon: _GoogleIcon(),
+                          icon: const Icon(
+                              Icons.g_mobiledata,
+                              size: 26,
+                              color: Color(0xFF4285F4),
+                            ),
                           isLoading: isLoading,
                           onPressed: () =>
                               context.read<AuthCubit>().signInWithGoogle(),
@@ -186,8 +183,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               text: const TextSpan(
                                 text: "Don't have an account? ",
                                 style: TextStyle(
-                                  color: Colors.black54,
-                                  fontSize: 14,
+                                  fontSize: AppFontSize.sm,
                                 ),
                                 children: [
                                   TextSpan(
@@ -243,55 +239,4 @@ class _Blob extends StatelessWidget {
       decoration: BoxDecoration(color: color, shape: BoxShape.circle),
     );
   }
-}
-
-// ── Google "G" icon ───────────────────────────────────────────────────────────
-
-class _GoogleIcon extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return const SizedBox(
-      width: 22,
-      height: 22,
-      child: CustomPaint(painter: _GooglePainter()),
-    );
-  }
-}
-
-class _GooglePainter extends CustomPainter {
-  const _GooglePainter();
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final center = Offset(size.width / 2, size.height / 2);
-    final radius = size.width / 2;
-
-    final colors = [
-      const Color(0xFF4285F4),
-      const Color(0xFF34A853),
-      const Color(0xFFFBBC05),
-      const Color(0xFFEA4335),
-    ];
-
-    final sweeps = [90.0, 90.0, 90.0, 90.0];
-    final starts = [-90.0, 0.0, 90.0, 180.0];
-
-    for (int i = 0; i < 4; i++) {
-      final paint = Paint()
-        ..color = colors[i]
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = size.width * 0.18;
-
-      canvas.drawArc(
-        Rect.fromCircle(center: center, radius: radius * 0.72),
-        starts[i] * 3.14159 / 180,
-        sweeps[i] * 3.14159 / 180,
-        false,
-        paint,
-      );
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
