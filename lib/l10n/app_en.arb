@@ -1,0 +1,113 @@
+{
+  "@@locale": "en",
+
+  "appName": "Electra",
+  "@appName": { "description": "The name of the app" },
+
+  "settingsTitle": "Settings",
+  "settingsAccount": "Account",
+  "settingsGeneral": "General",
+  "settingsData": "Data",
+  "settingsHelp": "Help",
+  "settingsAbout": "About",
+
+  "settingsBudget": "Budget & Income",
+  "settingsTheme": "Theme",
+  "settingsLanguage": "Language",
+  "settingsCurrency": "Currency",
+  "settingsNotifications": "Push Notifications",
+  "settingsNotificationsSubtitle": "Get reminders and spending alerts",
+  "settingsExportData": "Export Data",
+  "settingsExportDataSubtitle": "Export your data",
+  "settingsSharedAccount": "Shared Account",
+  "settingsSharedAccountSubtitle": "Manage shared account settings",
+  "settingsSupport": "Support",
+  "settingsSupportSubtitle": "Contact our support team",
+  "settingsDocs": "Documentation",
+  "settingsDocsSubtitle": "Learn how to use the app",
+  "settingsSuggest": "Suggest an Improvement",
+  "settingsSuggestSubtitle": "Share your feedback to help us",
+  "settingsVersion": "Version",
+  "settingsSetupGuide": "Setup Guide",
+  "settingsSetupGuideSubtitle": "New here? Start with this",
+  "settingsDeleteAccount": "Delete Account",
+  "settingsDeleteAccountSubtitle": "Permanently remove your account",
+
+  "budgetNotSet": "Not set",
+  "budgetPerMonth": "{amount} / month",
+  "@budgetPerMonth": {
+    "placeholders": { "amount": { "type": "String" } }
+  },
+
+  "themeSystem": "System",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+
+  "languageSystemDefault": "System Default",
+  "languageEnglish": "English",
+  "languageFrench": "Français",
+  "languageSpanish": "Español",
+  "languageGerman": "Deutsch",
+  "languageJapanese": "日本語",
+  "languageChineseSimplified": "简体中文",
+  "languageKorean": "한국어",
+  "languagePortuguese": "Português",
+  "languageArabic": "العربية",
+
+  "logoutTitle": "Log out?",
+  "logoutBody": "You will be signed out of your account.",
+  "logoutConfirm": "Log out",
+  "cancel": "Cancel",
+  "confirm": "Confirm",
+  "save": "Save",
+  "delete": "Delete",
+  "edit": "Edit",
+  "retry": "Try again",
+
+  "deleteAccountTitle": "Delete account?",
+  "deleteAccountBody": "This will permanently remove your account and all your data. This action cannot be undone.",
+
+  "onboardingSkip": "Skip",
+  "onboardingNext": "Next",
+  "onboardingLetsGo": "Let's Go",
+
+  "homeGreeting": "Hello {name}",
+  "@homeGreeting": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "homeTagline": "Take control of\nyour day",
+  "homeSpendingBreakdown": "Spending Breakdown",
+  "homeMonthlySnapshot": "Monthly Snapshot",
+  "homeRecentlyCompleted": "Recently Completed",
+  "homeViewAll": "View all",
+  "homeAvgDaily": "Avg. daily spend: {amount}",
+  "@homeAvgDaily": {
+    "placeholders": { "amount": { "type": "String" } }
+  },
+  "homeBudgetGood": "Nice work! You're staying within budget 👍",
+  "homeBudgetWarning": "Heads up! You're close to your budget.",
+  "homeBudgetOver": "You have exceeded your monthly budget.",
+  "homeBudgetNone": "No budget set for this month.",
+
+  "insightsTitle": "Spending insights",
+  "insightsPeriodWeekly": "Weekly",
+  "insightsPeriodMonthly": "Monthly",
+  "insightsPeriodYearly": "Yearly",
+  "insightsTotalSpent": "Total spent in {period}",
+  "@insightsTotalSpent": {
+    "placeholders": { "period": { "type": "String" } }
+  },
+  "insightsBudgetOnTrack": "On track",
+  "insightsBudgetOver": "Over budget",
+  "insightsSpendingOverview": "Spending overview",
+  "insightsViewByCategories": "View by categories",
+  "insightsViewAllCategories": "View all categories",
+  "insightsKeyInsights": "Key insights",
+  "insightsTopCategories": "Top spending categories",
+  "insightsViewAll": "View all",
+  "insightsTrend": "Spending trend",
+
+  "errorGeneric": "Something went wrong",
+  "errorNetwork": "Unable to connect. Please check your network.",
+  "errorSessionExpired": "Your session has expired. Please sign in again."
+}

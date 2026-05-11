@@ -171,6 +171,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               return null;
                             },
                           ),
+
+                          const SizedBox(height: 20),
+
+                          MainButton(
+                            text: 'Sign Up',
+                            isLoading: isLoading,
+                            size: ButtonSize.small,
+                            width: double.infinity,
+                            onPressed: () => _submit(context),
+                          ),
+
                           const SizedBox(height: 28),
 
                           const AuthDivider(),
@@ -196,10 +207,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               },
                               child: RichText(
                                 text: const TextSpan(
-                                  text: 'Do you have an account? ',
-                                  style: TextStyle(
-                                    fontSize: AppFontSize.sm,
-                                  ),
+                                  text: 'Already have an account? ',
+                                  style: TextStyle(fontSize: AppFontSize.sm),
                                   children: [
                                     TextSpan(
                                       text: 'Sign in',
@@ -212,15 +221,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 ),
                               ),
                             ),
-                          ),
-                          const SizedBox(height: 20),
-
-                          MainButton(
-                            text: 'Sign Up',
-                            isLoading: isLoading,
-                            size: ButtonSize.small,
-                            width: double.infinity,
-                            onPressed: () => _submit(context),
                           ),
 
                           SizedBox(

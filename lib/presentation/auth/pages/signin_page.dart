@@ -42,7 +42,7 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-  
+
     return Scaffold(
       body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
@@ -118,9 +118,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         const SizedBox(height: 4),
                         Text(
                           'Sign in and start planning.',
-                          style: TextStyle(
-                            fontSize: AppFontSize.sm,
-                          ),
+                          style: TextStyle(fontSize: AppFontSize.sm),
                         ),
                         const SizedBox(height: 28),
 
@@ -156,6 +154,16 @@ class _SignInScreenState extends State<SignInScreen> {
                             return null;
                           },
                         ),
+                        const SizedBox(height: 20),
+
+                        MainButton(
+                          text: 'Sign In',
+                          isLoading: isLoading,
+                          size: ButtonSize.small,
+                          width: double.infinity,
+                          onPressed: () => _submit(context),
+                        ),
+
                         const SizedBox(height: 28),
 
                         const AuthDivider(),
@@ -164,10 +172,10 @@ class _SignInScreenState extends State<SignInScreen> {
                         AuthSocialButton(
                           label: 'Continue With Google',
                           icon: const Icon(
-                              Icons.g_mobiledata,
-                              size: 26,
-                              color: Color(0xFF4285F4),
-                            ),
+                            Icons.g_mobiledata,
+                            size: 26,
+                            color: Color(0xFF4285F4),
+                          ),
                           isLoading: isLoading,
                           onPressed: () =>
                               context.read<AuthCubit>().signInWithGoogle(),
@@ -182,9 +190,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             child: RichText(
                               text: const TextSpan(
                                 text: "Don't have an account? ",
-                                style: TextStyle(
-                                  fontSize: AppFontSize.sm,
-                                ),
+                                style: TextStyle(fontSize: AppFontSize.sm),
                                 children: [
                                   TextSpan(
                                     text: 'Sign up',
@@ -197,15 +203,6 @@ class _SignInScreenState extends State<SignInScreen> {
                               ),
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 20),
-
-                        MainButton(
-                          text: 'Sign In',
-                          isLoading: isLoading,
-                          size: ButtonSize.small,
-                          width: double.infinity,
-                          onPressed: () => _submit(context),
                         ),
 
                         SizedBox(

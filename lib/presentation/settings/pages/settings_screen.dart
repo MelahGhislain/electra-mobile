@@ -1,4 +1,5 @@
 import 'package:electra/common/blocs/auth/app_auth_cubit.dart';
+import 'package:electra/common/blocs/locale_cubit.dart';
 import 'package:electra/common/blocs/theme_cubit.dart';
 import 'package:electra/common/widgets/buttons/main_icon_button.dart';
 import 'package:electra/core/configs/fonts.dart';
@@ -8,6 +9,7 @@ import 'package:electra/core/services/app_info_service.dart';
 import 'package:electra/core/utils/storage/onboarding_storage.dart';
 import 'package:electra/domain/entities/user/user.dart';
 import 'package:electra/domain/entities/user/user_settings.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:electra/presentation/auth/bloc/auth_cubit.dart';
 import 'package:electra/presentation/auth/bloc/auth_state.dart';
 import 'package:electra/presentation/settings/widgets/bottom_sheets/budget_bottom_sheet.dart';
@@ -62,10 +64,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
-  String _themeLabel(ThemeMode mode) => switch (mode) {
-    ThemeMode.system => 'System',
-    ThemeMode.light => 'Light',
-    ThemeMode.dark => 'Dark',
+  String _themeLabel(ThemeMode mode, AppLocalizations l) => switch (mode) {
+    ThemeMode.system => l.themeSystem,
+    ThemeMode.light => l.themeLight,
+    ThemeMode.dark => l.themeDark,
   };
 
   String _currencyLabel(UserSettings? settings) {
@@ -82,23 +84,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   String _languageLabel(UserSettings? settings) {
-    if (settings == null) return 'System Default';
-    try {
-      final match = AppLanguage.values.firstWhere(
-        (l) => l.name.toLowerCase() == settings.locale.toLowerCase(),
-        orElse: () => AppLanguage.systemDefault,
-      );
-      return match.label;
-    } catch (_) {
-      return settings.locale;
-    }
+    final lang = AppLanguage.fromCode(settings?.locale);
+    return lang.label;
   }
 
-  String _budgetLabel(UserSettings? settings) {
+  String _budgetLabel(UserSettings? settings, AppLocalizations l) {
     if (settings?.monthlyBudget == null || settings!.monthlyBudget! <= 0) {
-      return 'Not set';
+      return l.budgetNotSet;
     }
-    return '\$${settings.monthlyBudget!.toStringAsFixed(0)} / month';
+    return l.budgetPerMonth('\$${settings.monthlyBudget!.toStringAsFixed(0)}');
   }
 
   // ── Sheet openers ─────────────────────────────────────────────────────────
@@ -111,20 +105,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
+
   Future<void> _openLanguageSheet(User user) async {
-    AppLanguage current = AppLanguage.systemDefault;
-    try {
-      current = AppLanguage.values.firstWhere(
-        (l) =>
-            l.name.toLowerCase() == (user.settings?.locale ?? '').toLowerCase(),
-        orElse: () => AppLanguage.systemDefault,
-      );
-    } catch (_) {}
+    final current = AppLanguage.fromCode(user.settings?.locale);
     final result = await LanguageBottomSheet.show(context, current);
-    if (result != null && mounted) {
-      await context.read<UserCubit>().updateUserSetting(user.id, {
-        'locale': result.name,
-      });
+    if (result == null || !mounted) return;
+
+    // 1. Save to backend (empty string = system default)
+    await context.read<UserCubit>().updateUserSetting(user.id, {
+      'locale': result.backendValue,
+    });
+
+    // 2. Apply immediately to the running app
+    if (mounted) {
+      context.read<LocaleCubit>().setLocale(result.code);
     }
   }
 
@@ -223,12 +217,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
           final isSaving = userState is UserSaving;
           final isLoading =
               userState is UserLoading || userState is UserInitial;
+          final l = AppLocalizations.of(context);
 
           return Scaffold(
             appBar: AppBar(
               elevation: 0,
               title: Text(
-                'Settings',
+                l.settingsTitle,
                 style: TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: AppFontSize.xxl,
@@ -304,13 +299,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
 
                           // ── ACCOUNT ───────────────────────────────────
-                          const SettingsSectionHeader(title: 'Account'),
+                          SettingsSectionHeader(title: l.settingsAccount),
                           _SettingsGroup(
                             children: [
                               SettingsTile(
                                 icon: Icons.wallet_rounded,
-                                title: 'Budget & Income',
-                                subtitle: _budgetLabel(settings),
+                                title: l.settingsBudget,
+                                subtitle: _budgetLabel(settings, l),
                                 showChevron: true,
                                 onTap: user != null
                                     ? () => _openBudgetSheet(user)
@@ -320,20 +315,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
 
                           // ── GENERAL ───────────────────────────────────
-                          const SettingsSectionHeader(title: 'General'),
+                          SettingsSectionHeader(title: l.settingsGeneral),
                           _SettingsGroup(
                             children: [
                               SettingsTile(
                                 icon: Icons.palette_outlined,
-                                title: 'Theme',
-                                subtitle: _themeLabel(_themeMode),
+                                title: l.settingsTheme,
+                                subtitle: _themeLabel(_themeMode, l),
                                 showDivider: true,
                                 showChevron: true,
                                 onTap: _openThemeSheet,
                               ),
                               SettingsTile(
                                 icon: Icons.language_rounded,
-                                title: 'Language',
+                                title: l.settingsLanguage,
                                 subtitle: _languageLabel(settings),
                                 showDivider: true,
                                 showChevron: true,
@@ -343,7 +338,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               ),
                               SettingsTile(
                                 icon: Icons.attach_money_rounded,
-                                title: 'Currency',
+                                title: l.settingsCurrency,
                                 subtitle: _currencyLabel(settings),
                                 showDivider: true,
                                 showChevron: true,
@@ -353,8 +348,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               ),
                               SettingsToggleTile(
                                 icon: Icons.notifications_outlined,
-                                title: 'Push Notifications',
-                                subtitle: 'Get reminders and spending alerts',
+                                title: l.settingsNotifications,
+                                subtitle: l.settingsNotificationsSubtitle,
                                 value: settings?.pushNotification ?? false,
                                 onChanged: user != null
                                     ? (val) => _toggleNotifications(user, val)
@@ -364,21 +359,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
 
                           // ── DATA ──────────────────────────────────────
-                          const SettingsSectionHeader(title: 'Data'),
+                          SettingsSectionHeader(title: l.settingsData),
                           _SettingsGroup(
                             children: [
                               SettingsTile(
                                 icon: Icons.download,
-                                title: 'Export Data',
-                                subtitle: 'Export your data',
+                                title: l.settingsExportData,
+                                subtitle: l.settingsExportDataSubtitle,
                                 showDivider: true,
                                 showChevron: true,
                                 onTap: () {},
                               ),
                               SettingsTile(
                                 icon: Icons.people,
-                                title: 'Shared Account',
-                                subtitle: 'Manage shared account settings',
+                                title: l.settingsSharedAccount,
+                                subtitle: l.settingsSharedAccountSubtitle,
                                 showChevron: true,
                                 onTap: () {},
                               ),
@@ -386,29 +381,29 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
 
                           // ── HELP ──────────────────────────────────────
-                          const SettingsSectionHeader(title: 'Help'),
+                          SettingsSectionHeader(title: l.settingsHelp),
                           _SettingsGroup(
                             children: [
                               SettingsTile(
                                 icon: Icons.mail_outline_rounded,
-                                title: 'Support',
-                                subtitle: 'Contact our support team',
+                                title: l.settingsSupport,
+                                subtitle: l.settingsSupportSubtitle,
                                 showDivider: true,
                                 showChevron: true,
                                 onTap: () {},
                               ),
                               SettingsTile(
                                 icon: Icons.menu_book_rounded,
-                                title: 'Documentation',
-                                subtitle: 'Learn how to use the app',
+                                title: l.settingsDocs,
+                                subtitle: l.settingsDocsSubtitle,
                                 showDivider: true,
                                 showChevron: true,
                                 onTap: () {},
                               ),
                               SettingsTile(
                                 icon: Icons.lightbulb_outline_rounded,
-                                title: 'Suggest an Improvement',
-                                subtitle: 'Share your feedback to help us',
+                                title: l.settingsSuggest,
+                                subtitle: l.settingsSuggestSubtitle,
                                 showChevron: true,
                                 onTap: () {},
                               ),
@@ -416,27 +411,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
 
                           // ── ABOUT ─────────────────────────────────────
-                          const SettingsSectionHeader(title: 'About'),
+                          SettingsSectionHeader(title: l.settingsAbout),
                           _SettingsGroup(
                             children: [
                               SettingsTile(
                                 icon: Icons.info_outline_rounded,
-                                title: 'Version',
+                                title: l.settingsVersion,
                                 subtitle: _version,
                                 showDivider: true,
                               ),
                               SettingsTile(
                                 icon: Icons.map_outlined,
-                                title: 'Setup Guide',
-                                subtitle: 'New here? Start with this',
+                                title: l.settingsSetupGuide,
+                                subtitle: l.settingsSetupGuideSubtitle,
                                 showDivider: true,
                                 showChevron: true,
                                 onTap: () => _resetOnboarding(context),
                               ),
                               SettingsTile(
                                 icon: Icons.delete_outline_rounded,
-                                title: 'Delete Account',
-                                subtitle: 'Permanently remove your account',
+                                title: l.settingsDeleteAccount,
+                                subtitle: l.settingsDeleteAccountSubtitle,
                                 iconColor: Theme.of(context).colorScheme.error,
                                 showChevron: true,
                                 onTap: user != null

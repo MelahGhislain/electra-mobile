@@ -1,9 +1,11 @@
+import 'package:electra/core/assets/app_images.dart';
 import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/core/router/route_names.dart';
 import 'package:electra/core/utils/storage/onboarding_storage.dart';
 import 'package:electra/data/models/onboarding/onboarding.dart';
 import 'package:electra/domain/entities/user/language.dart';
+import 'package:electra/presentation/onboading/widgets/highlighted_title.dart';
 import 'package:electra/presentation/onboading/widgets/language/language_selector.dart';
 import 'package:electra/presentation/onboading/widgets/onboarding_page.dart';
 import 'package:electra/presentation/onboading/widgets/onboarding_widget.dart';
@@ -27,49 +29,63 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     OnboardingPage.content(
       OnboardingData(
         title: "Where Did My Money Go?",
+        highlights: const ['My Money'],
+        topPosition: 60,
         description:
-            "Stop guessing your spending.\nElectra helps you track every expense effortlessly.",
-        imagePrompt:
-            "A dramatic full-screen photo of a person looking confused at a wallet with money flying away in a modern city at dusk, cinematic lighting, snow-capped mountains in background like the reference screenshot, high resolution, realistic, winter vibe",
+            "Stop guessing your spending. Electra helps you track every expense effortlessly.",
+        image: AppImages.onboarding1,
       ),
     ),
     OnboardingPage.content(
       OnboardingData(
-        title: "Just Say It",
+        title: "Track with Your Voice",
+        highlights: const ['Voice'],
+        topPosition: 50,
         description:
-            "“Bought lunch for \$12”\nElectra records it instantly — no typing needed.",
-        imagePrompt:
-            "Close-up of a person speaking into a glowing microphone with audio waveform visualization, modern minimalist style, snowy mountain background, vibrant colors, high detail, realistic photo like the reference image",
+            "Just speak, and we'll take care of the rest. Fast, smart and super easy.",
+        image: AppImages.onboarding2,
       ),
     ),
     OnboardingPage.content(
       OnboardingData(
-        title: "Snap Your Receipts",
+        title: "Auto-Categorize Expenses",
+        highlights: const ['Auto-Categorize'],
+        topPosition: 200,
         description:
-            "Take a picture and we’ll extract items, prices, and totals automatically.",
-        imagePrompt:
-            "Smartphone camera scanning a receipt with AI overlay highlighting items and totals, clean modern UI elements floating, snowy landscape background, professional photography style",
+            "Electra automatically categorizes your expenses so you can focus on what matters.",
+        image: AppImages.onboarding3,
       ),
     ),
     OnboardingPage.content(
       OnboardingData(
-        title: "Track Your Way",
+        title: "Insights That Help You Save",
+        highlights: const ['Save'],
+        topPosition: 80,
         description:
-            "Type it, say it, or snap it.\nElectra organizes, categorizes, and calculates everything for you. No spreadsheets. No stress.",
-        imagePrompt:
-            "Person using phone with multiple expense tracking options (voice, camera, keyboard) glowing around it, beautiful winter mountain road background, dynamic composition, realistic high-quality photo",
+            "Understand your spending patterns and make smarter financial decisions.",
+        image: AppImages.onboarding4,
       ),
     ),
     OnboardingPage.content(
       OnboardingData(
-        title: "See Where Your Money Goes",
+        title: "Your Data is Always Safe",
+        highlights: const ['Safe'],
+        topPosition: 10,
         description:
-            "Get instant breakdowns by category, trends, and spending habits.",
-        imagePrompt:
-            "Beautiful pie chart and spending insights dashboard floating over a scenic snowy mountain view, elegant data visualization, premium finance app aesthetic, cinematic lighting",
+            "We keep your data private and secure. Your trust is our priority.",
+        image: AppImages.onboarding5,
       ),
     ),
-    // OnboardingPage.custom(const AccountSetupScreen()),
+    OnboardingPage.content(
+      OnboardingData(
+        title: "Save More. Stress Less.",
+        highlights: const ['Save More.'],
+        topPosition: 10,
+        description:
+            "Stay on top of your finances and build better money habits every day.",
+        image: AppImages.onboarding6,
+      ),
+    ),
   ];
 
   Future<void> _onOnboardingComplete(BuildContext context) async {
@@ -115,6 +131,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       body: Stack(
         children: [
@@ -175,8 +193,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     child: Text(
                       "Skip",
                       style: TextStyle(
-                        color: AppColors.lightText,
-                        fontSize: 16,
+                        color: theme.textTheme.titleLarge?.color,
+                        fontSize: AppFontSize.md,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -194,7 +212,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     left: 0,
                     right: 0,
                     child: Container(
-                      height: MediaQuery.of(context).size.height * 0.42,
+                      height: MediaQuery.of(context).size.height * 0.35,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           begin: Alignment.topCenter,
@@ -216,9 +234,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Expanded(
-                                  child: Text(
-                                    _pages[_currentPage].data!.title,
-                                    style: const TextStyle(
+                                  child: HighlightedTitle(
+                                    text: _pages[_currentPage].data!.title,
+                                    highlights:
+                                        _pages[_currentPage].data!.highlights,
+                                    highlightColor: const Color(
+                                      0xFF22C55E,
+                                    ), // green accent
+                                    baseStyle: const TextStyle(
                                       fontSize: 32,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
@@ -280,7 +303,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                     children: [
                                       Text(
                                         _currentPage == _pages.length - 1
-                                            ? "Add First Expense"
+                                            ? "Let's Go"
                                             : "Next",
                                         style: const TextStyle(
                                           fontSize: AppFontSize.buttonText,

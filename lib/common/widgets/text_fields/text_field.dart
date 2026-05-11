@@ -109,7 +109,7 @@ class _AppTextFieldState extends State<AppTextField> {
                         _obscure
                             ? Icons.visibility_off_outlined
                             : Icons.visibility_outlined,
-                        color: colorScheme.onSurfaceVariant,
+                        color: theme.iconTheme.color,
                         size: 20,
                       ),
                       onPressed: () => setState(() => _obscure = !_obscure),

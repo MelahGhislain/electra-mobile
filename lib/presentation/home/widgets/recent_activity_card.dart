@@ -101,7 +101,7 @@ class _ActivityRow extends StatelessWidget {
                   children: [
                     Text(
                       RecentActivityHelper.formatRelativeTime(item.date),
-                      style: const TextStyle(fontSize: AppFontSize.sm),
+                      style: const TextStyle(fontSize: AppFontSize.xs),
                     ),
                     const SizedBox(width: 6),
                     _CategoryChip(
@@ -120,7 +120,7 @@ class _ActivityRow extends StatelessWidget {
           Text(
             '-\$${item.amount.toStringAsFixed(2)}',
             style: const TextStyle(
-              fontSize: AppFontSize.lg,
+              fontSize: AppFontSize.md,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -180,7 +180,7 @@ class _CategoryChip extends StatelessWidget {
       child: Text(
         label,
         style: TextStyle(
-          fontSize: AppFontSize.sm,
+          fontSize: AppFontSize.xs,
           fontWeight: FontWeight.w600,
           color: color,
         ),

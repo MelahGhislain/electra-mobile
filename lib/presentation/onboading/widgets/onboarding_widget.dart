@@ -16,37 +16,49 @@ class OnboardingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Stack(
       fit: StackFit.expand,
       children: [
-        // Background Image - In production use AssetImage after generating
-        // For now using placeholder - replace with your generated images
-        Image.network(
-          'https://picsum.photos/id/${100 + currentPage}/1080/1920', // temporary
-          fit: BoxFit.cover,
-          errorBuilder: (context, error, stack) => Container(
-            color: Colors.grey[900],
-            child: const Center(
-              child: Icon(Icons.image, size: 100, color: Colors.white38),
+        // ── Background fill (shown around the image) ───────────────────
+        Container(color: isDark ? Colors.black : Colors.white),
+
+        // ── Background image (natural proportions, no stretch) ─────────
+        Positioned.fill(
+          top: data.topPosition, // adjust this value to move the image up
+          child: Image.asset(
+            data.image,
+            fit: BoxFit.contain,
+            alignment: Alignment.topCenter,
+            errorBuilder: (context, error, stack) => Container(
+              color: Colors.grey[900],
+              child: const Center(
+                child: Icon(Icons.image, size: 100, color: Colors.white38),
+              ),
             ),
           ),
         ),
 
-        // Optional subtle overlay for better text readability
+        // ── Subtle top-to-bottom overlay for text readability ──────────
         Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
+                Colors.black.withValues(alpha: 0.0),
+                Colors.black.withValues(alpha: 0.01),
+                Colors.black.withValues(alpha: 0.05),
+                Colors.black.withValues(alpha: 0.07),
                 Colors.black.withValues(alpha: 0.1),
-                Colors.black.withValues(alpha: 0.3),
               ],
             ),
           ),
         ),
 
-        // Progress indicators (optional, top or bottom)
+        // ── Page indicator dots ────────────────────────────────────────
         Positioned(
           top: 80,
           left: 0,
@@ -55,13 +67,17 @@ class OnboardingWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(
               totalPages,
-              (index) => Container(
+              (index) => AnimatedContainer(
+                duration: const Duration(milliseconds: 250),
+                curve: Curves.easeInOut,
                 margin: const EdgeInsets.symmetric(horizontal: 4),
                 width: currentPage == index ? 24 : 8,
                 height: 8,
                 decoration: BoxDecoration(
                   color: currentPage == index
-                      ? AppColors.darkSurface
+                      ? isDark
+                            ? AppColors.lightSurface
+                            : AppColors.darkSurface
                       : Colors.white38,
                   borderRadius: BorderRadius.circular(4),
                 ),
