@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 import 'package:electra/core/configs/fonts.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:electra/presentation/home/utils/home_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -43,6 +44,7 @@ class TodaySpendingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final pct = todaySummary.percentVsYesterday;
     final accentColor = _accentColor;
+    final l = AppLocalizations.of(context);
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 0),
@@ -73,9 +75,9 @@ class TodaySpendingCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // Title
-                      const Text(
-                        "Today's Spending",
-                        style: TextStyle(
+                      Text(
+                        l.todaysSpending,
+                        style: const TextStyle(
                           fontSize: AppFontSize.lg,
                           fontWeight: FontWeight.w500,
                         ),
@@ -109,7 +111,7 @@ class TodaySpendingCard extends StatelessWidget {
                             ),
                             const SizedBox(width: 3),
                             Text(
-                              '${pct.abs().toStringAsFixed(0)}% vs yesterday',
+                              l.vsYesterday(pct.abs().toStringAsFixed(0)),
                               style: TextStyle(
                                 fontSize: AppFontSize.sm,
                                 fontWeight: FontWeight.w600,
@@ -123,8 +125,8 @@ class TodaySpendingCard extends StatelessWidget {
                       else
                         Text(
                           todaySummary.hasTodayPurchases
-                              ? 'No data for yesterday'
-                              : 'Most recent purchase',
+                              ? l.noDataForYesterday
+                              : l.mostRecentPurchase,
                           style: const TextStyle(fontSize: AppFontSize.sm),
                         ),
                     ],
@@ -157,8 +159,9 @@ class TodaySpendingCard extends StatelessWidget {
                               letterSpacing: -0.5,
                             ),
                           ),
-                          const Text(
-                            'of daily\nbudget',
+                          Text(
+                            l.ofDailyBudget,
+                            // 'of daily\nbudget',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: AppFontSize.xs,
@@ -186,7 +189,7 @@ class TodaySpendingCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Daily budget',
+                      l.dailyBudget,
                       style: TextStyle(
                         fontSize: AppFontSize.sm,
                         fontWeight: FontWeight.w400,

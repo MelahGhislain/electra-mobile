@@ -3,6 +3,7 @@ import 'package:electra/common/widgets/buttons/main_button.dart';
 import 'package:electra/common/widgets/text_fields/chip_selector.dart';
 import 'package:electra/common/widgets/text_fields/text_field.dart';
 import 'package:electra/core/configs/fonts.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:electra/presentation/settings/blocs/user_cubit.dart';
 import 'package:electra/presentation/settings/blocs/user_state.dart';
 import 'package:flutter/material.dart';
@@ -15,9 +16,10 @@ class BudgetBottomSheet {
     required String userId,
     double? currentBudget,
   }) async {
+    final l = AppLocalizations.of(context);
     final result = await AppBottomSheet.show<bool>(
       context,
-      title: 'Monthly Budget',
+      title: l.monthlyBudget,
       icon: Icons.wallet_rounded,
       maxHeightPct: 0.85,
       child: BlocProvider.value(
@@ -88,8 +90,7 @@ class _BudgetSheetBodyState extends State<_BudgetSheetBody> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    final isDark = theme.brightness == Brightness.dark;
+    final l = AppLocalizations.of(context);
 
     return BlocListener<UserCubit, UserState>(
       listener: (context, state) {
@@ -121,15 +122,15 @@ class _BudgetSheetBodyState extends State<_BudgetSheetBody> {
             mainAxisSize: MainAxisSize.min,
             children: [
               // Subtitle
-              const Text(
-                'Set a monthly spending limit to stay on track.',
+              Text(
+                l.budgetSubtitle,
                 style: TextStyle(fontSize: AppFontSize.sm),
               ),
               const SizedBox(height: 24),
 
               AppTextField(
-                label: 'Budget Amount',
-                hint: 'Enter budget amount',
+                label: l.budgetAmount,
+                hint: l.enterBudgetAmount,
                 controller: _budgetCtrl,
                 keyboardType: const TextInputType.numberWithOptions(
                   decimal: true,
@@ -140,14 +141,14 @@ class _BudgetSheetBodyState extends State<_BudgetSheetBody> {
                 prefixText: '\$  ',
                 validator: (v) {
                   if (v == null || v.trim().isEmpty) {
-                    return 'Please enter a budget amount';
+                    return l.pleaseEnterABudgetAmount;
                   }
                   final parsed = double.tryParse(v.trim());
                   if (parsed == null || parsed <= 0) {
-                    return 'Enter a valid amount greater than 0';
+                    return l.enterAValidAmountGreaterThan0;
                   }
                   if (parsed > 1000000) {
-                    return 'Budget seems too high — please check';
+                    return l.budgetSeemsTooHigh;
                   }
                   return null;
                 },
@@ -157,7 +158,7 @@ class _BudgetSheetBodyState extends State<_BudgetSheetBody> {
 
               // Quick-select chips
               ChipSelector<String>(
-                label: 'Quick select',
+                label: l.quickSelect,
                 selected: _budgetCtrl.text.trim(),
                 options: _quickAmounts
                     .map(
@@ -178,7 +179,7 @@ class _BudgetSheetBodyState extends State<_BudgetSheetBody> {
                   return Column(
                     children: [
                       MainButton(
-                        text: 'Save Budget',
+                        text: l.saveBudget,
                         width: double.infinity,
                         isLoading: isSaving,
                         onPressed: isSaving ? () {} : () => _save(context),
@@ -201,9 +202,9 @@ class _BudgetSheetBodyState extends State<_BudgetSheetBody> {
                                 borderRadius: BorderRadius.circular(14),
                               ),
                             ),
-                            child: const Text(
-                              'Remove Budget',
-                              style: TextStyle(
+                            child: Text(
+                              l.removeBudget,
+                              style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
                               ),

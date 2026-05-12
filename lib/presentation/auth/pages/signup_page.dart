@@ -3,6 +3,7 @@ import 'package:electra/common/widgets/text_fields/text_field.dart';
 import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/router/route_names.dart';
 import 'package:electra/core/utils/auth/auth_navigation.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:electra/presentation/auth/bloc/auth_cubit.dart';
 import 'package:electra/presentation/auth/bloc/auth_state.dart';
 import 'package:electra/presentation/auth/widgets/auth_divider.dart';
@@ -47,6 +48,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l = AppLocalizations.of(context);
 
     return Scaffold(
       body: BlocConsumer<AuthCubit, AuthState>(
@@ -88,10 +90,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         onPressed: () => Navigator.pop(context),
                         icon: const Icon(Icons.arrow_back_ios_new, size: 18),
                       ),
-                      const Expanded(
+                      Expanded(
                         child: Center(
                           child: Text(
-                            'Sign Up',
+                            l.signUp,
                             style: TextStyle(
                               fontSize: AppFontSize.xxl,
                               fontWeight: FontWeight.w600,
@@ -115,28 +117,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           const SizedBox(height: 8),
 
                           AppTextField(
-                            label: 'Full Name',
+                            label: l.fullName,
                             hint: 'john smith',
                             controller: _nameController,
                             validator: (v) => (v == null || v.trim().isEmpty)
-                                ? 'Name is required'
+                                ? l.nameIsRequired
                                 : null,
                           ),
                           const SizedBox(height: 16),
 
                           AppTextField(
-                            label: 'Email Address',
+                            label: l.emailAddress,
                             hint: 'johnsmith@mail.com',
                             controller: _emailController,
                             keyboardType: TextInputType.emailAddress,
                             validator: (v) {
                               if (v == null || v.isEmpty) {
-                                return 'Email is required';
+                                return l.emailIsRequired;
                               }
                               if (!RegExp(
                                 r'^[\w-.]+@([\w-]+\.)+[\w]{2,}$',
                               ).hasMatch(v)) {
-                                return 'Enter a valid email';
+                                return l.enterValidEmail;
                               }
                               return null;
                             },
@@ -144,29 +146,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           const SizedBox(height: 16),
 
                           AppTextField(
-                            label: 'Password',
+                            label: l.password,
                             hint: '••••••••••',
                             controller: _passwordController,
                             isPassword: true,
                             validator: (v) {
                               if (v == null || v.isEmpty) {
-                                return 'Password is required';
+                                return l.passwordIsRequired;
                               }
-                              if (v.length < 8) return 'Minimum 8 characters';
+                              if (v.length < 8) return l.minimum8Characters;
                               return null;
                             },
                           ),
                           const SizedBox(height: 16),
 
                           AppTextField(
-                            label: 'Re-Enter Password',
+                            label: l.reEnterPassword,
                             hint: '••••••••••',
                             controller: _confirmPasswordController,
                             isPassword: true,
                             textInputAction: TextInputAction.done,
                             validator: (v) {
                               if (v != _passwordController.text) {
-                                return 'Passwords do not match';
+                                return l.passwordsDoNotMatch;
                               }
                               return null;
                             },
@@ -175,7 +177,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           const SizedBox(height: 20),
 
                           MainButton(
-                            text: 'Sign Up',
+                            text: l.signUp,
                             isLoading: isLoading,
                             size: ButtonSize.small,
                             width: double.infinity,
@@ -184,11 +186,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                           const SizedBox(height: 28),
 
-                          const AuthDivider(),
+                          AuthDivider(label: l.orSignWith),
                           const SizedBox(height: 16),
 
                           AuthSocialButton(
-                            label: 'Continue With Google',
+                            label: l.continueWithGoogle,
                             icon: const Icon(
                               Icons.g_mobiledata,
                               size: 26,
@@ -206,12 +208,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 context.goNamed(RouteNames.signIn);
                               },
                               child: RichText(
-                                text: const TextSpan(
-                                  text: 'Already have an account? ',
+                                text: TextSpan(
+                                  text: l.alreadyHaveAnAccount,
                                   style: TextStyle(fontSize: AppFontSize.sm),
                                   children: [
                                     TextSpan(
-                                      text: 'Sign in',
+                                      text: l.signIn,
                                       style: TextStyle(
                                         color: Color(0xFF2563EB),
                                         fontWeight: FontWeight.w600,

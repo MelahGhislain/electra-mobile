@@ -1,33 +1,23 @@
 import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/domain/entities/purchase/purchase.dart';
 import 'package:electra/core/utils/category_meta.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:electra/common/helpers/average.dart';
+import 'package:intl/intl.dart';
 
 class SpendingDetailHeroCard extends StatelessWidget {
   final Purchase purchase;
 
   const SpendingDetailHeroCard({super.key, required this.purchase});
 
-  String _formatDateTime(DateTime d) {
-    const months = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
-    final hour = d.hour > 12 ? d.hour - 12 : (d.hour == 0 ? 12 : d.hour);
-    final minute = d.minute.toString().padLeft(2, '0');
-    final period = d.hour >= 12 ? 'PM' : 'AM';
-    return '${months[d.month - 1]} ${d.day}, ${d.year} • $hour:$minute $period';
+  String _formatDateTime(BuildContext context, DateTime d) {
+    final locale = Localizations.localeOf(context);
+
+    final date = DateFormat.yMMMd(locale.toString()).format(d);
+    final time = DateFormat.jm(locale.toString()).format(d);
+
+    return '$date • $time';
   }
 
   String _avgPrice() {
@@ -35,14 +25,14 @@ class SpendingDetailHeroCard extends StatelessWidget {
     return average(purchase.totals.amount, purchase.totals.itemCount);
   }
 
-  String _paymentLabel() {
+  String _paymentLabel(AppLocalizations l) {
     switch (purchase.payment.method) {
       case PaymentMethod.card:
-        return 'Card${purchase.payment.last4 != null ? ' ••${purchase.payment.last4}' : ''}';
+        return '${l.card}${purchase.payment.last4 != null ? ' ••${purchase.payment.last4}' : ''}';
       case PaymentMethod.cash:
-        return 'Cash';
+        return l.cash;
       case PaymentMethod.other:
-        return 'Other';
+        return l.other;
     }
   }
 
@@ -59,6 +49,7 @@ class SpendingDetailHeroCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
@@ -66,7 +57,7 @@ class SpendingDetailHeroCard extends StatelessWidget {
         ? purchase.items.first.category.normalizedName
         : 'other';
     final meta = CategoryMeta.fromKey(categoryKey);
-    final merchantName = purchase.merchant?.name ?? 'Unknown';
+    final merchantName = purchase.merchant?.name ?? l.unknown;
 
     return Container(
       margin: const EdgeInsets.fromLTRB(20, 16, 20, 0),
@@ -115,7 +106,7 @@ class SpendingDetailHeroCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 3),
                       Text(
-                        _formatDateTime(purchase.purchaseDate),
+                        _formatDateTime(context, purchase.purchaseDate),
                         style: const TextStyle(fontSize: AppFontSize.sm),
                       ),
                     ],
@@ -124,10 +115,7 @@ class SpendingDetailHeroCard extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    const Text(
-                      'Total',
-                      style: TextStyle(fontSize: AppFontSize.sm),
-                    ),
+                    Text(l.total, style: TextStyle(fontSize: AppFontSize.sm)),
                     const SizedBox(height: 2),
                     Text(
                       '\$${purchase.totals.amount.toStringAsFixed(2)}',
@@ -155,22 +143,22 @@ class SpendingDetailHeroCard extends StatelessWidget {
                 _SummaryCell(
                   icon: Icons.shopping_bag_outlined,
                   value:
-                      '${purchase.totals.itemCount} Item${purchase.totals.itemCount == 1 ? '' : 's'}',
-                  label: 'Items',
+                      '${purchase.totals.itemCount} ${purchase.totals.itemCount == 1 ? l.item : l.items}',
+                  label: l.items,
                   color: meta.color,
                 ),
                 _VerticalDivider(color: meta.color),
                 _SummaryCell(
                   icon: Icons.dialpad,
                   value: _avgPrice(),
-                  label: 'Avg price',
+                  label: l.avgPrice,
                   color: meta.color,
                 ),
                 _VerticalDivider(color: meta.color),
                 _SummaryCell(
                   icon: _paymentIcon(),
-                  value: _paymentLabel(),
-                  label: 'Payment',
+                  value: _paymentLabel(l),
+                  label: l.payment,
                   color: meta.color,
                 ),
               ],

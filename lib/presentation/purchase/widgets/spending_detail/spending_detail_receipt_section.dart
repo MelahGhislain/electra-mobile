@@ -1,153 +1,14 @@
-// import 'package:electra/core/configs/theme/app_colors.dart';
-// import 'package:electra/domain/entities/purchase/purchase.dart';
-// import 'package:flutter/material.dart';
-
-// class SpendingDetailReceiptSection extends StatelessWidget {
-//   final Receipt? receipt;
-//   final VoidCallback? onView;
-
-//   const SpendingDetailReceiptSection({super.key, this.receipt, this.onView});
-
-//   String _formatUploadDate(DateTime? d) {
-//     if (d == null) return '';
-//     const months = [
-//       'Jan',
-//       'Feb',
-//       'Mar',
-//       'Apr',
-//       'May',
-//       'Jun',
-//       'Jul',
-//       'Aug',
-//       'Sep',
-//       'Oct',
-//       'Nov',
-//       'Dec',
-//     ];
-//     return '${months[d.month - 1]} ${d.day}, ${d.year}';
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final hasReceipt = receipt != null && receipt!.imageUrl != null;
-
-//     return Container(
-//       margin: const EdgeInsets.symmetric(horizontal: 20),
-//       padding: const EdgeInsets.all(14),
-//       decoration: BoxDecoration(
-//         color: AppColors.lightSurface,
-//         borderRadius: BorderRadius.circular(16),
-//         border: Border.all(color: AppColors.dividerLight),
-//       ),
-//       child: Row(
-//         children: [
-//           Container(
-//             width: 44,
-//             height: 44,
-//             decoration: BoxDecoration(
-//               color: const Color(0xFFF1F5F9),
-//               borderRadius: BorderRadius.circular(10),
-//             ),
-//             child: const Icon(
-//               Icons.receipt_outlined,
-//               size: 22,
-//               color: AppColors.lightTextSecondary,
-//             ),
-//           ),
-//           const SizedBox(width: 12),
-//           Expanded(
-//             child: Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 Text(
-//                   hasReceipt ? (receipt!.name ?? 'Receipt') : 'No receipt',
-//                   style: const TextStyle(
-//                     fontSize: 14,
-//                     fontWeight: FontWeight.w500,
-//                     color: AppColors.lightText,
-//                   ),
-//                 ),
-//                 if (receipt?.uploadedAt != null) ...[
-//                   const SizedBox(height: 2),
-//                   Text(
-//                     'Uploaded ${_formatUploadDate(receipt!.uploadedAt)} • Processed',
-//                     style: const TextStyle(
-//                       fontSize: 12,
-//                       color: AppColors.lightTextSecondary,
-//                     ),
-//                   ),
-//                 ],
-//               ],
-//             ),
-//           ),
-//           if (hasReceipt)
-//             GestureDetector(
-//               onTap: onView,
-//               child: Container(
-//                 padding: const EdgeInsets.symmetric(
-//                   horizontal: 14,
-//                   vertical: 8,
-//                 ),
-//                 decoration: BoxDecoration(
-//                   color: AppColors.primary.withValues(alpha: 0.1),
-//                   borderRadius: BorderRadius.circular(10),
-//                 ),
-//                 child: Row(
-//                   mainAxisSize: MainAxisSize.min,
-//                   children: const [
-//                     Icon(
-//                       Icons.visibility_outlined,
-//                       size: 14,
-//                       color: AppColors.primary,
-//                     ),
-//                     SizedBox(width: 5),
-//                     Text(
-//                       'View',
-//                       style: TextStyle(
-//                         fontSize: 13,
-//                         fontWeight: FontWeight.w600,
-//                         color: AppColors.primary,
-//                       ),
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
 import 'package:electra/core/configs/fonts.dart';
-import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/domain/entities/purchase/purchase.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class SpendingDetailReceiptSection extends StatelessWidget {
   final Receipt? receipt;
   final VoidCallback? onView;
 
   const SpendingDetailReceiptSection({super.key, this.receipt, this.onView});
-
-  String _formatUploadDate(DateTime? d) {
-    if (d == null) return '';
-    const months = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
-    return 'Uploaded ${months[d.month - 1]} ${d.day}, ${d.year} • Processed';
-  }
 
   bool get _hasReceipt => receipt != null && receipt!.imageUrl != null;
 
@@ -174,28 +35,21 @@ class _ReceiptPresent extends StatelessWidget {
 
   const _ReceiptPresent({required this.receipt, this.onView});
 
-  String _formatUploadDate(DateTime? d) {
-    if (d == null) return 'Processed';
-    const months = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
-    return 'Uploaded ${months[d.month - 1]} ${d.day}, ${d.year} • Processed';
+  String _formatUploadDate(BuildContext context, DateTime? d) {
+    final l = AppLocalizations.of(context);
+
+    if (d == null) return l.uploadedProcessed('');
+
+    final locale = Localizations.localeOf(context).toString();
+    final date = DateFormat.yMMMd(locale).format(d);
+
+    return l.uploadedProcessed(date);
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l = AppLocalizations.of(context);
 
     return Padding(
       padding: const EdgeInsets.all(14),
@@ -221,7 +75,7 @@ class _ReceiptPresent extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  receipt.name ?? 'Receipt',
+                  receipt.name ?? l.receipt,
                   style: const TextStyle(
                     fontSize: AppFontSize.sm,
                     fontWeight: FontWeight.w600,
@@ -229,7 +83,7 @@ class _ReceiptPresent extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  _formatUploadDate(receipt.uploadedAt),
+                  _formatUploadDate(context, receipt.uploadedAt),
                   style: const TextStyle(fontSize: AppFontSize.xs),
                 ),
               ],
@@ -241,24 +95,24 @@ class _ReceiptPresent extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
               decoration: BoxDecoration(
-                color: AppColors.primary.withValues(alpha: 0.1),
+                color: theme.colorScheme.primary.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
-                children: const [
+                children: [
                   Icon(
                     Icons.visibility_outlined,
                     size: AppFontSize.sm,
-                    color: AppColors.primary,
+                    color: theme.colorScheme.primary,
                   ),
                   SizedBox(width: 5),
                   Text(
-                    'View',
+                    l.view,
                     style: TextStyle(
                       fontSize: AppFontSize.sm,
                       fontWeight: FontWeight.w600,
-                      color: AppColors.primary,
+                      color: theme.colorScheme.primary,
                     ),
                   ),
                 ],
@@ -275,6 +129,7 @@ class _ReceiptAbsent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l = AppLocalizations.of(context);
 
     return Padding(
       padding: const EdgeInsets.all(14),
@@ -291,9 +146,9 @@ class _ReceiptAbsent extends StatelessWidget {
             child: const Icon(Icons.receipt_long_outlined, size: 22),
           ),
           const SizedBox(width: 12),
-          const Expanded(
+          Expanded(
             child: Text(
-              'No receipt added',
+              l.noReceiptAdded,
               style: TextStyle(
                 fontSize: AppFontSize.sm,
                 fontStyle: FontStyle.italic,

@@ -6,6 +6,7 @@ import 'package:electra/common/widgets/text_fields/date_field.dart';
 import 'package:electra/common/widgets/text_fields/text_field.dart';
 import 'package:electra/core/utils/category_meta.dart';
 import 'package:electra/domain/entities/purchase/purchase.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:electra/presentation/purchase/blocs/purchase/purchase_cubit.dart';
 import 'package:electra/presentation/purchase/blocs/purchase/purchase_state.dart';
 import 'package:electra/presentation/purchase/widgets/spending_detail/category_picker.dart';
@@ -14,9 +15,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddPurchaseBottomSheet {
   static Future<void> show(BuildContext context, {Purchase? purchase}) {
+    final l = AppLocalizations.of(context);
     return AppBottomSheet.show(
       context,
-      title: purchase == null ? 'Add Purchase' : 'Edit Purchase',
+      title: purchase == null ? l.addPurchase : l.editPurchase,
       icon: Icons.receipt_long_outlined,
       maxHeightPct: 0.90,
       child: BlocProvider.value(
@@ -132,9 +134,18 @@ class _AddPurchaseBodyState extends State<_AddPurchaseBody> {
     }
   }
 
+  List<ChipSelectorOption<String>> methods(AppLocalizations l) {
+    return [
+      ChipSelectorOption(value: 'card', label: l.card),
+      ChipSelectorOption(value: 'cash', label: l.cash),
+      ChipSelectorOption(value: 'other', label: l.other),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l = AppLocalizations.of(context);
 
     return BlocConsumer<PurchaseCubit, PurchaseState>(
       listenWhen: (prev, curr) =>
@@ -178,18 +189,18 @@ class _AddPurchaseBodyState extends State<_AddPurchaseBody> {
               children: [
                 AppTextField(
                   controller: _titleCtrl,
-                  label: 'Title',
+                  label: l.title,
                   hint: 'e.g. Santa lucia',
                   textCapitalization: TextCapitalization.words,
                   validator: (v) => (v == null || v.trim().isEmpty)
-                      ? 'Please enter a name'
+                      ? l.pleaseEnterName
                       : null,
                 ),
 
                 const SizedBox(height: 16),
 
                 DateField(
-                  label: 'Date',
+                  label: l.date,
                   value: _selectedDate,
                   onTap: _pickDate,
                 ),
@@ -204,11 +215,9 @@ class _AddPurchaseBodyState extends State<_AddPurchaseBody> {
                 const SizedBox(height: 16),
 
                 ChipSelector<String>(
-                  label: 'Payment Method',
+                  label: l.paymentMethod,
                   selected: _paymentMethod,
-                  options: ['Card', 'Cash', 'Other']
-                      .map((opt) => ChipSelectorOption(value: opt, label: opt))
-                      .toList(),
+                  options: methods(l),
                   onSelected: (opt) => setState(() => _paymentMethod = opt!),
                 ),
 
@@ -221,13 +230,13 @@ class _AddPurchaseBodyState extends State<_AddPurchaseBody> {
                       flex: 2,
                       child: AppTextField(
                         controller: _amountCtrl,
-                        label: 'Amount',
+                        label: l.amount,
                         hint: '0.00',
                         keyboardType: const TextInputType.numberWithOptions(
                           decimal: true,
                         ),
                         validator: (v) => (v == null || v.trim().isEmpty)
-                            ? 'Enter amount'
+                            ? l.enterAmount
                             : null,
                       ),
                     ),
@@ -235,7 +244,7 @@ class _AddPurchaseBodyState extends State<_AddPurchaseBody> {
                     Expanded(
                       child: AppTextField(
                         controller: _currencyCtrl,
-                        label: 'Currency',
+                        label: l.currency,
                         hint: 'e.g USD',
                       ),
                     ),
@@ -245,7 +254,7 @@ class _AddPurchaseBodyState extends State<_AddPurchaseBody> {
                 const SizedBox(height: 28),
 
                 MainButton(
-                  text: _isEditing ? 'Save Changes' : 'Save Purchase',
+                  text: _isEditing ? l.saveChanges : l.savePurchase,
                   onPressed: isSaving ? () {} : _save,
                   isLoading: isSaving,
                   width: double.infinity,

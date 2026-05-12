@@ -1,5 +1,6 @@
 import 'package:electra/domain/entities/purchase/purchase.dart';
 import 'package:electra/core/utils/category_meta.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:electra/presentation/home/model/spending_category.dart';
 
 /// All derived values the home screen needs, computed once from purchases.
@@ -79,10 +80,10 @@ class HomeSummary {
 
   bool get hasBudget => budget > 0;
 
-  String get budgetStatusMessage {
-    if (!hasBudget) return 'No budget set for this month.';
-    if (progress >= 1.0) return 'You have exceeded your monthly budget.';
-    if (progress >= 0.85) return "Heads up! You're close to your budget.";
-    return "Nice work! You're staying within budget 👍";
+  String budgetStatusMessage(AppLocalizations l) {
+    if (!hasBudget) return l.noBudgetSetForThisMonth;
+    if (progress >= 1.0) return l.youHaveExceededYourMonthlyBudget;
+    if (progress >= 0.85) return l.headsUpYouAreCloseToYourBudget;
+    return l.niceWorkYouAreStayingWithinBudget;
   }
 }

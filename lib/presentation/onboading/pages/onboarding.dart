@@ -5,6 +5,7 @@ import 'package:electra/core/router/route_names.dart';
 import 'package:electra/core/utils/storage/onboarding_storage.dart';
 import 'package:electra/data/models/onboarding/onboarding.dart';
 import 'package:electra/domain/entities/user/language.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:electra/presentation/onboading/widgets/highlighted_title.dart';
 import 'package:electra/presentation/onboading/widgets/language/language_selector.dart';
 import 'package:electra/presentation/onboading/widgets/onboarding_page.dart';
@@ -25,68 +26,70 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   int _currentPage = 0;
   Language language = languages.first;
 
-  final List<OnboardingPage> _pages = [
-    OnboardingPage.content(
-      OnboardingData(
-        title: "Where Did My Money Go?",
-        highlights: const ['My Money'],
-        topPosition: 60,
-        description:
-            "Stop guessing your spending. Electra helps you track every expense effortlessly.",
-        image: AppImages.onboarding1,
+  List<OnboardingPage> _pages(AppLocalizations l) {
+    return [
+      OnboardingPage.content(
+        OnboardingData(
+          title: "Where Did My Money Go?",
+          highlights: const ['My Money'],
+          topPosition: 60,
+          description:
+              "Stop guessing your spending. Electra helps you track every expense effortlessly.",
+          image: AppImages.onboarding1,
+        ),
       ),
-    ),
-    OnboardingPage.content(
-      OnboardingData(
-        title: "Track with Your Voice",
-        highlights: const ['Voice'],
-        topPosition: 50,
-        description:
-            "Just speak, and we'll take care of the rest. Fast, smart and super easy.",
-        image: AppImages.onboarding2,
+      OnboardingPage.content(
+        OnboardingData(
+          title: "Track with Your Voice",
+          highlights: const ['Voice'],
+          topPosition: 50,
+          description:
+              "Just speak, and we'll take care of the rest. Fast, smart and super easy.",
+          image: AppImages.onboarding2,
+        ),
       ),
-    ),
-    OnboardingPage.content(
-      OnboardingData(
-        title: "Auto-Categorize Expenses",
-        highlights: const ['Auto-Categorize'],
-        topPosition: 200,
-        description:
-            "Electra automatically categorizes your expenses so you can focus on what matters.",
-        image: AppImages.onboarding3,
+      OnboardingPage.content(
+        OnboardingData(
+          title: "Auto-Categorize Expenses",
+          highlights: const ['Auto-Categorize'],
+          topPosition: 200,
+          description:
+              "Electra automatically categorizes your expenses so you can focus on what matters.",
+          image: AppImages.onboarding3,
+        ),
       ),
-    ),
-    OnboardingPage.content(
-      OnboardingData(
-        title: "Insights That Help You Save",
-        highlights: const ['Save'],
-        topPosition: 80,
-        description:
-            "Understand your spending patterns and make smarter financial decisions.",
-        image: AppImages.onboarding4,
+      OnboardingPage.content(
+        OnboardingData(
+          title: "Insights That Help You Save",
+          highlights: const ['Save'],
+          topPosition: 80,
+          description:
+              "Understand your spending patterns and make smarter financial decisions.",
+          image: AppImages.onboarding4,
+        ),
       ),
-    ),
-    OnboardingPage.content(
-      OnboardingData(
-        title: "Your Data is Always Safe",
-        highlights: const ['Safe'],
-        topPosition: 10,
-        description:
-            "We keep your data private and secure. Your trust is our priority.",
-        image: AppImages.onboarding5,
+      OnboardingPage.content(
+        OnboardingData(
+          title: "Your Data is Always Safe",
+          highlights: const ['Safe'],
+          topPosition: 10,
+          description:
+              "We keep your data private and secure. Your trust is our priority.",
+          image: AppImages.onboarding5,
+        ),
       ),
-    ),
-    OnboardingPage.content(
-      OnboardingData(
-        title: "Save More. Stress Less.",
-        highlights: const ['Save More.'],
-        topPosition: 10,
-        description:
-            "Stay on top of your finances and build better money habits every day.",
-        image: AppImages.onboarding6,
+      OnboardingPage.content(
+        OnboardingData(
+          title: "Save More. Stress Less.",
+          highlights: const ['Save More.'],
+          topPosition: 10,
+          description:
+              "Stay on top of your finances and build better money habits every day.",
+          image: AppImages.onboarding6,
+        ),
       ),
-    ),
-  ];
+    ];
+  }
 
   Future<void> _onOnboardingComplete(BuildContext context) async {
     await sl<OnboardingStorage>().markOnboardingSeen();
@@ -95,8 +98,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     context.goNamed(RouteNames.home);
   }
 
-  Future<void> _nextPage() async {
-    if (_currentPage < _pages.length - 1) {
+  Future<void> _nextPage(AppLocalizations l) async {
+    if (_currentPage < _pages(l).length - 1) {
       _pageController.nextPage(
         duration: const Duration(milliseconds: 400),
         curve: Curves.easeInOut,
@@ -132,6 +135,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l = AppLocalizations.of(context);
 
     return Scaffold(
       body: Stack(
@@ -142,15 +146,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             onPageChanged: (index) {
               setState(() => _currentPage = index);
             },
-            itemCount: _pages.length,
+            itemCount: _pages(l).length,
             itemBuilder: (context, index) {
-              final page = _pages[index];
+              final page = _pages(l)[index];
 
               if (page.type == OnboardingPageType.content) {
                 return OnboardingWidget(
                   data: page.data!,
                   currentPage: index,
-                  totalPages: _pages.length,
+                  totalPages: _pages(l).length,
                 );
               } else {
                 return page.customWidget!;
@@ -191,7 +195,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     onPressed: () =>
                         context.goNamed(RouteNames.home), // adjust route
                     child: Text(
-                      "Skip",
+                      l.skip,
                       style: TextStyle(
                         color: theme.textTheme.titleLarge?.color,
                         fontSize: AppFontSize.md,
@@ -205,7 +209,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           ),
 
           // Bottom Overlay Content
-          ...(_pages[_currentPage].type == OnboardingPageType.content
+          ...(_pages(l)[_currentPage].type == OnboardingPageType.content
               ? [
                   Positioned(
                     bottom: 0,
@@ -235,9 +239,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               children: [
                                 Expanded(
                                   child: HighlightedTitle(
-                                    text: _pages[_currentPage].data!.title,
-                                    highlights:
-                                        _pages[_currentPage].data!.highlights,
+                                    text: _pages(l)[_currentPage].data!.title,
+                                    highlights: _pages(
+                                      l,
+                                    )[_currentPage].data!.highlights,
                                     highlightColor: const Color(
                                       0xFF22C55E,
                                     ), // green accent
@@ -263,7 +268,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
                             // Description
                             Text(
-                              _pages[_currentPage].data!.description,
+                              _pages(l)[_currentPage].data!.description,
                               style: TextStyle(
                                 fontSize: AppFontSize.md,
                                 color: Colors.white.withValues(alpha: 0.9),
@@ -286,7 +291,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 ),
                                 const Spacer(),
                                 ElevatedButton(
-                                  onPressed: _nextPage,
+                                  onPressed: () => _nextPage(l),
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: AppColors.lightSurface,
                                     foregroundColor: AppColors.lightText,
@@ -302,9 +307,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Text(
-                                        _currentPage == _pages.length - 1
-                                            ? "Let's Go"
-                                            : "Next",
+                                        _currentPage == _pages(l).length - 1
+                                            ? l.letsGo
+                                            : l.next,
                                         style: const TextStyle(
                                           fontSize: AppFontSize.buttonText,
                                           fontWeight: FontWeight.w600,
@@ -323,7 +328,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                   ),
                 ]
-              : [_pages[_currentPage].customWidget!]),
+              : [_pages(l)[_currentPage].customWidget!]),
         ],
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:electra/common/widgets/buttons/main_icon_button.dart';
 import 'package:electra/core/router/route_names.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -19,6 +20,8 @@ class HomeHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
       child: Column(
@@ -35,7 +38,7 @@ class HomeHeader extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          'Hello, $name',
+                          l.homeGreeting(name),
                           style: const TextStyle(
                             fontSize: 26,
                             fontWeight: FontWeight.w800,
@@ -58,7 +61,7 @@ class HomeHeader extends StatelessWidget {
                 ),
               ),
 
-              // Right: bell + scan + avatar
+              // Right: Calendar + avatar
               Row(
                 children: [
                   MainIconButton(
@@ -118,8 +121,7 @@ class HomeHeader extends StatelessWidget {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      insightBannerText ??
-                          "You're spending less than usual. Great job!",
+                      insightBannerText ?? l.homeYoureSpendingLessThanUsual,
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w500,

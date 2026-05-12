@@ -2,6 +2,7 @@ import 'package:electra/common/widgets/bottom_sheets/app_bottom_sheet.dart';
 import 'package:electra/common/widgets/buttons/main_button.dart';
 import 'package:electra/common/widgets/text_fields/chip_selector.dart';
 import 'package:electra/common/widgets/text_fields/date_range_field.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:electra/presentation/purchase/pages/purchase_filter.dart';
 import 'package:flutter/material.dart';
 
@@ -12,9 +13,10 @@ class PurchaseFilterSheet {
     required List<String> categories,
     required List<String> merchants,
   }) {
+    final l = AppLocalizations.of(context);
     return AppBottomSheet.show<PurchaseFilter>(
       context,
-      title: 'Filter & Sort',
+      title: l.filterAndSort,
       icon: Icons.tune_rounded,
       maxHeightPct: 0.82,
       child: _PurchaseFilterContent(
@@ -80,6 +82,8 @@ class _PurchaseFilterContentState extends State<_PurchaseFilterContent> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+
     return Column(
       children: [
         if (_filter.hasActiveFilters)
@@ -89,8 +93,8 @@ class _PurchaseFilterContentState extends State<_PurchaseFilterContent> {
               alignment: Alignment.centerRight,
               child: GestureDetector(
                 onTap: _reset,
-                child: const Text(
-                  'Reset all',
+                child: Text(
+                  l.resetAll,
                   style: TextStyle(
                     fontSize: 13,
                     color: Color(0xFFEF4444),
@@ -105,7 +109,7 @@ class _PurchaseFilterContentState extends State<_PurchaseFilterContent> {
             padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
             children: [
               ChipSelector<PurchaseSortOption>(
-                label: 'Sort By',
+                label: l.sortBy,
                 selected: _filter.sort,
                 options: PurchaseSortOption.values
                     .map(
@@ -119,10 +123,10 @@ class _PurchaseFilterContentState extends State<_PurchaseFilterContent> {
               const SizedBox(height: 24),
 
               ChipSelector<String>(
-                label: 'Category',
+                label: l.category,
                 selected: _filter.category,
                 emptyMessage: widget.availableCategories.isEmpty
-                    ? 'No categories available'
+                    ? l.noCategoriesAvailable
                     : null,
                 options: widget.availableCategories
                     .map((cat) => ChipSelectorOption(value: cat, label: cat))
@@ -134,10 +138,10 @@ class _PurchaseFilterContentState extends State<_PurchaseFilterContent> {
               const SizedBox(height: 24),
 
               ChipSelector<String>(
-                label: 'Merchant',
+                label: l.merchant,
                 selected: _filter.merchant,
                 emptyMessage: widget.availableMerchants.isEmpty
-                    ? 'No merchants available'
+                    ? l.noMerchantsAvailable
                     : null,
                 options: widget.availableMerchants
                     .map((m) => ChipSelectorOption(value: m, label: m))
@@ -149,7 +153,7 @@ class _PurchaseFilterContentState extends State<_PurchaseFilterContent> {
               const SizedBox(height: 24),
 
               DateRangeField(
-                label: 'Date Range',
+                label: l.dateRange,
                 dateFrom: _filter.dateFrom,
                 dateTo: _filter.dateTo,
                 onTap: _pickDateRange,
@@ -163,7 +167,7 @@ class _PurchaseFilterContentState extends State<_PurchaseFilterContent> {
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 8, 20, 0),
           child: MainButton(
-            text: 'Apply Filters',
+            text: l.applyFilters,
             onPressed: _apply,
             width: double.infinity,
           ),

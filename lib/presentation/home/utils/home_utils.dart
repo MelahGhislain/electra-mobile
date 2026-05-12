@@ -1,5 +1,6 @@
 import 'package:electra/core/utils/category_meta.dart';
 import 'package:electra/domain/entities/purchase/purchase.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:electra/presentation/home/widgets/top_spending_today_card.dart';
 import 'package:flutter/material.dart';
 
@@ -189,7 +190,7 @@ class RecentActivityHelper {
     }).toList();
   }
 
-  static String formatRelativeTime(DateTime date) {
+  static String formatRelativeTime(DateTime date, AppLocalizations l) {
     final now = DateTime.now();
     final todayStart = DateTime(now.year, now.month, now.day);
     final dateStart = DateTime(date.year, date.month, date.day);
@@ -201,8 +202,8 @@ class RecentActivityHelper {
     final hDisplay = h > 12 ? h - 12 : (h == 0 ? 12 : h);
     final timeStr = '$hDisplay:$m $period';
 
-    if (dateStart == todayStart) return 'Today, $timeStr';
-    if (dateStart == yesterdayStart) return 'Yesterday, $timeStr';
+    if (dateStart == todayStart) return '${l.today}, $timeStr';
+    if (dateStart == yesterdayStart) return '${l.yesterday}, $timeStr';
     return '${date.month}/${date.day}/${date.year}, $timeStr';
   }
 }

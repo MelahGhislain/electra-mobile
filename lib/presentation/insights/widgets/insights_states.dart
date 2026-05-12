@@ -2,6 +2,7 @@ import 'package:electra/common/widgets/buttons/main_button.dart';
 import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/domain/entities/insights/insights.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 // ── Loading ───────────────────────────────────────────────────────────────────
@@ -31,6 +32,8 @@ class InsightsSavingsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -62,8 +65,8 @@ class InsightsSavingsCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Savings opportunity',
+                Text(
+                  l.savingsOpportunity,
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
@@ -94,8 +97,8 @@ class InsightsSavingsCard extends StatelessWidget {
                       ),
                       padding: const EdgeInsets.symmetric(vertical: 10),
                     ),
-                    child: const Text(
-                      'Set budget',
+                    child: Text(
+                      l.setBudget,
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 13,
@@ -127,6 +130,8 @@ class InsightsErrorState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l = AppLocalizations.of(context);
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(32),
@@ -148,7 +153,7 @@ class InsightsErrorState extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              'Something went wrong',
+              l.somethingWentWrong,
               style: TextStyle(
                 fontSize: AppFontSize.md,
                 fontWeight: FontWeight.bold,
@@ -169,7 +174,7 @@ class InsightsErrorState extends StatelessWidget {
             SizedBox(
               width: 140,
               child: MainButton(
-                text: 'Try again',
+                text: l.tryAgain,
                 onPressed: onRetry,
                 width: double.infinity,
                 size: ButtonSize.small,

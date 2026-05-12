@@ -105,7 +105,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
-
   Future<void> _openLanguageSheet(User user) async {
     final current = AppLanguage.fromCode(user.settings?.locale);
     final result = await LanguageBottomSheet.show(context, current);

@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/utils/category_meta.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 /// Shows spending categories for today (or most recent).
@@ -48,6 +49,7 @@ class _TopSpendingTodayCardState extends State<TopSpendingTodayCard>
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     if (widget.rows.isEmpty) return const SizedBox.shrink();
 
     final total = _total;
@@ -76,9 +78,9 @@ class _TopSpendingTodayCardState extends State<TopSpendingTodayCard>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Text(
-                  'Top Spending Today',
-                  style: TextStyle(
+                Text(
+                  l.topSpendingToday,
+                  style: const TextStyle(
                     fontSize: AppFontSize.lg,
                     fontWeight: FontWeight.w600,
                   ),
@@ -86,7 +88,7 @@ class _TopSpendingTodayCardState extends State<TopSpendingTodayCard>
                 GestureDetector(
                   onTap: widget.onViewAll,
                   child: Text(
-                    'View all',
+                    l.viewAll,
                     style: TextStyle(
                       fontSize: AppFontSize.md,
                       fontWeight: FontWeight.w500,
@@ -106,7 +108,7 @@ class _TopSpendingTodayCardState extends State<TopSpendingTodayCard>
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: widget.rows.asMap().entries.map((entry) {
+                    children: widget.rows.asMap().entries.take(4).map((entry) {
                       final i = entry.key;
                       final row = entry.value;
                       final pct = total > 0
@@ -219,9 +221,9 @@ class _TopSpendingTodayCardState extends State<TopSpendingTodayCard>
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
-                            const Text(
-                              'Total',
-                              style: TextStyle(fontSize: AppFontSize.xs),
+                            Text(
+                              l.total,
+                              style: const TextStyle(fontSize: AppFontSize.xs),
                             ),
                           ],
                         ),

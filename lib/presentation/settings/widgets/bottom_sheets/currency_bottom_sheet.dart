@@ -1,5 +1,6 @@
 import 'package:electra/common/widgets/bottom_sheets/app_bottom_sheet.dart';
 import 'package:electra/common/widgets/text_fields/radio_option_list.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 enum AppCurrency { usd, eur, gbp, jpy, cad, aud, chf, cny, inr, brl }
@@ -53,9 +54,10 @@ extension AppCurrencyExtension on AppCurrency {
 
 class CurrencyBottomSheet {
   static Future<AppCurrency?> show(BuildContext context, AppCurrency current) {
+    final l = AppLocalizations.of(context);
     return AppBottomSheet.show<AppCurrency>(
       context,
-      title: 'Currency',
+      title: l.settingsCurrency,
       icon: Icons.folder_outlined,
       child: RadioOptionList<AppCurrency>(
         selectedValue: current,

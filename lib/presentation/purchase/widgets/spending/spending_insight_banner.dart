@@ -1,3 +1,4 @@
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
 
@@ -10,6 +11,9 @@ class SpendingInsightBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    ;
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -47,8 +51,8 @@ class SpendingInsightBanner extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Insight',
+                  Text(
+                    l.insight,
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,

@@ -2,6 +2,7 @@ import 'package:electra/common/widgets/bottom_sheets/app_bottom_sheet.dart';
 import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/domain/entities/purchase/purchase_item.dart';
 import 'package:electra/core/utils/category_meta.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:electra/presentation/purchase/widgets/spending_detail/item_form_sheet.dart';
 import 'package:flutter/material.dart';
 
@@ -28,18 +29,21 @@ class SpendingDetailItemRow extends StatelessWidget {
   double get _percentOfTotal =>
       purchaseTotal > 0 ? (item.totalPrice / purchaseTotal) * 100 : 0;
 
-  String get label {
+  String getLabel(AppLocalizations l) {
     final cmp = item.totalPrice.compareTo(double.tryParse(average) ?? 0);
-    if (cmp < 0) return '↓ Below';
-    if (cmp > 0) return '↑ Above';
-    return 'At';
+
+    if (cmp < 0) return l.below;
+    if (cmp > 0) return l.above;
+    return l.at;
   }
 
-  String _itemInsights() {
-    return '↑ +12% vs last purchase • $label average price';
+  String _itemInsights(AppLocalizations l) {
+    final label = getLabel(l);
+    return l.itemInsights('12', label);
   }
 
   void _showItemOptions(BuildContext context) {
+    final l = AppLocalizations.of(context);
     AppBottomSheet.show(
       context,
       title: item.name,
@@ -53,8 +57,8 @@ class SpendingDetailItemRow extends StatelessWidget {
               color: Theme.of(context).iconTheme.color,
               size: 20,
             ),
-            title: const Text(
-              'Edit item',
+            title: Text(
+              l.editItem,
               style: TextStyle(fontWeight: FontWeight.w500),
             ),
             onTap: () {
@@ -69,7 +73,7 @@ class SpendingDetailItemRow extends StatelessWidget {
               size: 20,
             ),
             title: Text(
-              'Delete item',
+              l.deleteItem,
               style: TextStyle(
                 color: Theme.of(context).colorScheme.error,
                 fontWeight: FontWeight.w500,
@@ -90,6 +94,7 @@ class SpendingDetailItemRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
 
     final meta = CategoryMeta.fromKey(item.category.normalizedName);
@@ -182,7 +187,7 @@ class SpendingDetailItemRow extends StatelessWidget {
                     ),
                     const SizedBox(height: 3),
                     Text(
-                      '${pct.toStringAsFixed(1)}% of total',
+                      l.ofTotal(pct.toStringAsFixed(1)),
                       style: const TextStyle(fontSize: AppFontSize.sm),
                     ),
                   ],
@@ -213,7 +218,7 @@ class SpendingDetailItemRow extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    _itemInsights(),
+                    _itemInsights(l),
                     style: const TextStyle(fontSize: AppFontSize.xs),
                   ),
                   const SizedBox(width: 14),
@@ -228,12 +233,12 @@ class SpendingDetailItemRow extends StatelessWidget {
                         color: const Color(0xFFFEF3C7),
                         borderRadius: BorderRadius.circular(5),
                       ),
-                      child: const Text(
-                        'Edited',
+                      child: Text(
+                        l.edited,
                         style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.w600,
-                          color: Color(0xFFD97706),
+                          color: const Color(0xFFD97706),
                         ),
                       ),
                     ),

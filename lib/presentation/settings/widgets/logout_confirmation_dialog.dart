@@ -1,4 +1,4 @@
-import 'package:electra/core/configs/theme/app_colors.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class LogoutConfirmationDialog extends StatelessWidget {
@@ -17,26 +17,24 @@ class LogoutConfirmationDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l = AppLocalizations.of(context);
 
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       backgroundColor: theme.cardTheme.color,
       title: Text(
-        'Logout',
+        l.logoutTitle,
         style: TextStyle(
           fontWeight: FontWeight.w600,
           color: theme.textTheme.titleLarge?.color,
         ),
       ),
-      content: const Text(
-        'Are you sure you want to logout of your account?',
-        style: TextStyle(),
-      ),
+      content: Text(l.logoutBody, style: TextStyle()),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),
           child: Text(
-            'Cancel',
+            l.cancel,
             style: TextStyle(color: theme.textTheme.titleLarge?.color),
           ),
         ),
@@ -49,7 +47,7 @@ class LogoutConfirmationDialog extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
             ),
           ),
-          child: const Text('Logout'),
+          child: Text(l.logoutTitle),
         ),
       ],
     );

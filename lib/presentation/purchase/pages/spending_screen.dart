@@ -3,6 +3,7 @@ import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/core/router/route_names.dart';
 import 'package:electra/domain/entities/purchase/purchase.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:electra/presentation/purchase/blocs/purchase/purchase_cubit.dart';
 import 'package:electra/presentation/purchase/blocs/purchase/purchase_state.dart';
 import 'package:electra/presentation/purchase/pages/purchase_filter.dart';
@@ -125,6 +126,8 @@ class _SpendingScreenState extends State<SpendingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+
     return BlocBuilder<PurchaseCubit, PurchaseState>(
       builder: (context, state) {
         final allPurchases = state is PurchaseLoaded
@@ -161,7 +164,7 @@ class _SpendingScreenState extends State<SpendingScreen> {
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
                       child: AppSearchBar(
-                        hintText: 'Search merchant, item or category...',
+                        hintText: l.searchMerchantItemOrCategory,
                         initialValue: _filter.searchQuery,
                         onChanged: (q) => setState(
                           () => _filter = _filter.copyWith(searchQuery: q),
@@ -207,10 +210,10 @@ class _SpendingScreenState extends State<SpendingScreen> {
                         padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
                         child: GestureDetector(
                           onTap: () {
-                            context.pushNamed(RouteNames.insights);
+                            context.goNamed(RouteNames.insights);
                           },
                           child: SpendingInsightBanner(
-                            message: 'You spent 18% more on food this week',
+                            message: l.spendingInsightMessage("18", "food"),
                           ),
                         ),
                       ),
@@ -313,31 +316,38 @@ class _SpendingHeader extends StatelessWidget {
     final filterBorderColor = isDark
         ? AppColors.darkBorder
         : AppColors.lightBorder;
+    final l = AppLocalizations.of(context)!;
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              Text(
-                'Spending',
-                style: TextStyle(
-                  fontSize: AppFontSize.xxl,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: -0.5,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  l.spending,
+                  style: TextStyle(
+                    fontSize: AppFontSize.xxl,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: -0.5,
+                  ),
                 ),
-              ),
-              SizedBox(height: 2),
-              Text(
-                'Track your spending, stay in control',
-                style: TextStyle(fontSize: AppFontSize.md),
-              ),
-            ],
+                SizedBox(height: 2),
+                Text(
+                  l.trackYourSpendingStayInControl,
+                  style: TextStyle(fontSize: AppFontSize.md),
+                  // maxLines: 2,
+                  // overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
           ),
-          const Spacer(),
+
+          const SizedBox(width: 20,),
+
           GestureDetector(
             onTap: onFilterTap,
             child: AnimatedContainer(

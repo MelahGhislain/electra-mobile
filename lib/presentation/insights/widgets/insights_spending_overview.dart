@@ -1,6 +1,7 @@
 import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/utils/category_meta.dart';
 import 'package:electra/domain/entities/insights/insights.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -28,6 +29,7 @@ class InsightsSpendingOverview extends StatelessWidget {
     final symbol = currency == 'USD' ? r'$' : currency;
     final fmt = NumberFormat.currency(symbol: symbol, decimalDigits: 2);
     final displayed = categories.take(3).toList();
+    final l = AppLocalizations.of(context);
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -90,7 +92,7 @@ class InsightsSpendingOverview extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          'Total',
+                          l.total,
                           style: TextStyle(fontSize: AppFontSize.xs),
                         ),
                         const SizedBox(height: 1),
@@ -115,7 +117,7 @@ class InsightsSpendingOverview extends StatelessWidget {
                 child: categories.isEmpty
                     ? Center(
                         child: Text(
-                          'No data\nthis period',
+                          l.noDataThisPeriod,
                           textAlign: TextAlign.center,
                           style: theme.textTheme.bodySmall,
                         ),
@@ -186,7 +188,7 @@ class InsightsSpendingOverview extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Text(
-                  'View all categories',
+                  l.viewAllCategories,
                   style: TextStyle(
                     fontSize: AppFontSize.sm,
                     color: theme.colorScheme.primary,

@@ -1,5 +1,6 @@
 import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/domain/entities/insights/insights.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -33,6 +34,7 @@ class InsightsTrendSection extends StatelessWidget {
     final previousSpots = _toSpots(trend.previous);
     final maxX = currentSpots.isNotEmpty ? currentSpots.last.x : 30.0;
     final yInterval = (_maxY / 3).ceilToDouble();
+    final l = AppLocalizations.of(context);
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -52,7 +54,7 @@ class InsightsTrendSection extends StatelessWidget {
                 children: [
                   // ── Daily average ────────────────────────────────────────────
                   Text(
-                    'Average per day',
+                    l.averagePerDay,
                     style: theme.textTheme.bodySmall?.copyWith(
                       fontSize: AppFontSize.xs,
                     ),
@@ -76,13 +78,13 @@ class InsightsTrendSection extends StatelessWidget {
                 children: [
                   _LegendItem(
                     color: const Color(0xFF7C3AED),
-                    label: 'This period',
+                    label: l.thisPeriod,
                     dashed: false,
                   ),
                   const SizedBox(width: 16),
                   _LegendItem(
                     color: theme.textTheme.bodySmall?.color ?? Colors.grey,
-                    label: 'Previous',
+                    label: l.previous,
                     dashed: true,
                   ),
                 ],
@@ -98,7 +100,7 @@ class InsightsTrendSection extends StatelessWidget {
             child: currentSpots.isEmpty && previousSpots.isEmpty
                 ? Center(
                     child: Text(
-                      'No trend data available',
+                      l.noTrendDataAvailable,
                       style: theme.textTheme.bodySmall,
                     ),
                   )
@@ -157,7 +159,7 @@ class InsightsTrendSection extends StatelessWidget {
                               final base = trend.current.first.date;
                               final date = base.add(Duration(days: v.toInt()));
                               return Text(
-                                '${_monthAbbr(date.month)} ${date.day}',
+                                '${_monthAbbr(context, date.month)} ${date.day}',
                                 style: theme.textTheme.bodySmall?.copyWith(
                                   fontSize: 10,
                                 ),
@@ -175,7 +177,7 @@ class InsightsTrendSection extends StatelessWidget {
                             final base = trend.current.first.date;
                             final date = base.add(Duration(days: s.x.toInt()));
                             return LineTooltipItem(
-                              '${_monthAbbr(date.month)} ${date.day}, ${date.year}\n${fmt.format(s.y)}',
+                              '${_monthAbbr(context, date.month)} ${date.day}, ${date.year}\n${fmt.format(s.y)}',
                               const TextStyle(
                                 color: Colors.white,
                                 fontSize: 11,
@@ -224,22 +226,10 @@ class InsightsTrendSection extends StatelessWidget {
     );
   }
 
-  String _monthAbbr(int month) {
-    const m = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
-    return m[month - 1];
+  String _monthAbbr(BuildContext context, int month) {
+    final locale = Localizations.localeOf(context).toLanguageTag();
+
+    return DateFormat.MMM(locale).format(DateTime(2026, month));
   }
 }
 

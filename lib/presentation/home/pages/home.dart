@@ -1,7 +1,9 @@
 import 'package:electra/common/blocs/auth/app_auth_cubit.dart';
+import 'package:electra/common/blocs/locale_cubit.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/core/router/route_names.dart';
 import 'package:electra/domain/entities/purchase/purchase.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:electra/presentation/home/bloc/home_cubit.dart';
 import 'package:electra/presentation/home/utils/home_summary.dart';
 import 'package:electra/presentation/home/utils/home_utils.dart';
@@ -31,160 +33,183 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    // Fire both loads — HomeCubit and LocaleCubit are triggered from the
+    // UserCubit listener below once the user actually loads.
     context.read<PurchaseCubit>().loadPurchases();
     context.read<UserCubit>().loadUser();
-
-    final user = context.read<UserCubit>().currentUser;
-    final isLoaded = context.read<UserCubit>().isLoaded;
-    final userId = isLoaded ? user!.id : '';
-    context.read<HomeCubit>().load(userId);
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
+    final locale = Localizations.localeOf(context).languageCode;
+    final l = AppLocalizations.of(context);
 
-    return BlocConsumer<PurchaseCubit, PurchaseState>(
-      listener: (context, state) {
-        if (state is PurchaseFailure) {
-          final msg = state.message.toLowerCase();
-          if (msg.contains('session expired') || msg.contains('unauthori')) {
-            context.read<AppAuthCubit>().onLogout();
+    return MultiBlocListener(
+      listeners: [
+        // ── Auth error → logout ──────────────────────────────────────────
+        BlocListener<PurchaseCubit, PurchaseState>(
+          listener: (context, state) {
+            if (state is PurchaseFailure) {
+              final msg = state.message.toLowerCase();
+              if (msg.contains('session expired') ||
+                  msg.contains('unauthori')) {
+                context.read<AppAuthCubit>().onLogout();
+              }
+            }
+          },
+        ),
+
+        // ── User loaded → wire HomeCubit + LocaleCubit ───────────────────
+        BlocListener<UserCubit, UserState>(
+          // Only react the first time user actually loads.
+          listenWhen: (prev, curr) =>
+              curr is UserLoaded && prev is! UserLoaded,
+          listener: (context, state) {
+            if (state is UserLoaded) {
+              context.read<HomeCubit>().load(state.user.id);
+              context.read<LocaleCubit>().applyStoredLocale(
+                    state.user.settings?.locale,
+                  );
+            }
+          },
+        ),
+      ],
+      child: BlocBuilder<PurchaseCubit, PurchaseState>(
+        builder: (context, purchaseState) {
+          // ── Loading ────────────────────────────────────────────────────
+          if (purchaseState is PurchaseLoading ||
+              purchaseState is PurchaseInitial) {
+            return Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(
+                  color: isDark
+                      ? AppColors.lightBackground
+                      : AppColors.darkBackground,
+                  strokeWidth: 2,
+                ),
+              ),
+            );
           }
-        }
-      },
-      builder: (context, purchaseState) {
-        if (purchaseState is PurchaseLoading ||
-            purchaseState is PurchaseInitial) {
-          return Center(
-            child: CircularProgressIndicator(
-              color: isDark
-                  ? AppColors.lightBackground
-                  : AppColors.darkBackground,
-              strokeWidth: 2,
-            ),
-          );
-        }
 
-        if (purchaseState is PurchaseFailure) {
-          return _ErrorScreen(
-            message: purchaseState.message,
-            onRetry: () => context.read<PurchaseCubit>().loadPurchases(),
-          );
-        }
+          // ── Error ──────────────────────────────────────────────────────
+          if (purchaseState is PurchaseFailure) {
+            return _ErrorScreen(
+              message: purchaseState.message,
+              onRetry: () => context.read<PurchaseCubit>().loadPurchases(),
+            );
+          }
 
-        if (purchaseState is PurchaseLoaded) {
-          return BlocBuilder<UserCubit, UserState>(
-            builder: (context, userState) {
-              // ── User data ──────────────────────────────────────────────
-              final userName = userState is UserLoaded
-                  ? userState.user.name.split(' ').first
-                  : '';
-              final monthlyBudget = userState is UserLoaded
-                  ? userState.user.settings?.monthlyBudget
-                  : null;
+          // ── Loaded ─────────────────────────────────────────────────────
+          if (purchaseState is PurchaseLoaded) {
+            return BlocBuilder<UserCubit, UserState>(
+              // Only rebuild when the loaded user data actually changes —
+              // ignore transient states like UserSaving, UserUpdated etc.
+              buildWhen: (prev, curr) =>
+                  curr is UserLoaded || curr is UserInitial,
+              builder: (context, userState) {
+                final userName = userState is UserLoaded
+                    ? userState.user.name.split(' ').first
+                    : '';
+                final monthlyBudget = userState is UserLoaded
+                    ? userState.user.settings?.monthlyBudget
+                    : null;
 
-              final purchases = purchaseState.purchases;
+                final purchases = purchaseState.purchases;
 
-              // ── Derived data ───────────────────────────────────────────
+                // ── Derived data ─────────────────────────────────────────
+                final summary = HomeSummary.fromPurchases(
+                  purchases,
+                  monthlyBudget: monthlyBudget,
+                );
 
-              // Monthly summary
-              final summary = HomeSummary.fromPurchases(
-                purchases,
-                monthlyBudget: monthlyBudget,
-              );
+                final todaySummary = TodaySummary.fromPurchases(purchases);
 
-              // Today's total (% vs yesterday)
-              final todaySummary = TodaySummary.fromPurchases(purchases);
+                final displayTotal = todaySummary.hasTodayPurchases
+                    ? todaySummary.todayTotal
+                    : _lastPurchaseAmount(purchases);
 
-              // Today spending amount — if no today purchases, show last purchase
-              final displayTotal = todaySummary.hasTodayPurchases
-                  ? todaySummary.todayTotal
-                  : _lastPurchaseAmount(purchases);
+                final displaySummary = TodaySummary(
+                  todayTotal: displayTotal,
+                  yesterdayTotal: todaySummary.yesterdayTotal,
+                  hasTodayPurchases: todaySummary.hasTodayPurchases,
+                );
 
-              final displaySummary = TodaySummary(
-                todayTotal: displayTotal,
-                yesterdayTotal: todaySummary.yesterdayTotal,
-                hasTodayPurchases: todaySummary.hasTodayPurchases,
-              );
+                final topRows = todaySummary.hasTodayPurchases
+                    ? RawSpendingHelper.forToday(purchases)
+                    : RawSpendingHelper.forLastPurchases(purchases);
 
-              // Top spending rows — raw categories, not grouped
-              final topRows = todaySummary.hasTodayPurchases
-                  ? RawSpendingHelper.forToday(purchases)
-                  : RawSpendingHelper.forLastPurchases(purchases);
+                final recentItems = RecentActivityHelper.getRecent(
+                  purchases,
+                  count: 3,
+                );
 
-              // Recent activity (3 most recent purchases)
-              final recentItems = RecentActivityHelper.getRecent(
-                purchases,
-                count: 3,
-              );
-
-              return Scaffold(
-                body: SafeArea(
-                  child: CustomScrollView(
-                    slivers: [
-                      // ── 1. Header ─────────────────────────────────────
-                      SliverToBoxAdapter(
-                        child: HomeHeader(
-                          name: userName,
-                          date: DateFormat(
-                            'EEEE, MMMM d, yyyy',
-                          ).format(DateTime.now()),
-                          showInsightBanner:
-                              displaySummary.spendingLessThanUsual,
-                          insightBannerText:
-                              "You're spending less than usual. Great job!",
-                        ),
-                      ),
-
-                      // ── 2. Today's Spending ───────────────────────────
-                      SliverToBoxAdapter(child: HomeSetupCard()),
-
-                      // ── 3. Today's Spending ───────────────────────────
-                      SliverToBoxAdapter(
-                        child: TodaySpendingCard(
-                          todaySummary: displaySummary,
-                          monthlyBudget: monthlyBudget,
-                        ),
-                      ),
-
-                      // ── 4. Top Spending Today ─────────────────────────
-                      if (topRows.isNotEmpty)
+                return Scaffold(
+                  body: SafeArea(
+                    child: CustomScrollView(
+                      slivers: [
+                        // ── 1. Header ──────────────────────────────────
                         SliverToBoxAdapter(
-                          child: TopSpendingTodayCard(
-                            rows: topRows,
+                          child: HomeHeader(
+                            name: userName,
+                            date: DateFormat.yMMMMEEEEd(locale)
+                                .format(DateTime.now()),
+                            showInsightBanner:
+                                displaySummary.spendingLessThanUsual,
+                            insightBannerText:
+                                l.homeYoureSpendingLessThanUsual,
+                          ),
+                        ),
+
+                        // ── 2. Setup card ──────────────────────────────
+                        SliverToBoxAdapter(child: HomeSetupCard()),
+
+                        // ── 3. Today's Spending ────────────────────────
+                        SliverToBoxAdapter(
+                          child: TodaySpendingCard(
+                            todaySummary: displaySummary,
+                            monthlyBudget: monthlyBudget,
+                          ),
+                        ),
+
+                        // ── 4. Top Spending Today ──────────────────────
+                        if (topRows.isNotEmpty)
+                          SliverToBoxAdapter(
+                            child: TopSpendingTodayCard(
+                              rows: topRows,
+                              onViewAll: () =>
+                                  context.goNamed(RouteNames.purchase),
+                            ),
+                          ),
+
+                        // ── 5. This Month ──────────────────────────────
+                        SliverToBoxAdapter(
+                          child: ThisMonthCard(summary: summary),
+                        ),
+
+                        // ── 6. Recent Activity ─────────────────────────
+                        SliverToBoxAdapter(
+                          child: RecentActivityCard(
+                            items: recentItems,
                             onViewAll: () =>
                                 context.goNamed(RouteNames.purchase),
                           ),
                         ),
 
-                      // ── 5. This Month ─────────────────────────────────
-                      SliverToBoxAdapter(
-                        child: ThisMonthCard(summary: summary),
-                      ),
-
-                      // ── 6. Recent Activity ────────────────────────────
-                      SliverToBoxAdapter(
-                        child: RecentActivityCard(
-                          items: recentItems,
-                          onViewAll: () => context.goNamed(RouteNames.purchase),
-                        ),
-                      ),
-
-                      // ── 7. Saving Goal ────────────────────────────────
-                      // const SliverToBoxAdapter(child: SavingGoalCard()),
-                      const SliverToBoxAdapter(child: SizedBox(height: 20)),
-                    ],
+                        const SliverToBoxAdapter(
+                            child: SizedBox(height: 20)),
+                      ],
+                    ),
                   ),
-                ),
-              );
-            },
-          );
-        }
+                );
+              },
+            );
+          }
 
-        return const SizedBox.shrink();
-      },
+          return const SizedBox.shrink();
+        },
+      ),
     );
   }
 
@@ -208,6 +233,7 @@ class _ErrorScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l = AppLocalizations.of(context);
 
     return Scaffold(
       body: SafeArea(
@@ -220,13 +246,16 @@ class _ErrorScreen extends StatelessWidget {
                 Icon(
                   Icons.wifi_off_rounded,
                   size: 56,
-                  color: Theme.of(context).iconTheme.color,
+                  color: theme.iconTheme.color,
                 ),
                 const SizedBox(height: 16),
                 Text(
                   message,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 15, color: Colors.grey.shade600),
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.grey.shade600,
+                  ),
                 ),
                 const SizedBox(height: 24),
                 FilledButton(
@@ -242,7 +271,7 @@ class _ErrorScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  child: const Text('Try Again'),
+                  child: Text(l.tryAgain),
                 ),
               ],
             ),

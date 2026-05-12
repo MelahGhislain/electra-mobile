@@ -1,5 +1,6 @@
 import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:electra/presentation/insights/bloc/insights_cubit.dart';
 import 'package:electra/presentation/insights/bloc/insights_state.dart';
 import 'package:electra/presentation/insights/widgets/insights_header.dart';
@@ -12,6 +13,7 @@ import 'package:electra/presentation/insights/widgets/insights_trend_section.dar
 import 'package:electra/presentation/insights/widgets/insights_bottom_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 class InsightsScreen extends StatefulWidget {
   const InsightsScreen({super.key});
@@ -41,12 +43,14 @@ class _InsightsScreenState extends State<InsightsScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l = AppLocalizations.of(context);
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         scrolledUnderElevation: 0,
         title: Text(
-          'Spending insights',
+          l.spendingInsights,
           style: TextStyle(
             fontSize: AppFontSize.xxl,
             fontWeight: FontWeight.bold,
@@ -105,6 +109,7 @@ class _InsightsContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final insights = state.insights;
+    final l = AppLocalizations.of(context);
 
     return RefreshIndicator(
       backgroundColor: AppColors.lightBackground,
@@ -141,8 +146,8 @@ class _InsightsContent extends StatelessWidget {
 
             // ── Spending overview (donut) ─────────────────────────────
             _SectionHeader(
-              title: 'Spending overview',
-              trailing: 'View by categories',
+              title: l.spendingOverview,
+              trailing: l.viewByCategories,
               onTap: () {},
             ),
             const SizedBox(height: 12),
@@ -158,7 +163,7 @@ class _InsightsContent extends StatelessWidget {
             const SizedBox(height: 24),
 
             // ── Key insights ──────────────────────────────────────────
-            _SectionHeader(title: 'Key insights'),
+            _SectionHeader(title: l.keyInsights),
             const SizedBox(height: 12),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -169,8 +174,8 @@ class _InsightsContent extends StatelessWidget {
 
             // ── Top spending categories ───────────────────────────────
             _SectionHeader(
-              title: 'Top spending categories',
-              trailing: 'View all',
+              title: l.topSpendingCategories,
+              trailing: l.viewAll,
               hideDropdown: true,
             ),
             const SizedBox(height: 12),
@@ -185,9 +190,8 @@ class _InsightsContent extends StatelessWidget {
 
             // ── Spending trend ────────────────────────────────────────
             _SectionHeader(
-              title: 'Spending trend',
-              trailing:
-                  'vs ${_previousLabel(insights.meta.label, state.period)}',
+              title: l.spendingTrend,
+              trailing: 'vs ${_previousLabel(context, state.period)}',
             ),
             const SizedBox(height: 12),
             Padding(
@@ -214,47 +218,20 @@ class _InsightsContent extends StatelessWidget {
     );
   }
 
-  String _previousLabel(String currentLabel, String period) {
+  String _previousLabel(BuildContext context, String period) {
+    final l = AppLocalizations.of(context);
+    final locale = Localizations.localeOf(context).toLanguageTag();
+
     try {
       if (period == 'monthly') {
-        final parts = currentLabel.split(' ');
-        const months = [
-          'Jan',
-          'Feb',
-          'Mar',
-          'Apr',
-          'May',
-          'Jun',
-          'Jul',
-          'Aug',
-          'Sep',
-          'Oct',
-          'Nov',
-          'Dec',
-        ];
-        const fullMonths = [
-          'January',
-          'February',
-          'March',
-          'April',
-          'May',
-          'June',
-          'July',
-          'August',
-          'September',
-          'October',
-          'November',
-          'December',
-        ];
-        final idx = fullMonths.indexOf(parts[0]);
-        if (idx >= 0) {
-          final prevIdx = (idx - 1 + 12) % 12;
-          final year = idx == 0 ? int.parse(parts[1]) - 1 : int.parse(parts[1]);
-          return '${months[prevIdx]} $year';
-        }
+        final now = DateTime.now();
+        final previousMonth = DateTime(now.year, now.month - 1);
+
+        return DateFormat.yMMM(locale).format(previousMonth);
       }
     } catch (_) {}
-    return 'Previous';
+
+    return l.previous;
   }
 }
 

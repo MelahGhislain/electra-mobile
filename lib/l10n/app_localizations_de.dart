@@ -27,7 +27,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get settingsHelp => 'Hilfe';
 
   @override
-  String get settingsAbout => 'Über';
+  String get settingsAbout => 'Über die App';
 
   @override
   String get settingsBudget => 'Budget & Einkommen';
@@ -46,7 +46,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get settingsNotificationsSubtitle =>
-      'Erhalte Erinnerungen und Ausgabenwarnungen';
+      'Erinnerungen und Ausgabenwarnungen erhalten';
 
   @override
   String get settingsExportData => 'Daten exportieren';
@@ -55,44 +55,44 @@ class AppLocalizationsDe extends AppLocalizations {
   String get settingsExportDataSubtitle => 'Exportiere deine Daten';
 
   @override
-  String get settingsSharedAccount => 'Geteiltes Konto';
+  String get settingsSharedAccount => 'Gemeinsames Konto';
 
   @override
   String get settingsSharedAccountSubtitle =>
-      'Einstellungen für geteiltes Konto verwalten';
+      'Einstellungen für gemeinsames Konto verwalten';
 
   @override
   String get settingsSupport => 'Support';
 
   @override
-  String get settingsSupportSubtitle => 'Kontaktiere unser Support-Team';
+  String get settingsSupportSubtitle => 'Unser Support-Team kontaktieren';
 
   @override
   String get settingsDocs => 'Dokumentation';
 
   @override
-  String get settingsDocsSubtitle => 'Lerne die App kennen';
+  String get settingsDocsSubtitle => 'Lerne, die App zu nutzen';
 
   @override
   String get settingsSuggest => 'Verbesserung vorschlagen';
 
   @override
-  String get settingsSuggestSubtitle => 'Teile dein Feedback';
+  String get settingsSuggestSubtitle => 'Teile dein Feedback, um uns zu helfen';
 
   @override
   String get settingsVersion => 'Version';
 
   @override
-  String get settingsSetupGuide => 'Einrichtungshandbuch';
+  String get settingsSetupGuide => 'Einrichtungsanleitung';
 
   @override
-  String get settingsSetupGuideSubtitle => 'Neu hier? Starte hier';
+  String get settingsSetupGuideSubtitle => 'Neu hier? Beginne damit';
 
   @override
   String get settingsDeleteAccount => 'Konto löschen';
 
   @override
-  String get settingsDeleteAccountSubtitle => 'Konto dauerhaft entfernen';
+  String get settingsDeleteAccountSubtitle => 'Dein Konto dauerhaft löschen';
 
   @override
   String get budgetNotSet => 'Nicht festgelegt';
@@ -112,7 +112,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get themeDark => 'Dunkel';
 
   @override
-  String get languageSystemDefault => 'Systemstandard';
+  String get languageSystemDefault => 'Systemsprache';
 
   @override
   String get languageEnglish => 'English';
@@ -142,13 +142,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get languageArabic => 'العربية';
 
   @override
-  String get logoutTitle => 'Abmelden?';
+  String get logoutTitle => 'Abmelden';
 
   @override
-  String get logoutBody => 'Du wirst von deinem Konto abgemeldet.';
-
-  @override
-  String get logoutConfirm => 'Abmelden';
+  String get logoutBody =>
+      'Möchtest du dich wirklich von deinem Konto abmelden?';
 
   @override
   String get cancel => 'Abbrechen';
@@ -166,14 +164,89 @@ class AppLocalizationsDe extends AppLocalizations {
   String get edit => 'Bearbeiten';
 
   @override
-  String get retry => 'Erneut versuchen';
+  String get tryAgain => 'Erneut versuchen';
 
   @override
-  String get deleteAccountTitle => 'Konto löschen?';
+  String get today => 'Heute';
+
+  @override
+  String get yesterday => 'Gestern';
+
+  @override
+  String get editProfile => 'Profil bearbeiten';
+
+  @override
+  String get enterYourName => 'Gib deinen Namen ein';
+
+  @override
+  String get nameCannotBeEmpty => 'Name darf nicht leer sein';
+
+  @override
+  String get nameTooShort => 'Name ist zu kurz';
+
+  @override
+  String get email => 'E-Mail';
+
+  @override
+  String get enterYourEmail => 'Gib deine E-Mail-Adresse ein';
+
+  @override
+  String get emailCannotBeEmpty => 'E-Mail darf nicht leer sein';
+
+  @override
+  String get enterValidEmail => 'Gib eine gültige E-Mail-Adresse ein';
+
+  @override
+  String get saveChanges => 'Änderungen speichern';
+
+  @override
+  String get monthlyBudget => 'Monatliches Budget';
+
+  @override
+  String get budgetSubtitle =>
+      'Lege ein monatliches Ausgabenlimit fest, um auf Kurs zu bleiben.';
+
+  @override
+  String get budgetAmount => 'Budgetbetrag';
+
+  @override
+  String get enterBudgetAmount => 'Budgetbetrag eingeben';
+
+  @override
+  String get pleaseEnterABudgetAmount => 'Bitte gib einen Budgetbetrag ein';
+
+  @override
+  String get enterAValidAmountGreaterThan0 =>
+      'Gib einen gültigen Betrag größer als 0 ein';
+
+  @override
+  String get budgetSeemsTooHigh => 'Budget scheint zu hoch — bitte überprüfen';
+
+  @override
+  String get quickSelect => 'Schnellauswahl';
+
+  @override
+  String get saveBudget => 'Budget speichern';
+
+  @override
+  String get removeBudget => 'Budget entfernen';
+
+  @override
+  String get deleteAccountTitle => 'Konto löschen';
 
   @override
   String get deleteAccountBody =>
-      'Dein Konto und alle Daten werden dauerhaft gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.';
+      'Diese Aktion ist dauerhaft und kann nicht rückgängig gemacht werden. Alle deine Daten, Käufe und Einstellungen werden gelöscht.';
+
+  @override
+  String deleteAccountConfirmationMessage(String keyword) {
+    return 'Gib $keyword unten ein, um zu bestätigen, dass du verstehst, dass dies unwiderruflich ist.';
+  }
+
+  @override
+  String typeDeleteHere(String keyword) {
+    return 'Gib $keyword hier ein';
+  }
 
   @override
   String get onboardingSkip => 'Überspringen';
@@ -190,88 +263,505 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get homeTagline => 'Übernimm die Kontrolle\nüber deinen Tag';
+  String get homeYoureSpendingLessThanUsual =>
+      'Du gibst weniger als üblich aus. Großartig!';
 
   @override
-  String get homeSpendingBreakdown => 'Ausgabenübersicht';
+  String get letsSetThingsUp => 'Lass uns alles einrichten';
 
   @override
-  String get homeMonthlySnapshot => 'Monatsübersicht';
+  String get getTheMostOutOfTheAppBySetting =>
+      'Hole das Beste aus der App heraus, indem du einige Dinge einrichtest.';
 
   @override
-  String get homeRecentlyCompleted => 'Zuletzt abgeschlossen';
+  String get setMonthlyBudgetTitle => 'Monatliches Budget festlegen';
 
   @override
-  String get homeViewAll => 'Alle anzeigen';
+  String get helpUsPersonalizeYourSpending =>
+      'Hilf uns, deinen Ausgabenplan zu personalisieren';
 
   @override
-  String homeAvgDaily(String amount) {
-    return 'Ø Tagesausgabe: $amount';
+  String get enablePushNotifications => 'Push-Benachrichtigungen aktivieren';
+
+  @override
+  String get stayUpdatedOnSpending =>
+      'Bleib über Ausgaben und Erinnerungen informiert';
+
+  @override
+  String get skipForNow => 'Vorerst überspringen';
+
+  @override
+  String get youCanChangeTheseLater =>
+      'Du kannst diese Einstellungen jederzeit in den Einstellungen ändern.';
+
+  @override
+  String get todaysSpending => 'Heutige Ausgaben';
+
+  @override
+  String vsYesterday(String percentage) {
+    return '$percentage% vs. gestern';
   }
 
   @override
-  String get homeBudgetGood => 'Gut gemacht! Du bleibst im Budget 👍';
+  String get noDataForYesterday => 'Keine Daten von gestern';
 
   @override
-  String get homeBudgetWarning => 'Achtung! Du näherst dich deinem Budget.';
+  String get mostRecentPurchase => 'Letzter Kauf';
 
   @override
-  String get homeBudgetOver => 'Du hast dein Monatsbudget überschritten.';
+  String get ofDailyBudget => 'des täglichen\nBudgets';
 
   @override
-  String get homeBudgetNone => 'Kein Budget für diesen Monat festgelegt.';
+  String get dailyBudget => 'Tagesbudget';
 
   @override
-  String get insightsTitle => 'Ausgabenanalyse';
+  String get topSpendingToday => 'Größte Ausgaben heute';
 
   @override
-  String get insightsPeriodWeekly => 'Wöchentlich';
+  String get viewAll => 'Alle anzeigen';
 
   @override
-  String get insightsPeriodMonthly => 'Monatlich';
+  String get total => 'Gesamt';
 
   @override
-  String get insightsPeriodYearly => 'Jährlich';
+  String get thisMonth => 'Diesen Monat';
 
   @override
-  String insightsTotalSpent(String period) {
-    return 'Gesamt ausgegeben im $period';
+  String get headsUp => 'Achtung';
+
+  @override
+  String get avgDailySpend => 'Durchschn. Tagesausgaben';
+
+  @override
+  String get daysLeft => 'Verbleibende Tage';
+
+  @override
+  String get recentActivity => 'Letzte Aktivität';
+
+  @override
+  String get addExpense => 'Ausgabe hinzufügen';
+
+  @override
+  String get repeat => 'Wiederholen';
+
+  @override
+  String get setBudget => 'Budget festlegen';
+
+  @override
+  String get scanReceipt => 'Beleg\nscannen';
+
+  @override
+  String get noBudgetSetForThisMonth =>
+      'Kein Budget für diesen Monat festgelegt.';
+
+  @override
+  String get youHaveExceededYourMonthlyBudget =>
+      'Du hast dein monatliches Budget überschritten.';
+
+  @override
+  String get headsUpYouAreCloseToYourBudget =>
+      'Achtung! Du näherst dich deinem Budget.';
+
+  @override
+  String get niceWorkYouAreStayingWithinBudget =>
+      'Gut gemacht! Du bleibst im Budget 👍';
+
+  @override
+  String get spending => 'Ausgaben';
+
+  @override
+  String get trackYourSpendingStayInControl =>
+      'Verfolge deine Ausgaben, behalte die Kontrolle';
+
+  @override
+  String get searchMerchantItemOrCategory =>
+      'Händler, Artikel oder Kategorie suchen...';
+
+  @override
+  String spendingInsightMessage(String percentage, String category) {
+    return 'Du hast diese Woche $percentage% mehr für $category ausgegeben';
   }
 
   @override
-  String get insightsBudgetOnTrack => 'Im Plan';
+  String get addPurchase => 'Kauf hinzufügen';
 
   @override
-  String get insightsBudgetOver => 'Budget überschritten';
+  String get editPurchase => 'Kauf bearbeiten';
 
   @override
-  String get insightsSpendingOverview => 'Ausgabenübersicht';
+  String get title => 'Titel';
 
   @override
-  String get insightsViewByCategories => 'Nach Kategorien';
+  String get date => 'Datum';
 
   @override
-  String get insightsViewAllCategories => 'Alle Kategorien';
+  String get category => 'Kategorie';
 
   @override
-  String get insightsKeyInsights => 'Wichtige Erkenntnisse';
+  String get paymentMethod => 'Zahlungsmethode';
 
   @override
-  String get insightsTopCategories => 'Top-Kategorien';
+  String get amount => 'Betrag';
 
   @override
-  String get insightsViewAll => 'Alle anzeigen';
+  String get currency => 'Währung';
 
   @override
-  String get insightsTrend => 'Ausgabentrend';
+  String get pleaseEnterName => 'Bitte gib einen Namen ein';
 
   @override
-  String get errorGeneric => 'Etwas ist schiefgelaufen';
+  String get enterAmount => 'Betrag eingeben';
 
   @override
-  String get errorNetwork => 'Keine Verbindung. Prüfe dein Netzwerk.';
+  String get savePurchase => 'Kauf speichern';
 
   @override
-  String get errorSessionExpired =>
-      'Deine Sitzung ist abgelaufen. Bitte erneut anmelden.';
+  String get card => 'Karte';
+
+  @override
+  String get cash => 'Bargeld';
+
+  @override
+  String get other => 'Sonstiges';
+
+  @override
+  String get filterAndSort => 'Filtern und sortieren';
+
+  @override
+  String get resetAll => 'Alle zurücksetzen';
+
+  @override
+  String get applyFilters => 'Filter anwenden';
+
+  @override
+  String get sortBy => 'Sortieren nach';
+
+  @override
+  String get merchant => 'Händler';
+
+  @override
+  String get dateRange => 'Datumsbereich';
+
+  @override
+  String get noCategoriesAvailable => 'Keine Kategorien verfügbar';
+
+  @override
+  String get noMerchantsAvailable => 'Keine Händler verfügbar';
+
+  @override
+  String get noResultsFound => 'Keine Ergebnisse gefunden';
+
+  @override
+  String get noPurchasesYet => 'Noch keine Käufe';
+
+  @override
+  String get tryAdjustingFiltersOrSearch =>
+      'Versuche, deine Filter oder Suche anzupassen';
+
+  @override
+  String get purchaseHistoryWillAppearHere =>
+      'Dein Kaufverlauf wird hier angezeigt';
+
+  @override
+  String get clearFilters => 'Filter löschen';
+
+  @override
+  String get insight => 'Einblick';
+
+  @override
+  String get noItems => 'Keine Artikel';
+
+  @override
+  String get item => 'Artikel';
+
+  @override
+  String get items => 'Artikel';
+
+  @override
+  String get unknown => 'Unbekannt';
+
+  @override
+  String get failedToLoadPurchase => 'Kauf konnte nicht geladen werden';
+
+  @override
+  String get avgPrice => 'Durchschn. Preis';
+
+  @override
+  String get payment => 'Zahlung';
+
+  @override
+  String get below => '↓ Darunter';
+
+  @override
+  String get above => '↑ Darüber';
+
+  @override
+  String get at => 'Bei';
+
+  @override
+  String itemInsights(String percent, String label) {
+    return '↑ +$percent% vs. letzter Kauf • Durchschnittspreis $label';
+  }
+
+  @override
+  String get editItem => 'Artikel bearbeiten';
+
+  @override
+  String get deleteItem => 'Artikel löschen';
+
+  @override
+  String get edited => 'Bearbeitet';
+
+  @override
+  String ofTotal(String percent) {
+    return '$percent% des Gesamtbetrags';
+  }
+
+  @override
+  String get sortNameAZ => 'Name (A–Z)';
+
+  @override
+  String get sortNameZA => 'Name (Z–A)';
+
+  @override
+  String get sortPriceLow => 'Preis ↑';
+
+  @override
+  String get sortPriceHigh => 'Preis ↓';
+
+  @override
+  String get addItem => 'Artikel hinzufügen';
+
+  @override
+  String get noItemsRecorded => 'Keine Artikel erfasst';
+
+  @override
+  String get noCategoryDataAvailable => 'Keine Kategoriedaten verfügbar';
+
+  @override
+  String get sortItems => 'Artikel sortieren';
+
+  @override
+  String get view => 'Ansehen';
+
+  @override
+  String get receipt => 'Beleg';
+
+  @override
+  String get noReceiptAdded => 'Kein Beleg hinzugefügt';
+
+  @override
+  String uploadedProcessed(String date) {
+    return 'Hochgeladen am $date • Verarbeitet';
+  }
+
+  @override
+  String get spendingInsights => 'Ausgabenanalyse';
+
+  @override
+  String get spendingOverview => 'Ausgabenübersicht';
+
+  @override
+  String get viewByCategories => 'Nach Kategorien';
+
+  @override
+  String get keyInsights => 'Wichtige Einblicke';
+
+  @override
+  String get topSpendingCategories => 'Top-Ausgabenkategorien';
+
+  @override
+  String get spendingTrend => 'Ausgabentrend';
+
+  @override
+  String get previous => 'Vorherige';
+
+  @override
+  String get paymentMethods => 'Zahlungsmethoden';
+
+  @override
+  String get weekly => 'Wöchentlich';
+
+  @override
+  String get monthly => 'Monatlich';
+
+  @override
+  String get yearly => 'Jährlich';
+
+  @override
+  String get noDataThisPeriod => 'Keine Daten\nin diesem Zeitraum';
+
+  @override
+  String get viewAllCategories => 'Alle Kategorien anzeigen';
+
+  @override
+  String get somethingWentWrong => 'Etwas ist schiefgelaufen';
+
+  @override
+  String get savingsOpportunity => 'Sparmöglichkeit';
+
+  @override
+  String get noSpendingDataThisPeriod =>
+      'Keine Ausgabendaten in diesem Zeitraum';
+
+  @override
+  String totalSpentIn(String period) {
+    return 'Gesamt ausgegeben in $period';
+  }
+
+  @override
+  String lessThanPrevious(String percent, String amount) {
+    return '$percent% weniger als vorher ($amount)';
+  }
+
+  @override
+  String moreThanPrevious(String percent, String amount) {
+    return '$percent% mehr als vorher ($amount)';
+  }
+
+  @override
+  String get budgetStatus => 'Budgetstatus';
+
+  @override
+  String get onTrack => 'Im Rahmen';
+
+  @override
+  String get overBudget => 'Budget überschritten';
+
+  @override
+  String ofBudget(String amount) {
+    return 'von $amount Budget';
+  }
+
+  @override
+  String get averagePerDay => 'Durchschnitt pro Tag';
+
+  @override
+  String get thisPeriod => 'Dieser Zeitraum';
+
+  @override
+  String get noTrendDataAvailable => 'Keine Trenddaten verfügbar';
+
+  @override
+  String get letsSignYouIn => 'Lass uns dich anmelden';
+
+  @override
+  String get signInAndStartPlanning => 'Melde dich an und beginne zu planen.';
+
+  @override
+  String get emailAddress => 'E-Mail-Adresse';
+
+  @override
+  String get enterYourMailAddress => 'Gib deine E-Mail-Adresse ein';
+
+  @override
+  String get emailIsRequired => 'E-Mail ist erforderlich';
+
+  @override
+  String get password => 'Passwort';
+
+  @override
+  String get enterYourPassword => 'Gib dein Passwort ein';
+
+  @override
+  String get passwordIsRequired => 'Passwort ist erforderlich';
+
+  @override
+  String get signIn => 'Anmelden';
+
+  @override
+  String get continueWithGoogle => 'Mit Google fortfahren';
+
+  @override
+  String get dontHaveAnAccount => 'Noch kein Konto?';
+
+  @override
+  String get signUp => 'Registrieren';
+
+  @override
+  String get fullName => 'Vollständiger Name';
+
+  @override
+  String get nameIsRequired => 'Name ist erforderlich';
+
+  @override
+  String get minimum8Characters => 'Mindestens 8 Zeichen';
+
+  @override
+  String get reEnterPassword => 'Passwort wiederholen';
+
+  @override
+  String get passwordsDoNotMatch => 'Passwörter stimmen nicht überein';
+
+  @override
+  String get alreadyHaveAnAccount => 'Bereits ein Konto?';
+
+  @override
+  String get orSignWith => 'Oder fortfahren mit';
+
+  @override
+  String get whereDidMyMoneyGo => 'Wo ist mein Geld geblieben?';
+
+  @override
+  String get myMoney => 'Mein Geld';
+
+  @override
+  String get stopGuessingSpending =>
+      'Hör auf zu raten. Electra hilft dir, jeden Ausgabe mühelos zu verfolgen.';
+
+  @override
+  String get trackWithYourVoice => 'Mit deiner Stimme verfolgen';
+
+  @override
+  String get voice => 'Stimme';
+
+  @override
+  String get voiceDescription =>
+      'Sprich einfach, wir erledigen den Rest. Schnell, intelligent und super einfach.';
+
+  @override
+  String get autoCategorizeExpenses => 'Ausgaben automatisch kategorisieren';
+
+  @override
+  String get autoCategorize => 'Auto-Kategorie';
+
+  @override
+  String get autoCategorizeDescription =>
+      'Electra kategorisiert deine Ausgaben automatisch, damit du dich auf das Wesentliche konzentrieren kannst.';
+
+  @override
+  String get insightsThatHelpYouSave => 'Einblicke, die dir helfen zu sparen';
+
+  @override
+  String get insightsDescription =>
+      'Verstehe deine Ausgabenmuster und triff klügere finanzielle Entscheidungen.';
+
+  @override
+  String get yourDataIsSafe => 'Deine Daten sind immer sicher';
+
+  @override
+  String get safe => 'Sicher';
+
+  @override
+  String get privacyDescription =>
+      'Wir halten deine Daten privat und sicher. Dein Vertrauen ist unsere Priorität.';
+
+  @override
+  String get saveMoreStressLess => 'Mehr sparen. Weniger stressen.';
+
+  @override
+  String get saveMore => 'Mehr sparen.';
+
+  @override
+  String get finalOnboardingDescription =>
+      'Behalte die Kontrolle über deine Finanzen und entwickle täglich bessere Geldgewohnheiten.';
+
+  @override
+  String get skip => 'Überspringen';
+
+  @override
+  String get next => 'Weiter';
+
+  @override
+  String get letsGo => 'Los geht\'s';
 }

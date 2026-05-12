@@ -1,11 +1,11 @@
 import 'package:electra/common/helpers/average.dart';
 import 'package:electra/common/widgets/bottom_sheets/app_bottom_sheet.dart';
-import 'package:electra/common/widgets/buttons/main_button.dart';
 import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/core/utils/helpers.dart';
 import 'package:electra/domain/entities/purchase/purchase.dart';
 import 'package:electra/domain/entities/purchase/purchase_item.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:electra/presentation/purchase/blocs/purchase_detail/purchase_detail_cubit.dart';
 import 'package:electra/presentation/purchase/blocs/purchase_detail/purchase_detail_state.dart';
 import 'package:electra/core/utils/category_meta.dart';
@@ -18,17 +18,17 @@ enum _ItemView { list, group }
 
 enum _ItemSort { nameAZ, nameZA, priceLow, priceHigh }
 
-extension _ItemSortLabel on _ItemSort {
-  String get label {
-    switch (this) {
+class SortLabels {
+  static String get(_ItemSort sort, AppLocalizations l) {
+    switch (sort) {
       case _ItemSort.nameAZ:
-        return 'Name (A–Z)';
+        return l.sortNameAZ;
       case _ItemSort.nameZA:
-        return 'Name (Z–A)';
+        return l.sortNameZA;
       case _ItemSort.priceLow:
-        return 'Price ↑';
+        return l.sortPriceLow;
       case _ItemSort.priceHigh:
-        return 'Price ↓';
+        return l.sortPriceHigh;
     }
   }
 }
@@ -77,10 +77,10 @@ class _SpendingDetailItemsSectionState
 
   // ── Sort picker ────────────────────────────────────────────────────────────
 
-  Future<void> _showSortPicker(ThemeData theme) async {
+  Future<void> _showSortPicker(ThemeData theme, AppLocalizations l) async {
     final result = await AppBottomSheet.show<_ItemSort>(
       context,
-      title: 'Sort items',
+      title: l.sortItems,
       icon: Icons.sort_rounded,
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -89,17 +89,17 @@ class _SpendingDetailItemsSectionState
           return ListTile(
             contentPadding: const EdgeInsets.symmetric(horizontal: 20),
             title: Text(
-              opt.label,
+              SortLabels.get(opt, AppLocalizations.of(context)),
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
-                color: selected ? AppColors.primary : null,
+                color: selected ? theme.colorScheme.primary : null,
               ),
             ),
             trailing: selected
-                ? const Icon(
+                ? Icon(
                     Icons.check_rounded,
-                    color: AppColors.primary,
+                    color: theme.colorScheme.primary,
                     size: 18,
                   )
                 : null,
@@ -143,6 +143,7 @@ class _SpendingDetailItemsSectionState
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     // BlocBuilder here — every state change (including mutations) rebuilds this
     // widget with the latest purchase so the list stays in sync.
     return BlocBuilder<PurchaseDetailCubit, PurchaseDetailState>(
@@ -165,7 +166,7 @@ class _SpendingDetailItemsSectionState
               child: Row(
                 children: [
                   Text(
-                    'Items (${activeItems.length})',
+                    '${l.items} (${activeItems.length})',
                     style: const TextStyle(
                       fontSize: AppFontSize.lg,
                       fontWeight: FontWeight.w600,
@@ -180,13 +181,13 @@ class _SpendingDetailItemsSectionState
                     GestureDetector(
                       onTap: isMutating
                           ? null
-                          : () => _showSortPicker(Theme.of(context)),
+                          : () => _showSortPicker(Theme.of(context), l),
                       child: Row(
                         children: [
                           const Icon(Icons.sort_rounded, size: AppFontSize.md),
                           const SizedBox(width: 4),
                           Text(
-                            _sort.label,
+                            SortLabels.get(_sort, AppLocalizations.of(context)),
                             style: const TextStyle(fontSize: AppFontSize.sm),
                           ),
                         ],
@@ -223,7 +224,7 @@ class _SpendingDetailItemsSectionState
                             ),
                             SizedBox(width: 4),
                             Text(
-                              'Add item',
+                              l.addItem,
                               style: TextStyle(
                                 fontSize: AppFontSize.md,
                                 fontWeight: FontWeight.w600,
@@ -261,9 +262,9 @@ class _SpendingDetailItemsSectionState
                       ),
                     ],
                   ),
-                  child: const Center(
+                  child: Center(
                     child: Text(
-                      'No items recorded',
+                      l.noItemsRecorded,
                       style: TextStyle(fontSize: AppFontSize.sm),
                     ),
                   ),
@@ -313,6 +314,7 @@ class _GroupView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final total = purchase.totals.amount;
+    final l = AppLocalizations.of(context);
 
     final Map<String, List<PurchaseItem>> grouped = {};
     for (final item in purchase.activeItems) {
@@ -320,11 +322,11 @@ class _GroupView extends StatelessWidget {
     }
 
     if (grouped.isEmpty) {
-      return const Padding(
-        padding: EdgeInsets.all(24),
+      return Padding(
+        padding: const EdgeInsets.all(24),
         child: Center(
           child: Text(
-            'No category data available',
+            l.noCategoryDataAvailable,
             style: TextStyle(color: AppColors.lightTextSecondary),
           ),
         ),
@@ -373,7 +375,7 @@ class _GroupView extends StatelessWidget {
                     const SizedBox(width: 10),
                     Expanded(
                       child: Text(
-                        '${categoryItems.length} item${categoryItems.length == 1 ? '' : 's'}',
+                        '${categoryItems.length} ${categoryItems.length == 1 ? l.item : l.items}',
                         style: TextStyle(
                           fontSize: 12,
                           color: Colors.grey.shade400,

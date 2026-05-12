@@ -1,6 +1,7 @@
 import 'package:electra/core/assets/app_images.dart';
 import 'package:electra/domain/entities/user/user.dart';
 import 'package:electra/domain/entities/user/user_settings.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:electra/presentation/home/bloc/home_cubit.dart';
 import 'package:electra/presentation/home/bloc/home_state.dart';
 import 'package:electra/presentation/settings/widgets/bottom_sheets/budget_bottom_sheet.dart';
@@ -43,6 +44,7 @@ class _HomeSetupCardState extends State<HomeSetupCard> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l = AppLocalizations.of(context);
 
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, homeState) {
@@ -105,7 +107,7 @@ class _HomeSetupCardState extends State<HomeSetupCard> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Let's set things up",
+                                l.letsSetThingsUp,
                                 style: TextStyle(
                                   fontSize: AppFontSize.xxl,
                                   fontWeight: FontWeight.w600,
@@ -113,7 +115,7 @@ class _HomeSetupCardState extends State<HomeSetupCard> {
                               ),
                               const SizedBox(height: 2),
                               Text(
-                                "Get the most out of the app by setting up a few things.",
+                                l.getTheMostOutOfTheAppBySetting,
                                 style: TextStyle(fontSize: AppFontSize.sm),
                               ),
                             ],
@@ -130,8 +132,8 @@ class _HomeSetupCardState extends State<HomeSetupCard> {
                       color: (settings?.monthlyBudget ?? 0) > 0
                           ? AppColors.primary
                           : theme.iconTheme.color!,
-                      title: "Set your monthly budget",
-                      subtitle: "Help us personalize your spending plan",
+                      title: l.setMonthlyBudgetTitle,
+                      subtitle: l.helpUsPersonalizeYourSpending,
                       onTap: user != null ? () => _openBudgetSheet(user) : null,
                     ),
 
@@ -142,8 +144,8 @@ class _HomeSetupCardState extends State<HomeSetupCard> {
                       color: (settings?.pushNotification == true)
                           ? AppColors.accent
                           : theme.iconTheme.color!,
-                      title: "Enable push notifications",
-                      subtitle: "Stay updated on spending & reminders",
+                      title: l.enablePushNotifications,
+                      subtitle: l.stayUpdatedOnSpending,
                       value: settings?.pushNotification ?? false,
                       onChanged: user != null
                           ? (val) => _toggleNotifications(user, val)
@@ -158,13 +160,13 @@ class _HomeSetupCardState extends State<HomeSetupCard> {
                         borderRadius: BorderRadius.circular(8),
                         onTap: () =>
                             context.read<HomeCubit>().skipSetup(user!.id),
-                        child: const Padding(
+                        child: Padding(
                           padding: EdgeInsets.symmetric(
                             horizontal: 8,
                             vertical: 4,
                           ),
                           child: Text(
-                            "Skip for now",
+                            l.skipForNow,
                             style: TextStyle(
                               fontSize: AppFontSize.md,
                               color: AppColors.primary,
@@ -189,7 +191,7 @@ class _HomeSetupCardState extends State<HomeSetupCard> {
                         const SizedBox(width: 6),
                         Expanded(
                           child: Text(
-                            "You can always change these later in Settings.",
+                            l.youCanChangeTheseLater,
                             style: TextStyle(fontSize: AppFontSize.xs),
                           ),
                         ),

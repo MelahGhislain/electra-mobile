@@ -1,6 +1,7 @@
 import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/utils/category_meta.dart';
 import 'package:electra/domain/entities/insights/insights.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -15,13 +16,14 @@ class InsightsTopCategories extends StatelessWidget {
     final symbol = r'$';
     final fmt = NumberFormat.currency(symbol: symbol, decimalDigits: 2);
     final displayed = categories.take(3).toList();
+    final l = AppLocalizations.of(context);
 
     if (displayed.isEmpty) {
       return Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 24),
           child: Text(
-            'No spending data this period',
+            l.noSpendingDataThisPeriod,
             style: TextStyle(fontSize: AppFontSize.md),
           ),
         ),

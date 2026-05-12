@@ -1,5 +1,7 @@
 import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
+import 'package:electra/core/utils/constants/global_keys.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:electra/presentation/settings/blocs/user_cubit.dart';
 import 'package:electra/presentation/settings/blocs/user_state.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +16,6 @@ class DeleteAccountDialog extends StatefulWidget {
   static Future<bool> show(BuildContext context, String userId) async {
     final result = await showDialog<bool>(
       context: context,
-      barrierDismissible: false,
       builder: (_) => BlocProvider.value(
         value: context.read<UserCubit>(),
         child: DeleteAccountDialog(userId: userId),
@@ -35,7 +36,10 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
   void initState() {
     super.initState();
     _ctrl.addListener(
-      () => setState(() => _confirmed = _ctrl.text.trim() == 'DELETE'),
+      () => setState(
+        () => _confirmed =
+            _ctrl.text.trim() == GlobalKeys.confirmationDeleteKeyword,
+      ),
     );
   }
 
@@ -54,6 +58,7 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
+    final l = AppLocalizations.of(context);
 
     return BlocListener<UserCubit, UserState>(
       listener: (context, state) {
@@ -89,7 +94,7 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
             ),
             const SizedBox(width: 10),
             Text(
-              'Delete Account',
+              l.deleteAccountTitle,
               style: TextStyle(
                 fontSize: AppFontSize.xxl,
                 fontWeight: FontWeight.w700,
@@ -103,8 +108,7 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'This action is permanent and cannot be undone. '
-              'All your data, purchases, and settings will be deleted.',
+              l.deleteAccountBody,
               style: TextStyle(
                 fontSize: AppFontSize.md,
                 height: 1.5,
@@ -132,7 +136,9 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      'Type DELETE below to confirm you understand this is irreversible.',
+                      l.deleteAccountConfirmationMessage(
+                        GlobalKeys.confirmationDeleteKeyword,
+                      ),
                       style: TextStyle(
                         fontSize: AppFontSize.sm,
                         color: Colors.red.shade700,
@@ -157,7 +163,9 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
                 letterSpacing: 1,
               ),
               decoration: InputDecoration(
-                hintText: 'Type DELETE here',
+                hintText: l.typeDeleteHere(
+                  GlobalKeys.confirmationDeleteKeyword,
+                ),
                 hintStyle: TextStyle(
                   color: AppColors.lightTextSecondary,
                   fontSize: AppFontSize.sm,
@@ -209,7 +217,7 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
                       ),
                     ),
                     child: Text(
-                      'Cancel',
+                      l.cancel,
                       style: TextStyle(
                         fontWeight: FontWeight.w500,
                         color: isDark
@@ -245,8 +253,8 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
                                   color: Colors.white,
                                 ),
                               )
-                            : const Text(
-                                'Delete',
+                            : Text(
+                                l.delete,
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   color: Colors.white,

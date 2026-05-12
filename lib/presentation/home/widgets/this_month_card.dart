@@ -1,5 +1,6 @@
 import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:electra/presentation/home/utils/home_summary.dart';
 import 'package:electra/presentation/home/utils/home_utils.dart';
 import 'package:flutter/material.dart';
@@ -26,10 +27,10 @@ class ThisMonthCard extends StatelessWidget {
     return const Color(0xFFCBFCDC);
   }
 
-  String get _badge {
-    if (_isOver) return 'Over budget';
-    if (_isWarning) return 'Heads up';
-    return 'On track';
+  String getBadge(AppLocalizations l) {
+    if (_isOver) return l.overBudget;
+    if (_isWarning) return l.headsUp;
+    return l.onTrack;
   }
 
   @override
@@ -43,6 +44,7 @@ class ThisMonthCard extends StatelessWidget {
       budget: effectiveBudget,
       spentThisMonth: summary.spentThisMonth,
     );
+    final l = AppLocalizations.of(context);
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 0),
@@ -66,9 +68,9 @@ class ThisMonthCard extends StatelessWidget {
             // ── Header row ───────────────────────────────────────────────
             Row(
               children: [
-                const Text(
-                  'This Month',
-                  style: TextStyle(
+                Text(
+                  l.thisMonth,
+                  style: const TextStyle(
                     fontSize: AppFontSize.lg,
                     fontWeight: FontWeight.w600,
                   ),
@@ -84,7 +86,7 @@ class ThisMonthCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
-                    _badge,
+                    getBadge(l),
                     style: TextStyle(
                       fontSize: AppFontSize.xs,
                       fontWeight: FontWeight.w400,
@@ -166,7 +168,7 @@ class ThisMonthCard extends StatelessWidget {
                         iconBg: const Color(0xFFDCFCE7),
                         icon: Icons.trending_up_rounded,
                         iconColor: AppColors.primary,
-                        label: 'Avg. daily spend',
+                        label: l.avgDailySpend,
                         value: '\$${summary.avgDaily.toStringAsFixed(2)}',
                       ),
                     ),
@@ -179,7 +181,7 @@ class ThisMonthCard extends StatelessWidget {
                         iconBg: const Color(0xFFDEEBFF),
                         icon: Icons.calendar_today_rounded,
                         iconColor: AppColors.accent,
-                        label: 'Days left',
+                        label: l.daysLeft,
                         value: '${extras.daysLeft}',
                       ),
                     ),
@@ -220,18 +222,25 @@ class _StatChip extends StatelessWidget {
           child: Icon(icon, size: 15),
         ),
         const SizedBox(width: 8),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(label, style: const TextStyle(fontSize: AppFontSize.sm)),
-            Text(
-              value,
-              style: TextStyle(
-                fontSize: AppFontSize.md,
-                fontWeight: FontWeight.w400,
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: const TextStyle(fontSize: AppFontSize.sm),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
               ),
-            ),
-          ],
+              Text(
+                value,
+                style: TextStyle(
+                  fontSize: AppFontSize.md,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );

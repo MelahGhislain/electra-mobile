@@ -2,6 +2,7 @@ import 'package:electra/common/widgets/bottom_sheets/app_bottom_sheet.dart';
 import 'package:electra/common/widgets/buttons/main_button.dart';
 import 'package:electra/common/widgets/text_fields/text_field.dart';
 import 'package:electra/domain/entities/user/user.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:electra/presentation/settings/blocs/user_cubit.dart';
 import 'package:electra/presentation/settings/blocs/user_state.dart';
 import 'package:flutter/material.dart';
@@ -9,9 +10,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class EditProfileBottomSheet {
   static Future<bool> show(BuildContext context, User user) async {
+    final l = AppLocalizations.of(context);
     final result = await AppBottomSheet.show<bool>(
       context,
-      title: 'Edit Profile',
+      title: l.editProfile,
       icon: Icons.person_outline_rounded,
       maxHeightPct: 0.80,
       child: BlocProvider.value(
@@ -62,6 +64,7 @@ class _EditProfileBodyState extends State<_EditProfileBody> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l = AppLocalizations.of(context);
 
     return BlocListener<UserCubit, UserState>(
       listener: (context, state) {
@@ -94,15 +97,15 @@ class _EditProfileBodyState extends State<_EditProfileBody> {
             children: [
               // Name field
               AppTextField(
-                label: 'Full Name',
-                hint: 'Enter your name',
+                label: l.fullName,
+                hint: l.enterYourName,
                 controller: _nameCtrl,
                 keyboardType: TextInputType.name,
                 validator: (v) {
                   if (v == null || v.trim().isEmpty) {
-                    return 'Name cannot be empty';
+                    return l.nameCannotBeEmpty;
                   }
-                  if (v.trim().length < 2) return 'Name is too short';
+                  if (v.trim().length < 2) return l.nameTooShort;
                   return null;
                 },
               ),
@@ -110,18 +113,18 @@ class _EditProfileBodyState extends State<_EditProfileBody> {
 
               // Email — editable
               AppTextField(
-                label: 'Email',
-                hint: 'Enter your email',
+                label: l.email,
+                hint: l.enterYourEmail,
                 controller: _emailCtrl,
                 keyboardType: TextInputType.emailAddress,
                 validator: (v) {
                   if (v == null || v.trim().isEmpty) {
-                    return 'Email cannot be empty';
+                    return l.emailCannotBeEmpty;
                   }
                   if (!RegExp(
                     r'^[\w-.]+@([\w-]+\.)+[\w]{2,}$',
                   ).hasMatch(v.trim())) {
-                    return 'Enter a valid email address';
+                    return l.enterValidEmail;
                   }
                   return null;
                 },
@@ -134,7 +137,7 @@ class _EditProfileBodyState extends State<_EditProfileBody> {
                 builder: (context, state) {
                   final isSaving = state is UserSaving;
                   return MainButton(
-                    text: 'Save Changes',
+                    text: l.saveChanges,
                     width: double.infinity,
                     isLoading: isSaving,
                     onPressed: isSaving ? () {} : () => _save(context),

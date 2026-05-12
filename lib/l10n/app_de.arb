@@ -2,39 +2,47 @@
   "@@locale": "de",
 
   "appName": "Electra",
+
   "settingsTitle": "Einstellungen",
   "settingsAccount": "Konto",
   "settingsGeneral": "Allgemein",
   "settingsData": "Daten",
   "settingsHelp": "Hilfe",
-  "settingsAbout": "Über",
+  "settingsAbout": "Über die App",
+
   "settingsBudget": "Budget & Einkommen",
   "settingsTheme": "Design",
   "settingsLanguage": "Sprache",
   "settingsCurrency": "Währung",
   "settingsNotifications": "Push-Benachrichtigungen",
-  "settingsNotificationsSubtitle": "Erhalte Erinnerungen und Ausgabenwarnungen",
+  "settingsNotificationsSubtitle": "Erinnerungen und Ausgabenwarnungen erhalten",
   "settingsExportData": "Daten exportieren",
   "settingsExportDataSubtitle": "Exportiere deine Daten",
-  "settingsSharedAccount": "Geteiltes Konto",
-  "settingsSharedAccountSubtitle": "Einstellungen für geteiltes Konto verwalten",
+  "settingsSharedAccount": "Gemeinsames Konto",
+  "settingsSharedAccountSubtitle": "Einstellungen für gemeinsames Konto verwalten",
   "settingsSupport": "Support",
-  "settingsSupportSubtitle": "Kontaktiere unser Support-Team",
+  "settingsSupportSubtitle": "Unser Support-Team kontaktieren",
   "settingsDocs": "Dokumentation",
-  "settingsDocsSubtitle": "Lerne die App kennen",
+  "settingsDocsSubtitle": "Lerne, die App zu nutzen",
   "settingsSuggest": "Verbesserung vorschlagen",
-  "settingsSuggestSubtitle": "Teile dein Feedback",
+  "settingsSuggestSubtitle": "Teile dein Feedback, um uns zu helfen",
   "settingsVersion": "Version",
-  "settingsSetupGuide": "Einrichtungshandbuch",
-  "settingsSetupGuideSubtitle": "Neu hier? Starte hier",
+  "settingsSetupGuide": "Einrichtungsanleitung",
+  "settingsSetupGuideSubtitle": "Neu hier? Beginne damit",
   "settingsDeleteAccount": "Konto löschen",
-  "settingsDeleteAccountSubtitle": "Konto dauerhaft entfernen",
+  "settingsDeleteAccountSubtitle": "Dein Konto dauerhaft löschen",
+
   "budgetNotSet": "Nicht festgelegt",
   "budgetPerMonth": "{amount} / Monat",
+  "@budgetPerMonth": {
+    "placeholders": { "amount": { "type": "String" } }
+  },
+
   "themeSystem": "System",
   "themeLight": "Hell",
   "themeDark": "Dunkel",
-  "languageSystemDefault": "Systemstandard",
+
+  "languageSystemDefault": "Systemsprache",
   "languageEnglish": "English",
   "languageFrench": "Français",
   "languageSpanish": "Español",
@@ -44,46 +52,275 @@
   "languageKorean": "한국어",
   "languagePortuguese": "Português",
   "languageArabic": "العربية",
-  "logoutTitle": "Abmelden?",
-  "logoutBody": "Du wirst von deinem Konto abgemeldet.",
-  "logoutConfirm": "Abmelden",
+
+  "logoutTitle": "Abmelden",
+  "logoutBody": "Möchtest du dich wirklich von deinem Konto abmelden?",
   "cancel": "Abbrechen",
   "confirm": "Bestätigen",
   "save": "Speichern",
   "delete": "Löschen",
   "edit": "Bearbeiten",
-  "retry": "Erneut versuchen",
-  "deleteAccountTitle": "Konto löschen?",
-  "deleteAccountBody": "Dein Konto und alle Daten werden dauerhaft gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
+  "tryAgain": "Erneut versuchen",
+  "today": "Heute",
+  "yesterday": "Gestern",
+
+  "editProfile": "Profil bearbeiten",
+  "fullName": "Vollständiger Name",
+  "enterYourName": "Gib deinen Namen ein",
+  "nameCannotBeEmpty": "Name darf nicht leer sein",
+  "nameTooShort": "Name ist zu kurz",
+  "email": "E-Mail",
+  "enterYourEmail": "Gib deine E-Mail-Adresse ein",
+  "emailCannotBeEmpty": "E-Mail darf nicht leer sein",
+  "enterValidEmail": "Gib eine gültige E-Mail-Adresse ein",
+  "saveChanges": "Änderungen speichern",
+
+  "monthlyBudget": "Monatliches Budget",
+  "budgetSubtitle": "Lege ein monatliches Ausgabenlimit fest, um auf Kurs zu bleiben.",
+  "budgetAmount": "Budgetbetrag",
+  "enterBudgetAmount": "Budgetbetrag eingeben",
+  "pleaseEnterABudgetAmount": "Bitte gib einen Budgetbetrag ein",
+  "enterAValidAmountGreaterThan0": "Gib einen gültigen Betrag größer als 0 ein",
+  "budgetSeemsTooHigh": "Budget scheint zu hoch — bitte überprüfen",
+  "quickSelect": "Schnellauswahl",
+  "saveBudget": "Budget speichern",
+  "removeBudget": "Budget entfernen",
+
+  "deleteAccountTitle": "Konto löschen",
+  "deleteAccountBody": "Diese Aktion ist dauerhaft und kann nicht rückgängig gemacht werden. Alle deine Daten, Käufe und Einstellungen werden gelöscht.",
+  "deleteAccountConfirmationMessage": "Gib {keyword} unten ein, um zu bestätigen, dass du verstehst, dass dies unwiderruflich ist.",
+  "@deleteAccountConfirmationMessage": {
+    "placeholders": { "keyword": { "type": "String" } }
+  },
+  "typeDeleteHere": "Gib {keyword} hier ein",
+  "@typeDeleteHere": {
+    "placeholders": { "keyword": { "type": "String" } }
+  },
+
   "onboardingSkip": "Überspringen",
   "onboardingNext": "Weiter",
   "onboardingLetsGo": "Los geht's",
+
   "homeGreeting": "Hallo {name}",
-  "homeTagline": "Übernimm die Kontrolle\nüber deinen Tag",
-  "homeSpendingBreakdown": "Ausgabenübersicht",
-  "homeMonthlySnapshot": "Monatsübersicht",
-  "homeRecentlyCompleted": "Zuletzt abgeschlossen",
-  "homeViewAll": "Alle anzeigen",
-  "homeAvgDaily": "Ø Tagesausgabe: {amount}",
-  "homeBudgetGood": "Gut gemacht! Du bleibst im Budget 👍",
-  "homeBudgetWarning": "Achtung! Du näherst dich deinem Budget.",
-  "homeBudgetOver": "Du hast dein Monatsbudget überschritten.",
-  "homeBudgetNone": "Kein Budget für diesen Monat festgelegt.",
-  "insightsTitle": "Ausgabenanalyse",
-  "insightsPeriodWeekly": "Wöchentlich",
-  "insightsPeriodMonthly": "Monatlich",
-  "insightsPeriodYearly": "Jährlich",
-  "insightsTotalSpent": "Gesamt ausgegeben im {period}",
-  "insightsBudgetOnTrack": "Im Plan",
-  "insightsBudgetOver": "Budget überschritten",
-  "insightsSpendingOverview": "Ausgabenübersicht",
-  "insightsViewByCategories": "Nach Kategorien",
-  "insightsViewAllCategories": "Alle Kategorien",
-  "insightsKeyInsights": "Wichtige Erkenntnisse",
-  "insightsTopCategories": "Top-Kategorien",
-  "insightsViewAll": "Alle anzeigen",
-  "insightsTrend": "Ausgabentrend",
-  "errorGeneric": "Etwas ist schiefgelaufen",
-  "errorNetwork": "Keine Verbindung. Prüfe dein Netzwerk.",
-  "errorSessionExpired": "Deine Sitzung ist abgelaufen. Bitte erneut anmelden."
+  "@homeGreeting": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "homeYoureSpendingLessThanUsual": "Du gibst weniger als üblich aus. Großartig!",
+  "letsSetThingsUp": "Lass uns alles einrichten",
+  "getTheMostOutOfTheAppBySetting": "Hole das Beste aus der App heraus, indem du einige Dinge einrichtest.",
+  "setMonthlyBudgetTitle": "Monatliches Budget festlegen",
+  "helpUsPersonalizeYourSpending": "Hilf uns, deinen Ausgabenplan zu personalisieren",
+  "enablePushNotifications": "Push-Benachrichtigungen aktivieren",
+  "stayUpdatedOnSpending": "Bleib über Ausgaben und Erinnerungen informiert",
+  "skipForNow": "Vorerst überspringen",
+  "youCanChangeTheseLater": "Du kannst diese Einstellungen jederzeit in den Einstellungen ändern.",
+
+  "todaysSpending": "Heutige Ausgaben",
+  "vsYesterday": "{percentage}% vs. gestern",
+  "@vsYesterday": {
+    "placeholders": { "percentage": { "type": "String" } }
+  },
+  "noDataForYesterday": "Keine Daten von gestern",
+  "mostRecentPurchase": "Letzter Kauf",
+  "ofDailyBudget": "des täglichen\nBudgets",
+  "dailyBudget": "Tagesbudget",
+
+  "topSpendingToday": "Größte Ausgaben heute",
+  "viewAll": "Alle anzeigen",
+  "total": "Gesamt",
+
+  "thisMonth": "Diesen Monat",
+  "overBudget": "Budget überschritten",
+  "headsUp": "Achtung",
+  "onTrack": "Im Rahmen",
+
+  "avgDailySpend": "Durchschn. Tagesausgaben",
+  "daysLeft": "Verbleibende Tage",
+  "recentActivity": "Letzte Aktivität",
+
+  "addExpense": "Ausgabe hinzufügen",
+  "repeat": "Wiederholen",
+  "setBudget": "Budget festlegen",
+  "scanReceipt": "Beleg\nscannen",
+
+  "noBudgetSetForThisMonth": "Kein Budget für diesen Monat festgelegt.",
+  "youHaveExceededYourMonthlyBudget": "Du hast dein monatliches Budget überschritten.",
+  "headsUpYouAreCloseToYourBudget": "Achtung! Du näherst dich deinem Budget.",
+  "niceWorkYouAreStayingWithinBudget": "Gut gemacht! Du bleibst im Budget 👍",
+
+  "spending": "Ausgaben",
+  "trackYourSpendingStayInControl": "Verfolge deine Ausgaben, behalte die Kontrolle",
+  "searchMerchantItemOrCategory": "Händler, Artikel oder Kategorie suchen...",
+  "spendingInsightMessage": "Du hast diese Woche {percentage}% mehr für {category} ausgegeben",
+  "@spendingInsightMessage": {
+    "placeholders": {
+      "percentage": { "type": "String" },
+      "category": { "type": "String" }
+    }
+  },
+
+  "addPurchase": "Kauf hinzufügen",
+  "editPurchase": "Kauf bearbeiten",
+  "title": "Titel",
+  "date": "Datum",
+  "category": "Kategorie",
+  "paymentMethod": "Zahlungsmethode",
+  "amount": "Betrag",
+  "currency": "Währung",
+  "pleaseEnterName": "Bitte gib einen Namen ein",
+  "enterAmount": "Betrag eingeben",
+  "savePurchase": "Kauf speichern",
+  "card": "Karte",
+  "cash": "Bargeld",
+  "other": "Sonstiges",
+
+  "filterAndSort": "Filtern und sortieren",
+  "resetAll": "Alle zurücksetzen",
+  "applyFilters": "Filter anwenden",
+  "sortBy": "Sortieren nach",
+  "merchant": "Händler",
+  "dateRange": "Datumsbereich",
+  "noCategoriesAvailable": "Keine Kategorien verfügbar",
+  "noMerchantsAvailable": "Keine Händler verfügbar",
+
+  "noResultsFound": "Keine Ergebnisse gefunden",
+  "noPurchasesYet": "Noch keine Käufe",
+  "tryAdjustingFiltersOrSearch": "Versuche, deine Filter oder Suche anzupassen",
+  "purchaseHistoryWillAppearHere": "Dein Kaufverlauf wird hier angezeigt",
+  "clearFilters": "Filter löschen",
+  "insight": "Einblick",
+
+  "noItems": "Keine Artikel",
+  "item": "Artikel",
+  "items": "Artikel",
+  "unknown": "Unbekannt",
+  "failedToLoadPurchase": "Kauf konnte nicht geladen werden",
+  "avgPrice": "Durchschn. Preis",
+  "payment": "Zahlung",
+
+  "below": "↓ Darunter",
+  "above": "↑ Darüber",
+  "at": "Bei",
+
+  "itemInsights": "↑ +{percent}% vs. letzter Kauf • Durchschnittspreis {label}",
+  "@itemInsights": {
+    "placeholders": {
+      "percent": { "type": "String" },
+      "label": { "type": "String" }
+    }
+  },
+
+  "editItem": "Artikel bearbeiten",
+  "deleteItem": "Artikel löschen",
+  "edited": "Bearbeitet",
+  "ofTotal": "{percent}% des Gesamtbetrags",
+  "@ofTotal": {
+    "placeholders": { "percent": { "type": "String" } }
+  },
+  "sortNameAZ": "Name (A–Z)",
+  "sortNameZA": "Name (Z–A)",
+  "sortPriceLow": "Preis ↑",
+  "sortPriceHigh": "Preis ↓",
+  "addItem": "Artikel hinzufügen",
+  "noItemsRecorded": "Keine Artikel erfasst",
+  "noCategoryDataAvailable": "Keine Kategoriedaten verfügbar",
+  "sortItems": "Artikel sortieren",
+  "view": "Ansehen",
+  "receipt": "Beleg",
+  "noReceiptAdded": "Kein Beleg hinzugefügt",
+  "uploadedProcessed": "Hochgeladen am {date} • Verarbeitet",
+  "@uploadedProcessed": {
+    "placeholders": { "date": { "type": "String" } }
+  },
+
+  "spendingInsights": "Ausgabenanalyse",
+  "spendingOverview": "Ausgabenübersicht",
+  "viewByCategories": "Nach Kategorien",
+  "keyInsights": "Wichtige Einblicke",
+  "topSpendingCategories": "Top-Ausgabenkategorien",
+  "spendingTrend": "Ausgabentrend",
+  "previous": "Vorherige",
+  "paymentMethods": "Zahlungsmethoden",
+  "weekly": "Wöchentlich",
+  "monthly": "Monatlich",
+  "yearly": "Jährlich",
+  "noDataThisPeriod": "Keine Daten\nin diesem Zeitraum",
+  "viewAllCategories": "Alle Kategorien anzeigen",
+  "somethingWentWrong": "Etwas ist schiefgelaufen",
+  "savingsOpportunity": "Sparmöglichkeit",
+  "noSpendingDataThisPeriod": "Keine Ausgabendaten in diesem Zeitraum",
+
+  "totalSpentIn": "Gesamt ausgegeben in {period}",
+  "@totalSpentIn": {
+    "placeholders": { "period": { "type": "String" } }
+  },
+  "lessThanPrevious": "{percent}% weniger als vorher ({amount})",
+  "@lessThanPrevious": {
+    "placeholders": {
+      "percent": { "type": "String" },
+      "amount": { "type": "String" }
+    }
+  },
+  "moreThanPrevious": "{percent}% mehr als vorher ({amount})",
+  "@moreThanPrevious": {
+    "placeholders": {
+      "percent": { "type": "String" },
+      "amount": { "type": "String" }
+    }
+  },
+  "budgetStatus": "Budgetstatus",
+  "ofBudget": "von {amount} Budget",
+  "@ofBudget": {
+    "placeholders": { "amount": { "type": "String" } }
+  },
+
+  "averagePerDay": "Durchschnitt pro Tag",
+  "thisPeriod": "Dieser Zeitraum",
+  "noTrendDataAvailable": "Keine Trenddaten verfügbar",
+
+  "letsSignYouIn": "Lass uns dich anmelden",
+  "signInAndStartPlanning": "Melde dich an und beginne zu planen.",
+  "emailAddress": "E-Mail-Adresse",
+  "enterYourMailAddress": "Gib deine E-Mail-Adresse ein",
+  "emailIsRequired": "E-Mail ist erforderlich",
+  "password": "Passwort",
+  "enterYourPassword": "Gib dein Passwort ein",
+  "passwordIsRequired": "Passwort ist erforderlich",
+  "signIn": "Anmelden",
+  "continueWithGoogle": "Mit Google fortfahren",
+  "dontHaveAnAccount": "Noch kein Konto?",
+  "signUp": "Registrieren",
+  "nameIsRequired": "Name ist erforderlich",
+  "minimum8Characters": "Mindestens 8 Zeichen",
+  "reEnterPassword": "Passwort wiederholen",
+  "passwordsDoNotMatch": "Passwörter stimmen nicht überein",
+  "alreadyHaveAnAccount": "Bereits ein Konto?",
+  "orSignWith": "Oder fortfahren mit",
+
+  "whereDidMyMoneyGo": "Wo ist mein Geld geblieben?",
+  "myMoney": "Mein Geld",
+  "stopGuessingSpending": "Hör auf zu raten. Electra hilft dir, jeden Ausgabe mühelos zu verfolgen.",
+
+  "trackWithYourVoice": "Mit deiner Stimme verfolgen",
+  "voice": "Stimme",
+  "voiceDescription": "Sprich einfach, wir erledigen den Rest. Schnell, intelligent und super einfach.",
+
+  "autoCategorizeExpenses": "Ausgaben automatisch kategorisieren",
+  "autoCategorize": "Auto-Kategorie",
+  "autoCategorizeDescription": "Electra kategorisiert deine Ausgaben automatisch, damit du dich auf das Wesentliche konzentrieren kannst.",
+
+  "insightsThatHelpYouSave": "Einblicke, die dir helfen zu sparen",
+  "insightsDescription": "Verstehe deine Ausgabenmuster und triff klügere finanzielle Entscheidungen.",
+
+  "yourDataIsSafe": "Deine Daten sind immer sicher",
+  "safe": "Sicher",
+  "privacyDescription": "Wir halten deine Daten privat und sicher. Dein Vertrauen ist unsere Priorität.",
+
+  "saveMoreStressLess": "Mehr sparen. Weniger stressen.",
+  "saveMore": "Mehr sparen.",
+  "finalOnboardingDescription": "Behalte die Kontrolle über deine Finanzen und entwickle täglich bessere Geldgewohnheiten.",
+
+  "skip": "Überspringen",
+  "next": "Weiter",
+  "letsGo": "Los geht's"
 }

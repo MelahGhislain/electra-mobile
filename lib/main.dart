@@ -7,6 +7,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:electra/core/configs/env.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,6 +39,7 @@ void main() async {
     Env.debugPrintAll();
   }
 
+  await initializeDateFormatting();
   // Initialize dependency injection
   await init(); // DI (Service Locator)
 

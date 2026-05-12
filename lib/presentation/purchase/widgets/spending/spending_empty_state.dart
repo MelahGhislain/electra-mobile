@@ -1,4 +1,5 @@
 import 'package:electra/core/configs/theme/app_colors.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class SpendingEmptyState extends StatelessWidget {
@@ -13,6 +14,8 @@ class SpendingEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 40),
@@ -35,14 +38,14 @@ class SpendingEmptyState extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              isFiltered ? 'No results found' : 'No purchases yet',
+              isFiltered ? l.noResultsFound : l.noPurchasesYet,
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 6),
             Text(
               isFiltered
-                  ? 'Try adjusting your filters or search query'
-                  : 'Your purchase history will appear here',
+                  ? l.tryAdjustingFiltersOrSearch
+                  : l.purchaseHistoryWillAppearHere,
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 13,
@@ -63,8 +66,8 @@ class SpendingEmptyState extends StatelessWidget {
                     vertical: 10,
                   ),
                 ),
-                child: const Text(
-                  'Clear Filters',
+                child: Text(
+                  l.clearFilters,
                   style: TextStyle(
                     color: AppColors.darkBackground,
                     fontWeight: FontWeight.w600,

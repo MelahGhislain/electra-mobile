@@ -1,4 +1,5 @@
 import 'package:electra/domain/entities/insights/insights.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -55,6 +56,7 @@ class _PaymentMethodsCard extends StatelessWidget {
     final theme = Theme.of(context);
     final fmt = NumberFormat.currency(symbol: r'$', decimalDigits: 2);
     final displayed = methods.take(3).toList();
+    final l = AppLocalizations.of(context);
 
     return Container(
       padding: const EdgeInsets.all(14),
@@ -72,7 +74,7 @@ class _PaymentMethodsCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'Payment methods',
+                  l.paymentMethods,
                   style: theme.textTheme.bodyMedium?.copyWith(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,

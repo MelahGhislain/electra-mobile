@@ -1,3 +1,4 @@
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:electra/presentation/purchase/pages/purchase_filter.dart';
 import 'package:flutter/material.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
@@ -14,6 +15,8 @@ class SpendingActiveFilterChips extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+
     if (!filter.hasActiveFilters) return const SizedBox.shrink();
 
     final chips = <Widget>[];
@@ -46,7 +49,7 @@ class SpendingActiveFilterChips extends StatelessWidget {
     if (filter.dateFrom != null) {
       chips.add(
         _Chip(
-          label: 'Date range',
+          label: l.dateRange,
           onRemove: () => onFilterChanged(filter.copyWith(clearDate: true)),
         ),
       );

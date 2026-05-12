@@ -1,4 +1,5 @@
 import 'package:electra/core/configs/fonts.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:electra/presentation/home/utils/home_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +16,7 @@ class RecentActivityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (items.isEmpty) return const SizedBox.shrink();
+    final l = AppLocalizations.of(context);
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 20, 18, 0),
@@ -25,8 +27,8 @@ class RecentActivityCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Recent Activity',
+              Text(
+                l.recentActivity,
                 style: TextStyle(
                   fontSize: AppFontSize.lg,
                   fontWeight: FontWeight.w700,
@@ -35,7 +37,7 @@ class RecentActivityCard extends StatelessWidget {
               GestureDetector(
                 onTap: onViewAll,
                 child: Text(
-                  'View all',
+                  l.viewAll,
                   style: TextStyle(
                     fontSize: AppFontSize.md,
                     fontWeight: FontWeight.w400,
@@ -72,6 +74,8 @@ class _ActivityRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12),
       child: Row(
@@ -100,7 +104,7 @@ class _ActivityRow extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      RecentActivityHelper.formatRelativeTime(item.date),
+                      RecentActivityHelper.formatRelativeTime(item.date, l),
                       style: const TextStyle(fontSize: AppFontSize.xs),
                     ),
                     const SizedBox(width: 6),

@@ -3,6 +3,7 @@ import 'package:electra/common/widgets/text_fields/text_field.dart';
 import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/router/route_names.dart';
 import 'package:electra/core/utils/auth/auth_navigation.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:electra/presentation/auth/bloc/auth_cubit.dart';
 import 'package:electra/presentation/auth/bloc/auth_state.dart';
 import 'package:electra/presentation/auth/widgets/auth_divider.dart';
@@ -42,6 +43,7 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l = AppLocalizations.of(context);
 
     return Scaffold(
       body: BlocConsumer<AuthCubit, AuthState>(
@@ -108,8 +110,8 @@ class _SignInScreenState extends State<SignInScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          "Let's Sign you in",
+                        Text(
+                          l.letsSignYouIn,
                           style: TextStyle(
                             fontSize: AppFontSize.xxl,
                             fontWeight: FontWeight.bold,
@@ -117,24 +119,24 @@ class _SignInScreenState extends State<SignInScreen> {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          'Sign in and start planning.',
+                          l.signInAndStartPlanning,
                           style: TextStyle(fontSize: AppFontSize.sm),
                         ),
                         const SizedBox(height: 28),
 
                         AppTextField(
-                          label: 'Email Address',
-                          hint: 'Enter your mail address',
+                          label: l.emailAddress,
+                          hint: l.enterYourMailAddress,
                           controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
                           validator: (v) {
                             if (v == null || v.isEmpty) {
-                              return 'Email is required';
+                              return l.emailIsRequired;
                             }
                             if (!RegExp(
                               r'^[\w-.]+@([\w-]+\.)+[\w]{2,}$',
                             ).hasMatch(v)) {
-                              return 'Enter a valid email';
+                              return l.enterValidEmail;
                             }
                             return null;
                           },
@@ -142,14 +144,14 @@ class _SignInScreenState extends State<SignInScreen> {
                         const SizedBox(height: 16),
 
                         AppTextField(
-                          label: 'Password',
-                          hint: 'Enter your password',
+                          label: l.password,
+                          hint: l.enterYourPassword,
                           controller: _passwordController,
                           isPassword: true,
                           textInputAction: TextInputAction.done,
                           validator: (v) {
                             if (v == null || v.isEmpty) {
-                              return 'Password is required';
+                              return l.passwordIsRequired;
                             }
                             return null;
                           },
@@ -157,7 +159,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         const SizedBox(height: 20),
 
                         MainButton(
-                          text: 'Sign In',
+                          text: l.signIn,
                           isLoading: isLoading,
                           size: ButtonSize.small,
                           width: double.infinity,
@@ -166,11 +168,11 @@ class _SignInScreenState extends State<SignInScreen> {
 
                         const SizedBox(height: 28),
 
-                        const AuthDivider(),
+                        AuthDivider(label: l.orSignWith),
                         const SizedBox(height: 16),
 
                         AuthSocialButton(
-                          label: 'Continue With Google',
+                          label: l.continueWithGoogle,
                           icon: const Icon(
                             Icons.g_mobiledata,
                             size: 26,
@@ -188,12 +190,12 @@ class _SignInScreenState extends State<SignInScreen> {
                               context.pushNamed(RouteNames.signUp);
                             },
                             child: RichText(
-                              text: const TextSpan(
-                                text: "Don't have an account? ",
+                              text: TextSpan(
+                                text: l.dontHaveAnAccount,
                                 style: TextStyle(fontSize: AppFontSize.sm),
                                 children: [
                                   TextSpan(
-                                    text: 'Sign up',
+                                    text: l.signUp,
                                     style: TextStyle(
                                       color: Color(0xFF2563EB),
                                       fontWeight: FontWeight.w600,

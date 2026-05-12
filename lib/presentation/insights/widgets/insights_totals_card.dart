@@ -3,6 +3,7 @@
 import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/domain/entities/insights/insights.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -34,6 +35,7 @@ class InsightsTotalsCard extends StatelessWidget {
     final prevFmt = fmt.format(totals.previousAmount);
 
     final shortLabel = periodLabel.split(' ').first;
+    final l = AppLocalizations.of(context);
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -57,7 +59,7 @@ class InsightsTotalsCard extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          'Total spent in $shortLabel',
+                          l.totalSpentIn(shortLabel),
                           style: const TextStyle(
                             fontSize: AppFontSize.sm,
                             fontWeight: FontWeight.w500,
@@ -88,7 +90,9 @@ class InsightsTotalsCard extends StatelessWidget {
                           const SizedBox(width: 2),
                           Flexible(
                             child: Text(
-                              '$absPct% ${isDown ? 'less' : 'more'} than previous ($prevFmt)',
+                              isDown
+                                  ? l.lessThanPrevious(absPct, prevFmt)
+                                  : l.moreThanPrevious(absPct, prevFmt),
                               style: TextStyle(
                                 fontSize: AppFontSize.xs,
                                 color: deltaColor,
@@ -122,7 +126,7 @@ class InsightsTotalsCard extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        'Budget status',
+                        l.budgetStatus,
                         style: TextStyle(
                           fontSize: AppFontSize.xs,
                           color: budget!.isOnTrack
@@ -135,7 +139,7 @@ class InsightsTotalsCard extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            budget!.isOnTrack ? 'On track' : 'Over budget',
+                            budget!.isOnTrack ? l.onTrack : l.overBudget,
                             style: TextStyle(
                               fontSize: AppFontSize.sm,
                               fontWeight: FontWeight.w500,
@@ -200,7 +204,7 @@ class InsightsTotalsCard extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            'of ${fmt.format(budget!.monthlyBudget)} budget',
+                            l.ofBudget(fmt.format(budget!.monthlyBudget)),
                             style: theme.textTheme.bodySmall?.copyWith(
                               fontSize: AppFontSize.xs,
                               color: AppColors.darkBackground,

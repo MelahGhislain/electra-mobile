@@ -1,5 +1,6 @@
 import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class InsightsHeader extends StatelessWidget {
@@ -74,19 +75,21 @@ class _PeriodDropdown extends StatelessWidget {
     required this.theme,
   });
 
-  String _labelFor(String p) {
+  String _labelFor(String p, AppLocalizations l) {
     switch (p) {
       case 'weekly':
-        return 'Weekly';
+        return l.weekly;
       case 'yearly':
-        return 'Yearly';
+        return l.yearly;
       default:
-        return 'Monthly';
+        return l.monthly;
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+
     return PopupMenuButton<String>(
       initialValue: selected,
       onSelected: onChanged,
@@ -105,7 +108,7 @@ class _PeriodDropdown extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      _labelFor(p),
+                      _labelFor(p, l),
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: p == selected
@@ -133,7 +136,7 @@ class _PeriodDropdown extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              _labelFor(selected),
+              _labelFor(selected, l),
               style: TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: AppFontSize.sm,

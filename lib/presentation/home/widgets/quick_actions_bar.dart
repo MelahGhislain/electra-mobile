@@ -1,5 +1,6 @@
 import 'package:electra/common/blocs/receipt/receipt_cubit.dart';
 import 'package:electra/core/enums/image_source_enum.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,12 +18,14 @@ class QuickActionsBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 0),
       child: Row(
         children: [
           _ActionCard(
-            label: 'Add Expense',
+            label: l.addExpense,
             icon: Icons.add_rounded,
             iconColor: Colors.white,
             circleBg: const Color(0xFF22C55E),
@@ -32,7 +35,7 @@ class QuickActionsBar extends StatelessWidget {
           _ScanCard(),
           const SizedBox(width: 10),
           _ActionCard(
-            label: 'Repeat',
+            label: l.repeat,
             icon: Icons.repeat_rounded,
             iconColor: Colors.white,
             circleBg: const Color(0xFF8B5CF6),
@@ -40,7 +43,7 @@ class QuickActionsBar extends StatelessWidget {
           ),
           const SizedBox(width: 10),
           _ActionCard(
-            label: 'Set Budget',
+            label: l.setBudget,
             icon: Icons.gps_fixed_rounded,
             iconColor: Colors.white,
             circleBg: const Color(0xFFF97316),
@@ -118,6 +121,8 @@ class _ActionCard extends StatelessWidget {
 class _ScanCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+
     return Expanded(
       child: GestureDetector(
         onTap: () =>
@@ -152,8 +157,8 @@ class _ScanCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8),
-              const Text(
-                'Scan\nReceipt',
+              Text(
+                l.scanReceipt,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 12,

@@ -1,5 +1,7 @@
 import 'package:electra/core/configs/fonts.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class SpendingDayHeader extends StatelessWidget {
   final DateTime date;
@@ -13,36 +15,25 @@ class SpendingDayHeader extends StatelessWidget {
     required this.total,
   });
 
-  String _formatLabel() {
+  String _formatLabel(BuildContext context) {
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
     final yesterday = today.subtract(const Duration(days: 1));
     final d = DateTime(date.year, date.month, date.day);
+    final l = AppLocalizations.of(context);
+    final locale = Localizations.localeOf(context);
 
     if (d == today) {
-      final month = _monthAbbr(date.month);
-      return 'Today • $month ${date.day}, ${date.year}';
+      final month = monthAbbr(date.month, locale);
+      return '${l.today} • $month ${date.day}, ${date.year}';
     }
-    if (d == yesterday) return 'Yesterday';
-    return '${_monthAbbr(date.month)} ${date.day}, ${date.year}';
+    if (d == yesterday) return l.yesterday;
+    return '${monthAbbr(date.month, locale)} ${date.day}, ${date.year}';
   }
 
-  String _monthAbbr(int m) {
-    const months = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
-    return months[m - 1];
+  String monthAbbr(int month, Locale locale) {
+    final date = DateTime(2024, month, 1);
+    return DateFormat.MMM(locale.toString()).format(date);
   }
 
   @override
@@ -52,7 +43,7 @@ class SpendingDayHeader extends StatelessWidget {
       child: Row(
         children: [
           Text(
-            _formatLabel(),
+            _formatLabel(context),
             style: const TextStyle(
               fontSize: AppFontSize.md,
               fontWeight: FontWeight.w500,
