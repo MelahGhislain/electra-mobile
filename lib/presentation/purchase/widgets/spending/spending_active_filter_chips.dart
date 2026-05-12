@@ -24,7 +24,7 @@ class SpendingActiveFilterChips extends StatelessWidget {
     if (filter.sort != PurchaseSortOption.newest) {
       chips.add(
         _Chip(
-          label: filter.sort.label,
+          label: filter.sort.label(l),
           onRemove: () =>
               onFilterChanged(filter.copyWith(sort: PurchaseSortOption.newest)),
         ),

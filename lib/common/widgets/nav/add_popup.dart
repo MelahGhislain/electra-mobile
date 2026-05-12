@@ -1,6 +1,7 @@
 import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/core/router/route_names.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -22,6 +23,7 @@ class AddPopup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     final notchColor = Theme.of(context).brightness == Brightness.dark
         ? AppColors.darkBorder
         : Colors.white;
@@ -54,8 +56,8 @@ class AddPopup extends StatelessWidget {
                   iconBg: const Color(0xFFE8FDF0),
                   icon: Icons.edit_outlined,
                   iconColor: const Color(0xFF22C55E),
-                  title: 'Manual Entry',
-                  subtitle: 'Enter details manually',
+                  title: l.manualEntry,
+                  subtitle: l.enterDetailsManually,
                   onTap: onManualEntry,
                 ),
                 const Divider(height: 0.5, indent: 16, endIndent: 16),
@@ -63,8 +65,8 @@ class AddPopup extends StatelessWidget {
                   iconBg: const Color(0xFFEDE9FE),
                   icon: Icons.mic_outlined,
                   iconColor: const Color(0xFF7C3AED),
-                  title: 'Voice Input',
-                  subtitle: 'Add by speaking',
+                  title: l.voiceInput,
+                  subtitle: l.addBySpeaking,
                   isPremium: true,
                   isLocked: true,
                   onTap: onVoiceInput,
@@ -74,8 +76,8 @@ class AddPopup extends StatelessWidget {
                   iconBg: const Color(0xFFDBEAFE),
                   icon: Icons.camera_alt_outlined,
                   iconColor: const Color(0xFF2563EB),
-                  title: 'Scan Receipt',
-                  subtitle: 'Snap a photo of your receipt',
+                  title: l.scanReceipt,
+                  subtitle: l.snapPhotoOfReceipt,
                   isPremium: true,
                   isLocked: true,
                   onTap: onScanReceipt,
@@ -137,6 +139,8 @@ class _PopupRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+
     return InkWell(
       onTap: !isLocked
           ? onTap
@@ -163,10 +167,11 @@ class _PopupRow extends StatelessWidget {
                   Row(
                     children: [
                       SizedBox(
-                        width: 120,
+                        width: 130,
                         child: Text(
                           title,
                           style: const TextStyle(fontSize: AppFontSize.md),
+                          maxLines: 1,
                         ),
                       ),
                       if (isPremium) ...[
@@ -181,9 +186,9 @@ class _PopupRow extends StatelessWidget {
                             ).primaryColor.withValues(alpha: 0.8),
                             borderRadius: BorderRadius.circular(5),
                           ),
-                          child: const Text(
-                            'Premium',
-                            style: TextStyle(fontSize: AppFontSize.sm),
+                          child: Text(
+                            l.premium,
+                            style: const TextStyle(fontSize: AppFontSize.sm),
                           ),
                         ),
                       ],

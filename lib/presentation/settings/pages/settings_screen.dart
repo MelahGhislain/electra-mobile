@@ -302,6 +302,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           _SettingsGroup(
                             children: [
                               SettingsTile(
+                                icon: Icons.diamond_outlined,
+                                title: l.subscription,
+                                // subtitle: _budgetLabel(settings, l), // TODO: Display the subcription tier
+                                showChevron: true,
+                                showDivider: true,
+                                onTap: user != null
+                                    ? () => context.pushNamed(
+                                        RouteNames.subscription,
+                                      )
+                                    : null,
+                              ),
+                              SettingsTile(
                                 icon: Icons.wallet_rounded,
                                 title: l.settingsBudget,
                                 subtitle: _budgetLabel(settings, l),

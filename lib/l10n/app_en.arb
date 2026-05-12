@@ -340,5 +340,74 @@
 
   "skip": "Skip",
   "next": "Next",
-  "letsGo": "Let's Go"
+  "letsGo": "Let's Go",
+
+  "spendingDetails": "Spending details",
+  "editPurchase": "Edit purchase",
+  "share": "Share",
+  "export": "Export",
+  "deletePurchase": "Delete purchase",
+  "deletePurchaseTitle": "Delete purchase?",
+  "deletePurchaseDescription": "This action cannot be undone.",
+  "premiumFeature": "Premium feature",
+  "savingChanges": "Saving changes…",
+  "sortNewest": "Newest First",
+  "sortOldest": "Oldest First",
+  "sortMostExpensive": "Most Expensive",
+  "sortCheapest": "Cheapest",
+  "sortByName": "By Name",
+  "categoryFood":          "Food",
+  "categoryTransport":     "Transport",
+  "categoryHousing":       "Housing",
+  "categoryBills":         "Bills",
+  "categorySubscriptions": "Subscriptions",
+  "categoryShopping":      "Shopping",
+  "categoryHealth":        "Health",
+  "categoryEntertainment": "Entertainment",
+  "categoryTravel":        "Travel",
+  "categoryEducation":     "Education",
+  "categoryPersonal":      "Personal",
+  "categoryGifts":         "Gifts",
+  "categoryDonations":     "Donations",
+  "categoryOther":         "Other",
+
+  "selectCategory": "Select category",
+  "searchCategories": "Search categories...",
+  "noCategoriesFoundFor": "No categories found for \"{query}\"",
+  "@noCategoriesFoundFor": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "itemWillBePermanentlyRemoved": "\"{itemName}\" will be permanently removed from this purchase.",
+  "@itemWillBePermanentlyRemoved": {
+    "placeholders": {
+      "itemName": {
+        "type": "String"
+      }
+    }
+  },
+
+  "itemName": "Item name",
+  "itemNameHint": "e.g. Beef, Milk, Shampoo",
+  "unitPrice": "Unit price",
+  "required": "Required",
+  "invalid": "Invalid",
+  "quantityShort": "Qty",
+  "minimumOne": "Min 1",
+  "home": "Home",
+  "insights": "Insights",
+  "profile": "Profile",
+  "selectDateRange": "Select date range",
+
+  "premium": "Premium",
+  "subscription": "Subscription",
+  "manualEntry": "Manual Entry",
+  "enterDetailsManually": "Enter details manually",
+  "voiceInput": "Voice Input",
+  "addBySpeaking": "Add by speaking",
+  "snapPhotoOfReceipt": "Snap a photo of your receipt",
+  "all": "All"
 }

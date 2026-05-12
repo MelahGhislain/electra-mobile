@@ -3,9 +3,9 @@ import 'package:electra/common/widgets/buttons/main_button.dart';
 import 'package:electra/common/widgets/dialogs/app_confirm_dialog.dart';
 import 'package:electra/common/widgets/text_fields/catetory_selector.dart';
 import 'package:electra/common/widgets/text_fields/text_field.dart';
-import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/domain/entities/purchase/purchase_item.dart';
 import 'package:electra/core/utils/category_meta.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:electra/presentation/purchase/widgets/spending_detail/category_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -32,10 +32,12 @@ Future<ItemFormResult?> showItemFormSheet(
   BuildContext context, {
   PurchaseItem? item,
 }) {
+  final l = AppLocalizations.of(context);
+
   return AppBottomSheet.show<ItemFormResult>(
     context,
     maxHeightPct: 0.90,
-    title: item == null ? 'Add item' : 'Edit item',
+    title: item == null ? l.addItem : l.editItem,
     icon: item == null ? Icons.add_circle_outline_rounded : Icons.edit_rounded,
     child: _ItemFormSheetBody(item: item),
   );
@@ -117,6 +119,8 @@ class _ItemFormSheetBodyState extends State<_ItemFormSheetBody> {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+
     return Padding(
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,
@@ -132,18 +136,18 @@ class _ItemFormSheetBodyState extends State<_ItemFormSheetBody> {
               // ── 1. Name ──────────────────────────────────────────────
               AppTextField(
                 controller: _nameCtrl,
-                label: 'Item name',
-                hint: 'e.g. Beef, Milk, Shampoo',
+                label: l.itemName,
+                hint: l.itemNameHint,
                 textCapitalization: TextCapitalization.words,
                 validator: (v) =>
-                    (v == null || v.trim().isEmpty) ? 'Name is required' : null,
+                    (v == null || v.trim().isEmpty) ? l.nameIsRequired : null,
               ),
 
               const SizedBox(height: 16),
 
               // ── 2. Category ──────────────────────────────────────────
               CategorySelectField(
-                label: 'Category',
+                label: l.category,
                 selected: _selectedCategory,
                 onTap: _pickCategory,
               ),
@@ -162,7 +166,7 @@ class _ItemFormSheetBodyState extends State<_ItemFormSheetBody> {
 
               // ── Save button ──────────────────────────────────────────
               MainButton(
-                text: _isEdit ? 'Save changes' : 'Add item',
+                text: _isEdit ? l.saveChanges : l.addItem,
                 onPressed: _submit,
                 width: double.infinity,
               ),
@@ -193,6 +197,8 @@ class _PricingRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -202,7 +208,7 @@ class _PricingRow extends StatelessWidget {
           child: AppTextField(
             controller: unitPriceCtrl,
             hint: '0.00',
-            label: 'Unit price',
+            label: l.unitPrice,
             prefixText: '\$ ',
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             inputFormatters: [
@@ -210,9 +216,9 @@ class _PricingRow extends StatelessWidget {
             ],
             onChanged: (_) => onChanged(),
             validator: (v) {
-              if (v == null || v.trim().isEmpty) return 'Required';
+              if (v == null || v.trim().isEmpty) return l.required;
               final n = double.tryParse(v);
-              if (n == null || n <= 0) return 'Invalid';
+              if (n == null || n <= 0) return l.invalid;
               return null;
             },
           ),
@@ -226,14 +232,14 @@ class _PricingRow extends StatelessWidget {
           child: AppTextField(
             controller: qtyCtrl,
             hint: '1',
-            label: 'Qty',
+            label: l.quantityShort,
             keyboardType: TextInputType.number,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             onChanged: (_) => onChanged(),
             validator: (v) {
-              if (v == null || v.trim().isEmpty) return 'Required';
+              if (v == null || v.trim().isEmpty) return l.required;
               if (int.tryParse(v) == null || int.parse(v) < 1) {
-                return 'Min 1';
+                return l.minimumOne;
               }
               return null;
             },
@@ -248,8 +254,8 @@ class _PricingRow extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Total',
+              Text(
+                l.total,
                 style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 6),
@@ -283,12 +289,13 @@ Future<bool?> showDeleteItemConfirmation(
   BuildContext context, {
   required PurchaseItem item,
 }) {
+  final l = AppLocalizations.of(context);
+
   return AppConfirmDialog.show(
     context,
-    title: 'Delete item?',
-    description:
-        '"${item.name}" will be permanently removed from this purchase.',
-    confirmText: 'Delete',
+    title: l.deleteItem,
+    description: l.itemWillBePermanentlyRemoved(item.name),
+    confirmText: l.delete,
     isDestructive: true,
     onConfirm: () => Navigator.pop(context, true),
   );

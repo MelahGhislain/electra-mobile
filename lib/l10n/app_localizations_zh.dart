@@ -369,7 +369,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get addPurchase => '添加消费';
 
   @override
-  String get editPurchase => '编辑消费';
+  String get editPurchase => '编辑购买';
 
   @override
   String get title => '标题';
@@ -738,4 +738,158 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get letsGo => '开始';
+
+  @override
+  String get spendingDetails => '消费详情';
+
+  @override
+  String get share => '分享';
+
+  @override
+  String get export => '导出';
+
+  @override
+  String get deletePurchase => '删除购买';
+
+  @override
+  String get deletePurchaseTitle => '删除购买？';
+
+  @override
+  String get deletePurchaseDescription => '此操作无法撤销。';
+
+  @override
+  String get premiumFeature => '高级功能';
+
+  @override
+  String get savingChanges => '正在保存更改…';
+
+  @override
+  String get sortNewest => '最新优先';
+
+  @override
+  String get sortOldest => '最旧优先';
+
+  @override
+  String get sortMostExpensive => '最贵优先';
+
+  @override
+  String get sortCheapest => '最便宜优先';
+
+  @override
+  String get sortByName => '按名称';
+
+  @override
+  String get categoryFood => '餐饮';
+
+  @override
+  String get categoryTransport => '交通';
+
+  @override
+  String get categoryHousing => '住房';
+
+  @override
+  String get categoryBills => '账单';
+
+  @override
+  String get categorySubscriptions => '订阅';
+
+  @override
+  String get categoryShopping => '购物';
+
+  @override
+  String get categoryHealth => '健康';
+
+  @override
+  String get categoryEntertainment => '娱乐';
+
+  @override
+  String get categoryTravel => '旅行';
+
+  @override
+  String get categoryEducation => '教育';
+
+  @override
+  String get categoryPersonal => '个人';
+
+  @override
+  String get categoryGifts => '礼物';
+
+  @override
+  String get categoryDonations => '捐款';
+
+  @override
+  String get categoryOther => '其他';
+
+  @override
+  String get selectCategory => '选择分类';
+
+  @override
+  String get searchCategories => '搜索分类...';
+
+  @override
+  String noCategoriesFoundFor(String query) {
+    return '未找到\"$query\"的分类';
+  }
+
+  @override
+  String itemWillBePermanentlyRemoved(String itemName) {
+    return '\"$itemName\"将从此购买中永久删除。';
+  }
+
+  @override
+  String get itemName => '商品名称';
+
+  @override
+  String get itemNameHint => '例如：牛肉、牛奶、洗发水';
+
+  @override
+  String get unitPrice => '单价';
+
+  @override
+  String get required => '必填';
+
+  @override
+  String get invalid => '无效';
+
+  @override
+  String get quantityShort => '数量';
+
+  @override
+  String get minimumOne => '最少 1';
+
+  @override
+  String get home => '首页';
+
+  @override
+  String get insights => '洞察';
+
+  @override
+  String get profile => '个人资料';
+
+  @override
+  String get selectDateRange => '选择日期范围';
+
+  @override
+  String get premium => '高级版';
+
+  @override
+  String get subscription => '订阅';
+
+  @override
+  String get manualEntry => '手动输入';
+
+  @override
+  String get enterDetailsManually => '手动输入详情';
+
+  @override
+  String get voiceInput => '语音输入';
+
+  @override
+  String get addBySpeaking => '通过语音添加';
+
+  @override
+  String get snapPhotoOfReceipt => '拍摄收据照片';
+
+  @override
+  String get all => '全部';
 }

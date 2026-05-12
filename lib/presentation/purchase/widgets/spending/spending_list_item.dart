@@ -121,7 +121,7 @@ class SpendingListItem extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(4),
                                 ),
                                 child: Text(
-                                  purchase.items.first.category.name,
+                                  meta.localizedLabel(l),
                                   style: TextStyle(
                                     fontSize: AppFontSize.sm,
                                     fontWeight: FontWeight.w600,

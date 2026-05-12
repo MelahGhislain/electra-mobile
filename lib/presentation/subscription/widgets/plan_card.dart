@@ -9,6 +9,8 @@ class PlanCard extends StatelessWidget {
   final VoidCallback onSubscribe;
   final bool isLoading;
   final String priceString;
+  final double monthlyPrice;
+  final double annualPrice;
 
   const PlanCard({
     super.key,
@@ -16,6 +18,8 @@ class PlanCard extends StatelessWidget {
     required this.onSubscribe,
     this.isLoading = false,
     required this.priceString,
+    required this.monthlyPrice,
+    required this.annualPrice,
   });
 
   String get _price => priceString;
@@ -26,13 +30,18 @@ class PlanCard extends StatelessWidget {
 
   static const _premiumFeatures = [
     'Everything in Free',
-    'Unlimited purchases & items',
-    'AI receipt scanning',
-    'Voice input for expenses',
-    'Smart spending insights & trends',
-    'Budget alerts & forecasting',
+    'Never hit a tracking limit again',
+    'Scan a receipt in under 3 seconds',
+    'Log expenses while driving, hands-free',
+    'Know your worst spending habits in 1 tap',
+    'Get warned before you overspend',
     'Priority support',
   ];
+
+  int get _savingPercent {
+    if (monthlyPrice <= 0) return 0;
+    return (((monthlyPrice - annualPrice) / monthlyPrice) * 100).round();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,31 +103,56 @@ class PlanCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Price
+                  // Replace the price Row with this:
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            _price,
-                            style: const TextStyle(
-                              fontSize: AppFontSize.xxxxl,
-                              fontWeight: FontWeight.w800,
-                              letterSpacing: -1.5,
-                              height: 1,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 6, left: 4),
-                            child: Text(
-                              _period,
-                              style: const TextStyle(
-                                fontSize: AppFontSize.md,
+                          // Strikethrough original price — anchoring
+                          if (isAnnual)
+                            Text(
+                              '\$${ monthlyPrice.toStringAsFixed(2)}/month',
+                              style: TextStyle(
+                                fontSize: AppFontSize.xs,
                                 fontWeight: FontWeight.w500,
+                                decoration: TextDecoration.lineThrough,
+                                decorationColor:
+                                    theme.textTheme.bodySmall?.color,
+                                color: theme.textTheme.bodySmall?.color,
                               ),
                             ),
+                          if (isAnnual) const SizedBox(height: 2),
+
+                          // Actual price
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                _price,
+                                style: const TextStyle(
+                                  fontSize: AppFontSize.xxxl,
+                                  fontWeight: FontWeight.w800,
+                                  letterSpacing: -1.5,
+                                  height: 1,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  bottom: 6,
+                                  left: 4,
+                                ),
+                                child: Text(
+                                  _period,
+                                  style: const TextStyle(
+                                    fontSize: AppFontSize.md,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -134,9 +168,9 @@ class PlanCard extends StatelessWidget {
                             color: theme.primaryColor,
                             borderRadius: BorderRadius.circular(20),
                           ),
-                          child: const Text(
-                            'SAVE 40%',
-                            style: TextStyle(
+                          child: Text(
+                            'SAVE $_savingPercent%',
+                            style: const TextStyle(
                               fontSize: AppFontSize.xs,
                               fontWeight: FontWeight.w800,
                               letterSpacing: 0.5,
@@ -186,6 +220,20 @@ class PlanCard extends StatelessWidget {
                   ),
 
                   const SizedBox(height: 24),
+
+                  // Fine print
+                  const Center(
+                    child: Text(
+                      'Joined by 10,000+ users tracking smarter',
+                      style: TextStyle(
+                        fontSize: AppFontSize.xs,
+                        fontWeight: FontWeight.w400,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+
+                  const SizedBox(height: 16),
 
                   // CTA Button
                   // SubscribeButton(onPressed: onSubscribe, isLoading: isLoading),

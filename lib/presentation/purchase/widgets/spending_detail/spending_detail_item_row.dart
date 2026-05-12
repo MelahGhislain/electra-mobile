@@ -157,7 +157,7 @@ class SpendingDetailItemRow extends StatelessWidget {
                           borderRadius: BorderRadius.circular(6),
                         ),
                         child: Text(
-                          item.category.name,
+                          meta.localizedLabel(l),
                           style: TextStyle(
                             fontSize: AppFontSize.sm,
                             fontWeight: FontWeight.w600,

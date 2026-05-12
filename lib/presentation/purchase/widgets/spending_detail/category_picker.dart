@@ -2,6 +2,7 @@ import 'package:electra/common/widgets/text_fields/search_bar.dart';
 import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/core/utils/category_meta.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 /// Shows a searchable category picker bottom sheet.
@@ -30,22 +31,7 @@ class _CategoryPickerSheetState extends State<_CategoryPickerSheet> {
   final _searchCtrl = TextEditingController();
   String _query = '';
 
-  static const _allKeys = [
-    'food',
-    'transport',
-    'housing',
-    'bills',
-    'subscriptions',
-    'shopping',
-    'health',
-    'entertainment',
-    'travel',
-    'education',
-    'personal',
-    'gifts',
-    'donations',
-    'other',
-  ];
+  late final List<String> _allKeys = CategoryMeta.keys;
 
   List<CategoryMeta> get _filtered {
     final all = _allKeys.map(CategoryMeta.fromKey).toList();
@@ -64,6 +50,7 @@ class _CategoryPickerSheetState extends State<_CategoryPickerSheet> {
   Widget build(BuildContext context) {
     final filtered = _filtered;
     final theme = Theme.of(context);
+    final l = AppLocalizations.of(context);
 
     return Container(
       constraints: BoxConstraints(
@@ -100,8 +87,8 @@ class _CategoryPickerSheetState extends State<_CategoryPickerSheet> {
                   size: AppFontSize.xl,
                 ),
                 const SizedBox(width: 10),
-                const Text(
-                  'Select category',
+                Text(
+                  l.selectCategory,
                   style: TextStyle(
                     fontSize: AppFontSize.lg,
                     fontWeight: FontWeight.bold,
@@ -119,7 +106,7 @@ class _CategoryPickerSheetState extends State<_CategoryPickerSheet> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: AppSearchBar(
-              hintText: 'Search categories...',
+              hintText: l.searchCategories,
               initialValue: _searchCtrl.text,
               onChanged: (v) => setState(() => _query = v),
               onClear: () => setState(() => _query = ''),
@@ -145,7 +132,7 @@ class _CategoryPickerSheetState extends State<_CategoryPickerSheet> {
                         ),
                         const SizedBox(height: 12),
                         Text(
-                          'No categories found for "$_query"',
+                          l.noCategoriesFoundFor(_query),
                           style: const TextStyle(fontSize: AppFontSize.sm),
                           textAlign: TextAlign.center,
                         ),
@@ -178,7 +165,7 @@ class _CategoryPickerSheetState extends State<_CategoryPickerSheet> {
                           child: Icon(meta.icon, color: meta.color, size: 18),
                         ),
                         title: Text(
-                          meta.label,
+                          meta.localizedLabel(l),
                           style: TextStyle(
                             fontSize: isSelected
                                 ? AppFontSize.md

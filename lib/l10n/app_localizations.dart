@@ -805,7 +805,7 @@ abstract class AppLocalizations {
   /// No description provided for @editPurchase.
   ///
   /// In en, this message translates to:
-  /// **'Edit Purchase'**
+  /// **'Edit purchase'**
   String get editPurchase;
 
   /// No description provided for @title.
@@ -1515,6 +1515,306 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Let\'s Go'**
   String get letsGo;
+
+  /// No description provided for @spendingDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Spending details'**
+  String get spendingDetails;
+
+  /// No description provided for @share.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get share;
+
+  /// No description provided for @export.
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get export;
+
+  /// No description provided for @deletePurchase.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete purchase'**
+  String get deletePurchase;
+
+  /// No description provided for @deletePurchaseTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete purchase?'**
+  String get deletePurchaseTitle;
+
+  /// No description provided for @deletePurchaseDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'This action cannot be undone.'**
+  String get deletePurchaseDescription;
+
+  /// No description provided for @premiumFeature.
+  ///
+  /// In en, this message translates to:
+  /// **'Premium feature'**
+  String get premiumFeature;
+
+  /// No description provided for @savingChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving changes…'**
+  String get savingChanges;
+
+  /// No description provided for @sortNewest.
+  ///
+  /// In en, this message translates to:
+  /// **'Newest First'**
+  String get sortNewest;
+
+  /// No description provided for @sortOldest.
+  ///
+  /// In en, this message translates to:
+  /// **'Oldest First'**
+  String get sortOldest;
+
+  /// No description provided for @sortMostExpensive.
+  ///
+  /// In en, this message translates to:
+  /// **'Most Expensive'**
+  String get sortMostExpensive;
+
+  /// No description provided for @sortCheapest.
+  ///
+  /// In en, this message translates to:
+  /// **'Cheapest'**
+  String get sortCheapest;
+
+  /// No description provided for @sortByName.
+  ///
+  /// In en, this message translates to:
+  /// **'By Name'**
+  String get sortByName;
+
+  /// No description provided for @categoryFood.
+  ///
+  /// In en, this message translates to:
+  /// **'Food'**
+  String get categoryFood;
+
+  /// No description provided for @categoryTransport.
+  ///
+  /// In en, this message translates to:
+  /// **'Transport'**
+  String get categoryTransport;
+
+  /// No description provided for @categoryHousing.
+  ///
+  /// In en, this message translates to:
+  /// **'Housing'**
+  String get categoryHousing;
+
+  /// No description provided for @categoryBills.
+  ///
+  /// In en, this message translates to:
+  /// **'Bills'**
+  String get categoryBills;
+
+  /// No description provided for @categorySubscriptions.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscriptions'**
+  String get categorySubscriptions;
+
+  /// No description provided for @categoryShopping.
+  ///
+  /// In en, this message translates to:
+  /// **'Shopping'**
+  String get categoryShopping;
+
+  /// No description provided for @categoryHealth.
+  ///
+  /// In en, this message translates to:
+  /// **'Health'**
+  String get categoryHealth;
+
+  /// No description provided for @categoryEntertainment.
+  ///
+  /// In en, this message translates to:
+  /// **'Entertainment'**
+  String get categoryEntertainment;
+
+  /// No description provided for @categoryTravel.
+  ///
+  /// In en, this message translates to:
+  /// **'Travel'**
+  String get categoryTravel;
+
+  /// No description provided for @categoryEducation.
+  ///
+  /// In en, this message translates to:
+  /// **'Education'**
+  String get categoryEducation;
+
+  /// No description provided for @categoryPersonal.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal'**
+  String get categoryPersonal;
+
+  /// No description provided for @categoryGifts.
+  ///
+  /// In en, this message translates to:
+  /// **'Gifts'**
+  String get categoryGifts;
+
+  /// No description provided for @categoryDonations.
+  ///
+  /// In en, this message translates to:
+  /// **'Donations'**
+  String get categoryDonations;
+
+  /// No description provided for @categoryOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get categoryOther;
+
+  /// No description provided for @selectCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Select category'**
+  String get selectCategory;
+
+  /// No description provided for @searchCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Search categories...'**
+  String get searchCategories;
+
+  /// No description provided for @noCategoriesFoundFor.
+  ///
+  /// In en, this message translates to:
+  /// **'No categories found for \"{query}\"'**
+  String noCategoriesFoundFor(String query);
+
+  /// No description provided for @itemWillBePermanentlyRemoved.
+  ///
+  /// In en, this message translates to:
+  /// **'\"{itemName}\" will be permanently removed from this purchase.'**
+  String itemWillBePermanentlyRemoved(String itemName);
+
+  /// No description provided for @itemName.
+  ///
+  /// In en, this message translates to:
+  /// **'Item name'**
+  String get itemName;
+
+  /// No description provided for @itemNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. Beef, Milk, Shampoo'**
+  String get itemNameHint;
+
+  /// No description provided for @unitPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit price'**
+  String get unitPrice;
+
+  /// No description provided for @required.
+  ///
+  /// In en, this message translates to:
+  /// **'Required'**
+  String get required;
+
+  /// No description provided for @invalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid'**
+  String get invalid;
+
+  /// No description provided for @quantityShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Qty'**
+  String get quantityShort;
+
+  /// No description provided for @minimumOne.
+  ///
+  /// In en, this message translates to:
+  /// **'Min 1'**
+  String get minimumOne;
+
+  /// No description provided for @home.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get home;
+
+  /// No description provided for @insights.
+  ///
+  /// In en, this message translates to:
+  /// **'Insights'**
+  String get insights;
+
+  /// No description provided for @profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profile;
+
+  /// No description provided for @selectDateRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Select date range'**
+  String get selectDateRange;
+
+  /// No description provided for @premium.
+  ///
+  /// In en, this message translates to:
+  /// **'Premium'**
+  String get premium;
+
+  /// No description provided for @subscription.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription'**
+  String get subscription;
+
+  /// No description provided for @manualEntry.
+  ///
+  /// In en, this message translates to:
+  /// **'Manual Entry'**
+  String get manualEntry;
+
+  /// No description provided for @enterDetailsManually.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter details manually'**
+  String get enterDetailsManually;
+
+  /// No description provided for @voiceInput.
+  ///
+  /// In en, this message translates to:
+  /// **'Voice Input'**
+  String get voiceInput;
+
+  /// No description provided for @addBySpeaking.
+  ///
+  /// In en, this message translates to:
+  /// **'Add by speaking'**
+  String get addBySpeaking;
+
+  /// No description provided for @snapPhotoOfReceipt.
+  ///
+  /// In en, this message translates to:
+  /// **'Snap a photo of your receipt'**
+  String get snapPhotoOfReceipt;
+
+  /// No description provided for @all.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get all;
 }
 
 class _AppLocalizationsDelegate

@@ -2,6 +2,7 @@ import 'package:electra/common/widgets/bottom_sheets/app_bottom_sheet.dart';
 import 'package:electra/common/widgets/buttons/main_button.dart';
 import 'package:electra/common/widgets/text_fields/chip_selector.dart';
 import 'package:electra/common/widgets/text_fields/date_range_field.dart';
+import 'package:electra/core/utils/category_meta.dart';
 import 'package:electra/l10n/app_localizations.dart';
 import 'package:electra/presentation/purchase/pages/purchase_filter.dart';
 import 'package:flutter/material.dart';
@@ -113,7 +114,8 @@ class _PurchaseFilterContentState extends State<_PurchaseFilterContent> {
                 selected: _filter.sort,
                 options: PurchaseSortOption.values
                     .map(
-                      (opt) => ChipSelectorOption(value: opt, label: opt.label),
+                      (opt) =>
+                          ChipSelectorOption(value: opt, label: opt.label(l)),
                     )
                     .toList(),
                 onSelected: (opt) =>
@@ -129,7 +131,7 @@ class _PurchaseFilterContentState extends State<_PurchaseFilterContent> {
                     ? l.noCategoriesAvailable
                     : null,
                 options: widget.availableCategories
-                    .map((cat) => ChipSelectorOption(value: cat, label: cat))
+                    .map((cat) => ChipSelectorOption(value: cat, label: CategoryMeta.localizedKeyLabel(cat, l)))
                     .toList(),
                 onSelected: (cat) =>
                     setState(() => _filter = _filter.copyWith(category: cat)),
@@ -156,6 +158,7 @@ class _PurchaseFilterContentState extends State<_PurchaseFilterContent> {
                 label: l.dateRange,
                 dateFrom: _filter.dateFrom,
                 dateTo: _filter.dateTo,
+                hint: l.selectDateRange,
                 onTap: _pickDateRange,
                 onClear: () =>
                     setState(() => _filter = _filter.copyWith(clearDate: true)),

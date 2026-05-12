@@ -132,7 +132,7 @@ class _TopSpendingTodayCardState extends State<TopSpendingTodayCard>
                                   shape: BoxShape.circle,
                                 ),
                               ),
-                              const SizedBox(width: 8),
+                              const SizedBox(width: 6),
 
                               // Rounded-square icon
                               Container(
@@ -148,12 +148,14 @@ class _TopSpendingTodayCardState extends State<TopSpendingTodayCard>
                                   color: row.color,
                                 ),
                               ),
-                              const SizedBox(width: 8),
+                              const SizedBox(width: 6),
 
                               // Label
                               Expanded(
                                 child: Text(
                                   row.label,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                     fontSize: AppFontSize.sm,
                                     fontWeight: isSelected
@@ -163,7 +165,7 @@ class _TopSpendingTodayCardState extends State<TopSpendingTodayCard>
                                   ),
                                 ),
                               ),
-
+                              const SizedBox(width: 1),
                               // Amount
                               Text(
                                 '\$${row.amount.toStringAsFixed(2)}',
@@ -329,10 +331,14 @@ class RawSpendingRow {
   });
 
   /// Build from the raw category key → use CategoryMeta for icon/color/label
-  factory RawSpendingRow.fromCategoryKey(String key, double amount) {
+  factory RawSpendingRow.fromCategoryKey(
+    String key,
+    double amount,
+    AppLocalizations l,
+  ) {
     final meta = CategoryMeta.fromKey(key);
     return RawSpendingRow(
-      label: meta.label,
+      label: meta.localizedLabel(l),
       amount: amount,
       color: meta.color,
       icon: meta.icon,

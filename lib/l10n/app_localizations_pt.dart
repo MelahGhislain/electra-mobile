@@ -767,4 +767,158 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get letsGo => 'Vamos lá';
+
+  @override
+  String get spendingDetails => 'Detalhes dos gastos';
+
+  @override
+  String get share => 'Partilhar';
+
+  @override
+  String get export => 'Exportar';
+
+  @override
+  String get deletePurchase => 'Eliminar compra';
+
+  @override
+  String get deletePurchaseTitle => 'Eliminar compra?';
+
+  @override
+  String get deletePurchaseDescription => 'Esta ação não pode ser desfeita.';
+
+  @override
+  String get premiumFeature => 'Funcionalidade Premium';
+
+  @override
+  String get savingChanges => 'A guardar alterações…';
+
+  @override
+  String get sortNewest => 'Mais recente primeiro';
+
+  @override
+  String get sortOldest => 'Mais antigo primeiro';
+
+  @override
+  String get sortMostExpensive => 'Mais caro primeiro';
+
+  @override
+  String get sortCheapest => 'Mais barato primeiro';
+
+  @override
+  String get sortByName => 'Por nome';
+
+  @override
+  String get categoryFood => 'Alimentação';
+
+  @override
+  String get categoryTransport => 'Transporte';
+
+  @override
+  String get categoryHousing => 'Habitação';
+
+  @override
+  String get categoryBills => 'Faturas';
+
+  @override
+  String get categorySubscriptions => 'Subscrições';
+
+  @override
+  String get categoryShopping => 'Compras';
+
+  @override
+  String get categoryHealth => 'Saúde';
+
+  @override
+  String get categoryEntertainment => 'Entretenimento';
+
+  @override
+  String get categoryTravel => 'Viagens';
+
+  @override
+  String get categoryEducation => 'Educação';
+
+  @override
+  String get categoryPersonal => 'Pessoal';
+
+  @override
+  String get categoryGifts => 'Presentes';
+
+  @override
+  String get categoryDonations => 'Doações';
+
+  @override
+  String get categoryOther => 'Outro';
+
+  @override
+  String get selectCategory => 'Selecionar categoria';
+
+  @override
+  String get searchCategories => 'Pesquisar categorias...';
+
+  @override
+  String noCategoriesFoundFor(String query) {
+    return 'Nenhuma categoria encontrada para \"$query\"';
+  }
+
+  @override
+  String itemWillBePermanentlyRemoved(String itemName) {
+    return '«$itemName» será removido permanentemente desta compra.';
+  }
+
+  @override
+  String get itemName => 'Nome do artigo';
+
+  @override
+  String get itemNameHint => 'ex. Carne, Leite, Champô';
+
+  @override
+  String get unitPrice => 'Preço unitário';
+
+  @override
+  String get required => 'Obrigatório';
+
+  @override
+  String get invalid => 'Inválido';
+
+  @override
+  String get quantityShort => 'Qtd';
+
+  @override
+  String get minimumOne => 'Mín 1';
+
+  @override
+  String get home => 'Início';
+
+  @override
+  String get insights => 'Análises';
+
+  @override
+  String get profile => 'Perfil';
+
+  @override
+  String get selectDateRange => 'Selecionar intervalo de datas';
+
+  @override
+  String get premium => 'Premium';
+
+  @override
+  String get subscription => 'Assinatura';
+
+  @override
+  String get manualEntry => 'Entrada manual';
+
+  @override
+  String get enterDetailsManually => 'Digite os detalhes manualmente';
+
+  @override
+  String get voiceInput => 'Entrada de voz';
+
+  @override
+  String get addBySpeaking => 'Adicionar por voz';
+
+  @override
+  String get snapPhotoOfReceipt => 'Tire uma foto do seu recibo';
+
+  @override
+  String get all => 'Todos';
 }

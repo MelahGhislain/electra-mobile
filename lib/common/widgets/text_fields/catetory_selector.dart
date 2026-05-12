@@ -1,5 +1,6 @@
 import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/utils/category_meta.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class CategorySelectField extends StatelessWidget {
@@ -16,6 +17,7 @@ class CategorySelectField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final isDark = theme.brightness == Brightness.dark;
@@ -51,7 +53,7 @@ class CategorySelectField extends StatelessWidget {
                 const SizedBox(width: 10),
                 Expanded(
                   child: Text(
-                    selected.label,
+                    selected.localizedLabel(l),
                     style: theme.textTheme.bodyMedium?.copyWith(
                       fontSize: AppFontSize.sm,
                       fontWeight: FontWeight.w500,

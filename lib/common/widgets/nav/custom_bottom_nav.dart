@@ -1,4 +1,5 @@
 import 'package:electra/core/configs/theme/app_colors.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:glassmorphism/glassmorphism.dart';
 
@@ -17,6 +18,7 @@ class CustomBottomNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
+    final l = AppLocalizations.of(context);
 
     return GlassmorphicContainer(
       width: double.infinity,
@@ -52,13 +54,13 @@ class CustomBottomNav extends StatelessWidget {
             _NavItem(
               icon: Icons.home_rounded,
               isSelected: selectedIndex == 0,
-              label: 'Home',
+              label: l.home,
               onTap: () => onDestinationSelected(0),
             ),
             _NavItem(
               icon: Icons.receipt_long_outlined,
               isSelected: selectedIndex == 1,
-              label: 'Spending',
+              label: l.spending,
               onTap: () => onDestinationSelected(1),
             ),
 
@@ -90,13 +92,13 @@ class CustomBottomNav extends StatelessWidget {
             _NavItem(
               icon: Icons.insert_chart_outlined,
               isSelected: selectedIndex == 2,
-              label: 'Insights',
+              label: l.insights,
               onTap: () => onDestinationSelected(2),
             ),
             _NavItem(
               icon: Icons.person_outline_rounded,
               isSelected: selectedIndex == 3,
-              label: 'Profile',
+              label: l.profile,
               onTap: () => onDestinationSelected(3),
             ),
           ],

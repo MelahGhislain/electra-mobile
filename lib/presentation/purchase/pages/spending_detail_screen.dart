@@ -4,6 +4,7 @@ import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/core/router/route_names.dart';
 import 'package:electra/domain/entities/purchase/purchase.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:electra/presentation/purchase/blocs/purchase/purchase_cubit.dart';
 import 'package:electra/presentation/purchase/blocs/purchase_detail/purchase_detail_cubit.dart';
 import 'package:electra/presentation/purchase/blocs/purchase_detail/purchase_detail_state.dart';
@@ -95,6 +96,7 @@ class _SpendingDetailView extends StatelessWidget {
   ) {
     final theme = Theme.of(context);
     final hasPurchase = _purchaseFrom(state) != null;
+    final l = AppLocalizations.of(context);
 
     return AppBar(
       elevation: 0,
@@ -110,8 +112,8 @@ class _SpendingDetailView extends StatelessWidget {
         onTap: () => Navigator.of(context).pop(),
       ),
 
-      title: const Text(
-        'Spending details',
+      title: Text(
+        l.spendingDetails,
         style: TextStyle(
           fontSize: AppFontSize.xxl,
           fontWeight: FontWeight.bold,
@@ -182,6 +184,7 @@ class _SpendingDetailView extends StatelessWidget {
 
   void _showOptionsMenu(BuildContext context, Purchase purchase) {
     final theme = Theme.of(context);
+    final l = AppLocalizations.of(context);
 
     showModalBottomSheet(
       context: context,
@@ -210,7 +213,7 @@ class _SpendingDetailView extends StatelessWidget {
 
             _OptionTile(
               icon: Icons.edit_rounded,
-              label: 'Edit purchase',
+              label: l.editPurchase,
               onTap: () {
                 Navigator.pop(context);
                 AddPurchaseBottomSheet.show(context, purchase: purchase);
@@ -219,7 +222,7 @@ class _SpendingDetailView extends StatelessWidget {
 
             _OptionTile(
               icon: Icons.share_rounded,
-              label: 'Share',
+              label: l.share,
               isLocked: true,
               onTap: () {
                 // Navigator.pop(context);
@@ -228,7 +231,7 @@ class _SpendingDetailView extends StatelessWidget {
 
             _OptionTile(
               icon: Icons.download_rounded,
-              label: 'Export',
+              label: l.export,
               isLocked: true,
               onTap: () {
                 // Navigator.pop(context);
@@ -239,15 +242,15 @@ class _SpendingDetailView extends StatelessWidget {
 
             _OptionTile(
               icon: Icons.delete_outline_rounded,
-              label: 'Delete purchase',
+              label: l.deletePurchase,
               color: theme.colorScheme.error,
               onTap: () {
                 Navigator.pop(context); // close the options sheet first
                 AppConfirmDialog.show(
                   context,
-                  title: 'Delete purchase?',
-                  description: 'This action cannot be undone.',
-                  confirmText: 'Delete',
+                  title: l.deletePurchaseTitle,
+                  description: l.deletePurchaseDescription,
+                  confirmText: l.delete,
                   isDestructive: true,
                   onConfirm: () {
                     context.read<PurchaseCubit>().deletePurchase(purchase.id);
@@ -274,6 +277,8 @@ class _MutationLoadingOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+
     return IgnorePointer(
       // Block touches while mutating so the user can't trigger another action.
       child: Container(
@@ -304,9 +309,9 @@ class _MutationLoadingOverlay extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 14),
-                const Text(
-                  'Saving changes…',
-                  style: TextStyle(
+                Text(
+                  l.savingChanges,
+                  style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                     color: AppColors.lightText,
@@ -341,6 +346,8 @@ class _OptionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l = AppLocalizations.of(context);
+
     return ListTile(
       leading: Icon(icon, color: color ?? theme.iconTheme.color, size: 20),
       title: Text(
@@ -348,7 +355,7 @@ class _OptionTile extends StatelessWidget {
         style: TextStyle(color: color, fontWeight: FontWeight.w500),
       ),
       subtitle: isLocked == true
-          ? Text('Premium feature', style: TextStyle(fontSize: AppFontSize.xs))
+          ? Text(l.premiumFeature, style: TextStyle(fontSize: AppFontSize.xs))
           : null,
       trailing: isLocked == true
           ? Icon(Icons.lock_outline, color: theme.iconTheme.color, size: 20)
@@ -372,6 +379,7 @@ class _SpendingDetailContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Column(
@@ -381,7 +389,7 @@ class _SpendingDetailContent extends StatelessWidget {
           // Items section reads from the cubit directly (see fix below)
           const SpendingDetailItemsSection(),
 
-          const SpendingDetailSectionHeader(title: 'Receipt'),
+          SpendingDetailSectionHeader(title: l.receipt),
 
           SpendingDetailReceiptSection(
             receipt: purchase.receipt,

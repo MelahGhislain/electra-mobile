@@ -1,4 +1,5 @@
 import 'package:electra/core/configs/theme/app_colors.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class AppConfirmDialog {
@@ -6,12 +7,13 @@ class AppConfirmDialog {
     BuildContext context, {
     required String title,
     required String description,
-    String confirmText = 'Confirm',
-    String cancelText = 'Cancel',
+    String? confirmText,
+    String? cancelText,
     bool isDestructive = false,
     VoidCallback? onConfirm,
   }) {
     final theme = Theme.of(context);
+    final l = AppLocalizations.of(context);
 
     return showDialog<bool>(
       context: context,
@@ -38,7 +40,7 @@ class AppConfirmDialog {
             TextButton(
               onPressed: () => Navigator.pop(context, false),
               child: Text(
-                cancelText,
+                cancelText ?? l.cancel,
                 style: TextStyle(color: theme.textTheme.titleLarge!.color),
               ),
             ),
@@ -56,7 +58,7 @@ class AppConfirmDialog {
                 ),
               ),
               child: Text(
-                confirmText,
+                confirmText ?? l.confirm,
                 style: TextStyle(color: AppColors.darkText),
               ),
             ),

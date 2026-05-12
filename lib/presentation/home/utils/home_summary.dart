@@ -20,6 +20,7 @@ class HomeSummary {
   });
 
   factory HomeSummary.fromPurchases(
+    AppLocalizations l,
     List<Purchase> purchases, {
     double? monthlyBudget,
   }) {
@@ -63,7 +64,7 @@ class HomeSummary {
     final categories = sorted.take(6).map((entry) {
       final meta = CategoryMeta.fromKey(entry.key);
       return SpendingCategory(
-        label: meta.label,
+        label: meta.localizedLabel(l),
         amount: entry.value,
         color: meta.color,
       );

@@ -89,6 +89,7 @@ class RawSpendingHelper {
   /// Build rows from today's (or provided) purchases.
   /// Returns rows sorted descending by amount, capped at [maxRows].
   static List<RawSpendingRow> buildRows(
+    AppLocalizations l,
     List<Purchase> purchases, {
     int maxRows = 6,
   }) {
@@ -106,7 +107,7 @@ class RawSpendingHelper {
     return sorted.take(maxRows).map((e) {
       final meta = CategoryMeta.fromKey(e.key);
       return RawSpendingRow(
-        label: meta.label,
+        label: meta.localizedLabel(l),
         amount: e.value,
         color: meta.color,
         icon: meta.icon,
@@ -116,6 +117,7 @@ class RawSpendingHelper {
 
   /// Convenience: filter purchases to today then build rows.
   static List<RawSpendingRow> forToday(
+    AppLocalizations l,
     List<Purchase> allPurchases, {
     int maxRows = 6,
   }) {
@@ -129,18 +131,19 @@ class RawSpendingHelper {
               p.purchaseDate.day == now.day,
         )
         .toList();
-    return buildRows(today, maxRows: maxRows);
+    return buildRows(l, today, maxRows: maxRows);
   }
 
   /// Fallback: use the last N purchases when there are no today purchases.
   static List<RawSpendingRow> forLastPurchases(
+    AppLocalizations l,
     List<Purchase> allPurchases, {
     int maxRows = 6,
   }) {
     final sorted = allPurchases.where((p) => !p.isDeleted).toList()
       ..sort((a, b) => b.purchaseDate.compareTo(a.purchaseDate));
     final recent = sorted.take(5).toList();
-    return buildRows(recent, maxRows: maxRows);
+    return buildRows(l, recent, maxRows: maxRows);
   }
 }
 
@@ -168,6 +171,7 @@ class RecentActivityItem {
 
 class RecentActivityHelper {
   static List<RecentActivityItem> getRecent(
+    AppLocalizations l,
     List<Purchase> purchases, {
     int count = 3,
   }) {
@@ -180,8 +184,8 @@ class RecentActivityHelper {
       final meta = CategoryMeta.fromKey(key);
 
       return RecentActivityItem(
-        title: p.merchant?.name ?? 'Purchase',
-        categoryLabel: meta.label,
+        title: p.merchant?.name ?? l.spending,
+        categoryLabel: meta.localizedLabel(l),
         categoryColor: meta.color,
         categoryIcon: meta.icon,
         amount: p.totals.amount,

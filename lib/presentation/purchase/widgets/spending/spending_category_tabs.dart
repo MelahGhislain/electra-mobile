@@ -1,75 +1,92 @@
+import 'package:electra/core/utils/category_meta.dart';
+import 'package:electra/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:electra/core/configs/theme/app_colors.dart';
 
-class _TabItem {
-  final String label;
-  final IconData icon;
-  final String? categoryKey; // null = "All"
-
-  const _TabItem({required this.label, required this.icon, this.categoryKey});
-}
-
-/// Horizontal scrollable category tab bar shown below the search field.
 class SpendingCategoryTabs extends StatelessWidget {
   final String? selectedCategory;
+  final List<String> availableCategories;
   final ValueChanged<String?> onCategoryChanged;
-
-  static const _tabs = [
-    _TabItem(label: 'All', icon: Icons.grid_view_rounded),
-    _TabItem(
-      label: 'Food',
-      icon: Icons.restaurant_rounded,
-      categoryKey: 'Food',
-    ),
-    _TabItem(
-      label: 'Transport',
-      icon: Icons.directions_car_rounded,
-      categoryKey: 'Transport',
-    ),
-    _TabItem(
-      label: 'Shopping',
-      icon: Icons.shopping_bag_rounded,
-      categoryKey: 'Shopping',
-    ),
-    _TabItem(
-      label: 'Health',
-      icon: Icons.favorite_rounded,
-      categoryKey: 'Health',
-    ),
-    _TabItem(
-      label: 'Groceries',
-      icon: Icons.shopping_basket_rounded,
-      categoryKey: 'Groceries',
-    ),
-    _TabItem(
-      label: 'Drinks',
-      icon: Icons.local_drink_rounded,
-      categoryKey: 'Drinks',
-    ),
-  ];
 
   const SpendingCategoryTabs({
     super.key,
     required this.selectedCategory,
+    required this.availableCategories,
     required this.onCategoryChanged,
   });
 
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
+    // Build tab list: "All" first, then one tab per available category
+    final tabs = [
+      _Tab(label: l.all, icon: Icons.grid_view_rounded, key: null, color: theme.colorScheme.secondary),
+      ...availableCategories.map((key) {
+        final meta = CategoryMeta.fromKey(key);
+        return _Tab(
+          label: meta.localizedLabel(l),
+          icon: meta.icon,
+          key: key,
+          color: meta.color,
+        );
+      }),
+    ];
+
     return SizedBox(
       height: 40,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        itemCount: _tabs.length,
-        separatorBuilder: (_, _) => const SizedBox(width: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        itemCount: tabs.length,
+        separatorBuilder: (_, __) => const SizedBox(width: 8),
         itemBuilder: (context, i) {
-          final tab = _tabs[i];
-          final isSelected = tab.categoryKey == selectedCategory;
-          return _CategoryTab(
-            tab: tab,
-            isSelected: isSelected,
-            onTap: () => onCategoryChanged(tab.categoryKey),
+          final tab = tabs[i];
+          final isSelected = tab.key == selectedCategory;
+          final activeColor = tab.color ?? theme.colorScheme.onSurface;
+
+          return GestureDetector(
+            onTap: () => onCategoryChanged(tab.key),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 180),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+              decoration: BoxDecoration(
+                color: isSelected
+                    ? activeColor.withValues(alpha: isDark ? 0.25 : 0.12)
+                    : theme.cardTheme.color,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: isSelected ? activeColor : theme.dividerColor,
+                  width: isSelected ? 1 : 0.8,
+                ),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    tab.icon,
+                    size: 14,
+                    color: isSelected
+                        ? activeColor
+                        : theme.textTheme.bodySmall?.color,
+                  ),
+                  const SizedBox(width: 6),
+                  Text(
+                    tab.label,
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: isSelected
+                          ? FontWeight.w600
+                          : FontWeight.w500,
+                      color: isSelected
+                          ? activeColor
+                          : theme.textTheme.bodyMedium?.color,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           );
         },
       ),
@@ -77,53 +94,16 @@ class SpendingCategoryTabs extends StatelessWidget {
   }
 }
 
-class _CategoryTab extends StatelessWidget {
-  final _TabItem tab;
-  final bool isSelected;
-  final VoidCallback onTap;
+class _Tab {
+  final String label;
+  final IconData icon;
+  final String? key;   // null = "All"
+  final Color? color;  // null = use theme onSurface for "All" tab
 
-  const _CategoryTab({
-    required this.tab,
-    required this.isSelected,
-    required this.onTap,
+  const _Tab({
+    required this.label,
+    required this.icon,
+    required this.key,
+    required this.color,
   });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-        decoration: BoxDecoration(
-          color: isSelected ? AppColors.darkBackground : AppColors.lightSurface,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: isSelected
-                ? AppColors.darkBackground
-                : AppColors.dividerLight,
-          ),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              tab.icon,
-              size: 14,
-              color: isSelected ? Colors.white : AppColors.lightTextSecondary,
-            ),
-            const SizedBox(width: 6),
-            Text(
-              tab.label,
-              style: TextStyle(
-                fontSize: 13,
-                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-                color: isSelected ? Colors.white : AppColors.lightText,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }

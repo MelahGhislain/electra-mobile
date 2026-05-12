@@ -64,14 +64,13 @@ class _HomeScreenState extends State<HomeScreen> {
         // ── User loaded → wire HomeCubit + LocaleCubit ───────────────────
         BlocListener<UserCubit, UserState>(
           // Only react the first time user actually loads.
-          listenWhen: (prev, curr) =>
-              curr is UserLoaded && prev is! UserLoaded,
+          listenWhen: (prev, curr) => curr is UserLoaded && prev is! UserLoaded,
           listener: (context, state) {
             if (state is UserLoaded) {
               context.read<HomeCubit>().load(state.user.id);
               context.read<LocaleCubit>().applyStoredLocale(
-                    state.user.settings?.locale,
-                  );
+                state.user.settings?.locale,
+              );
             }
           },
         ),
@@ -120,6 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 // ── Derived data ─────────────────────────────────────────
                 final summary = HomeSummary.fromPurchases(
+                  l,
                   purchases,
                   monthlyBudget: monthlyBudget,
                 );
@@ -137,10 +137,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
 
                 final topRows = todaySummary.hasTodayPurchases
-                    ? RawSpendingHelper.forToday(purchases)
-                    : RawSpendingHelper.forLastPurchases(purchases);
+                    ? RawSpendingHelper.forToday(l, purchases)
+                    : RawSpendingHelper.forLastPurchases(l, purchases);
 
                 final recentItems = RecentActivityHelper.getRecent(
+                  l,
                   purchases,
                   count: 3,
                 );
@@ -153,12 +154,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         SliverToBoxAdapter(
                           child: HomeHeader(
                             name: userName,
-                            date: DateFormat.yMMMMEEEEd(locale)
-                                .format(DateTime.now()),
+                            date: DateFormat.yMMMMEEEEd(
+                              locale,
+                            ).format(DateTime.now()),
                             showInsightBanner:
                                 displaySummary.spendingLessThanUsual,
-                            insightBannerText:
-                                l.homeYoureSpendingLessThanUsual,
+                            insightBannerText: l.homeYoureSpendingLessThanUsual,
                           ),
                         ),
 
@@ -197,8 +198,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
 
-                        const SliverToBoxAdapter(
-                            child: SizedBox(height: 20)),
+                        const SliverToBoxAdapter(child: SizedBox(height: 20)),
                       ],
                     ),
                   ),
@@ -252,10 +252,7 @@ class _ErrorScreen extends StatelessWidget {
                 Text(
                   message,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.grey.shade600,
-                  ),
+                  style: TextStyle(fontSize: 15, color: Colors.grey.shade600),
                 ),
                 const SizedBox(height: 24),
                 FilledButton(

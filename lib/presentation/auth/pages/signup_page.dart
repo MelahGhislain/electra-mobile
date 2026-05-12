@@ -210,7 +210,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               child: RichText(
                                 text: TextSpan(
                                   text: l.alreadyHaveAnAccount,
-                                  style: TextStyle(fontSize: AppFontSize.sm),
+                                  style: TextStyle(
+                                    fontSize: AppFontSize.sm,
+                                    color: theme.textTheme.bodyMedium?.color,
+                                  ),
                                   children: [
                                     TextSpan(
                                       text: l.signIn,

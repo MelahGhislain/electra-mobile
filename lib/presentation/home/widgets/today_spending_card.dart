@@ -135,8 +135,8 @@ class TodaySpendingCard extends StatelessWidget {
 
                 // Right: donut ring
                 SizedBox(
-                  width: 80,
-                  height: 80,
+                  width: 100,
+                  height: 100,
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
@@ -145,7 +145,7 @@ class TodaySpendingCard extends StatelessWidget {
                         painter: _RingPainter(
                           progress: _progress,
                           color: accentColor,
-                          strokeWidth: 6,
+                          strokeWidth: 8,
                         ),
                       ),
                       Column(
@@ -159,13 +159,18 @@ class TodaySpendingCard extends StatelessWidget {
                               letterSpacing: -0.5,
                             ),
                           ),
-                          Text(
-                            l.ofDailyBudget,
-                            // 'of daily\nbudget',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: AppFontSize.xs,
-                              height: 1.1,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8.0,
+                            ),
+                            child: Text(
+                              l.ofDailyBudget,
+                              // 'of daily\nbudget',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: AppFontSize.xs,
+                                height: 1.1,
+                              ),
                             ),
                           ),
                         ],

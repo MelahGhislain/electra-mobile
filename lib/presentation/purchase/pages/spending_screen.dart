@@ -45,7 +45,11 @@ class _SpendingScreenState extends State<SpendingScreen> {
 
     if (_filter.category != null) {
       list = list
-          .where((p) => p.items.any((i) => i.category.name == _filter.category))
+          .where(
+            (p) => p.items.any(
+              (i) => i.category.normalizedName == _filter.category,
+            ),
+          )
           .toList();
     }
 
@@ -93,7 +97,10 @@ class _SpendingScreenState extends State<SpendingScreen> {
   }
 
   List<String> _categories(List<Purchase> all) =>
-      all.expand((p) => p.items.map((i) => i.category.name)).toSet().toList()
+      all
+          .expand((p) => p.items.map((i) => i.category.normalizedName))
+          .toSet()
+          .toList()
         ..sort();
 
   List<String> _merchants(List<Purchase> all) =>
@@ -181,6 +188,7 @@ class _SpendingScreenState extends State<SpendingScreen> {
                     child: Padding(
                       padding: const EdgeInsets.only(top: 12),
                       child: SpendingCategoryTabs(
+                        availableCategories: _categories(allPurchases),
                         selectedCategory: _filter.category,
                         onCategoryChanged: (cat) => setState(
                           () => _filter = cat == null
@@ -346,7 +354,7 @@ class _SpendingHeader extends StatelessWidget {
             ),
           ),
 
-          const SizedBox(width: 20,),
+          const SizedBox(width: 20),
 
           GestureDetector(
             onTap: onFilterTap,

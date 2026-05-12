@@ -381,7 +381,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get addPurchase => 'Add Purchase';
 
   @override
-  String get editPurchase => 'Edit Purchase';
+  String get editPurchase => 'Edit purchase';
 
   @override
   String get title => 'Title';
@@ -758,4 +758,158 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get letsGo => 'Let\'s Go';
+
+  @override
+  String get spendingDetails => 'Spending details';
+
+  @override
+  String get share => 'Share';
+
+  @override
+  String get export => 'Export';
+
+  @override
+  String get deletePurchase => 'Delete purchase';
+
+  @override
+  String get deletePurchaseTitle => 'Delete purchase?';
+
+  @override
+  String get deletePurchaseDescription => 'This action cannot be undone.';
+
+  @override
+  String get premiumFeature => 'Premium feature';
+
+  @override
+  String get savingChanges => 'Saving changes…';
+
+  @override
+  String get sortNewest => 'Newest First';
+
+  @override
+  String get sortOldest => 'Oldest First';
+
+  @override
+  String get sortMostExpensive => 'Most Expensive';
+
+  @override
+  String get sortCheapest => 'Cheapest';
+
+  @override
+  String get sortByName => 'By Name';
+
+  @override
+  String get categoryFood => 'Food';
+
+  @override
+  String get categoryTransport => 'Transport';
+
+  @override
+  String get categoryHousing => 'Housing';
+
+  @override
+  String get categoryBills => 'Bills';
+
+  @override
+  String get categorySubscriptions => 'Subscriptions';
+
+  @override
+  String get categoryShopping => 'Shopping';
+
+  @override
+  String get categoryHealth => 'Health';
+
+  @override
+  String get categoryEntertainment => 'Entertainment';
+
+  @override
+  String get categoryTravel => 'Travel';
+
+  @override
+  String get categoryEducation => 'Education';
+
+  @override
+  String get categoryPersonal => 'Personal';
+
+  @override
+  String get categoryGifts => 'Gifts';
+
+  @override
+  String get categoryDonations => 'Donations';
+
+  @override
+  String get categoryOther => 'Other';
+
+  @override
+  String get selectCategory => 'Select category';
+
+  @override
+  String get searchCategories => 'Search categories...';
+
+  @override
+  String noCategoriesFoundFor(String query) {
+    return 'No categories found for \"$query\"';
+  }
+
+  @override
+  String itemWillBePermanentlyRemoved(String itemName) {
+    return '\"$itemName\" will be permanently removed from this purchase.';
+  }
+
+  @override
+  String get itemName => 'Item name';
+
+  @override
+  String get itemNameHint => 'e.g. Beef, Milk, Shampoo';
+
+  @override
+  String get unitPrice => 'Unit price';
+
+  @override
+  String get required => 'Required';
+
+  @override
+  String get invalid => 'Invalid';
+
+  @override
+  String get quantityShort => 'Qty';
+
+  @override
+  String get minimumOne => 'Min 1';
+
+  @override
+  String get home => 'Home';
+
+  @override
+  String get insights => 'Insights';
+
+  @override
+  String get profile => 'Profile';
+
+  @override
+  String get selectDateRange => 'Select date range';
+
+  @override
+  String get premium => 'Premium';
+
+  @override
+  String get subscription => 'Subscription';
+
+  @override
+  String get manualEntry => 'Manual Entry';
+
+  @override
+  String get enterDetailsManually => 'Enter details manually';
+
+  @override
+  String get voiceInput => 'Voice Input';
+
+  @override
+  String get addBySpeaking => 'Add by speaking';
+
+  @override
+  String get snapPhotoOfReceipt => 'Snap a photo of your receipt';
+
+  @override
+  String get all => 'All';
 }

@@ -764,4 +764,159 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get letsGo => 'Los geht\'s';
+
+  @override
+  String get spendingDetails => 'Ausgabendetails';
+
+  @override
+  String get share => 'Teilen';
+
+  @override
+  String get export => 'Exportieren';
+
+  @override
+  String get deletePurchase => 'Kauf löschen';
+
+  @override
+  String get deletePurchaseTitle => 'Kauf löschen?';
+
+  @override
+  String get deletePurchaseDescription =>
+      'Diese Aktion kann nicht rückgängig gemacht werden.';
+
+  @override
+  String get premiumFeature => 'Premium-Funktion';
+
+  @override
+  String get savingChanges => 'Änderungen werden gespeichert…';
+
+  @override
+  String get sortNewest => 'Neueste zuerst';
+
+  @override
+  String get sortOldest => 'Älteste zuerst';
+
+  @override
+  String get sortMostExpensive => 'Teuerste zuerst';
+
+  @override
+  String get sortCheapest => 'Günstigste zuerst';
+
+  @override
+  String get sortByName => 'Nach Name';
+
+  @override
+  String get categoryFood => 'Lebensmittel';
+
+  @override
+  String get categoryTransport => 'Transport';
+
+  @override
+  String get categoryHousing => 'Wohnen';
+
+  @override
+  String get categoryBills => 'Rechnungen';
+
+  @override
+  String get categorySubscriptions => 'Abonnements';
+
+  @override
+  String get categoryShopping => 'Einkaufen';
+
+  @override
+  String get categoryHealth => 'Gesundheit';
+
+  @override
+  String get categoryEntertainment => 'Unterhaltung';
+
+  @override
+  String get categoryTravel => 'Reisen';
+
+  @override
+  String get categoryEducation => 'Bildung';
+
+  @override
+  String get categoryPersonal => 'Persönlich';
+
+  @override
+  String get categoryGifts => 'Geschenke';
+
+  @override
+  String get categoryDonations => 'Spenden';
+
+  @override
+  String get categoryOther => 'Sonstiges';
+
+  @override
+  String get selectCategory => 'Kategorie auswählen';
+
+  @override
+  String get searchCategories => 'Kategorien suchen...';
+
+  @override
+  String noCategoriesFoundFor(String query) {
+    return 'Keine Kategorien für \"$query\" gefunden';
+  }
+
+  @override
+  String itemWillBePermanentlyRemoved(String itemName) {
+    return '\"$itemName\" wird dauerhaft aus diesem Kauf entfernt.';
+  }
+
+  @override
+  String get itemName => 'Artikelname';
+
+  @override
+  String get itemNameHint => 'z.B. Rindfleisch, Milch, Shampoo';
+
+  @override
+  String get unitPrice => 'Stückpreis';
+
+  @override
+  String get required => 'Pflichtfeld';
+
+  @override
+  String get invalid => 'Ungültig';
+
+  @override
+  String get quantityShort => 'Mge';
+
+  @override
+  String get minimumOne => 'Min 1';
+
+  @override
+  String get home => 'Start';
+
+  @override
+  String get insights => 'Einblicke';
+
+  @override
+  String get profile => 'Profil';
+
+  @override
+  String get selectDateRange => 'Datumsbereich auswählen';
+
+  @override
+  String get premium => 'Premium';
+
+  @override
+  String get subscription => 'Abonnement';
+
+  @override
+  String get manualEntry => 'Manuelle Eingabe';
+
+  @override
+  String get enterDetailsManually => 'Details manuell eingeben';
+
+  @override
+  String get voiceInput => 'Spracheingabe';
+
+  @override
+  String get addBySpeaking => 'Per Sprache hinzufügen';
+
+  @override
+  String get snapPhotoOfReceipt => 'Foto deiner Quittung machen';
+
+  @override
+  String get all => 'Alle';
 }

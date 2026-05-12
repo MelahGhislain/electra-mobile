@@ -1,5 +1,6 @@
 import 'package:electra/core/configs/fonts.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class DateRangeField extends StatelessWidget {
   final String? label;
@@ -21,22 +22,9 @@ class DateRangeField extends StatelessWidget {
 
   bool get _hasRange => dateFrom != null && dateTo != null;
 
-  String _fmt(DateTime d) {
-    const months = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
-    return '${months[d.month - 1]} ${d.day}, ${d.year}';
+  String _fmt(BuildContext context, DateTime d) {
+    final locale = Localizations.localeOf(context).toLanguageTag();
+    return DateFormat.yMMMd(locale).format(d);
   }
 
   @override
@@ -83,7 +71,7 @@ class DateRangeField extends StatelessWidget {
                 Expanded(
                   child: Text(
                     _hasRange
-                        ? '${_fmt(dateFrom!)}  →  ${_fmt(dateTo!)}'
+                        ? '${_fmt(context, dateFrom!)}  →  ${_fmt(context, dateTo!)}'
                         : hint,
                     style: TextStyle(
                       fontSize: 14,

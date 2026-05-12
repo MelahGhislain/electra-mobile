@@ -1,18 +1,20 @@
+import 'package:electra/l10n/app_localizations.dart';
+
 enum PurchaseSortOption { newest, oldest, mostExpensive, cheapest, byName }
 
 extension PurchaseSortOptionLabel on PurchaseSortOption {
-  String get label {
+  String label(AppLocalizations l) {
     switch (this) {
       case PurchaseSortOption.newest:
-        return 'Newest First';
+        return l.sortNewest;
       case PurchaseSortOption.oldest:
-        return 'Oldest First';
+        return l.sortOldest;
       case PurchaseSortOption.mostExpensive:
-        return 'Most Expensive';
+        return l.sortMostExpensive;
       case PurchaseSortOption.cheapest:
-        return 'Cheapest';
+        return l.sortCheapest;
       case PurchaseSortOption.byName:
-        return 'By Name';
+        return l.sortByName;
     }
   }
 }

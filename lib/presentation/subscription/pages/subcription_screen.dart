@@ -96,7 +96,8 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                     child: Column(
                       children: [
                         const Text(
-                          'Spend Smarter.\nGrow Faster.',
+                          // 'Spend Smarter.\nGrow Faster.',
+                          'See Exactly Where \nYour Money Goes.',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: AppFontSize.xxl,
@@ -107,7 +108,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                         ),
                         const SizedBox(height: 10),
                         const Text(
-                          'Unlock AI-powered insights, unlimited tracking,\nand tools that actually change your habits.',
+                          'Most people lose track of +\$300/month without realising. Electra shows you exactly where it goes — in seconds.',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: AppFontSize.sm,
@@ -134,6 +135,8 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                     child: PlanCard(
                       isAnnual: _isAnnual,
                       priceString: priceString,
+                      monthlyPrice: 9.99,
+                      annualPrice: 4.99,
                       isLoading: isLoading || isPurchasing,
                       onSubscribe: () {
                         if (product == null) return;
@@ -268,7 +271,7 @@ class _TrustItem extends StatelessWidget {
     return Expanded(
       child: Column(
         children: [
-          Icon(icon, size: 20, color: const Color(0xFF22C55E)),
+          Icon(icon, size: 28, color: const Color(0xFF22C55E)),
           const SizedBox(height: 6),
           Text(
             label,
@@ -321,8 +324,6 @@ class _LegalFooter extends StatelessWidget {
             _FooterLink(label: 'Privacy Policy', onTap: () {}),
             const Text(' · ', style: TextStyle(fontSize: AppFontSize.xs)),
             _FooterLink(label: 'Terms of Service', onTap: () {}),
-            const Text(' · ', style: TextStyle(fontSize: AppFontSize.xs)),
-            _FooterLink(label: 'Restore Purchase', onTap: onRestore),
           ],
         ),
       ],
