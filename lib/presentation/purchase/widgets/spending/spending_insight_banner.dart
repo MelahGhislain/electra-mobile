@@ -12,7 +12,6 @@ class SpendingInsightBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
-    ;
 
     return GestureDetector(
       onTap: onTap,

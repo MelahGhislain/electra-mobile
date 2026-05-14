@@ -16,6 +16,7 @@ import 'package:electra/presentation/settings/widgets/bottom_sheets/budget_botto
 import 'package:electra/presentation/settings/widgets/bottom_sheets/currency_bottom_sheet.dart';
 import 'package:electra/presentation/settings/widgets/bottom_sheets/delete_account_dialog.dart';
 import 'package:electra/presentation/settings/widgets/bottom_sheets/edit_profile_bottom_sheet.dart';
+import 'package:electra/presentation/settings/widgets/bottom_sheets/export_data_bottom_sheet.dart';
 import 'package:electra/presentation/settings/widgets/bottom_sheets/language_bottom_sheet.dart';
 import 'package:electra/presentation/settings/widgets/bottom_sheets/theme_bottom_sheet.dart';
 import 'package:electra/presentation/settings/widgets/logout_confirmation_dialog.dart';
@@ -95,6 +96,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return l.budgetPerMonth('\$${settings.monthlyBudget!.toStringAsFixed(0)}');
   }
 
+  String _subscriptionLabel(UserCubit cubit, AppLocalizations l) {
+    if (!cubit.hasPremium) return 'Free · Tap to upgrade';
+    // Check if annual or monthly
+    final isAnnual =
+        cubit.currentUser?.subscription?.productId?.contains('annual') ?? false;
+    return isAnnual ? '👑 Premium · Annual' : '👑 Premium · Monthly';
+  }
+
   // ── Sheet openers ─────────────────────────────────────────────────────────
 
   Future<void> _openThemeSheet() async {
@@ -155,6 +164,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Future<void> _openEditProfile(User user) async {
     await EditProfileBottomSheet.show(context, user);
+  }
+
+  Future<void> _openExportData() async {
+    await ExportDataBottomSheet.show(context);
   }
 
   Future<void> _openDeleteAccount(User user) async {
@@ -304,7 +317,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               SettingsTile(
                                 icon: Icons.diamond_outlined,
                                 title: l.subscription,
-                                // subtitle: _budgetLabel(settings, l), // TODO: Display the subcription tier
+                                subtitle: _subscriptionLabel(cubit, l),
                                 showChevron: true,
                                 showDivider: true,
                                 onTap: user != null
@@ -379,7 +392,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 subtitle: l.settingsExportDataSubtitle,
                                 showDivider: true,
                                 showChevron: true,
-                                onTap: () {},
+                                isPremiumFeature: true,
+                                isLocked: cubit.hasPremium,
+                                onTap: user != null
+                                    ? () => _openExportData()
+                                    : null,
                               ),
                               SettingsTile(
                                 icon: Icons.people,

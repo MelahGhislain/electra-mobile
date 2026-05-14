@@ -1,3 +1,4 @@
+import 'package:electra/domain/entities/subscription/subscription.dart';
 import 'package:electra/domain/entities/user/user_settings.dart';
 import 'package:equatable/equatable.dart';
 
@@ -8,6 +9,7 @@ class User extends Equatable {
   final String provider;
   final String? providerId;
   final UserSettings? settings;
+  final Subscription? subscription;
   final DateTime createdAt;
   final DateTime updatedAt;
 
@@ -18,6 +20,7 @@ class User extends Equatable {
     required this.provider,
     this.providerId,
     this.settings,
+    this.subscription,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -29,6 +32,7 @@ class User extends Equatable {
     String? provider,
     String? providerId,
     UserSettings? settings,
+    Subscription? subscription,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) => User(
@@ -38,6 +42,7 @@ class User extends Equatable {
     provider: provider ?? this.provider,
     providerId: providerId ?? this.providerId,
     settings: settings ?? this.settings,
+    subscription: subscription ?? this.subscription,
     createdAt: createdAt ?? this.createdAt,
     updatedAt: updatedAt ?? this.updatedAt,
   );
@@ -49,6 +54,7 @@ class User extends Equatable {
     provider: provider,
     providerId: providerId,
     settings: settings?.toEntity(),
+    subscription: subscription?.toEntity(),
     createdAt: createdAt,
     updatedAt: updatedAt,
   );
@@ -61,6 +67,7 @@ class User extends Equatable {
     provider,
     providerId,
     settings,
+    subscription,
     createdAt,
     updatedAt,
   ];

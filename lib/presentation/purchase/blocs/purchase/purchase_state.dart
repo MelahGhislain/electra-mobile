@@ -73,3 +73,19 @@ class PurchaseMutationFailure extends PurchaseState {
   @override
   List<Object?> get props => [message, purchases];
 }
+
+class PurchaseExporting extends PurchaseState {
+  const PurchaseExporting();
+}
+
+class PurchaseExported extends PurchaseState {
+  const PurchaseExported();
+}
+
+class PurchaseExportFailure extends PurchaseState {
+  final String message;
+  const PurchaseExportFailure(this.message);
+
+  @override
+  List<Object?> get props => [message];
+}

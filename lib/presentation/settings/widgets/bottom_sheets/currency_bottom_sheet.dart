@@ -61,7 +61,9 @@ class CurrencyBottomSheet {
       icon: Icons.folder_outlined,
       child: RadioOptionList<AppCurrency>(
         selectedValue: current,
-        onSelected: (_) {},
+        onSelected: (value) {
+          Navigator.of(context, rootNavigator: false).pop(value);
+        },
         options: AppCurrency.values
             .map(
               (c) => RadioOption(

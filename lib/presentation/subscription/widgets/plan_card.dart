@@ -114,7 +114,7 @@ class PlanCard extends StatelessWidget {
                           // Strikethrough original price — anchoring
                           if (isAnnual)
                             Text(
-                              '\$${ monthlyPrice.toStringAsFixed(2)}/month',
+                              '\$${monthlyPrice.toStringAsFixed(2)}/month',
                               style: TextStyle(
                                 fontSize: AppFontSize.xs,
                                 fontWeight: FontWeight.w500,

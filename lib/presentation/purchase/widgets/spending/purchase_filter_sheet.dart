@@ -131,7 +131,12 @@ class _PurchaseFilterContentState extends State<_PurchaseFilterContent> {
                     ? l.noCategoriesAvailable
                     : null,
                 options: widget.availableCategories
-                    .map((cat) => ChipSelectorOption(value: cat, label: CategoryMeta.localizedKeyLabel(cat, l)))
+                    .map(
+                      (cat) => ChipSelectorOption(
+                        value: cat,
+                        label: CategoryMeta.localizedKeyLabel(cat, l),
+                      ),
+                    )
                     .toList(),
                 onSelected: (cat) =>
                     setState(() => _filter = _filter.copyWith(category: cat)),

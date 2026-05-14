@@ -2,7 +2,10 @@ import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/core/configs/theme/app_colors.dart';
 import 'package:electra/core/router/route_names.dart';
 import 'package:electra/l10n/app_localizations.dart';
+import 'package:electra/presentation/settings/blocs/user_cubit.dart';
+import 'package:electra/presentation/settings/blocs/user_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class AddPopup extends StatelessWidget {
@@ -28,70 +31,78 @@ class AddPopup extends StatelessWidget {
         ? AppColors.darkBorder
         : Colors.white;
 
-    return ScaleTransition(
-      scale: animation,
-      alignment: Alignment.bottomCenter,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          // Card
-          Container(
-            width: 320,
-            decoration: BoxDecoration(
-              color: Theme.of(context).cardTheme.color,
-              borderRadius: BorderRadius.circular(18),
-              border: Border.all(color: Theme.of(context).dividerColor),
-              boxShadow: [
-                BoxShadow(
-                  color: Theme.of(context).primaryColor.withValues(alpha: 0.12),
-                  blurRadius: 24,
-                  offset: const Offset(0, 8),
+    return BlocBuilder<UserCubit, UserState>(
+      builder: (context, userState) {
+        final cubit = context.read<UserCubit>();
+
+        return ScaleTransition(
+          scale: animation,
+          alignment: Alignment.bottomCenter,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Card
+              Container(
+                width: 320,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).cardTheme.color,
+                  borderRadius: BorderRadius.circular(18),
+                  border: Border.all(color: Theme.of(context).dividerColor),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Theme.of(
+                        context,
+                      ).primaryColor.withValues(alpha: 0.12),
+                      blurRadius: 24,
+                      offset: const Offset(0, 8),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _PopupRow(
-                  iconBg: const Color(0xFFE8FDF0),
-                  icon: Icons.edit_outlined,
-                  iconColor: const Color(0xFF22C55E),
-                  title: l.manualEntry,
-                  subtitle: l.enterDetailsManually,
-                  onTap: onManualEntry,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _PopupRow(
+                      iconBg: const Color(0xFFE8FDF0),
+                      icon: Icons.edit_outlined,
+                      iconColor: const Color(0xFF22C55E),
+                      title: l.manualEntry,
+                      subtitle: l.enterDetailsManually,
+                      onTap: onManualEntry,
+                    ),
+                    const Divider(height: 0.5, indent: 16, endIndent: 16),
+                    _PopupRow(
+                      iconBg: const Color(0xFFEDE9FE),
+                      icon: Icons.mic_outlined,
+                      iconColor: const Color(0xFF7C3AED),
+                      title: l.voiceInput,
+                      subtitle: l.addBySpeaking,
+                      isPremium: !cubit.hasPremium,
+                      isLocked: !cubit.hasPremium,
+                      onTap: onVoiceInput,
+                    ),
+                    const Divider(height: 0.5, indent: 16, endIndent: 16),
+                    _PopupRow(
+                      iconBg: const Color(0xFFDBEAFE),
+                      icon: Icons.camera_alt_outlined,
+                      iconColor: const Color(0xFF2563EB),
+                      title: l.scanReceipt,
+                      subtitle: l.snapPhotoOfReceipt,
+                      isPremium: !cubit.hasPremium,
+                      isLocked: !cubit.hasPremium,
+                      onTap: onScanReceipt,
+                    ),
+                  ],
                 ),
-                const Divider(height: 0.5, indent: 16, endIndent: 16),
-                _PopupRow(
-                  iconBg: const Color(0xFFEDE9FE),
-                  icon: Icons.mic_outlined,
-                  iconColor: const Color(0xFF7C3AED),
-                  title: l.voiceInput,
-                  subtitle: l.addBySpeaking,
-                  isPremium: true,
-                  isLocked: true,
-                  onTap: onVoiceInput,
-                ),
-                const Divider(height: 0.5, indent: 16, endIndent: 16),
-                _PopupRow(
-                  iconBg: const Color(0xFFDBEAFE),
-                  icon: Icons.camera_alt_outlined,
-                  iconColor: const Color(0xFF2563EB),
-                  title: l.scanReceipt,
-                  subtitle: l.snapPhotoOfReceipt,
-                  isPremium: true,
-                  isLocked: true,
-                  onTap: onScanReceipt,
-                ),
-              ],
-            ),
+              ),
+              // Notch pointing down toward the FAB
+              CustomPaint(
+                size: const Size(20, 10),
+                painter: _NotchPainter(color: notchColor),
+              ),
+            ],
           ),
-          // Notch pointing down toward the FAB
-          CustomPaint(
-            size: const Size(20, 10),
-            painter: _NotchPainter(color: notchColor),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

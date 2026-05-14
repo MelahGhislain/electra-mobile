@@ -161,6 +161,7 @@ class AppRouter {
                       createPurchase: sl(),
                       updatePurchase: sl(),
                       deletePurchase: sl(),
+                      exportPurchase: sl(),
                     ),
                   ),
                 ],

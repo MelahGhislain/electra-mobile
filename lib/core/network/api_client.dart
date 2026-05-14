@@ -5,8 +5,12 @@ class ApiClient {
 
   ApiClient(this.dio);
 
-  Future<Response> get(String path) async {
-    return await dio.get(path);
+  Future<Response> get(
+    String path, {
+    Map<String, dynamic>? params,
+    Options? options,
+  }) async {
+    return await dio.get(path, queryParameters: params, options: options);
   }
 
   Future<Response> post(String path, {dynamic data, Options? options}) async {

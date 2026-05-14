@@ -12,7 +12,9 @@ class ThemeBottomSheet {
       icon: Icons.palette_outlined,
       child: RadioOptionList<ThemeMode>(
         selectedValue: current,
-        onSelected: (_) {},
+        onSelected: (value) {
+          Navigator.of(context, rootNavigator: false).pop(value);
+        },
         options: [
           RadioOption(
             value: ThemeMode.system,

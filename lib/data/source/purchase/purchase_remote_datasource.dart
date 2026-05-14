@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:electra/core/network/api_client.dart';
 import 'package:electra/core/network/api_endpoints.dart';
 import 'package:electra/data/models/purchase/purchase_item_model.dart';
 import 'package:electra/data/models/purchase/purchase_model.dart';
+import 'package:path_provider/path_provider.dart';
 
 abstract class PurchaseRemoteDataSource {
   // ── Purchase ──────────────────────────────────────────────────────────────
@@ -23,6 +26,9 @@ abstract class PurchaseRemoteDataSource {
     Map<String, dynamic> body,
   );
   Future<void> deletePurchaseItem(String purchaseId, String itemId);
+  Future<String> exportData(
+    Map<String, dynamic> body,
+  ); // returns saved file path
 }
 
 class PurchaseRemoteDataSourceImpl implements PurchaseRemoteDataSource {
@@ -120,5 +126,43 @@ class PurchaseRemoteDataSourceImpl implements PurchaseRemoteDataSource {
         .replaceAll('{purchaseId}', purchaseId)
         .replaceAll('{itemId}', itemId);
     await apiClient.delete(endpoint, data: {}, options: _jsonOptions);
+  }
+
+  // ── Export ───────────────────────────────────────────────────────────────
+
+  @override
+  Future<String> exportData(Map<String, dynamic> body) async {
+    final format = body['format'] as String? ?? 'csv';
+
+    final response = await apiClient.get(
+      ApiEndpoints.exportData,
+      params: body,
+      options: Options(responseType: ResponseType.bytes), // ← binary response
+    );
+
+    // Pick the right extension
+    final extension = _extensionFromFormat(format);
+    final fileName =
+        'electra_export_${DateTime.now().millisecondsSinceEpoch}.$extension';
+
+    // Save to the device's temp/downloads directory
+    final dir = await getTemporaryDirectory();
+    final filePath = '${dir.path}/$fileName';
+    final file = File(filePath);
+    await file.writeAsBytes(response.data as List<int>);
+
+    return filePath;
+  }
+
+  static String _extensionFromFormat(String format) {
+    switch (format) {
+      case 'pdf':
+        return 'pdf';
+      case 'excel':
+        return 'xlsx';
+      case 'csv':
+      default:
+        return 'csv';
+    }
   }
 }

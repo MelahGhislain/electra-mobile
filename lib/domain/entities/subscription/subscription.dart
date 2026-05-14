@@ -35,7 +35,28 @@ class Subscription extends Equatable {
     this.updatedAt,
   });
 
-  bool get isPremium =>
+  Subscription toEntity() {
+    return Subscription(
+      id: id,
+      userId: userId,
+      plan: SubscriptionPlan.values.firstWhere((e) => e.name == plan.name),
+      status: SubscriptionStatus.values.firstWhere(
+        (e) => e.name == status.name,
+      ),
+      provider: SubscriptionProvider.values.firstWhere(
+        (e) => e.name == provider.name,
+      ),
+      providerId: providerId,
+      productId: productId,
+      currentPeriodStart: currentPeriodStart,
+      currentPeriodEnd: currentPeriodEnd,
+      cancelledAt: cancelledAt,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+    );
+  }
+
+  bool get hasPremium =>
       plan == SubscriptionPlan.premium && status == SubscriptionStatus.active;
 
   bool get isExpired => status == SubscriptionStatus.expired;

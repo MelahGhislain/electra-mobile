@@ -29,4 +29,7 @@ abstract class PurchaseRepository {
     String purchaseId,
     String itemId,
   );
+
+  // ── Export ───────────────────────────────────────────────────────────────
+  Future<Either<Failure, void>> exportData(Map<String, dynamic> body);
 }

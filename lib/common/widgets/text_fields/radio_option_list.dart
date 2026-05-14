@@ -48,10 +48,9 @@ class _RadioOptionListState<T> extends State<RadioOptionList<T>> {
           onTap: () {
             setState(() => _selected = option.value);
             widget.onSelected(option.value);
-            Navigator.of(context, rootNavigator: false).pop(option.value);
           },
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
               color: isSelected
                   ? theme.primaryColor.withValues(alpha: 0.08)

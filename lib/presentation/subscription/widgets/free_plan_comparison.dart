@@ -68,14 +68,14 @@ class FreePlanComparison extends StatelessWidget {
                 Expanded(
                   flex: 2,
                   child: Center(
-                      child: Text(
-                        'Premium',
-                        style: TextStyle(
-                          fontSize: AppFontSize.sm,
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: 0.6,
-                        ),
+                    child: Text(
+                      'Premium',
+                      style: TextStyle(
+                        fontSize: AppFontSize.sm,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 0.6,
                       ),
+                    ),
                   ),
                 ),
               ],
@@ -148,7 +148,7 @@ class FreePlanComparison extends StatelessWidget {
                     ],
                   ),
                 ),
-                
+
                 if (!isLast)
                   Divider(
                     height: 1,

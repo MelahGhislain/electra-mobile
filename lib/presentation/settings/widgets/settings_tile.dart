@@ -1,5 +1,7 @@
 import 'package:electra/common/widgets/buttons/animated_icon_button.dart';
+import 'package:electra/core/router/route_names.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class SettingsTile extends StatelessWidget {
   final IconData icon;
@@ -8,6 +10,8 @@ class SettingsTile extends StatelessWidget {
   final String? subtitle;
   final bool showDivider;
   final bool showChevron;
+  final bool isPremiumFeature;
+  final bool isLocked;
   final VoidCallback? onTap;
 
   const SettingsTile({
@@ -18,15 +22,24 @@ class SettingsTile extends StatelessWidget {
     this.iconColor,
     this.showDivider = false,
     this.showChevron = false,
+    this.isPremiumFeature = false,
+    this.isLocked = false,
     this.onTap,
   });
+
+  // True when the feature is premium and the user doesn't have access
+  bool get _isLocked => isPremiumFeature && !isLocked;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         ListTile(
-          onTap: onTap,
+          onTap: _isLocked
+              ? () {
+                  context.pushNamed(RouteNames.subscription);
+                }
+              : onTap, // disable tap when locked
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 16,
             vertical: 6,
@@ -41,11 +54,11 @@ class SettingsTile extends StatelessWidget {
           trailing: showChevron
               ? AnimatedIconButton(
                   icon: Icon(
-                    Icons.chevron_right,
+                    _isLocked ? Icons.lock_outline : Icons.chevron_right,
                     size: 26,
                     color: Theme.of(context).iconTheme.color,
                   ),
-                  onTap: onTap ?? () {},
+                  onTap: () {},
                 )
               : null,
         ),

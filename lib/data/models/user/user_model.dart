@@ -1,5 +1,6 @@
+import 'package:electra/data/models/subscription/subscription_model.dart';
+import 'package:electra/data/models/user/user_settings_model.dart';
 import 'package:electra/domain/entities/user/user.dart';
-import 'user_settings_model.dart';
 
 class UserModel extends User {
   const UserModel({
@@ -9,13 +10,13 @@ class UserModel extends User {
     required super.provider,
     super.providerId,
     super.settings,
+    super.subscription,
     required super.createdAt,
     required super.updatedAt,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-      // Use toString() guards so a non-string id never throws
       id: json['id']?.toString() ?? '',
       email: json['email']?.toString() ?? '',
       name: json['name']?.toString() ?? '',
@@ -24,7 +25,11 @@ class UserModel extends User {
       settings: json['settings'] != null
           ? UserSettingsModel.fromJson(json['settings'] as Map<String, dynamic>)
           : null,
-      // ISO-8601 strings from the API — fall back to now if missing
+      subscription: json['subscription'] != null
+          ? SubscriptionModel.fromJson(
+              json['subscription'] as Map<String, dynamic>,
+            ).toEntity()
+          : null,
       createdAt: json['createdAt'] != null
           ? DateTime.parse(json['createdAt'].toString())
           : DateTime.now(),
@@ -34,18 +39,19 @@ class UserModel extends User {
     );
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'email': email,
-      'name': name,
-      'provider': provider,
-      'providerId': providerId,
-      'settings': settings is UserSettingsModel
-          ? (settings as UserSettingsModel).toJson()
-          : null,
-      'createdAt': createdAt.toIso8601String(),
-      'updatedAt': updatedAt.toIso8601String(),
-    };
-  }
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'email': email,
+    'name': name,
+    'provider': provider,
+    'providerId': providerId,
+    'settings': settings is UserSettingsModel
+        ? (settings as UserSettingsModel).toJson()
+        : null,
+    'subscription': subscription is SubscriptionModel
+        ? (subscription as SubscriptionModel).toJson()
+        : null,
+    'createdAt': createdAt.toIso8601String(),
+    'updatedAt': updatedAt.toIso8601String(),
+  };
 }

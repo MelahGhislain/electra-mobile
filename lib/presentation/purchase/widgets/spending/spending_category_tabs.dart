@@ -22,7 +22,12 @@ class SpendingCategoryTabs extends StatelessWidget {
 
     // Build tab list: "All" first, then one tab per available category
     final tabs = [
-      _Tab(label: l.all, icon: Icons.grid_view_rounded, key: null, color: theme.colorScheme.secondary),
+      _Tab(
+        label: l.all,
+        icon: Icons.grid_view_rounded,
+        key: null,
+        color: theme.colorScheme.secondary,
+      ),
       ...availableCategories.map((key) {
         final meta = CategoryMeta.fromKey(key);
         return _Tab(
@@ -40,7 +45,7 @@ class SpendingCategoryTabs extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 16),
         itemCount: tabs.length,
-        separatorBuilder: (_, __) => const SizedBox(width: 8),
+        separatorBuilder: (_, _) => const SizedBox(width: 8),
         itemBuilder: (context, i) {
           final tab = tabs[i];
           final isSelected = tab.key == selectedCategory;
@@ -97,8 +102,8 @@ class SpendingCategoryTabs extends StatelessWidget {
 class _Tab {
   final String label;
   final IconData icon;
-  final String? key;   // null = "All"
-  final Color? color;  // null = use theme onSurface for "All" tab
+  final String? key; // null = "All"
+  final Color? color; // null = use theme onSurface for "All" tab
 
   const _Tab({
     required this.label,

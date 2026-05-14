@@ -52,6 +52,23 @@ class SubscriptionModel {
     );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'userId': userId,
+      'plan': plan,
+      'status': status,
+      'provider': provider,
+      'providerId': providerId,
+      'productId': productId,
+      'currentPeriodStart': currentPeriodStart.toUtc().toIso8601String(),
+      'currentPeriodEnd': currentPeriodEnd.toUtc().toIso8601String(),
+      'cancelledAt': cancelledAt?.toUtc().toIso8601String(),
+      'createdAt': createdAt?.toUtc().toIso8601String(),
+      'updatedAt': updatedAt?.toUtc().toIso8601String(),
+    };
+  }
+
   Subscription toEntity() {
     return Subscription(
       id: id,

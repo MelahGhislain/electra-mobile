@@ -18,3 +18,45 @@ samples, guidance on mobile development, and a full API reference.
 
 # How to change it properly (IMPORTANT)
 flutter pub run change_app_package_name:main com.melah.expensetracker
+
+
+
+
+# OCR image processing flow
+
+Flutter App
+   ↓
+Take Receipt Photo
+   ↓
+OCR (extract raw text)
+   ↓
+Send text to Gemini Flash
+   ↓
+Gemini returns structured JSON
+   ↓
+Validate JSON
+   ↓
+Save to backend/database
+
+```dart
+import 'dart:io';
+
+import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
+
+class ReceiptOcrService {
+  final _textRecognizer = TextRecognizer();
+
+  Future<String> extractText(File imageFile) async {
+    final inputImage = InputImage.fromFile(imageFile);
+
+    final RecognizedText recognizedText =
+        await _textRecognizer.processImage(inputImage);
+
+    return recognizedText.text;
+  }
+
+  void dispose() {
+    _textRecognizer.close();
+  }
+}
+```

@@ -104,5 +104,11 @@
 		<string>ko</string>
 		<string>ar</string>
 	</array>
+
+	<!-- File sharing -->
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
+	<key>UIFileSharingEnabled</key>
+	<true/>
 </dict>
 </plist>

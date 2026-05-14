@@ -7,6 +7,7 @@ import 'package:electra/domain/entities/purchase/purchase.dart';
 import 'package:electra/domain/entities/purchase/purchase_item.dart';
 import 'package:electra/domain/repository/purchase/purchase_repository.dart';
 import 'package:flutter/foundation.dart';
+import 'package:open_filex/open_filex.dart';
 
 class PurchaseRepositoryImpl implements PurchaseRepository {
   final PurchaseRemoteDataSource remoteDataSource;
@@ -149,6 +150,27 @@ class PurchaseRepositoryImpl implements PurchaseRepository {
   ) async {
     try {
       await remoteDataSource.deletePurchaseItem(purchaseId, itemId);
+      return const Right(null);
+    } on DioException catch (e) {
+      debugPrint('DioException: ${e.message}');
+      return Left(mapDioError(e));
+    } catch (e) {
+      debugPrint('Unknown error: $e');
+      return Left(UnknownFailure());
+    }
+  }
+
+  // ── Export ───────────────────────────────────────────────────────────────
+
+  @override
+  Future<Either<Failure, void>> exportData(Map<String, dynamic> body) async {
+    try {
+      final filePath = await remoteDataSource.exportData(body);
+      // Open the file automatically on device
+      final result = await OpenFilex.open(filePath);
+      if (result.type != ResultType.done) {
+        return Left(UnknownFailure());
+      }
       return const Right(null);
     } on DioException catch (e) {
       debugPrint('DioException: ${e.message}');

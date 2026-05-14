@@ -59,7 +59,9 @@ class LanguageBottomSheet {
       icon: Icons.language_rounded,
       child: RadioOptionList<AppLanguage>(
         selectedValue: current,
-        onSelected: (_) {},
+        onSelected: (value) {
+          Navigator.of(context, rootNavigator: false).pop(value);
+        },
         options: AppLanguage.all
             .map(
               (lang) => RadioOption(

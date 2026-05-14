@@ -126,4 +126,25 @@ class UserCubit extends Cubit<UserState> {
   }
 
   bool get isSaving => state is UserSaving;
+
+  // ── Premium ────────────────────────────────────────────────────────────────
+
+  bool get hasPremium => _currentUser()?.subscription?.hasPremium ?? false;
+
+  bool get isFree => !hasPremium;
+
+  bool get isSubscriptionExpired =>
+      _currentUser()?.subscription?.isExpired ?? false;
+
+  bool get isSubscriptionCancelled =>
+      _currentUser()?.subscription?.isCancelled ?? false;
+
+  DateTime? get subscriptionExpiryDate =>
+      _currentUser()?.subscription?.currentPeriodEnd;
+
+  bool get isSubscriptionExpiringSoon {
+    final expiry = subscriptionExpiryDate;
+    if (expiry == null) return false;
+    return expiry.difference(DateTime.now()).inDays <= 7;
+  }
 }

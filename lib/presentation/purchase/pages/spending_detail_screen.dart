@@ -14,6 +14,8 @@ import 'package:electra/presentation/purchase/widgets/spending_detail/spending_d
 import 'package:electra/presentation/purchase/widgets/spending_detail/spending_detail_items_section.dart';
 import 'package:electra/presentation/purchase/widgets/spending_detail/spending_detail_receipt_section.dart';
 import 'package:electra/presentation/purchase/widgets/spending_detail/spending_detail_section_header.dart';
+import 'package:electra/presentation/settings/blocs/user_cubit.dart';
+import 'package:electra/presentation/settings/widgets/bottom_sheets/export_data_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -182,9 +184,14 @@ class _SpendingDetailView extends StatelessWidget {
 
   // ── Options menu ───────────────────────────────────────────────────────────
 
+  Future<void> _openExportData(BuildContext context, String purchaseId) async {
+    await ExportDataBottomSheet.show(context, purchaseId: purchaseId, maxHeightPct: 0.80);
+  }
+
   void _showOptionsMenu(BuildContext context, Purchase purchase) {
     final theme = Theme.of(context);
     final l = AppLocalizations.of(context);
+    final hasPremium = context.read<UserCubit>().hasPremium;
 
     showModalBottomSheet(
       context: context,
@@ -223,7 +230,6 @@ class _SpendingDetailView extends StatelessWidget {
             _OptionTile(
               icon: Icons.share_rounded,
               label: l.share,
-              isLocked: true,
               onTap: () {
                 // Navigator.pop(context);
               },
@@ -232,9 +238,10 @@ class _SpendingDetailView extends StatelessWidget {
             _OptionTile(
               icon: Icons.download_rounded,
               label: l.export,
-              isLocked: true,
+              isLocked: !hasPremium,
               onTap: () {
-                // Navigator.pop(context);
+                Navigator.pop(context);
+                _openExportData(context, purchase.id);
               },
             ),
 
@@ -332,14 +339,14 @@ class _OptionTile extends StatelessWidget {
   final IconData icon;
   final String label;
   final Color? color;
-  final bool? isLocked;
+  final bool isLocked;
   final VoidCallback onTap;
 
   const _OptionTile({
     required this.icon,
     required this.label,
     required this.onTap,
-    this.isLocked,
+    this.isLocked = false,
     this.color,
   });
 
@@ -395,9 +402,7 @@ class _SpendingDetailContent extends StatelessWidget {
             receipt: purchase.receipt,
             onView: () {
               final url = purchase.receipt?.imageUrl;
-              if (url != null) {
-                // TODO: open receipt viewer
-              }
+              if (url != null) {}
             },
           ),
           const SizedBox(height: 32),

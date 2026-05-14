@@ -14,20 +14,20 @@ import 'package:electra/presentation/purchase/widgets/spending_detail/spending_d
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-enum _ItemView { list, group }
+enum ItemViewEnum { list, group }
 
-enum _ItemSort { nameAZ, nameZA, priceLow, priceHigh }
+enum ItemSortEnum { nameAZ, nameZA, priceLow, priceHigh }
 
 class SortLabels {
-  static String get(_ItemSort sort, AppLocalizations l) {
+  static String get(ItemSortEnum sort, AppLocalizations l) {
     switch (sort) {
-      case _ItemSort.nameAZ:
+      case ItemSortEnum.nameAZ:
         return l.sortNameAZ;
-      case _ItemSort.nameZA:
+      case ItemSortEnum.nameZA:
         return l.sortNameZA;
-      case _ItemSort.priceLow:
+      case ItemSortEnum.priceLow:
         return l.sortPriceLow;
-      case _ItemSort.priceHigh:
+      case ItemSortEnum.priceHigh:
         return l.sortPriceHigh;
     }
   }
@@ -46,8 +46,15 @@ class SpendingDetailItemsSection extends StatefulWidget {
 
 class _SpendingDetailItemsSectionState
     extends State<SpendingDetailItemsSection> {
-  _ItemView _view = _ItemView.list;
-  _ItemSort _sort = _ItemSort.nameAZ;
+  late ItemViewEnum _view;
+  late ItemSortEnum _sort;
+
+  @override
+  void initState() {
+    super.initState();
+    _view = ItemViewEnum.list;
+    _sort = ItemSortEnum.nameAZ;
+  }
 
   // ── Helpers ────────────────────────────────────────────────────────────────
 
@@ -63,13 +70,13 @@ class _SpendingDetailItemsSectionState
   List<PurchaseItem> _sorted(List<PurchaseItem> items) {
     final copy = List<PurchaseItem>.from(items);
     switch (_sort) {
-      case _ItemSort.nameAZ:
+      case ItemSortEnum.nameAZ:
         copy.sort((a, b) => a.name.compareTo(b.name));
-      case _ItemSort.nameZA:
+      case ItemSortEnum.nameZA:
         copy.sort((a, b) => b.name.compareTo(a.name));
-      case _ItemSort.priceLow:
+      case ItemSortEnum.priceLow:
         copy.sort((a, b) => a.totalPrice.compareTo(b.totalPrice));
-      case _ItemSort.priceHigh:
+      case ItemSortEnum.priceHigh:
         copy.sort((a, b) => b.totalPrice.compareTo(a.totalPrice));
     }
     return copy;
@@ -78,13 +85,13 @@ class _SpendingDetailItemsSectionState
   // ── Sort picker ────────────────────────────────────────────────────────────
 
   Future<void> _showSortPicker(ThemeData theme, AppLocalizations l) async {
-    final result = await AppBottomSheet.show<_ItemSort>(
+    final result = await AppBottomSheet.show<ItemSortEnum>(
       context,
       title: l.sortItems,
       icon: Icons.sort_rounded,
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        children: _ItemSort.values.map((opt) {
+        children: ItemSortEnum.values.map((opt) {
           final selected = opt == _sort;
           return ListTile(
             contentPadding: const EdgeInsets.symmetric(horizontal: 20),
@@ -177,7 +184,7 @@ class _SpendingDetailItemsSectionState
                   const SizedBox(width: 10),
 
                   // ── Sort control ─────────────────────────────────────────────
-                  if (_view == _ItemView.list)
+                  if (_view == ItemViewEnum.list)
                     GestureDetector(
                       onTap: isMutating
                           ? null
@@ -243,7 +250,7 @@ class _SpendingDetailItemsSectionState
             ),
 
             // ── Item list / group view ────────────────────────────────────
-            if (_view == _ItemView.list) ...[
+            if (_view == ItemViewEnum.list) ...[
               if (activeItems.isEmpty)
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 20),

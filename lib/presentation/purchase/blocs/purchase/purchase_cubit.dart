@@ -1,4 +1,7 @@
+import 'package:electra/data/models/purchase/export_purchase_model.dart';
+import 'package:electra/domain/entities/purchase/export_purchase.dart';
 import 'package:electra/domain/entities/purchase/purchase.dart';
+import 'package:electra/domain/usecases/purchase/export_purchase_usecase.dart';
 import 'package:electra/domain/usecases/purchase/get_purchases_usecase.dart';
 import 'package:electra/domain/usecases/purchase/purchase_usecases.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,16 +12,19 @@ class PurchaseCubit extends Cubit<PurchaseState> {
   final CreatePurchaseUseCase _createPurchase;
   final UpdatePurchaseUseCase _updatePurchase;
   final DeletePurchaseUseCase _deletePurchase;
+  final ExportPurchaseUseCase _exportPurchase;
 
   PurchaseCubit({
     required GetPurchasesUseCase getPurchases,
     required CreatePurchaseUseCase createPurchase,
     required UpdatePurchaseUseCase updatePurchase,
     required DeletePurchaseUseCase deletePurchase,
+    required ExportPurchaseUseCase exportPurchase,
   }) : _getPurchases = getPurchases,
        _createPurchase = createPurchase,
        _updatePurchase = updatePurchase,
        _deletePurchase = deletePurchase,
+       _exportPurchase = exportPurchase,
        super(const PurchaseInitial());
 
   // ── Read ──────────────────────────────────────────────────────────────────
@@ -87,6 +93,20 @@ class PurchaseCubit extends Cubit<PurchaseState> {
         emit(PurchaseLoaded(current.where((p) => p.id != id).toList()));
         loadPurchases();
       },
+    );
+  }
+
+  // ── Export ────────────────────────────────────────────────────────────────
+
+  Future<void> exportData(ExportPurchase export) async {
+    emit(const PurchaseExporting());
+
+    final body = ExportPurchaseModel.fromEntity(export).toJson();
+    final result = await _exportPurchase(body);
+
+    result.fold(
+      (failure) => emit(PurchaseExportFailure(failure.message)),
+      (_) => emit(const PurchaseExported()),
     );
   }
 

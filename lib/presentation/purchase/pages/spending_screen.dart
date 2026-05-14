@@ -324,7 +324,7 @@ class _SpendingHeader extends StatelessWidget {
     final filterBorderColor = isDark
         ? AppColors.darkBorder
         : AppColors.lightBorder;
-    final l = AppLocalizations.of(context)!;
+    final l = AppLocalizations.of(context);
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),

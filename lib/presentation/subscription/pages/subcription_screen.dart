@@ -1,5 +1,6 @@
 import 'package:electra/common/widgets/buttons/main_icon_button.dart';
 import 'package:electra/core/configs/fonts.dart';
+import 'package:electra/presentation/settings/blocs/user_cubit.dart';
 import 'package:electra/presentation/subscription/bloc/subscription_cubit.dart';
 import 'package:electra/presentation/subscription/bloc/subscription_state.dart';
 import 'package:electra/presentation/subscription/widgets/billing_toggle.dart';
@@ -34,6 +35,8 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
         listener: (context, state) {
           if (state is SubscriptionActivated) {
             HapticFeedback.heavyImpact();
+            // ← Refresh user so isPremium / hasPremium updates immediately
+            context.read<UserCubit>().loadUser();
             _showSuccessDialog(context);
           }
           if (state is SubscriptionFailure &&
