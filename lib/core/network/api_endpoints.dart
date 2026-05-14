@@ -31,4 +31,11 @@ class ApiEndpoints {
   static const createPurchaseItem = "/purchases/{purchaseId}/items";
   static const updatePurchaseItem = "/purchases/{purchaseId}/items/{itemId}";
   static const deletePurchaseItem = "/purchases/{purchaseId}/items/{itemId}";
+
+  // Notification endpoints
+  static const registerPushToken = "/notifications/token";
+  static const removePushToken = "/notifications/token";
+  static const getNotifications = "/notifications";
+  static const markAllRead = "/notifications/read-all";
+  static const getUnreadCount = "/notifications/unread-count";
 }

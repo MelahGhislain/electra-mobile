@@ -676,11 +676,11 @@ abstract class AppLocalizations {
   /// **'Daily budget'**
   String get dailyBudget;
 
-  /// No description provided for @topSpendingToday.
+  /// No description provided for @mostRecentSpending.
   ///
   /// In en, this message translates to:
-  /// **'Top Spending Today'**
-  String get topSpendingToday;
+  /// **'Most Recent Spending'**
+  String get mostRecentSpending;
 
   /// No description provided for @viewAll.
   ///

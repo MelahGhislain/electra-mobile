@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "936782351432",
+    "project_id": "electra-3b6eb",
+    "storage_bucket": "electra-3b6eb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:936782351432:android:072bfc70737280fa6a5c7d",
+        "android_client_info": {
+          "package_name": "com.electra.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUA_Va5GAi8TjFQljlOnmW6igBiHqfSac"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

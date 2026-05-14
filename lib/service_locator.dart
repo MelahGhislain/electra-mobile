@@ -48,6 +48,11 @@ import 'package:electra/domain/usecases/voice/stop_voice_stream.dart';
 import 'package:electra/presentation/purchase/blocs/purchase/purchase_cubit.dart';
 import 'package:electra/presentation/purchase/blocs/purchase_detail/purchase_detail_cubit.dart';
 import 'package:electra/presentation/subscription/bloc/subscription_cubit.dart';
+import 'package:electra/core/services/fcm_service.dart';
+import 'package:electra/data/source/notification/notification_datasource.dart';
+import 'package:electra/data/repository/notification/notification_repository_impl.dart';
+import 'package:electra/domain/usecases/notification/notification_usecase.dart';
+import 'package:electra/presentation/notification/blocs/notification_cubit.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -99,7 +104,12 @@ Future<void> init() async {
   // Global auth state
   // AppAuthCubit now needs AuthRepository too
   sl.registerLazySingleton(
-    () => AppAuthCubit(sl<AuthStorage>(), sl<AuthRepositoryImpl>()),
+    () => AppAuthCubit(
+      sl<AuthStorage>(),
+      sl<AuthRepositoryImpl>(),
+      sl<FcmService>(),
+      sl<RemovePushTokenUsecase>(),
+    ),
   );
 
   // =============== DATASOURCES/SERVICES (API calls) ======================
@@ -115,6 +125,9 @@ Future<void> init() async {
   // ── Subscription datasource ────────────────────────────────────
   sl.registerLazySingleton<SubscriptionRemoteDataSource>(
     () => SubscriptionRemoteDataSourceImpl(sl<ApiClient>()),
+  );
+  sl.registerLazySingleton(
+    () => NotificationRemoteDataSourceImpl(sl<ApiClient>()),
   );
 
   // =============== REPOSITORIES ======================
@@ -152,11 +165,17 @@ Future<void> init() async {
       iapDataSource: sl<IAPDataSource>(),
     ),
   );
+  sl.registerLazySingleton<NotificationRepositoryImpl>(
+    () => NotificationRepositoryImpl(sl<NotificationRemoteDataSourceImpl>()),
+  );
 
   /// ================ INTERCEPTORS ======================
   // ✅ THIS is the missing call — runs after storage + repository are ready
   dioClient.addAuthInterceptor(
     AuthInterceptor(storage: sl<AuthStorage>(), dio: sl<Dio>()),
+  );
+  sl.registerLazySingleton(
+    () => FcmService(registerToken: sl<RegisterPushTokenUsecase>()),
   );
 
   // =============== USECASES ======================
@@ -175,6 +194,24 @@ Future<void> init() async {
   sl.registerLazySingleton(() => DeleteUserUsecase(sl<UserRepositoryImpl>()));
   sl.registerLazySingleton(
     () => UpdateUserSettingUsecase(sl<UserRepositoryImpl>()),
+  );
+
+  /// ── Notification Usecases ────────────────────────────────────
+
+  sl.registerLazySingleton(
+    () => RegisterPushTokenUsecase(sl<NotificationRepositoryImpl>()),
+  );
+  sl.registerLazySingleton(
+    () => RemovePushTokenUsecase(sl<NotificationRepositoryImpl>()),
+  );
+  sl.registerLazySingleton(
+    () => GetNotificationsUsecase(sl<NotificationRepositoryImpl>()),
+  );
+  sl.registerLazySingleton(
+    () => MarkAllReadUsecase(sl<NotificationRepositoryImpl>()),
+  );
+  sl.registerLazySingleton(
+    () => GetUnreadCountUsecase(sl<NotificationRepositoryImpl>()),
   );
 
   /// Voice Usecases
@@ -218,6 +255,17 @@ Future<void> init() async {
       restorePurchases: sl(),
       cancelSubscription: sl(),
       iap: sl<IAPDataSource>(),
+    ),
+  );
+
+  // ── 6. CUBIT — registered as factory (fresh instance per screen) ──────────────
+  sl.registerFactory(
+    () => NotificationCubit(
+      registerToken: sl(),
+      removeToken: sl(),
+      getNotifications: sl(),
+      markAllRead: sl(),
+      getUnreadCount: sl(),
     ),
   );
 }

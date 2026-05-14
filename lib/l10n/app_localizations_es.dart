@@ -318,7 +318,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get dailyBudget => 'Presupuesto diario';
 
   @override
-  String get topSpendingToday => 'Principales gastos de hoy';
+  String get mostRecentSpending => 'Gastos más recientes';
 
   @override
   String get viewAll => 'Ver todo';

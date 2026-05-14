@@ -79,7 +79,7 @@ class _TopSpendingTodayCardState extends State<TopSpendingTodayCard>
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  l.topSpendingToday,
+                  l.mostRecentSpending,
                   style: const TextStyle(
                     fontSize: AppFontSize.lg,
                     fontWeight: FontWeight.w600,

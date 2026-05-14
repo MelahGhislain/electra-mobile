@@ -304,7 +304,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get dailyBudget => '每日预算';
 
   @override
-  String get topSpendingToday => '今日最高支出';
+  String get mostRecentSpending => '最近支出';
 
   @override
   String get viewAll => '查看全部';

@@ -185,7 +185,11 @@ class _SpendingDetailView extends StatelessWidget {
   // ── Options menu ───────────────────────────────────────────────────────────
 
   Future<void> _openExportData(BuildContext context, String purchaseId) async {
-    await ExportDataBottomSheet.show(context, purchaseId: purchaseId, maxHeightPct: 0.80);
+    await ExportDataBottomSheet.show(
+      context,
+      purchaseId: purchaseId,
+      maxHeightPct: 0.80,
+    );
   }
 
   void _showOptionsMenu(BuildContext context, Purchase purchase) {
