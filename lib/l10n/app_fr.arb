@@ -235,7 +235,12 @@
 
   "spendingInsights": "Analyses des dépenses",
   "spendingOverview": "Aperçu des dépenses",
-  "viewByCategories": "Par catégories",
+  "viewByCategories": "Par {group}",
+  "@viewByCategories": {
+    "placeholders": {
+      "group": { "type": "String" }
+    }
+  },
   "keyInsights": "Points clés",
   "topSpendingCategories": "Principales catégories de dépenses",
   "spendingTrend": "Tendance des dépenses",
@@ -381,5 +386,7 @@
   "voiceInput": "Saisie vocale",
   "addBySpeaking": "Ajouter par voix",
   "snapPhotoOfReceipt": "Prendre une photo de votre reçu",
-  "all": "Tous"
+  "all": "Tous",
+  "categories": "Catégories",
+  "merchants": "Marchands"
 }

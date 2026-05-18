@@ -1141,8 +1141,8 @@ abstract class AppLocalizations {
   /// No description provided for @viewByCategories.
   ///
   /// In en, this message translates to:
-  /// **'View by categories'**
-  String get viewByCategories;
+  /// **'View by {group}'**
+  String viewByCategories(String group);
 
   /// No description provided for @keyInsights.
   ///
@@ -1815,6 +1815,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'All'**
   String get all;
+
+  /// No description provided for @categories.
+  ///
+  /// In en, this message translates to:
+  /// **'Categories'**
+  String get categories;
+
+  /// No description provided for @merchants.
+  ///
+  /// In en, this message translates to:
+  /// **'Merchants'**
+  String get merchants;
 }
 
 class _AppLocalizationsDelegate

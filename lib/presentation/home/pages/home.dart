@@ -143,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 final recentItems = RecentActivityHelper.getRecent(
                   l,
                   purchases,
-                  count: 3,
+                  count: 5,
                 );
 
                 return Scaffold(
@@ -180,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: TopSpendingTodayCard(
                               rows: topRows,
                               onViewAll: () =>
-                                  context.goNamed(RouteNames.purchase),
+                                  context.goNamed(RouteNames.insights),
                             ),
                           ),
 
@@ -193,6 +193,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         SliverToBoxAdapter(
                           child: RecentActivityCard(
                             items: recentItems,
+                            purchases: purchases,
                             onViewAll: () =>
                                 context.goNamed(RouteNames.purchase),
                           ),

@@ -7,6 +7,7 @@ import 'package:electra/l10n/app_localizations.dart';
 import 'package:electra/presentation/auth/bloc/auth_cubit.dart';
 import 'package:electra/presentation/auth/bloc/auth_state.dart';
 import 'package:electra/presentation/auth/widgets/auth_divider.dart';
+import 'package:electra/presentation/auth/widgets/auth_scaffold.dart';
 import 'package:electra/presentation/auth/widgets/auth_social_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -73,18 +74,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
           }
         },
         builder: (context, state) {
-          final isLoading = state is AuthLoading;
+          final isLoading = state is AuthEmailLoading;
 
-          return SafeArea(
-            child: Column(
-              children: [
-                // App bar
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 4,
-                  ),
-                  child: Row(
+          return AuthScaffold(
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 20),
+
+                  // ── Top bar ─────────────────────────────────────
+                  Row(
                     children: [
                       IconButton(
                         onPressed: () => Navigator.pop(context),
@@ -96,147 +97,174 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             l.signUp,
                             style: TextStyle(
                               fontSize: AppFontSize.xxl,
-                              fontWeight: FontWeight.w600,
+                              fontWeight: FontWeight.w700,
+                              letterSpacing: -0.3,
                             ),
                           ),
                         ),
                       ),
-                      const SizedBox(width: 48), // balance the back button
+
+                      const SizedBox(width: 48),
                     ],
                   ),
-                ),
 
-                Expanded(
-                  child: SingleChildScrollView(
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(height: 8),
+                  const SizedBox(height: 28),
 
-                          AppTextField(
-                            label: l.fullName,
-                            hint: 'john smith',
-                            controller: _nameController,
-                            validator: (v) => (v == null || v.trim().isEmpty)
-                                ? l.nameIsRequired
-                                : null,
+                  // ── Heading ────────────────────────────────────
+                  Text(
+                    'Create your account ✨',
+                    style: TextStyle(
+                      fontSize: AppFontSize.xxxl,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: -0.5,
+                      height: 1.1,
+                    ),
+                  ),
+
+                  const SizedBox(height: 6),
+
+                  Text(
+                    'Start tracking your expenses smarter with Electra.',
+                    style: TextStyle(fontSize: AppFontSize.sm),
+                  ),
+
+                  const SizedBox(height: 32),
+
+                  // ── Full name ──────────────────────────────────
+                  AppTextField(
+                    label: l.fullName,
+                    hint: 'John Doe',
+                    controller: _nameController,
+                    validator: (v) {
+                      if (v == null || v.trim().isEmpty) {
+                        return l.nameIsRequired;
+                      }
+
+                      return null;
+                    },
+                  ),
+
+                  const SizedBox(height: 16),
+
+                  // ── Email ──────────────────────────────────────
+                  AppTextField(
+                    label: l.emailAddress,
+                    hint: 'john.doe@mail.com',
+                    controller: _emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (v) {
+                      if (v == null || v.isEmpty) {
+                        return l.emailIsRequired;
+                      }
+
+                      if (!RegExp(
+                        r'^[\w-.]+@([\w-]+\.)+[\w]{2,}$',
+                      ).hasMatch(v)) {
+                        return l.enterValidEmail;
+                      }
+
+                      return null;
+                    },
+                  ),
+
+                  const SizedBox(height: 16),
+
+                  // ── Password ───────────────────────────────────
+                  AppTextField(
+                    label: l.password,
+                    hint: l.enterYourPassword,
+                    controller: _passwordController,
+                    isPassword: true,
+                    validator: (v) {
+                      if (v == null || v.isEmpty) {
+                        return l.passwordIsRequired;
+                      }
+
+                      if (v.length < 8) {
+                        return l.minimum8Characters;
+                      }
+
+                      return null;
+                    },
+                  ),
+
+                  const SizedBox(height: 16),
+
+                  // ── Confirm password ───────────────────────────
+                  AppTextField(
+                    label: l.reEnterPassword,
+                    hint: l.reEnterPassword,
+                    controller: _confirmPasswordController,
+                    isPassword: true,
+                    textInputAction: TextInputAction.done,
+                    validator: (v) {
+                      if (v != _passwordController.text) {
+                        return l.passwordsDoNotMatch;
+                      }
+
+                      return null;
+                    },
+                  ),
+
+                  const SizedBox(height: 28),
+
+                  // ── Sign up button ─────────────────────────────
+                  MainButton(
+                    text: l.signUp,
+                    isLoading: isLoading,
+                    size: ButtonSize.small,
+                    width: double.infinity,
+                    onPressed: () => _submit(context),
+                  ),
+
+                  const SizedBox(height: 28),
+
+                  // ── Divider ────────────────────────────────────
+                  AuthDivider(label: l.orSignWith),
+
+                  const SizedBox(height: 20),
+
+                  // ── Google button ──────────────────────────────
+                  AuthGoogleButton(
+                    label: l.continueWithGoogle,
+                    isLoading: isLoading,
+                    onPressed: () {
+                      context.read<AuthCubit>().signInWithGoogle();
+                    },
+                  ),
+
+                  const SizedBox(height: 32),
+
+                  // ── Sign in link ───────────────────────────────
+                  Center(
+                    child: GestureDetector(
+                      onTap: () {
+                        context.goNamed(RouteNames.signIn);
+                      },
+                      child: RichText(
+                        text: TextSpan(
+                          text: l.alreadyHaveAnAccount,
+                          style: TextStyle(
+                            fontSize: AppFontSize.sm,
+                            color: theme.textTheme.bodyMedium?.color,
                           ),
-                          const SizedBox(height: 16),
-
-                          AppTextField(
-                            label: l.emailAddress,
-                            hint: 'johnsmith@mail.com',
-                            controller: _emailController,
-                            keyboardType: TextInputType.emailAddress,
-                            validator: (v) {
-                              if (v == null || v.isEmpty) {
-                                return l.emailIsRequired;
-                              }
-                              if (!RegExp(
-                                r'^[\w-.]+@([\w-]+\.)+[\w]{2,}$',
-                              ).hasMatch(v)) {
-                                return l.enterValidEmail;
-                              }
-                              return null;
-                            },
-                          ),
-                          const SizedBox(height: 16),
-
-                          AppTextField(
-                            label: l.password,
-                            hint: '••••••••••',
-                            controller: _passwordController,
-                            isPassword: true,
-                            validator: (v) {
-                              if (v == null || v.isEmpty) {
-                                return l.passwordIsRequired;
-                              }
-                              if (v.length < 8) return l.minimum8Characters;
-                              return null;
-                            },
-                          ),
-                          const SizedBox(height: 16),
-
-                          AppTextField(
-                            label: l.reEnterPassword,
-                            hint: '••••••••••',
-                            controller: _confirmPasswordController,
-                            isPassword: true,
-                            textInputAction: TextInputAction.done,
-                            validator: (v) {
-                              if (v != _passwordController.text) {
-                                return l.passwordsDoNotMatch;
-                              }
-                              return null;
-                            },
-                          ),
-
-                          const SizedBox(height: 20),
-
-                          MainButton(
-                            text: l.signUp,
-                            isLoading: isLoading,
-                            size: ButtonSize.small,
-                            width: double.infinity,
-                            onPressed: () => _submit(context),
-                          ),
-
-                          const SizedBox(height: 28),
-
-                          AuthDivider(label: l.orSignWith),
-                          const SizedBox(height: 16),
-
-                          AuthSocialButton(
-                            label: l.continueWithGoogle,
-                            icon: const Icon(
-                              Icons.g_mobiledata,
-                              size: 26,
-                              color: Color(0xFF4285F4),
-                            ),
-                            isLoading: isLoading,
-                            onPressed: () =>
-                                context.read<AuthCubit>().signInWithGoogle(),
-                          ),
-                          const SizedBox(height: 24),
-
-                          Center(
-                            child: GestureDetector(
-                              onTap: () {
-                                context.goNamed(RouteNames.signIn);
-                              },
-                              child: RichText(
-                                text: TextSpan(
-                                  text: l.alreadyHaveAnAccount,
-                                  style: TextStyle(
-                                    fontSize: AppFontSize.sm,
-                                    color: theme.textTheme.bodyMedium?.color,
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text: l.signIn,
-                                      style: TextStyle(
-                                        color: Color(0xFF2563EB),
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                          children: [
+                            TextSpan(
+                              text: ' ${l.signIn}',
+                              style: const TextStyle(
+                                color: Color(0xFF2563EB),
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
-                          ),
-
-                          SizedBox(
-                            height: MediaQuery.of(context).padding.bottom + 16,
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+
+                  SizedBox(height: MediaQuery.of(context).padding.bottom + 24),
+                ],
+              ),
             ),
           );
         },

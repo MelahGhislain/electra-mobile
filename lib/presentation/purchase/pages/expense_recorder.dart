@@ -1,19 +1,10 @@
-import 'package:electra/common/blocs/receipt/receipt_cubit.dart';
-import 'package:electra/common/blocs/receipt/receipt_state.dart';
-import 'package:electra/core/enums/image_source_enum.dart';
-import 'package:electra/core/router/route_names.dart';
-import 'package:electra/presentation/purchase/blocs/purchase/purchase_cubit.dart';
-import 'package:electra/presentation/purchase/blocs/purchase/purchase_state.dart';
 import 'package:electra/presentation/purchase/widgets/expense_recorder/animated_orb.dart';
-import 'package:electra/presentation/purchase/widgets/expense_recorder/bottom_nav_row.dart';
 import 'package:electra/presentation/purchase/widgets/expense_recorder/mic_button.dart';
 import 'package:electra/presentation/purchase/widgets/expense_recorder/recorder_heading.dart';
 import 'package:electra/presentation/purchase/widgets/expense_recorder/session_timer.dart';
 import 'package:electra/presentation/purchase/widgets/expense_recorder/start_talking_pill.dart';
 import 'package:electra/presentation/purchase/widgets/expense_recorder/waveform_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
 class ExpenseRecorderScreen extends StatelessWidget {
   const ExpenseRecorderScreen({super.key});
@@ -56,36 +47,6 @@ class ExpenseRecorderScreen extends StatelessWidget {
 
               // ── Session timer ──────────────────────────────────────────
               const SessionTimer(),
-
-              const SizedBox(height: 10),
-
-              // ── Bottom row: home · [timer] · chat ──────────────────────
-              BlocBuilder<PurchaseCubit, PurchaseState>(
-                builder: (context, purchaseState) {
-                  final hasPurchase =
-                      purchaseState is PurchaseLoaded && !purchaseState.isEmpty;
-                  return BlocBuilder<ReceiptCubit, ReceiptState>(
-                    builder: (context, receiptState) {
-                      return BottomNavRow(
-                        hasPurchase: hasPurchase,
-                        centerWidget: SizedBox.shrink(), // timer is above
-                        onHome: () {
-                          if (hasPurchase) {
-                            context.pop();
-                          } else {
-                            context.pushNamed(RouteNames.settings);
-                          }
-                        },
-                        onChat: () {
-                          context.read<ReceiptCubit>().pickImage(
-                            ImageSourceType.camera,
-                          );
-                        },
-                      );
-                    },
-                  );
-                },
-              ),
 
               const SizedBox(height: 10),
             ],

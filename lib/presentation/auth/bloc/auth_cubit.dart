@@ -24,8 +24,9 @@ class AuthCubit extends Cubit<AuthState> {
   }) : super(const AuthInitial());
 
   // ── Email / Password ───────────────────────────────────────────────────────
+
   Future<void> login({required String email, required String password}) async {
-    emit(const AuthLoading());
+    emit(const AuthEmailLoading());
     final result = await loginUseCase(email: email, password: password);
     result.fold(
       (failure) => emit(AuthFailure(failure.message)),
@@ -38,7 +39,7 @@ class AuthCubit extends Cubit<AuthState> {
     required String email,
     required String password,
   }) async {
-    emit(const AuthLoading());
+    emit(const AuthEmailLoading());
     final result = await registerUseCase(
       name: name,
       email: email,
@@ -51,7 +52,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> logout(User? user) async {
-    emit(const AuthLoading());
+    emit(const AuthEmailLoading());
     final result = await logoutUseCase(_mapProvider(user?.provider));
     result.fold(
       (failure) => emit(AuthFailure(failure.message)),
@@ -62,7 +63,7 @@ class AuthCubit extends Cubit<AuthState> {
   // ── OAuth ──────────────────────────────────────────────────────────────────
 
   Future<void> signInWithGoogle() async {
-    emit(const AuthLoading());
+    emit(const AuthGoogleLoading());
     final result = await repository.signInWithGoogle();
     result.fold(
       (failure) => emit(AuthFailure(failure.message)),
@@ -73,7 +74,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> signInWithApple() async {
-    emit(const AuthLoading());
+    emit(const AuthGoogleLoading());
     final result = await repository.signInWithApple();
     result.fold(
       (failure) => emit(AuthFailure(failure.message)),

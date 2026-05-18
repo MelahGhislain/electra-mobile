@@ -566,7 +566,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get spendingOverview => 'Visão geral dos gastos';
 
   @override
-  String get viewByCategories => 'Por categorias';
+  String viewByCategories(String group) {
+    return 'Por $group';
+  }
 
   @override
   String get keyInsights => 'Pontos-chave';
@@ -921,4 +923,10 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get all => 'Todos';
+
+  @override
+  String get categories => 'Categorias';
+
+  @override
+  String get merchants => 'Comerciantes';
 }

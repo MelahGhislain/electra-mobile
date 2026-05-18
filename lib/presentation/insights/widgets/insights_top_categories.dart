@@ -15,7 +15,7 @@ class InsightsTopCategories extends StatelessWidget {
     final theme = Theme.of(context);
     final symbol = r'$';
     final fmt = NumberFormat.currency(symbol: symbol, decimalDigits: 2);
-    final displayed = categories.take(3).toList();
+    final displayed = categories.take(5).toList();
     final l = AppLocalizations.of(context);
 
     if (displayed.isEmpty) {

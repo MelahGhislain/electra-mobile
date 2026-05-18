@@ -35,36 +35,36 @@ class InsightsCubit extends Cubit<InsightsState> {
 
   /// Navigate to previous period
   void previousPeriod() {
-    final offset = _periodOffset();
-    _anchorDate = DateTime(
-      _anchorDate.year,
-      _anchorDate.month - (offset == 12 ? 12 : 0),
-      _anchorDate.day - (offset != 12 ? offset : 0),
-    );
+    _anchorDate = _shift(-1);
     load();
   }
 
   /// Navigate to next period
   void nextPeriod() {
-    final offset = _periodOffset();
-    _anchorDate = DateTime(
-      _anchorDate.year,
-      _anchorDate.month + (offset == 12 ? 12 : 0),
-      _anchorDate.day + (offset != 12 ? offset : 0),
-    );
+    _anchorDate = _shift(1);
     load();
   }
 
-  int _periodOffset() {
+  /// Shift the anchor date by [direction] (+1 forward, -1 backward).
+  DateTime _shift(int direction) {
     switch (_period) {
       case 'weekly':
-        return 7;
+        return _anchorDate.add(Duration(days: 7 * direction));
       case 'yearly':
-        return 12; // used as month offset
+        return DateTime(
+          _anchorDate.year + direction,
+          _anchorDate.month,
+          _anchorDate.day,
+        );
+      case 'monthly':
       default:
-        return 0; // monthly uses month arithmetic directly
+        return DateTime(
+          _anchorDate.year,
+          _anchorDate.month + direction,
+          _anchorDate.day,
+        );
     }
   }
 
-  void setPeriod(String period) => load(period: period, date: _anchorDate);
+  void setPeriod(String period) => load(period: period, date: DateTime.now());
 }

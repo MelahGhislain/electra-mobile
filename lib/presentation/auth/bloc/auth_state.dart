@@ -10,8 +10,14 @@ class AuthInitial extends AuthState {
   const AuthInitial();
 }
 
-class AuthLoading extends AuthState {
-  const AuthLoading();
+/// Email / password form is submitting
+class AuthEmailLoading extends AuthState {
+  const AuthEmailLoading();
+}
+
+/// OAuth (Google / Apple) is in progress
+class AuthGoogleLoading extends AuthState {
+  const AuthGoogleLoading();
 }
 
 class AuthSuccess extends AuthState {

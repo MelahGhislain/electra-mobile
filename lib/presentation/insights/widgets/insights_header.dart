@@ -52,12 +52,12 @@ class InsightsHeader extends StatelessWidget {
             onTap: onNext,
             theme: theme,
           ),
-          const SizedBox(width: 8),
-          _NavButton(
-            icon: Icons.calendar_today_outlined,
-            onTap: () {},
-            theme: theme,
-          ),
+          // const SizedBox(width: 8),
+          // _NavButton(
+          //   icon: Icons.calendar_today_outlined,
+          //   onTap: () {},
+          //   theme: theme,
+          // ),
         ],
       ),
     );

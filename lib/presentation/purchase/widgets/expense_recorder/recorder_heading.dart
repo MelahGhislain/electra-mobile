@@ -1,4 +1,4 @@
-import 'package:electra/core/configs/theme/app_colors.dart';
+import 'package:electra/core/configs/fonts.dart';
 import 'package:electra/presentation/purchase/blocs/voice/voice_cubit.dart';
 import 'package:electra/presentation/purchase/blocs/voice/voice_state.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +12,8 @@ class RecorderHeading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return BlocBuilder<VoiceCubit, VoiceState>(
       builder: (context, state) {
         final hasTranscript = state.text.isNotEmpty;
@@ -36,10 +38,9 @@ class RecorderHeading extends StatelessWidget {
                   key: const ValueKey('transcript'),
                   state.text,
                   style: const TextStyle(
-                    fontSize: 22,
+                    fontSize: AppFontSize.xxl,
                     fontWeight: FontWeight.w500,
                     height: 1.35,
-                    color: Color(0xFF1A1A2E),
                   ),
                   textAlign: TextAlign.center,
                 )
@@ -47,18 +48,18 @@ class RecorderHeading extends StatelessWidget {
               : RichText(
                   key: const ValueKey('idle'),
                   textAlign: TextAlign.center,
-                  text: const TextSpan(
+                  text: TextSpan(
                     style: TextStyle(
-                      fontSize: 30,
+                      fontSize: AppFontSize.xxxl,
                       fontWeight: FontWeight.bold,
+                      color: theme.textTheme.bodyMedium?.color,
                       height: 1.15,
-                      color: Color(0xFF1A1A2E),
                     ),
                     children: [
                       TextSpan(text: 'What expense\nshould we log '),
                       TextSpan(
                         text: 'today?',
-                        style: TextStyle(color: AppColors.primary),
+                        style: TextStyle(color: theme.colorScheme.primary),
                       ),
                     ],
                   ),

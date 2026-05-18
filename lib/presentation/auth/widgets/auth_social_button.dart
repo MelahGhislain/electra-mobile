@@ -1,17 +1,18 @@
+import 'package:electra/core/assets/app_images.dart';
 import 'package:flutter/material.dart';
 
-class AuthSocialButton extends StatelessWidget {
+class AuthGoogleButton extends StatelessWidget {
   final String label;
-  final Widget icon;
   final VoidCallback onPressed;
   final bool isLoading;
+  final bool disabled;
 
-  const AuthSocialButton({
+  const AuthGoogleButton({
     super.key,
     required this.label,
-    required this.icon,
     required this.onPressed,
     this.isLoading = false,
+    this.disabled = false,
   });
 
   @override
@@ -20,7 +21,7 @@ class AuthSocialButton extends StatelessWidget {
       width: double.infinity,
       height: 52,
       child: OutlinedButton(
-        onPressed: isLoading ? null : onPressed,
+        onPressed: (isLoading || disabled) ? null : onPressed,
         style: OutlinedButton.styleFrom(
           side: BorderSide(color: Colors.grey.shade300),
           shape: RoundedRectangleBorder(
@@ -40,7 +41,11 @@ class AuthSocialButton extends StatelessWidget {
             : Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  icon,
+                  SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: Image.asset(AppImages.googleLogo, fit: BoxFit.cover),
+                  ),
                   const SizedBox(width: 10),
                   Text(
                     label,

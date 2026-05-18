@@ -1,17 +1,26 @@
 import 'package:electra/core/configs/fonts.dart';
+import 'package:electra/core/router/route_names.dart';
+import 'package:electra/domain/entities/purchase/purchase.dart';
 import 'package:electra/l10n/app_localizations.dart';
 import 'package:electra/presentation/home/utils/home_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class RecentActivityCard extends StatelessWidget {
   final List<RecentActivityItem> items;
+  final List<Purchase> purchases;
   final VoidCallback onViewAll;
 
   const RecentActivityCard({
     super.key,
     required this.items,
+    required this.purchases,
     required this.onViewAll,
   });
+
+  Purchase getPurchase(RecentActivityItem item) {
+    return RecentActivityHelper.getPurchaseFromItem(purchases, item);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +66,7 @@ class RecentActivityCard extends StatelessWidget {
 
             return Column(
               children: [
-                _ActivityRow(item: item),
+                _ActivityRow(item: item, purchase: getPurchase(item)),
                 if (!isLast) Divider(height: 1, thickness: 1, indent: 72),
               ],
             );
@@ -70,71 +79,82 @@ class RecentActivityCard extends StatelessWidget {
 
 class _ActivityRow extends StatelessWidget {
   final RecentActivityItem item;
-  const _ActivityRow({required this.item});
+  final Purchase purchase;
+  const _ActivityRow({required this.item, required this.purchase});
+
+  void _navigateToDetail(BuildContext context, Purchase purchase) {
+    context.pushNamed(
+      RouteNames.purchaseDetail,
+      pathParameters: {'purchaseId': purchase.id},
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 12),
-      child: Row(
-        children: [
-          // Logo / icon circle
-          _MerchantLogo(
-            title: item.title,
-            color: item.categoryColor,
-            icon: item.categoryIcon,
-          ),
-          const SizedBox(width: 12),
+    return InkWell(
+      onTap: () => _navigateToDetail(context, purchase),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        child: Row(
+          children: [
+            // Logo / icon circle
+            _MerchantLogo(
+              title: item.title,
+              color: item.categoryColor,
+              icon: item.categoryIcon,
+            ),
+            const SizedBox(width: 12),
 
-          // Title + time + category chip
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  item.title,
-                  style: const TextStyle(
-                    fontSize: AppFontSize.lg,
-                    fontWeight: FontWeight.w600,
+            // Title + time + category chip
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    item.title,
+                    style: const TextStyle(
+                      fontSize: AppFontSize.lg,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 4),
-                Row(
-                  children: [
-                    Text(
-                      RecentActivityHelper.formatRelativeTime(item.date, l),
-                      style: const TextStyle(fontSize: AppFontSize.xs),
-                    ),
-                    const SizedBox(width: 6),
-                    _CategoryChip(
-                      label: item.categoryLabel,
-                      color: item.categoryColor,
-                    ),
-                  ],
-                ),
-              ],
+                  const SizedBox(height: 4),
+                  Row(
+                    children: [
+                      Text(
+                        RecentActivityHelper.formatRelativeTime(item.date, l),
+                        style: const TextStyle(fontSize: AppFontSize.xs),
+                      ),
+                      const SizedBox(width: 6),
+                      _CategoryChip(
+                        label: item.categoryLabel,
+                        color: item.categoryColor,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
 
-          const SizedBox(width: 8),
+            const SizedBox(width: 8),
 
-          // Amount + chevron
-          Text(
-            '-\$${item.amount.toStringAsFixed(2)}',
-            style: const TextStyle(
-              fontSize: AppFontSize.md,
-              fontWeight: FontWeight.w500,
+            // Amount + chevron
+            Text(
+              '-\$${item.amount.toStringAsFixed(2)}',
+              style: const TextStyle(
+                fontSize: AppFontSize.md,
+                fontWeight: FontWeight.w500,
+              ),
             ),
-          ),
-          const SizedBox(width: 4),
-          Icon(
-            Icons.chevron_right_rounded,
-            size: 20,
-            color: Theme.of(context).iconTheme.color,
-          ),
-        ],
+            const SizedBox(width: 4),
+            Icon(
+              Icons.chevron_right_rounded,
+              size: 20,
+              color: Theme.of(context).iconTheme.color,
+            ),
+          ],
+        ),
       ),
     );
   }

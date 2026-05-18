@@ -235,7 +235,12 @@
 
   "spendingInsights": "Ausgabenanalyse",
   "spendingOverview": "Ausgabenübersicht",
-  "viewByCategories": "Nach Kategorien",
+  "viewByCategories": "Nach {group}",
+  "@viewByCategories": {
+    "placeholders": {
+      "group": { "type": "String" }
+    }
+  },
   "keyInsights": "Wichtige Einblicke",
   "topSpendingCategories": "Top-Ausgabenkategorien",
   "spendingTrend": "Ausgabentrend",
@@ -381,5 +386,7 @@
   "voiceInput": "Spracheingabe",
   "addBySpeaking": "Per Sprache hinzufügen",
   "snapPhotoOfReceipt": "Foto deiner Quittung machen",
-  "all": "Alle"
+  "all": "Alle",
+  "categories": "Kategorien",
+  "merchants": "Händler"
 }

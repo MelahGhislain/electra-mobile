@@ -1,7 +1,11 @@
 import 'package:electra/common/widgets/buttons/main_icon_button.dart';
+import 'package:electra/core/assets/app_images.dart';
 import 'package:electra/core/router/route_names.dart';
 import 'package:electra/l10n/app_localizations.dart';
+import 'package:electra/presentation/settings/blocs/user_cubit.dart';
+import 'package:electra/presentation/settings/blocs/user_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 class HomeHeader extends StatelessWidget {
@@ -79,12 +83,21 @@ class HomeHeader extends StatelessWidget {
                     onTap: () {
                       context.goNamed(RouteNames.settings);
                     },
-                    child: CircleAvatar(
-                      radius: 22,
-                      backgroundImage: const NetworkImage(
-                        'https://i.pravatar.cc/100',
-                      ),
-                      backgroundColor: Colors.grey.shade200,
+                    child: // Avatar
+                    BlocBuilder<UserCubit, UserState>(
+                      builder: (context, state) {
+                        final cubit = context.read<UserCubit>();
+                        final user = cubit.currentUser;
+                        return CircleAvatar(
+                          radius: 22,
+                          backgroundImage: user?.picture != null
+                              ? NetworkImage(user!.picture!)
+                              : const AssetImage(AppImages.defaultAvatar),
+                          backgroundColor: Theme.of(
+                            context,
+                          ).colorScheme.onSurface,
+                        );
+                      },
                     ),
                   ),
                 ],

@@ -13,4 +13,6 @@ class AppImages {
 
   static const String splash = '$basePath/splash/splash.png';
   static const String splashLight = '$basePath/splash/splash_light.png';
+
+  static const String googleLogo = '$basePath/google_logo.png';
 }

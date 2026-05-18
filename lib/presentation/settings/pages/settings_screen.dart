@@ -261,7 +261,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 // Logout button
                 BlocBuilder<AuthCubit, AuthState>(
                   builder: (context, authState) {
-                    final isAuthLoading = authState is AuthLoading;
+                    final isAuthLoading =
+                        authState is AuthEmailLoading ||
+                        authState is AuthGoogleLoading;
                     return Padding(
                       padding: const EdgeInsets.only(right: 16),
                       child: MainIconButton(
@@ -304,6 +306,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             child: ProfileHeaderCard(
                               name: user?.name ?? '—',
                               email: user?.email ?? '—',
+                              avatarUrl: user?.picture,
                               onEditPressed: user != null
                                   ? () => _openEditProfile(user)
                                   : null,

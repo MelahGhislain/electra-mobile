@@ -246,7 +246,12 @@
 
   "spendingInsights": "Spending insights",
   "spendingOverview": "Spending overview",
-  "viewByCategories": "View by categories",
+  "viewByCategories": "View by {group}",
+  "@viewByCategories": {
+    "placeholders": {
+      "group": { "type": "String" }
+    }
+  },
   "keyInsights": "Key insights",
   "topSpendingCategories": "Top spending categories",
   "spendingTrend": "Spending trend",
@@ -409,5 +414,7 @@
   "voiceInput": "Voice Input",
   "addBySpeaking": "Add by speaking",
   "snapPhotoOfReceipt": "Snap a photo of your receipt",
-  "all": "All"
+  "all": "All",
+  "categories": "Categories",
+  "merchants": "Merchants"
 }

@@ -67,20 +67,20 @@ class AppAuthCubit extends Cubit<AppAuthState> {
   }
 
   Future<void> onLogout() async {
-  try {
-    // On iOS, FCM requires the APNs token before it can return an FCM token.
-    // If APNs hasn't registered yet (e.g. simulator, no network, first boot),
-    // getToken() throws — we skip token removal and proceed with logout anyway.
-    final token = await FirebaseMessaging.instance.getToken();
-    if (token != null) {
-      await _removePushToken(token);
+    try {
+      // On iOS, FCM requires the APNs token before it can return an FCM token.
+      // If APNs hasn't registered yet (e.g. simulator, no network, first boot),
+      // getToken() throws — we skip token removal and proceed with logout anyway.
+      final token = await FirebaseMessaging.instance.getToken();
+      if (token != null) {
+        await _removePushToken(token);
+      }
+    } catch (_) {
+      // Token removal is best-effort — a failed unregister should never
+      // block the user from logging out. The token will expire naturally.
+    } finally {
+      await _storage.clearTokens();
+      emit(const AppAuthState.unauthenticated());
     }
-  } catch (_) {
-    // Token removal is best-effort — a failed unregister should never
-    // block the user from logging out. The token will expire naturally.
-  } finally {
-    await _storage.clearTokens();
-    emit(const AppAuthState.unauthenticated());
   }
-}
 }

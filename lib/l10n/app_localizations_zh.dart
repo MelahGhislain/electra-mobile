@@ -543,7 +543,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get spendingOverview => '支出概览';
 
   @override
-  String get viewByCategories => '按类别查看';
+  String viewByCategories(String group) {
+    return '按 $group 查看';
+  }
 
   @override
   String get keyInsights => '关键洞察';
@@ -892,4 +894,10 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get all => '全部';
+
+  @override
+  String get categories => '分类';
+
+  @override
+  String get merchants => '商家';
 }

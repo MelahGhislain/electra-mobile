@@ -13,6 +13,7 @@ class MainButton extends StatefulWidget {
   final double? width;
   final bool? rounded;
   final bool isLoading;
+  final bool disabled;
 
   const MainButton({
     super.key,
@@ -24,6 +25,7 @@ class MainButton extends StatefulWidget {
     this.width,
     this.rounded = false,
     this.isLoading = false,
+    this.disabled = false,
   });
 
   @override
@@ -81,6 +83,9 @@ class _MainButtonState extends State<MainButton> {
       onTapUp: (_) => _onTapUp(),
       onTapCancel: _onTapUp,
       onTap: widget.onPressed,
+      behavior: widget.disabled
+          ? HitTestBehavior.opaque
+          : HitTestBehavior.translucent,
       child: AnimatedScale(
         scale: _scale,
         duration: const Duration(milliseconds: 120),

@@ -229,7 +229,12 @@
 
   "spendingInsights": "支出分析",
   "spendingOverview": "支出概览",
-  "viewByCategories": "按类别查看",
+  "viewByCategories": "按 {group} 查看",
+  "@viewByCategories": {
+    "placeholders": {
+      "group": { "type": "String" }
+    }
+  },
   "keyInsights": "关键洞察",
   "topSpendingCategories": "主要消费类别",
   "spendingTrend": "消费趋势",
@@ -358,5 +363,7 @@
   "voiceInput": "语音输入",
   "addBySpeaking": "通过语音添加",
   "snapPhotoOfReceipt": "拍摄收据照片",
-  "all": "全部"
+  "all": "全部",
+  "categories": "分类",
+  "merchants": "商家"
 }

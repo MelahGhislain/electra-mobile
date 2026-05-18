@@ -8,6 +8,7 @@ class User extends Equatable {
   final String name;
   final String provider;
   final String? providerId;
+  final String? picture;
   final UserSettings? settings;
   final Subscription? subscription;
   final DateTime createdAt;
@@ -19,6 +20,7 @@ class User extends Equatable {
     required this.name,
     required this.provider,
     this.providerId,
+    this.picture,
     this.settings,
     this.subscription,
     required this.createdAt,
@@ -31,6 +33,7 @@ class User extends Equatable {
     String? name,
     String? provider,
     String? providerId,
+    String? picture,
     UserSettings? settings,
     Subscription? subscription,
     DateTime? createdAt,
@@ -41,6 +44,7 @@ class User extends Equatable {
     name: name ?? this.name,
     provider: provider ?? this.provider,
     providerId: providerId ?? this.providerId,
+    picture: picture ?? this.picture,
     settings: settings ?? this.settings,
     subscription: subscription ?? this.subscription,
     createdAt: createdAt ?? this.createdAt,
@@ -53,6 +57,7 @@ class User extends Equatable {
     name: name,
     provider: provider,
     providerId: providerId,
+    picture: picture,
     settings: settings?.toEntity(),
     subscription: subscription?.toEntity(),
     createdAt: createdAt,
@@ -66,6 +71,7 @@ class User extends Equatable {
     name,
     provider,
     providerId,
+    picture,
     settings,
     subscription,
     createdAt,

@@ -9,6 +9,7 @@ class UserModel extends User {
     required super.name,
     required super.provider,
     super.providerId,
+    super.picture,
     super.settings,
     super.subscription,
     required super.createdAt,
@@ -22,6 +23,7 @@ class UserModel extends User {
       name: json['name']?.toString() ?? '',
       provider: json['provider']?.toString() ?? 'email',
       providerId: json['providerId']?.toString(),
+      picture: json['picture']?.toString(),
       settings: json['settings'] != null
           ? UserSettingsModel.fromJson(json['settings'] as Map<String, dynamic>)
           : null,
@@ -45,6 +47,7 @@ class UserModel extends User {
     'name': name,
     'provider': provider,
     'providerId': providerId,
+    'picture': picture,
     'settings': settings is UserSettingsModel
         ? (settings as UserSettingsModel).toJson()
         : null,

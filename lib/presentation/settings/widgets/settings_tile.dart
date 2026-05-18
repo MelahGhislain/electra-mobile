@@ -58,7 +58,11 @@ class SettingsTile extends StatelessWidget {
                     size: 26,
                     color: Theme.of(context).iconTheme.color,
                   ),
-                  onTap: () {},
+                  onTap: _isLocked
+                      ? () {
+                          context.pushNamed(RouteNames.subscription);
+                        }
+                      : onTap ?? () {}, // Explicitly return void
                 )
               : null,
         ),

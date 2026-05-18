@@ -235,7 +235,12 @@
 
   "spendingInsights": "Análise de gastos",
   "spendingOverview": "Visão geral dos gastos",
-  "viewByCategories": "Por categorias",
+  "viewByCategories": "Por {group}",
+  "@viewByCategories": {
+    "placeholders": {
+      "group": { "type": "String" }
+    }
+  },
   "keyInsights": "Pontos-chave",
   "topSpendingCategories": "Principais categorias de gastos",
   "spendingTrend": "Tendência de gastos",
@@ -381,5 +386,7 @@
   "voiceInput": "Entrada de voz",
   "addBySpeaking": "Adicionar por voz",
   "snapPhotoOfReceipt": "Tire uma foto do seu recibo",
-  "all": "Todos"
+  "all": "Todos",
+  "categories": "Categorias",
+  "merchants": "Comerciantes"
 }

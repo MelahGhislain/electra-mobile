@@ -152,6 +152,7 @@ class RawSpendingHelper {
 // ─────────────────────────────────────────────────────────────────────────────
 
 class RecentActivityItem {
+  final String id;
   final String title;
   final String categoryLabel;
   final Color categoryColor;
@@ -160,6 +161,7 @@ class RecentActivityItem {
   final DateTime date;
 
   const RecentActivityItem({
+    required this.id,
     required this.title,
     required this.categoryLabel,
     required this.categoryColor,
@@ -184,6 +186,7 @@ class RecentActivityHelper {
       final meta = CategoryMeta.fromKey(key);
 
       return RecentActivityItem(
+        id: p.id,
         title: p.merchant?.name ?? l.spending,
         categoryLabel: meta.localizedLabel(l),
         categoryColor: meta.color,
@@ -192,6 +195,13 @@ class RecentActivityHelper {
         date: p.purchaseDate,
       );
     }).toList();
+  }
+
+  static Purchase getPurchaseFromItem(
+    List<Purchase> purchases,
+    RecentActivityItem item,
+  ) {
+    return purchases.firstWhere((p) => p.id == item.id);
   }
 
   static String formatRelativeTime(DateTime date, AppLocalizations l) {

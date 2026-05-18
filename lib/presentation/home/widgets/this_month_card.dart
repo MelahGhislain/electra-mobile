@@ -95,11 +95,6 @@ class ThisMonthCard extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                Icon(
-                  Icons.more_horiz_rounded,
-                  color: Theme.of(context).iconTheme.color,
-                  size: 22,
-                ),
               ],
             ),
 

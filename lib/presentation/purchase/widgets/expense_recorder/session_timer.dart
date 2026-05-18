@@ -45,6 +45,8 @@ class _SessionTimerState extends State<SessionTimer> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return BlocListener<VoiceCubit, VoiceState>(
       listenWhen: (prev, curr) => prev.isListening != curr.isListening,
       listener: (context, state) {
@@ -60,7 +62,7 @@ class _SessionTimerState extends State<SessionTimer> {
         style: TextStyle(
           fontSize: 13,
           fontWeight: FontWeight.w500,
-          color: const Color(0xFF1A1A2E).withValues(alpha: 0.45),
+          color: theme.textTheme.bodySmall?.color,
           letterSpacing: 0.5,
           fontFeatures: const [FontFeature.tabularFigures()],
         ),

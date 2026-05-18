@@ -29,7 +29,6 @@ class _InsightsScreenState extends State<InsightsScreen> {
     _load();
   }
 
-  // Called every time this branch tab is tapped/selected
   @override
   void activate() {
     super.activate();
@@ -102,13 +101,20 @@ class _InsightsScreenState extends State<InsightsScreen> {
   }
 }
 
-class _InsightsContent extends StatelessWidget {
+class _InsightsContent extends StatefulWidget {
   final InsightsLoaded state;
   const _InsightsContent({required this.state});
 
   @override
+  State<_InsightsContent> createState() => _InsightsContentState();
+}
+
+class _InsightsContentState extends State<_InsightsContent> {
+  SpendingOverviewView _overviewView = SpendingOverviewView.categories;
+
+  @override
   Widget build(BuildContext context) {
-    final insights = state.insights;
+    final insights = widget.state.insights;
     final l = AppLocalizations.of(context);
 
     return RefreshIndicator(
@@ -122,7 +128,7 @@ class _InsightsContent extends StatelessWidget {
           children: [
             // ── Period selector + navigation ──────────────────────────
             InsightsHeader(
-              period: state.period,
+              period: widget.state.period,
               label: insights.meta.label,
               onPrevious: () => context.read<InsightsCubit>().previousPeriod(),
               onNext: () => context.read<InsightsCubit>().nextPeriod(),
@@ -145,18 +151,26 @@ class _InsightsContent extends StatelessWidget {
             const SizedBox(height: 20),
 
             // ── Spending overview (donut) ─────────────────────────────
-            _SectionHeader(
+            _OverviewSectionHeader(
               title: l.spendingOverview,
-              trailing: l.viewByCategories,
-              onTap: () {},
+              selected: _overviewView,
+              items: [
+                (SpendingOverviewView.categories, l.categories),
+                (SpendingOverviewView.merchants, l.merchants),
+                (SpendingOverviewView.paymentMethods, l.paymentMethods),
+              ],
+              onChanged: (v) => setState(() => _overviewView = v),
             ),
             const SizedBox(height: 12),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: InsightsSpendingOverview(
                 categories: insights.categoryBreakdown,
+                merchants: insights.topMerchants,
+                paymentMethods: insights.paymentMethods,
                 total: insights.totals.amount,
                 currency: insights.totals.currency,
+                view: _overviewView,
               ),
             ),
 
@@ -175,7 +189,7 @@ class _InsightsContent extends StatelessWidget {
             // ── Top spending categories ───────────────────────────────
             _SectionHeader(
               title: l.topSpendingCategories,
-              trailing: l.viewAll,
+              // trailing: l.viewAll,
               hideDropdown: true,
             ),
             const SizedBox(height: 12),
@@ -191,7 +205,7 @@ class _InsightsContent extends StatelessWidget {
             // ── Spending trend ────────────────────────────────────────
             _SectionHeader(
               title: l.spendingTrend,
-              trailing: 'vs ${_previousLabel(context, state.period)}',
+              trailing: 'vs ${_previousLabel(context, widget.state.period)}',
             ),
             const SizedBox(height: 12),
             Padding(
@@ -226,7 +240,6 @@ class _InsightsContent extends StatelessWidget {
       if (period == 'monthly') {
         final now = DateTime.now();
         final previousMonth = DateTime(now.year, now.month - 1);
-
         return DateFormat.yMMM(locale).format(previousMonth);
       }
     } catch (_) {}
@@ -234,6 +247,122 @@ class _InsightsContent extends StatelessWidget {
     return l.previous;
   }
 }
+
+// ── Overview section header with anchored popup-menu dropdown ─────────────────
+
+class _OverviewSectionHeader extends StatelessWidget {
+  final String title;
+  final SpendingOverviewView selected;
+  final List<(SpendingOverviewView, String)> items;
+  final ValueChanged<SpendingOverviewView> onChanged;
+
+  const _OverviewSectionHeader({
+    required this.title,
+    required this.selected,
+    required this.items,
+    required this.onChanged,
+  });
+
+  void _openMenu(BuildContext context) {
+    final theme = Theme.of(context);
+
+    // Find the position of the tapped button in the screen
+    final renderBox = context.findRenderObject() as RenderBox;
+    final offset = renderBox.localToGlobal(Offset.zero);
+    final size = renderBox.size;
+
+    showMenu<SpendingOverviewView>(
+      context: context,
+      color: theme.cardTheme.color,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: BorderSide(color: theme.dividerColor),
+      ),
+      elevation: 4,
+      // Pin the right edge of the menu to the right edge of the row,
+      // and open it just below the row.
+      position: RelativeRect.fromLTRB(
+        offset.dx + size.width - 180,
+        offset.dy + size.height + 4,
+        offset.dx + size.width,
+        0,
+      ),
+      items: items.map((entry) {
+        final (view, label) = entry;
+        final isSelected = selected == view;
+        return PopupMenuItem<SpendingOverviewView>(
+          value: view,
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  label,
+                  style: TextStyle(
+                    fontSize: AppFontSize.sm,
+                    fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+                    color: theme.textTheme.bodyMedium?.color,
+                  ),
+                ),
+              ),
+              if (isSelected)
+                Icon(
+                  Icons.check_rounded,
+                  size: AppFontSize.md,
+                  color: theme.textTheme.bodyMedium?.color,
+                ),
+            ],
+          ),
+        );
+      }).toList(),
+    ).then((value) {
+      if (value != null) onChanged(value);
+    });
+  }
+
+  String get _selectedLabel => items.firstWhere((e) => e.$1 == selected).$2;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 18),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          // Section title
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: AppFontSize.md,
+              fontWeight: FontWeight.bold,
+              letterSpacing: -0.2,
+            ),
+          ),
+
+          // Pill-style dropdown button
+          GestureDetector(
+            onTap: () => _openMenu(context),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  l.viewByCategories(_selectedLabel),
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(width: 2),
+                Icon(Icons.arrow_drop_down_rounded, size: AppFontSize.xxxxl),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ── Generic section header ────────────────────────────────────────────────────
 
 class _SectionHeader extends StatelessWidget {
   final String title;
