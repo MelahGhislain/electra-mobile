@@ -38,16 +38,21 @@ class SubscriptionModel {
       provider: json['provider']?.toString() ?? 'NONE',
       providerId: json['providerId']?.toString(),
       productId: json['productId']?.toString(),
-      currentPeriodStart: DateTime.parse(json['currentPeriodStart'] as String),
-      currentPeriodEnd: DateTime.parse(json['currentPeriodEnd'] as String),
+      // ← safe parse with fallback instead of hard cast
+      currentPeriodStart: json['currentPeriodStart'] != null
+          ? DateTime.parse(json['currentPeriodStart'].toString())
+          : DateTime.now(),
+      currentPeriodEnd: json['currentPeriodEnd'] != null
+          ? DateTime.parse(json['currentPeriodEnd'].toString())
+          : DateTime.now().add(const Duration(days: 30)),
       cancelledAt: json['cancelledAt'] != null
-          ? DateTime.parse(json['cancelledAt'] as String)
+          ? DateTime.parse(json['cancelledAt'].toString())
           : null,
       createdAt: json['createdAt'] != null
-          ? DateTime.parse(json['createdAt'] as String)
+          ? DateTime.parse(json['createdAt'].toString())
           : null,
       updatedAt: json['updatedAt'] != null
-          ? DateTime.parse(json['updatedAt'] as String)
+          ? DateTime.parse(json['updatedAt'].toString())
           : null,
     );
   }

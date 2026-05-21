@@ -20,4 +20,9 @@ class ReceiptRepositoryImpl implements ReceiptRepository {
 
     return ReceiptImage(path: path);
   }
+
+  @override
+  Future<void> uploadReceipt(String imagePath) {
+    return dataSource.uploadReceipt(imagePath);
+  }
 }

@@ -38,4 +38,6 @@ class ApiEndpoints {
   static const getNotifications = "/notifications";
   static const markAllRead = "/notifications/read-all";
   static const getUnreadCount = "/notifications/unread-count";
+
+  static const scanReceipt = "/receipts/scan";
 }

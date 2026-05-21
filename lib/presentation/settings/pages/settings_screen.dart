@@ -230,6 +230,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           final isLoading =
               userState is UserLoading || userState is UserInitial;
           final l = AppLocalizations.of(context);
+          final isDark = Theme.of(context).brightness == Brightness.dark;
 
           return Scaffold(
             appBar: AppBar(
@@ -283,9 +284,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
 
             body: isLoading && !isSaving
-                ? const Center(
+                ? Center(
                     child: CircularProgressIndicator(
-                      color: AppColors.darkBackground,
+                      color: isDark
+                          ? AppColors.lightBackground
+                          : AppColors.darkBackground,
                     ),
                   )
                 : RefreshIndicator(

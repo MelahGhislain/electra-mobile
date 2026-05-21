@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:electra/common/widgets/nav/add_popup.dart';
 import 'package:electra/core/router/route_names.dart';
 import 'package:electra/presentation/purchase/widgets/bottom_sheet/add_purchase_bottom_sheet.dart';
+import 'package:electra/presentation/receipt/widgets/receipt_source_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:electra/common/widgets/nav/custom_bottom_nav.dart';
@@ -96,6 +97,7 @@ class _LayoutScaffoldState extends State<LayoutScaffold>
                     },
                     onScanReceipt: () {
                       _closePopup();
+                      ReceiptSourcePicker.show(context);
                     },
                   ),
                 ),

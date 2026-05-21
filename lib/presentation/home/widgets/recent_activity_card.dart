@@ -141,7 +141,7 @@ class _ActivityRow extends StatelessWidget {
 
             // Amount + chevron
             Text(
-              '-\$${item.amount.toStringAsFixed(2)}',
+              '\$${item.amount.toStringAsFixed(2)}',
               style: const TextStyle(
                 fontSize: AppFontSize.md,
                 fontWeight: FontWeight.w500,

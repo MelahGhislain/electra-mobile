@@ -13,3 +13,13 @@ class PickReceiptImage {
     return repository.pickImage(source: source);
   }
 }
+
+class UploadReceipt {
+  final ReceiptRepository repository;
+
+  UploadReceipt(this.repository);
+
+  Future<void> call(String imagePath) {
+    return repository.uploadReceipt(imagePath);
+  }
+}

@@ -3,9 +3,11 @@ import 'package:electra/common/blocs/locale_cubit.dart';
 import 'package:electra/core/configs/theme/app_theme.dart';
 import 'package:electra/core/router/app_router.dart';
 import 'package:electra/common/blocs/theme_cubit.dart';
-import 'package:electra/common/blocs/receipt/receipt_cubit.dart';
+import 'package:electra/presentation/receipt/bloc/receipt_cubit.dart';
+import 'package:electra/domain/usecases/receipt/pick_receipt_image.dart';
 import 'package:electra/l10n/app_localizations.dart';
 import 'package:electra/presentation/auth/bloc/auth_cubit.dart';
+import 'package:electra/presentation/purchase/blocs/purchase/purchase_cubit.dart';
 import 'package:electra/presentation/settings/blocs/user_cubit.dart';
 import 'package:electra/service_locator.dart';
 import 'package:flutter/material.dart';
@@ -63,7 +65,7 @@ class _MainAppState extends State<MainApp> {
           ),
         ),
         BlocProvider<ReceiptCubit>(
-          create: (_) => ReceiptCubit(sl()),
+          create: (_) => ReceiptCubit(sl<PickReceiptImage>(), sl<UploadReceipt>(), sl<PurchaseCubit>()),
         ), // Used both in recorder and home screens
       ],
       child: BlocBuilder<LocaleCubit, Locale?>(

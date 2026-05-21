@@ -116,7 +116,7 @@ Future<void> init() async {
   /// DataSources
   sl.registerLazySingleton(() => AuthRemoteDataSourceImpl(sl<ApiClient>()));
   sl.registerLazySingleton(() => UserRemoteDataSourceImpl(sl<ApiClient>()));
-  sl.registerLazySingleton(() => ReceiptDataSource(ImagePicker()));
+  sl.registerLazySingleton(() => ReceiptDataSource(ImagePicker(), sl<ApiClient>()));
   sl.registerLazySingleton(() => VoiceStreamService());
   sl.registerLazySingleton<PurchaseRemoteDataSourceImpl>(
     () => PurchaseRemoteDataSourceImpl(sl()),
@@ -238,6 +238,9 @@ Future<void> init() async {
 
   /// Insights Usecases
   sl.registerLazySingleton(() => GetInsightsUseCase(sl()));
+
+  /// Upload Receipt Usecase
+  sl.registerLazySingleton(() => UploadReceipt(sl<ReceiptRepository>()));
 
   /// ── Subscription usecases ──────────────────────────────────────
   sl.registerLazySingleton(() => GetSubscriptionUseCase(sl()));

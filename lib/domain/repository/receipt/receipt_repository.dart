@@ -3,4 +3,5 @@ import 'package:electra/domain/entities/receipt/receipt_image.dart';
 
 abstract class ReceiptRepository {
   Future<ReceiptImage?> pickImage({ImageSourceType source});
+  Future<void> uploadReceipt(String imagePath);
 }
