@@ -65,7 +65,12 @@ class _MainAppState extends State<MainApp> {
           ),
         ),
         BlocProvider<ReceiptCubit>(
-          create: (_) => ReceiptCubit(sl<PickReceiptImage>(), sl<UploadReceipt>(), sl<PurchaseCubit>()),
+          create: (_) => ReceiptCubit(
+            pickReceiptImage: sl<PickReceiptImage>(),
+            extractReceiptText: sl<ExtractReceiptText>(),
+            processReceiptText: sl<ProcessReceiptText>(),
+            purchaseCubit: sl<PurchaseCubit>(),
+          ),
         ), // Used both in recorder and home screens
       ],
       child: BlocBuilder<LocaleCubit, Locale?>(

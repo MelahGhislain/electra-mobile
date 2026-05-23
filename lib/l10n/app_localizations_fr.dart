@@ -531,6 +531,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get sortPriceHigh => 'Prix ↓';
 
   @override
+  String get dateNewest => 'Date ↑';
+
+  @override
+  String get sortDateOldest => 'Date ↓';
+
+  @override
   String get addItem => 'Ajouter un article';
 
   @override

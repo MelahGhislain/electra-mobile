@@ -19,7 +19,7 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
+         jvmTarget = JavaVersion.VERSION_17.toString()
     }
 
     defaultConfig {
@@ -31,9 +31,7 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
-        manifestPlaceholders = [
-            appAuthRedirectScheme: "com.electra.app"
-        ]
+        manifestPlaceholders["appAuthRedirectScheme"] = "com.electra.app"
     }
 
     buildTypes {

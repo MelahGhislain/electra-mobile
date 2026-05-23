@@ -511,6 +511,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get sortPriceHigh => '价格 ↓';
 
   @override
+  String get dateNewest => '日期 ↑';
+
+  @override
+  String get sortDateOldest => '日期 ↓';
+
+  @override
   String get addItem => '添加项目';
 
   @override

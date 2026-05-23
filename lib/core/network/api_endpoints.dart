@@ -40,4 +40,5 @@ class ApiEndpoints {
   static const getUnreadCount = "/notifications/unread-count";
 
   static const scanReceipt = "/receipts/scan";
+  static const processReceiptText = "/receipts/process";
 }

@@ -74,7 +74,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
           }
         },
         builder: (context, state) {
-          final isLoading = state is AuthEmailLoading;
+          final isEmailLoading = state is AuthEmailLoading;
+          final isGoogleLoading = state is AuthGoogleLoading;
+          final isAnyLoading = isEmailLoading || isGoogleLoading;
 
           return AuthScaffold(
             child: Form(
@@ -211,7 +213,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   // ── Sign up button ─────────────────────────────
                   MainButton(
                     text: l.signUp,
-                    isLoading: isLoading,
+                    isLoading: isEmailLoading,
+                    disabled: isAnyLoading,
                     size: ButtonSize.small,
                     width: double.infinity,
                     onPressed: () => _submit(context),
@@ -227,7 +230,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   // ── Google button ──────────────────────────────
                   AuthGoogleButton(
                     label: l.continueWithGoogle,
-                    isLoading: isLoading,
+                    isLoading: isGoogleLoading,
+                    disabled: isAnyLoading,
                     onPressed: () {
                       context.read<AuthCubit>().signInWithGoogle();
                     },
@@ -238,9 +242,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   // ── Sign in link ───────────────────────────────
                   Center(
                     child: GestureDetector(
-                      onTap: () {
-                        context.goNamed(RouteNames.signIn);
-                      },
+                      onTap: isAnyLoading
+                          ? null
+                          : () => context.goNamed(RouteNames.signIn),
                       child: RichText(
                         text: TextSpan(
                           text: l.alreadyHaveAnAccount,

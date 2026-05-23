@@ -16,11 +16,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 enum ItemViewEnum { list, group }
 
-enum ItemSortEnum { nameAZ, nameZA, priceLow, priceHigh }
+enum ItemSortEnum {
+  nameAZ,
+  nameZA,
+  priceLow,
+  priceHigh,
+  dateNewest,
+  dateOldest,
+}
 
 class SortLabels {
   static String get(ItemSortEnum sort, AppLocalizations l) {
     switch (sort) {
+      case ItemSortEnum.dateNewest:
+        return l.dateNewest;
+      case ItemSortEnum.dateOldest:
+        return l.sortDateOldest;
       case ItemSortEnum.nameAZ:
         return l.sortNameAZ;
       case ItemSortEnum.nameZA:
@@ -53,7 +64,7 @@ class _SpendingDetailItemsSectionState
   void initState() {
     super.initState();
     _view = ItemViewEnum.list;
-    _sort = ItemSortEnum.nameAZ;
+    _sort = ItemSortEnum.dateNewest;
   }
 
   // ── Helpers ────────────────────────────────────────────────────────────────
@@ -78,8 +89,25 @@ class _SpendingDetailItemsSectionState
         copy.sort((a, b) => a.totalPrice.compareTo(b.totalPrice));
       case ItemSortEnum.priceHigh:
         copy.sort((a, b) => b.totalPrice.compareTo(a.totalPrice));
+      case ItemSortEnum.dateNewest:
+        copy.sort(
+          (a, b) => _parseDate(b.createdAt).compareTo(_parseDate(a.createdAt)),
+        );
+      case ItemSortEnum.dateOldest:
+        copy.sort(
+          (a, b) => _parseDate(a.createdAt).compareTo(_parseDate(b.createdAt)),
+        );
     }
     return copy;
+  }
+
+  DateTime _parseDate(String? raw) {
+    if (raw == null || raw.isEmpty) return DateTime(0);
+    try {
+      return DateTime.parse(raw);
+    } catch (_) {
+      return DateTime(0);
+    }
   }
 
   // ── Sort picker ────────────────────────────────────────────────────────────
@@ -93,24 +121,27 @@ class _SpendingDetailItemsSectionState
         mainAxisSize: MainAxisSize.min,
         children: ItemSortEnum.values.map((opt) {
           final selected = opt == _sort;
-          return ListTile(
-            contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-            title: Text(
-              SortLabels.get(opt, AppLocalizations.of(context)),
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
-                color: selected ? theme.colorScheme.primary : null,
+          return Material(
+            color: Colors.transparent,
+            child: ListTile(
+              contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+              title: Text(
+                SortLabels.get(opt, AppLocalizations.of(context)),
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
+                  color: selected ? theme.colorScheme.primary : null,
+                ),
               ),
+              trailing: selected
+                  ? Icon(
+                      Icons.check_rounded,
+                      color: theme.colorScheme.primary,
+                      size: 18,
+                    )
+                  : null,
+              onTap: () => Navigator.pop(context, opt),
             ),
-            trailing: selected
-                ? Icon(
-                    Icons.check_rounded,
-                    color: theme.colorScheme.primary,
-                    size: 18,
-                  )
-                : null,
-            onTap: () => Navigator.pop(context, opt),
           );
         }).toList(),
       ),

@@ -34,37 +34,40 @@ class SettingsTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ListTile(
-          onTap: _isLocked
-              ? () {
-                  context.pushNamed(RouteNames.subscription);
-                }
-              : onTap, // disable tap when locked
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 6,
+        Material(
+          color: Colors.transparent,
+          child: ListTile(
+            onTap: _isLocked
+                ? () {
+                    context.pushNamed(RouteNames.subscription);
+                  }
+                : onTap, // disable tap when locked
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 6,
+            ),
+            leading: Icon(
+              icon,
+              color: iconColor ?? Theme.of(context).iconTheme.color,
+              size: 26,
+            ),
+            title: Text(title),
+            subtitle: subtitle != null ? Text(subtitle!) : null,
+            trailing: showChevron
+                ? AnimatedIconButton(
+                    icon: Icon(
+                      _isLocked ? Icons.lock_outline : Icons.chevron_right,
+                      size: 26,
+                      color: Theme.of(context).iconTheme.color,
+                    ),
+                    onTap: _isLocked
+                        ? () {
+                            context.pushNamed(RouteNames.subscription);
+                          }
+                        : onTap ?? () {}, // Explicitly return void
+                  )
+                : null,
           ),
-          leading: Icon(
-            icon,
-            color: iconColor ?? Theme.of(context).iconTheme.color,
-            size: 26,
-          ),
-          title: Text(title),
-          subtitle: subtitle != null ? Text(subtitle!) : null,
-          trailing: showChevron
-              ? AnimatedIconButton(
-                  icon: Icon(
-                    _isLocked ? Icons.lock_outline : Icons.chevron_right,
-                    size: 26,
-                    color: Theme.of(context).iconTheme.color,
-                  ),
-                  onTap: _isLocked
-                      ? () {
-                          context.pushNamed(RouteNames.subscription);
-                        }
-                      : onTap ?? () {}, // Explicitly return void
-                )
-              : null,
         ),
         if (showDivider)
           Divider(

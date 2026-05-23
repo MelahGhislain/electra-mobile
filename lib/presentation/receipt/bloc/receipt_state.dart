@@ -1,4 +1,11 @@
-enum ReceiptScanStatus { idle, picking, scanning, success, error }
+enum ReceiptScanStatus {
+  idle,
+  picking, // user selecting image
+  extracting, // ML Kit OCR running on device
+  scanning, // sending text to BE, DeepSeek parsing
+  success,
+  error,
+}
 
 class ReceiptState {
   final ReceiptScanStatus status;
@@ -12,7 +19,9 @@ class ReceiptState {
   });
 
   bool get isLoading =>
-      status == ReceiptScanStatus.picking || status == ReceiptScanStatus.scanning;
+      status == ReceiptScanStatus.picking ||
+      status == ReceiptScanStatus.extracting ||
+      status == ReceiptScanStatus.scanning;
 
   ReceiptState copyWith({
     ReceiptScanStatus? status,

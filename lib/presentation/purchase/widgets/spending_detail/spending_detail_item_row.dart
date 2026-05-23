@@ -50,42 +50,48 @@ class SpendingDetailItemRow extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          ListTile(
-            contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-            leading: Icon(
-              Icons.edit_rounded,
-              color: Theme.of(context).iconTheme.color,
-              size: 20,
-            ),
-            title: Text(
-              l.editItem,
-              style: TextStyle(fontWeight: FontWeight.w500),
-            ),
-            onTap: () {
-              onEdit?.call(item);
-            },
-          ),
-          ListTile(
-            contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-            leading: Icon(
-              Icons.delete_outline_rounded,
-              color: Theme.of(context).colorScheme.error,
-              size: 20,
-            ),
-            title: Text(
-              l.deleteItem,
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.error,
-                fontWeight: FontWeight.w500,
+          Material(
+            color: Colors.transparent,
+            child: ListTile(
+              contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+              leading: Icon(
+                Icons.edit_rounded,
+                color: Theme.of(context).iconTheme.color,
+                size: 20,
               ),
+              title: Text(
+                l.editItem,
+                style: TextStyle(fontWeight: FontWeight.w500),
+              ),
+              onTap: () {
+                onEdit?.call(item);
+              },
             ),
-            onTap: () async {
-              final confirmed = await showDeleteItemConfirmation(
-                context,
-                item: item,
-              );
-              if (confirmed == true) onDelete?.call(item.id);
-            },
+          ),
+          Material(
+            color: Colors.transparent,
+            child: ListTile(
+              contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+              leading: Icon(
+                Icons.delete_outline_rounded,
+                color: Theme.of(context).colorScheme.error,
+                size: 20,
+              ),
+              title: Text(
+                l.deleteItem,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.error,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              onTap: () async {
+                final confirmed = await showDeleteItemConfirmation(
+                  context,
+                  item: item,
+                );
+                if (confirmed == true) onDelete?.call(item.id);
+              },
+            ),
           ),
         ],
       ),

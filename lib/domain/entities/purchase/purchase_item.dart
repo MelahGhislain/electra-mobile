@@ -45,6 +45,9 @@ class PurchaseItem extends Equatable {
   final bool isEdited;
   final bool isDeleted;
 
+  final String createdAt;
+  final String updatedAt;
+
   const PurchaseItem({
     required this.id,
     required this.name,
@@ -53,6 +56,8 @@ class PurchaseItem extends Equatable {
     required this.unitPrice,
     required this.totalPrice,
     required this.category,
+    required this.createdAt,
+    required this.updatedAt,
     this.ai,
     this.isEdited = false,
     this.isDeleted = false,
@@ -67,6 +72,8 @@ class PurchaseItem extends Equatable {
     unitPrice,
     totalPrice,
     category,
+    createdAt,
+    updatedAt,
     ai,
     isEdited,
     isDeleted,

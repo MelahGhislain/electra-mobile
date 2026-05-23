@@ -22,19 +22,22 @@ class SettingsToggleTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ListTile(
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 6,
+        Material(
+          color: Colors.transparent,
+          child: ListTile(
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 6,
+            ),
+            leading: Icon(
+              icon,
+              color: Theme.of(context).iconTheme.color,
+              size: 26,
+            ),
+            title: Text(title),
+            subtitle: Text(subtitle),
+            trailing: Switch(value: value, onChanged: onChanged),
           ),
-          leading: Icon(
-            icon,
-            color: Theme.of(context).iconTheme.color,
-            size: 26,
-          ),
-          title: Text(title),
-          subtitle: Text(subtitle),
-          trailing: Switch(value: value, onChanged: onChanged),
         ),
         if (showDivider)
           const Divider(height: 1, thickness: 1, indent: 22, endIndent: 22),

@@ -1078,6 +1078,18 @@ abstract class AppLocalizations {
   /// **'Price ↓'**
   String get sortPriceHigh;
 
+  /// No description provided for @dateNewest.
+  ///
+  /// In en, this message translates to:
+  /// **'Date ↑'**
+  String get dateNewest;
+
+  /// No description provided for @sortDateOldest.
+  ///
+  /// In en, this message translates to:
+  /// **'Date ↓'**
+  String get sortDateOldest;
+
   /// No description provided for @addItem.
   ///
   /// In en, this message translates to:

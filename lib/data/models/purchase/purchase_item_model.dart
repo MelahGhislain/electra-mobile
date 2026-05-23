@@ -12,6 +12,8 @@ class PurchaseItemModel extends Equatable {
   final ItemAIModel? ai;
   final bool isEdited;
   final bool isDeleted;
+  final String createdAt;
+  final String updatedAt;
 
   const PurchaseItemModel({
     required this.id,
@@ -21,6 +23,8 @@ class PurchaseItemModel extends Equatable {
     required this.unitPrice,
     required this.totalPrice,
     required this.category,
+    required this.createdAt,
+    required this.updatedAt,
     this.ai,
     this.isEdited = false,
     this.isDeleted = false,
@@ -47,6 +51,8 @@ class PurchaseItemModel extends Equatable {
       ai: ai,
       isEdited: json['isEdited'] ?? false,
       isDeleted: json['isDeleted'] ?? false,
+      updatedAt: json['updatedAt']?.toString() ?? '',
+      createdAt: json['createdAt']?.toString() ?? '',
     );
   }
 
@@ -61,6 +67,8 @@ class PurchaseItemModel extends Equatable {
     'ai': ai?.toJson(),
     'isEdited': isEdited,
     'isDeleted': isDeleted,
+    'updatedAt': updatedAt,
+    'createdAt': createdAt,
   };
 
   PurchaseItem toEntity() => PurchaseItem(
@@ -74,6 +82,8 @@ class PurchaseItemModel extends Equatable {
     ai: ai?.toEntity(),
     isEdited: isEdited,
     isDeleted: isDeleted,
+    updatedAt: updatedAt,
+    createdAt: createdAt,
   );
 
   @override
@@ -88,6 +98,8 @@ class PurchaseItemModel extends Equatable {
     ai,
     isEdited,
     isDeleted,
+    updatedAt,
+    createdAt,
   ];
 }
 

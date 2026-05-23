@@ -184,6 +184,8 @@ class PurchaseDetailCubit extends Cubit<PurchaseDetailState> {
       ai: item.ai,
       isEdited: item.isEdited,
       isDeleted: true,
+      createdAt: item.createdAt,
+      updatedAt: item.updatedAt,
     );
   }
 }

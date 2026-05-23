@@ -221,6 +221,8 @@
   "sortNameZA": "Nom (Z–A)",
   "sortPriceLow": "Prix ↑",
   "sortPriceHigh": "Prix ↓",
+  "dateNewest": "Date ↑",
+  "sortDateOldest": "Date ↓",
   "addItem": "Ajouter un article",
   "noItemsRecorded": "Aucun article enregistré",
   "noCategoryDataAvailable": "Aucune donnée de catégorie disponible",

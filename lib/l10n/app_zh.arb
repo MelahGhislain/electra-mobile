@@ -218,6 +218,8 @@
   "sortNameZA": "名称 (Z–A)",
   "sortPriceLow": "价格 ↑",
   "sortPriceHigh": "价格 ↓",
+  "dateNewest": "日期 ↑",
+  "sortDateOldest": "日期 ↓",
   "addItem": "添加项目",
   "noItemsRecorded": "暂无记录",
   "noCategoryDataAvailable": "暂无类别数据",

@@ -530,6 +530,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get sortPriceHigh => 'Preis ↓';
 
   @override
+  String get dateNewest => 'Datum ↑';
+
+  @override
+  String get sortDateOldest => 'Datum ↓';
+
+  @override
   String get addItem => 'Artikel hinzufügen';
 
   @override
