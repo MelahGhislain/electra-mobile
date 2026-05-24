@@ -124,15 +124,15 @@ class _TopSpendingTodayCardState extends State<TopSpendingTodayCard>
                           child: Row(
                             children: [
                               // Colored dot
-                              Container(
-                                width: 10,
-                                height: 10,
-                                decoration: BoxDecoration(
-                                  color: row.color,
-                                  shape: BoxShape.circle,
-                                ),
-                              ),
-                              const SizedBox(width: 6),
+                              // Container(
+                              //   width: 10,
+                              //   height: 10,
+                              //   decoration: BoxDecoration(
+                              //     color: row.color,
+                              //     shape: BoxShape.circle,
+                              //   ),
+                              // ),
+                              // const SizedBox(width: 6),
 
                               // Rounded-square icon
                               Container(
@@ -202,8 +202,8 @@ class _TopSpendingTodayCardState extends State<TopSpendingTodayCard>
                 AnimatedBuilder(
                   animation: _anim,
                   builder: (_, _) => SizedBox(
-                    width: 115,
-                    height: 115,
+                    width: 105,
+                    height: 105,
                     child: CustomPaint(
                       painter: _DonutPainter(
                         rows: widget.rows,
@@ -261,7 +261,7 @@ class _DonutPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final center = Offset(size.width / 2, size.height / 2);
     final radius = size.width / 2;
-    const sw = 22.0;
+    const sw = 15.0;
     const gap = 0.025;
 
     // Background ring

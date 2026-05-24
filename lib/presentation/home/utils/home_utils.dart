@@ -216,8 +216,8 @@ class RecentActivityHelper {
     final hDisplay = h > 12 ? h - 12 : (h == 0 ? 12 : h);
     final timeStr = '$hDisplay:$m $period';
 
-    if (dateStart == todayStart) return '${l.today}, $timeStr';
-    if (dateStart == yesterdayStart) return '${l.yesterday}, $timeStr';
-    return '${date.month}/${date.day}/${date.year}, $timeStr';
+    if (dateStart == todayStart) return '${l.today}, \n$timeStr';
+    if (dateStart == yesterdayStart) return '${l.yesterday}, \n$timeStr';
+    return '${date.month}/${date.day}/${date.year}, \n$timeStr';
   }
 }

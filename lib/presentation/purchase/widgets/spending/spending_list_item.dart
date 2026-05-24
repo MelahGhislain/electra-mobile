@@ -111,21 +111,25 @@ class SpendingListItem extends StatelessWidget {
                             ),
                             const SizedBox(width: 8),
                             if (purchase.items.isNotEmpty)
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 6,
-                                  vertical: 2,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: meta.color.withValues(alpha: 0.1),
-                                  borderRadius: BorderRadius.circular(4),
-                                ),
-                                child: Text(
-                                  meta.localizedLabel(l),
-                                  style: TextStyle(
-                                    fontSize: AppFontSize.sm,
-                                    fontWeight: FontWeight.w600,
-                                    color: meta.color,
+                              Flexible(
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 6,
+                                    vertical: 2,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: meta.color.withValues(alpha: 0.1),
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  child: Text(
+                                    meta.localizedLabel(l),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: AppFontSize.sm,
+                                      fontWeight: FontWeight.w600,
+                                      color: meta.color,
+                                    ),
                                   ),
                                 ),
                               ),

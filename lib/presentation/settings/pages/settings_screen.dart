@@ -475,7 +475,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             ],
                           ),
 
-                          const SizedBox(height: 100),
+                          const SizedBox(height: 120),
                         ],
                       ),
                     ),

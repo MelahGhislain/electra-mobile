@@ -79,8 +79,8 @@ class _AppTextFieldState extends State<AppTextField> {
               filled: true,
               fillColor: isDark ? colorScheme.onSurface : colorScheme.surface,
               contentPadding: const EdgeInsets.symmetric(
-                horizontal: 14,
-                vertical: 14,
+                horizontal: 10,
+                vertical: 10,
               ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),

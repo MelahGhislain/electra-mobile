@@ -114,8 +114,10 @@ class _ActivityRow extends StatelessWidget {
                 children: [
                   Text(
                     item.title,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
-                      fontSize: AppFontSize.lg,
+                      fontSize: AppFontSize.md,
                       fontWeight: FontWeight.w600,
                     ),
                   ),

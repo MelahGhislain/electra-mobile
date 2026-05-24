@@ -225,7 +225,7 @@ class _InsightsContentState extends State<_InsightsContent> {
               ),
             ),
 
-            const SizedBox(height: 100),
+            const SizedBox(height: 120),
           ],
         ),
       ),

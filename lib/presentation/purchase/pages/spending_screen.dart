@@ -248,7 +248,7 @@ class _SpendingScreenState extends State<SpendingScreen> {
                     )
                   else
                     SliverPadding(
-                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 100),
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                       sliver: SliverList(
                         delegate: SliverChildBuilderDelegate(
                           (context, index) => _buildListItem(

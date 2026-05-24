@@ -48,6 +48,12 @@ class VoiceStreamService {
 
     _channel = WebSocketChannel.connect(uri);
 
+    // FIX 1: Wait for the WS handshake to fully complete before proceeding.
+    // Without this, START_SESSION and audio chunks can be sent before the
+    // server has finished the HTTP → WS upgrade, causing the server to drop
+    // them or process them out of order.
+    await _channel!.ready;
+
     _socketSubscription = _channel!.stream.listen(
       (event) {
         if (event is String && !_textController.isClosed) {
@@ -89,6 +95,26 @@ class VoiceStreamService {
         _emitAmplitudeFromPcm(chunk);
       },
       onError: (error) => debugPrint('Audio stream error: $error'),
+      // FIX 2: Detect when the mic stream closes unexpectedly (silent failure
+      // on some Android versions). Without this handler the subscription just
+      // ends with no log output and no audio ever reaches Deepgram again,
+      // causing the "No speech detected" error.
+      onDone: () {
+        debugPrint(
+          'WARNING: Audio stream ended unexpectedly — mic may have been '
+          'interrupted by the OS or a hardware event.',
+        );
+        // Emit an error to the text stream so the cubit can surface it in the UI.
+        if (!_textController.isClosed) {
+          _textController.add(jsonEncode({
+            'type': 'ERROR',
+            'payload': {
+              'message': 'Microphone stream closed unexpectedly',
+              'code': 'MIC_STREAM_ENDED',
+            },
+          }));
+        }
+      },
     );
   }
 
@@ -125,9 +151,24 @@ class VoiceStreamService {
   // ── Public API ─────────────────────────────────────────────────────────────
 
   Future<void> start() async {
+    // FIX 3: Correct startup sequence.
+    //
+    // OLD (broken):
+    //   1. connect socket  ← handshake not awaited
+    //   2. send START_SESSION  ← fires before server is ready
+    //   3. start mic
+    //
+    // NEW (fixed):
+    //   1. connect socket + await handshake  ← server is fully ready
+    //   2. start mic  ← mic warms up while we send the control message
+    //   3. send START_SESSION  ← server creates session AFTER mic is live
+    //
+    // Sending START_SESSION last ensures the server session is created only
+    // once audio is already flowing, so no chunks are sent before the session
+    // exists and none are dropped with "Audio received before START_SESSION".
     await _initWebSocket();
-    _sendControl(VoiceSessionEnum.startSession.value);
     await _startAudioStreaming();
+    _sendControl(VoiceSessionEnum.startSession.value);
   }
 
   Future<void> stop() async {

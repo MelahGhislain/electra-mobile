@@ -78,7 +78,7 @@ class _LayoutScaffoldState extends State<LayoutScaffold>
           /// ✅ 🔥 MOVE POPUP HERE (CRITICAL)
           if (_popupOpen)
             Positioned(
-              bottom: 90, // adjust based on your nav height
+              bottom: 110, // adjust based on your nav height
               left: 0,
               right: 0,
               child: Center(
@@ -108,7 +108,7 @@ class _LayoutScaffoldState extends State<LayoutScaffold>
 
       /// ✅ Bottom nav ONLY (no popup here anymore)
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(bottom: 20, left: 16, right: 16),
+        padding: const EdgeInsets.only(bottom: 40, left: 16, right: 16),
         child: CustomBottomNav(
           selectedIndex: widget.navigationShell.currentIndex,
           onDestinationSelected: (index) {

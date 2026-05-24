@@ -412,7 +412,7 @@ class _SpendingDetailContent extends StatelessWidget {
               if (url != null) {}
             },
           ),
-          const SizedBox(height: 32),
+          const SizedBox(height: 50),
         ],
       ),
     );
