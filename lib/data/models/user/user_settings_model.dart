@@ -1,4 +1,4 @@
-import 'package:electra/domain/entities/user/user_settings.dart';
+import 'package:minata/domain/entities/user/user_settings.dart';
 
 class UserSettingsModel extends UserSettings {
   const UserSettingsModel({

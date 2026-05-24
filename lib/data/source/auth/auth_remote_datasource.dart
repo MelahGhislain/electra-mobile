@@ -1,7 +1,7 @@
-import 'package:electra/core/network/api_client.dart';
-import 'package:electra/core/network/api_endpoints.dart';
-import 'package:electra/data/models/auth/auth_tokens_model.dart';
-import 'package:electra/domain/entities/auth/social_auth_credential.dart';
+import 'package:minata/core/network/api_client.dart';
+import 'package:minata/core/network/api_endpoints.dart';
+import 'package:minata/data/models/auth/auth_tokens_model.dart';
+import 'package:minata/domain/entities/auth/social_auth_credential.dart';
 
 abstract class AuthRemoteDataSource {
   Future<AuthTokensModel> login({

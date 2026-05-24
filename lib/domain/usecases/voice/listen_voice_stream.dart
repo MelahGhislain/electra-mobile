@@ -1,4 +1,4 @@
-import 'package:electra/domain/repository/voice/voice_repository.dart';
+import 'package:minata/domain/repository/voice/voice_repository.dart';
 
 class ListenVoiceStream {
   final VoiceRepository repository;

@@ -1,10 +1,10 @@
-import 'package:electra/core/enums/auth_provider_enum.dart';
-import 'package:electra/data/repository/auth/auth_repository_impl.dart';
-import 'package:electra/domain/entities/user/user.dart';
-import 'package:electra/domain/usecases/auth/login_user.dart';
-import 'package:electra/domain/usecases/auth/logout_user.dart';
-import 'package:electra/domain/usecases/auth/register_user.dart';
-import 'package:electra/domain/usecases/auth/social_login_usecase.dart';
+import 'package:minata/core/enums/auth_provider_enum.dart';
+import 'package:minata/data/repository/auth/auth_repository_impl.dart';
+import 'package:minata/domain/entities/user/user.dart';
+import 'package:minata/domain/usecases/auth/login_user.dart';
+import 'package:minata/domain/usecases/auth/logout_user.dart';
+import 'package:minata/domain/usecases/auth/register_user.dart';
+import 'package:minata/domain/usecases/auth/social_login_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'auth_state.dart';
 

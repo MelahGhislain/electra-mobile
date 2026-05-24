@@ -1,4 +1,4 @@
-import 'package:electra/presentation/onboading/models/onboarding_settings.dart';
+import 'package:minata/presentation/onboading/models/onboarding_settings.dart';
 import 'package:equatable/equatable.dart';
 
 class OnboardingState extends Equatable {

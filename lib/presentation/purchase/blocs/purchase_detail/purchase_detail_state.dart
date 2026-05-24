@@ -1,5 +1,5 @@
-import 'package:electra/domain/entities/purchase/purchase.dart';
-import 'package:electra/domain/entities/purchase/purchase_item.dart';
+import 'package:minata/domain/entities/purchase/purchase.dart';
+import 'package:minata/domain/entities/purchase/purchase_item.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class PurchaseDetailState extends Equatable {

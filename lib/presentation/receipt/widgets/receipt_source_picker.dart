@@ -1,11 +1,11 @@
 import 'dart:math' as math;
 
-import 'package:electra/common/widgets/bottom_sheets/app_bottom_sheet.dart';
-import 'package:electra/core/configs/fonts.dart';
-import 'package:electra/core/configs/theme/app_colors.dart';
-import 'package:electra/core/enums/image_source_enum.dart';
-import 'package:electra/presentation/receipt/bloc/receipt_cubit.dart';
-import 'package:electra/presentation/receipt/bloc/receipt_state.dart';
+import 'package:minata/common/widgets/bottom_sheets/app_bottom_sheet.dart';
+import 'package:minata/core/configs/fonts.dart';
+import 'package:minata/core/configs/theme/app_colors.dart';
+import 'package:minata/core/enums/image_source_enum.dart';
+import 'package:minata/presentation/receipt/bloc/receipt_cubit.dart';
+import 'package:minata/presentation/receipt/bloc/receipt_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

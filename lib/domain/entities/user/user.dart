@@ -1,5 +1,5 @@
-import 'package:electra/domain/entities/subscription/subscription.dart';
-import 'package:electra/domain/entities/user/user_settings.dart';
+import 'package:minata/domain/entities/subscription/subscription.dart';
+import 'package:minata/domain/entities/user/user_settings.dart';
 import 'package:equatable/equatable.dart';
 
 class User extends Equatable {

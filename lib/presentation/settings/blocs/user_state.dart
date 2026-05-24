@@ -1,4 +1,4 @@
-import 'package:electra/domain/entities/user/user.dart';
+import 'package:minata/domain/entities/user/user.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class UserState extends Equatable {

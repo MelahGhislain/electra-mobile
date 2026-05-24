@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:electra/core/errors/failures.dart';
-import 'package:electra/domain/entities/insights/insights.dart';
-import 'package:electra/domain/repository/insights/insights_repository.dart';
+import 'package:minata/core/errors/failures.dart';
+import 'package:minata/domain/entities/insights/insights.dart';
+import 'package:minata/domain/repository/insights/insights_repository.dart';
 
 class GetInsightsUseCase {
   final InsightsRepository repository;

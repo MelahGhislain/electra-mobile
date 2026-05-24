@@ -1,6 +1,6 @@
-import 'package:electra/common/widgets/bottom_sheets/app_bottom_sheet.dart';
-import 'package:electra/common/widgets/text_fields/radio_option_list.dart';
-import 'package:electra/l10n/app_localizations.dart';
+import 'package:minata/common/widgets/bottom_sheets/app_bottom_sheet.dart';
+import 'package:minata/common/widgets/text_fields/radio_option_list.dart';
+import 'package:minata/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 enum AppCurrency { usd, eur, gbp, jpy, cad, aud, chf, cny, inr, brl }

@@ -1,9 +1,9 @@
-import 'package:electra/presentation/purchase/widgets/expense_recorder/animated_orb.dart';
-import 'package:electra/presentation/purchase/widgets/expense_recorder/mic_button.dart';
-import 'package:electra/presentation/purchase/widgets/expense_recorder/recorder_heading.dart';
-import 'package:electra/presentation/purchase/widgets/expense_recorder/session_timer.dart';
-import 'package:electra/presentation/purchase/widgets/expense_recorder/start_talking_pill.dart';
-import 'package:electra/presentation/purchase/widgets/expense_recorder/waveform_bar.dart';
+import 'package:minata/presentation/purchase/widgets/expense_recorder/animated_orb.dart';
+import 'package:minata/presentation/purchase/widgets/expense_recorder/mic_button.dart';
+import 'package:minata/presentation/purchase/widgets/expense_recorder/recorder_heading.dart';
+import 'package:minata/presentation/purchase/widgets/expense_recorder/session_timer.dart';
+import 'package:minata/presentation/purchase/widgets/expense_recorder/start_talking_pill.dart';
+import 'package:minata/presentation/purchase/widgets/expense_recorder/waveform_bar.dart';
 import 'package:flutter/material.dart';
 
 class ExpenseRecorderScreen extends StatelessWidget {

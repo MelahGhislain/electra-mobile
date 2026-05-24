@@ -1,4 +1,4 @@
-import 'package:electra/core/configs/theme/app_colors.dart';
+import 'package:minata/core/configs/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 

@@ -1,7 +1,7 @@
-import 'package:electra/core/enums/image_source_enum.dart';
-import 'package:electra/data/source/receipt/receipt_data_source.dart';
-import 'package:electra/domain/entities/receipt/receipt_image.dart';
-import 'package:electra/domain/repository/receipt/receipt_repository.dart';
+import 'package:minata/core/enums/image_source_enum.dart';
+import 'package:minata/data/source/receipt/receipt_data_source.dart';
+import 'package:minata/domain/entities/receipt/receipt_image.dart';
+import 'package:minata/domain/repository/receipt/receipt_repository.dart';
 
 class ReceiptRepositoryImpl implements ReceiptRepository {
   final ReceiptDataSource dataSource;

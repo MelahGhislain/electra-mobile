@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:electra/core/errors/dio_error_mapper.dart';
-import 'package:electra/core/errors/failures.dart';
-import 'package:electra/data/source/insights/insights_remote_datasource.dart';
-import 'package:electra/domain/entities/insights/insights.dart';
-import 'package:electra/domain/repository/insights/insights_repository.dart';
+import 'package:minata/core/errors/dio_error_mapper.dart';
+import 'package:minata/core/errors/failures.dart';
+import 'package:minata/data/source/insights/insights_remote_datasource.dart';
+import 'package:minata/domain/entities/insights/insights.dart';
+import 'package:minata/domain/repository/insights/insights_repository.dart';
 import 'package:flutter/foundation.dart';
 
 class InsightsRepositoryImpl implements InsightsRepository {

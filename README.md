@@ -1,4 +1,4 @@
-# electra
+# minata
 
 A new Flutter project.
 
@@ -65,3 +65,6 @@ class ReceiptOcrService {
 ```dart
 flutter emulators --launch Medium_Phone_API_36.1
 ```
+
+### App Names
+- Minata

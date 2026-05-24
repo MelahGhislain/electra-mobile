@@ -1,10 +1,10 @@
-import 'package:electra/common/widgets/bottom_sheets/app_bottom_sheet.dart';
-import 'package:electra/common/widgets/buttons/main_button.dart';
-import 'package:electra/common/widgets/text_fields/chip_selector.dart';
-import 'package:electra/common/widgets/text_fields/date_range_field.dart';
-import 'package:electra/core/utils/category_meta.dart';
-import 'package:electra/l10n/app_localizations.dart';
-import 'package:electra/presentation/purchase/pages/purchase_filter.dart';
+import 'package:minata/common/widgets/bottom_sheets/app_bottom_sheet.dart';
+import 'package:minata/common/widgets/buttons/main_button.dart';
+import 'package:minata/common/widgets/text_fields/chip_selector.dart';
+import 'package:minata/common/widgets/text_fields/date_range_field.dart';
+import 'package:minata/core/utils/category_meta.dart';
+import 'package:minata/l10n/app_localizations.dart';
+import 'package:minata/presentation/purchase/pages/purchase_filter.dart';
 import 'package:flutter/material.dart';
 
 class PurchaseFilterSheet {

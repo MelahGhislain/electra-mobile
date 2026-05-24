@@ -1,6 +1,6 @@
-import 'package:electra/common/widgets/buttons/main_icon_button.dart';
-import 'package:electra/presentation/purchase/blocs/voice/voice_cubit.dart';
-import 'package:electra/presentation/purchase/blocs/voice/voice_state.dart';
+import 'package:minata/common/widgets/buttons/main_icon_button.dart';
+import 'package:minata/presentation/purchase/blocs/voice/voice_cubit.dart';
+import 'package:minata/presentation/purchase/blocs/voice/voice_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

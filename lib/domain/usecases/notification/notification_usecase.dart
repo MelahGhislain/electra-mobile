@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:electra/core/errors/failures.dart';
-import 'package:electra/data/repository/notification/notification_repository_impl.dart';
-import 'package:electra/domain/entities/notification/notification.dart';
+import 'package:minata/core/errors/failures.dart';
+import 'package:minata/data/repository/notification/notification_repository_impl.dart';
+import 'package:minata/domain/entities/notification/notification.dart';
 
 class RegisterPushTokenUsecase {
   final NotificationRepositoryImpl repository;

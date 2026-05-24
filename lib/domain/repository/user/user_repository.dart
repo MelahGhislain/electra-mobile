@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:electra/core/errors/failures.dart';
-import 'package:electra/domain/entities/user/user.dart';
-import 'package:electra/domain/entities/user/user_settings.dart';
+import 'package:minata/core/errors/failures.dart';
+import 'package:minata/domain/entities/user/user.dart';
+import 'package:minata/domain/entities/user/user_settings.dart';
 
 abstract class UserRepository {
   Future<Either<Failure, User>> getCurrentUser();

@@ -1,6 +1,6 @@
-import 'package:electra/core/enums/image_source_enum.dart';
-import 'package:electra/domain/usecases/receipt/pick_receipt_image.dart';
-import 'package:electra/presentation/purchase/blocs/purchase/purchase_cubit.dart';
+import 'package:minata/core/enums/image_source_enum.dart';
+import 'package:minata/domain/usecases/receipt/pick_receipt_image.dart';
+import 'package:minata/presentation/purchase/blocs/purchase/purchase_cubit.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permission_handler/permission_handler.dart';

@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:electra/core/errors/dio_error_mapper.dart';
-import 'package:electra/core/errors/failures.dart';
-import 'package:electra/data/source/subscription/iap_datasource.dart';
-import 'package:electra/data/source/subscription/subscription_remote_datasource.dart';
-import 'package:electra/domain/entities/subscription/subscription.dart';
-import 'package:electra/domain/repository/subscription/subscription_repository.dart';
+import 'package:minata/core/errors/dio_error_mapper.dart';
+import 'package:minata/core/errors/failures.dart';
+import 'package:minata/data/source/subscription/iap_datasource.dart';
+import 'package:minata/data/source/subscription/subscription_remote_datasource.dart';
+import 'package:minata/domain/entities/subscription/subscription.dart';
+import 'package:minata/domain/repository/subscription/subscription_repository.dart';
 import 'package:flutter/foundation.dart';
 
 class SubscriptionRepositoryImpl implements SubscriptionRepository {

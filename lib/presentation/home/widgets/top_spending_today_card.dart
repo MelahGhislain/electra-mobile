@@ -1,7 +1,7 @@
 import 'dart:math' as math;
-import 'package:electra/core/configs/fonts.dart';
-import 'package:electra/core/utils/category_meta.dart';
-import 'package:electra/l10n/app_localizations.dart';
+import 'package:minata/core/configs/fonts.dart';
+import 'package:minata/core/utils/category_meta.dart';
+import 'package:minata/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 /// Shows spending categories for today (or most recent).

@@ -1,4 +1,4 @@
-import 'package:electra/domain/entities/insights/insights.dart';
+import 'package:minata/domain/entities/insights/insights.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class InsightsState extends Equatable {

@@ -1,5 +1,5 @@
-import 'package:electra/domain/repository/voice/voice_repository.dart';
-import 'package:electra/data/source/voice/voice_stream_service.dart';
+import 'package:minata/domain/repository/voice/voice_repository.dart';
+import 'package:minata/data/source/voice/voice_stream_service.dart';
 
 class VoiceRepositoryImpl implements VoiceRepository {
   final VoiceStreamService service;

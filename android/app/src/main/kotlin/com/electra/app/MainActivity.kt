@@ -1,4 +1,4 @@
-package com.electra.app
+package com.minata.app
 
 import io.flutter.embedding.android.FlutterActivity
 

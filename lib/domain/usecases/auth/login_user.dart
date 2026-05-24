@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:electra/core/errors/failures.dart';
-import 'package:electra/domain/entities/auth/auth_tokens.dart';
-import 'package:electra/domain/repository/auth/auth_repository.dart';
+import 'package:minata/core/errors/failures.dart';
+import 'package:minata/domain/entities/auth/auth_tokens.dart';
+import 'package:minata/domain/repository/auth/auth_repository.dart';
 
 class LoginUser {
   final AuthRepository repository;

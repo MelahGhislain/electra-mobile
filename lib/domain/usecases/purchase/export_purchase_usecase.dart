@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:electra/core/errors/failures.dart';
-import 'package:electra/domain/repository/purchase/purchase_repository.dart';
+import 'package:minata/core/errors/failures.dart';
+import 'package:minata/domain/repository/purchase/purchase_repository.dart';
 
 class ExportPurchaseUseCase {
   final PurchaseRepository _repository;

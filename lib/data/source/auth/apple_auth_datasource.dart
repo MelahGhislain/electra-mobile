@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:crypto/crypto.dart';
-import 'package:electra/domain/entities/auth/social_auth_credential.dart';
+import 'package:minata/domain/entities/auth/social_auth_credential.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 abstract class AppleAuthDataSource {

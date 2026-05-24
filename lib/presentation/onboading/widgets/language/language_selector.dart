@@ -1,5 +1,5 @@
-import 'package:electra/core/configs/theme/app_colors.dart';
-import 'package:electra/domain/entities/user/language.dart';
+import 'package:minata/core/configs/theme/app_colors.dart';
+import 'package:minata/domain/entities/user/language.dart';
 import 'package:flutter/material.dart';
 import 'language_tile.dart';
 

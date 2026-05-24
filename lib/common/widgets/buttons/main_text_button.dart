@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:electra/core/configs/fonts.dart';
-import 'package:electra/core/configs/theme/app_colors.dart';
+import 'package:minata/core/configs/fonts.dart';
+import 'package:minata/core/configs/theme/app_colors.dart';
 
 class MainTextButton extends StatefulWidget {
   final String text;

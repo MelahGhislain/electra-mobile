@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:electra/core/enums/auth_provider_enum.dart';
-import 'package:electra/core/errors/failures.dart';
-import 'package:electra/domain/entities/auth/auth_tokens.dart';
-import 'package:electra/domain/entities/auth/social_auth_credential.dart';
+import 'package:minata/core/enums/auth_provider_enum.dart';
+import 'package:minata/core/errors/failures.dart';
+import 'package:minata/domain/entities/auth/auth_tokens.dart';
+import 'package:minata/domain/entities/auth/social_auth_credential.dart';
 
 abstract class AuthRepository {
   Future<Either<Failure, AuthTokens>> register({

@@ -1,6 +1,6 @@
-import 'package:electra/core/enums/image_source_enum.dart';
-import 'package:electra/domain/entities/receipt/receipt_image.dart';
-import 'package:electra/domain/repository/receipt/receipt_repository.dart';
+import 'package:minata/core/enums/image_source_enum.dart';
+import 'package:minata/domain/entities/receipt/receipt_image.dart';
+import 'package:minata/domain/repository/receipt/receipt_repository.dart';
 
 /// Picks an image from camera or gallery
 class PickReceiptImage {

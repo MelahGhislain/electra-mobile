@@ -1,4 +1,4 @@
-import 'package:electra/l10n/app_localizations.dart';
+import 'package:minata/l10n/app_localizations.dart';
 
 enum PurchaseSortOption { newest, oldest, mostExpensive, cheapest, byName }
 

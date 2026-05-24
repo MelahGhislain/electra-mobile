@@ -1,8 +1,8 @@
-import 'package:electra/core/configs/fonts.dart';
-import 'package:electra/core/router/route_names.dart';
-import 'package:electra/domain/entities/purchase/purchase.dart';
-import 'package:electra/l10n/app_localizations.dart';
-import 'package:electra/presentation/home/utils/home_utils.dart';
+import 'package:minata/core/configs/fonts.dart';
+import 'package:minata/core/router/route_names.dart';
+import 'package:minata/domain/entities/purchase/purchase.dart';
+import 'package:minata/l10n/app_localizations.dart';
+import 'package:minata/presentation/home/utils/home_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

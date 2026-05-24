@@ -1,4 +1,4 @@
-import 'package:electra/domain/usecases/notification/notification_usecase.dart';
+import 'package:minata/domain/usecases/notification/notification_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'notification_state.dart';
 

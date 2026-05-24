@@ -1,16 +1,16 @@
-import 'package:electra/core/assets/app_images.dart';
-import 'package:electra/core/configs/fonts.dart';
-import 'package:electra/core/configs/theme/app_colors.dart';
-import 'package:electra/core/router/route_names.dart';
-import 'package:electra/core/utils/storage/onboarding_storage.dart';
-import 'package:electra/data/models/onboarding/onboarding.dart';
-import 'package:electra/domain/entities/user/language.dart';
-import 'package:electra/l10n/app_localizations.dart';
-import 'package:electra/presentation/onboading/widgets/highlighted_title.dart';
-import 'package:electra/presentation/onboading/widgets/language/language_selector.dart';
-import 'package:electra/presentation/onboading/widgets/onboarding_page.dart';
-import 'package:electra/presentation/onboading/widgets/onboarding_widget.dart';
-import 'package:electra/service_locator.dart';
+import 'package:minata/core/assets/app_images.dart';
+import 'package:minata/core/configs/fonts.dart';
+import 'package:minata/core/configs/theme/app_colors.dart';
+import 'package:minata/core/router/route_names.dart';
+import 'package:minata/core/utils/storage/onboarding_storage.dart';
+import 'package:minata/data/models/onboarding/onboarding.dart';
+import 'package:minata/domain/entities/user/language.dart';
+import 'package:minata/l10n/app_localizations.dart';
+import 'package:minata/presentation/onboading/widgets/highlighted_title.dart';
+import 'package:minata/presentation/onboading/widgets/language/language_selector.dart';
+import 'package:minata/presentation/onboading/widgets/onboarding_page.dart';
+import 'package:minata/presentation/onboading/widgets/onboarding_widget.dart';
+import 'package:minata/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -278,11 +278,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
                             const Spacer(),
 
-                            // Bottom Bar: @electra + Next Button
+                            // Bottom Bar: @minata + Next Button
                             Row(
                               children: [
                                 const Text(
-                                  "@electra",
+                                  "@minata",
                                   style: TextStyle(
                                     color: Colors.white70,
                                     fontSize: 16,

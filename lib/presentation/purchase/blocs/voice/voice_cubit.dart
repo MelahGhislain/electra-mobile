@@ -1,8 +1,8 @@
 import 'dart:async';
-import 'package:electra/domain/repository/voice/voice_repository.dart';
-import 'package:electra/domain/usecases/voice/start_voice_stream.dart';
-import 'package:electra/domain/usecases/voice/stop_voice_stream.dart';
-import 'package:electra/domain/usecases/voice/listen_voice_stream.dart';
+import 'package:minata/domain/repository/voice/voice_repository.dart';
+import 'package:minata/domain/usecases/voice/start_voice_stream.dart';
+import 'package:minata/domain/usecases/voice/stop_voice_stream.dart';
+import 'package:minata/domain/usecases/voice/listen_voice_stream.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:permission_handler/permission_handler.dart';

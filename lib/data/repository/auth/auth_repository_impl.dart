@@ -1,15 +1,15 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:electra/core/enums/auth_provider_enum.dart';
-import 'package:electra/core/errors/dio_error_mapper.dart';
-import 'package:electra/core/errors/failures.dart';
-import 'package:electra/core/utils/storage/auth_storage.dart';
-import 'package:electra/data/source/auth/apple_auth_datasource.dart';
-import 'package:electra/data/source/auth/auth_remote_datasource.dart';
-import 'package:electra/data/source/auth/google_auth_datasource.dart';
-import 'package:electra/domain/entities/auth/auth_tokens.dart';
-import 'package:electra/domain/entities/auth/social_auth_credential.dart';
-import 'package:electra/domain/repository/auth/auth_repository.dart';
+import 'package:minata/core/enums/auth_provider_enum.dart';
+import 'package:minata/core/errors/dio_error_mapper.dart';
+import 'package:minata/core/errors/failures.dart';
+import 'package:minata/core/utils/storage/auth_storage.dart';
+import 'package:minata/data/source/auth/apple_auth_datasource.dart';
+import 'package:minata/data/source/auth/auth_remote_datasource.dart';
+import 'package:minata/data/source/auth/google_auth_datasource.dart';
+import 'package:minata/domain/entities/auth/auth_tokens.dart';
+import 'package:minata/domain/entities/auth/social_auth_credential.dart';
+import 'package:minata/domain/repository/auth/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSourceImpl remoteDataSource;

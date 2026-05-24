@@ -1,5 +1,5 @@
-import 'package:electra/data/models/purchase/purchase_item_model.dart';
-import 'package:electra/domain/entities/purchase/purchase.dart';
+import 'package:minata/data/models/purchase/purchase_item_model.dart';
+import 'package:minata/domain/entities/purchase/purchase.dart';
 import 'package:equatable/equatable.dart';
 
 class PurchaseModel extends Equatable {

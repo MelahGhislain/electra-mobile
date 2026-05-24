@@ -1,9 +1,9 @@
-import 'package:electra/common/widgets/bottom_sheets/app_bottom_sheet.dart';
-import 'package:electra/core/configs/fonts.dart';
-import 'package:electra/domain/entities/purchase/purchase_item.dart';
-import 'package:electra/core/utils/category_meta.dart';
-import 'package:electra/l10n/app_localizations.dart';
-import 'package:electra/presentation/purchase/widgets/spending_detail/item_form_sheet.dart';
+import 'package:minata/common/widgets/bottom_sheets/app_bottom_sheet.dart';
+import 'package:minata/core/configs/fonts.dart';
+import 'package:minata/domain/entities/purchase/purchase_item.dart';
+import 'package:minata/core/utils/category_meta.dart';
+import 'package:minata/l10n/app_localizations.dart';
+import 'package:minata/presentation/purchase/widgets/spending_detail/item_form_sheet.dart';
 import 'package:flutter/material.dart';
 
 class SpendingDetailItemRow extends StatelessWidget {

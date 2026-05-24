@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
-import 'package:electra/domain/usecases/notification/notification_usecase.dart';
+import 'package:minata/domain/usecases/notification/notification_usecase.dart';
 
 /// Top-level handler required by FCM for background/terminated messages.
 /// Must be a top-level function (not a class method).

@@ -1,9 +1,9 @@
-import 'package:electra/common/widgets/buttons/main_icon_button.dart';
-import 'package:electra/core/assets/app_images.dart';
-import 'package:electra/core/router/route_names.dart';
-import 'package:electra/l10n/app_localizations.dart';
-import 'package:electra/presentation/settings/blocs/user_cubit.dart';
-import 'package:electra/presentation/settings/blocs/user_state.dart';
+import 'package:minata/common/widgets/buttons/main_icon_button.dart';
+import 'package:minata/core/assets/app_images.dart';
+import 'package:minata/core/router/route_names.dart';
+import 'package:minata/l10n/app_localizations.dart';
+import 'package:minata/presentation/settings/blocs/user_cubit.dart';
+import 'package:minata/presentation/settings/blocs/user_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';

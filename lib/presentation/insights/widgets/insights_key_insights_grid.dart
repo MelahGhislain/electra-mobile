@@ -1,5 +1,5 @@
-import 'package:electra/core/configs/fonts.dart';
-import 'package:electra/domain/entities/insights/insights.dart';
+import 'package:minata/core/configs/fonts.dart';
+import 'package:minata/domain/entities/insights/insights.dart';
 import 'package:flutter/material.dart';
 
 class InsightsKeyInsightsGrid extends StatelessWidget {

@@ -1,4 +1,4 @@
-import 'package:electra/core/configs/fonts.dart';
+import 'package:minata/core/configs/fonts.dart';
 import 'package:flutter/material.dart';
 
 class FeatureRow extends StatelessWidget {

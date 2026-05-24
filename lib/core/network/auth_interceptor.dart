@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:electra/core/errors/api_error.dart';
-import 'package:electra/core/network/api_endpoints.dart';
-import 'package:electra/core/utils/storage/auth_storage.dart';
+import 'package:minata/core/errors/api_error.dart';
+import 'package:minata/core/network/api_endpoints.dart';
+import 'package:minata/core/utils/storage/auth_storage.dart';
 import 'package:flutter/widgets.dart';
 
 class AuthInterceptor extends Interceptor {

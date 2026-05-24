@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:electra/core/configs/env.dart';
-import 'package:electra/domain/entities/auth/social_auth_credential.dart';
+import 'package:minata/core/configs/env.dart';
+import 'package:minata/domain/entities/auth/social_auth_credential.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 abstract class GoogleAuthDataSource {

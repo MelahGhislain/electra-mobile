@@ -1,8 +1,8 @@
-import 'package:electra/common/blocs/auth/app_auth_cubit.dart';
-import 'package:electra/core/assets/app_images.dart';
-import 'package:electra/core/router/route_names.dart';
-import 'package:electra/core/utils/storage/onboarding_storage.dart';
-import 'package:electra/service_locator.dart';
+import 'package:minata/common/blocs/auth/app_auth_cubit.dart';
+import 'package:minata/core/assets/app_images.dart';
+import 'package:minata/core/router/route_names.dart';
+import 'package:minata/core/utils/storage/onboarding_storage.dart';
+import 'package:minata/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';

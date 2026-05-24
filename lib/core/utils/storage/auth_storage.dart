@@ -1,5 +1,5 @@
-import 'package:electra/core/utils/constants/storage_keys.dart';
-import 'package:electra/core/utils/storage/secure_storage.dart';
+import 'package:minata/core/utils/constants/storage_keys.dart';
+import 'package:minata/core/utils/storage/secure_storage.dart';
 
 class AuthStorage {
   final SecureStorage _storage;

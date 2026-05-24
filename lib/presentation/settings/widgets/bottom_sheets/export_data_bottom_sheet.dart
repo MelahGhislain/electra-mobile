@@ -1,12 +1,12 @@
-import 'package:electra/common/widgets/bottom_sheets/app_bottom_sheet.dart';
-import 'package:electra/common/widgets/buttons/main_button.dart';
-import 'package:electra/common/widgets/text_fields/date_range_field.dart';
-import 'package:electra/common/widgets/text_fields/radio_option_list.dart';
-import 'package:electra/core/configs/fonts.dart';
-import 'package:electra/core/configs/theme/app_colors.dart';
-import 'package:electra/domain/entities/purchase/export_purchase.dart';
-import 'package:electra/presentation/purchase/blocs/purchase/purchase_cubit.dart';
-import 'package:electra/presentation/purchase/blocs/purchase/purchase_state.dart';
+import 'package:minata/common/widgets/bottom_sheets/app_bottom_sheet.dart';
+import 'package:minata/common/widgets/buttons/main_button.dart';
+import 'package:minata/common/widgets/text_fields/date_range_field.dart';
+import 'package:minata/common/widgets/text_fields/radio_option_list.dart';
+import 'package:minata/core/configs/fonts.dart';
+import 'package:minata/core/configs/theme/app_colors.dart';
+import 'package:minata/domain/entities/purchase/export_purchase.dart';
+import 'package:minata/presentation/purchase/blocs/purchase/purchase_cubit.dart';
+import 'package:minata/presentation/purchase/blocs/purchase/purchase_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

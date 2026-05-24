@@ -1,5 +1,5 @@
-import 'package:electra/core/network/api_client.dart';
-import 'package:electra/data/models/subscription/subscription_model.dart';
+import 'package:minata/core/network/api_client.dart';
+import 'package:minata/data/models/subscription/subscription_model.dart';
 
 abstract class SubscriptionRemoteDataSource {
   Future<SubscriptionModel> getSubscription();

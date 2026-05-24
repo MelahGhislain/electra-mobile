@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:electra/core/configs/env.dart';
-import 'package:electra/core/enums/voice_session_enum.dart';
-import 'package:electra/core/network/api_endpoints.dart';
+import 'package:minata/core/configs/env.dart';
+import 'package:minata/core/enums/voice_session_enum.dart';
+import 'package:minata/core/network/api_endpoints.dart';
 import 'package:flutter/material.dart';
 import 'package:record/record.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';

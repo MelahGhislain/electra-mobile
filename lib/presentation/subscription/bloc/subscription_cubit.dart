@@ -1,5 +1,5 @@
-import 'package:electra/data/source/subscription/iap_datasource.dart';
-import 'package:electra/domain/usecases/subscription/subscription_usecase.dart';
+import 'package:minata/data/source/subscription/iap_datasource.dart';
+import 'package:minata/domain/usecases/subscription/subscription_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'subscription_state.dart';

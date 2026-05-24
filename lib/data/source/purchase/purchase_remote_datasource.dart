@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:electra/core/network/api_client.dart';
-import 'package:electra/core/network/api_endpoints.dart';
-import 'package:electra/data/models/purchase/purchase_item_model.dart';
-import 'package:electra/data/models/purchase/purchase_model.dart';
+import 'package:minata/core/network/api_client.dart';
+import 'package:minata/core/network/api_endpoints.dart';
+import 'package:minata/data/models/purchase/purchase_item_model.dart';
+import 'package:minata/data/models/purchase/purchase_model.dart';
 import 'package:path_provider/path_provider.dart';
 
 abstract class PurchaseRemoteDataSource {
@@ -143,7 +143,7 @@ class PurchaseRemoteDataSourceImpl implements PurchaseRemoteDataSource {
     // Pick the right extension
     final extension = _extensionFromFormat(format);
     final fileName =
-        'electra_export_${DateTime.now().millisecondsSinceEpoch}.$extension';
+        'minata_export_${DateTime.now().millisecondsSinceEpoch}.$extension';
 
     // Save to the device's temp/downloads directory
     final dir = await getTemporaryDirectory();

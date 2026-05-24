@@ -1,9 +1,9 @@
-import 'package:electra/core/services/fcm_service.dart';
-import 'package:electra/data/repository/auth/auth_repository_impl.dart';
-import 'package:electra/domain/usecases/notification/notification_usecase.dart';
+import 'package:minata/core/services/fcm_service.dart';
+import 'package:minata/data/repository/auth/auth_repository_impl.dart';
+import 'package:minata/domain/usecases/notification/notification_usecase.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:electra/core/utils/storage/auth_storage.dart';
+import 'package:minata/core/utils/storage/auth_storage.dart';
 import 'app_auth_state.dart';
 
 class AppAuthCubit extends Cubit<AppAuthState> {

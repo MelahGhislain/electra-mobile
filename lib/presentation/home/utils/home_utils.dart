@@ -1,7 +1,7 @@
-import 'package:electra/core/utils/category_meta.dart';
-import 'package:electra/domain/entities/purchase/purchase.dart';
-import 'package:electra/l10n/app_localizations.dart';
-import 'package:electra/presentation/home/widgets/top_spending_today_card.dart';
+import 'package:minata/core/utils/category_meta.dart';
+import 'package:minata/domain/entities/purchase/purchase.dart';
+import 'package:minata/l10n/app_localizations.dart';
+import 'package:minata/presentation/home/widgets/top_spending_today_card.dart';
 import 'package:flutter/material.dart';
 
 // ─────────────────────────────────────────────────────────────────────────────

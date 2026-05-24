@@ -1,9 +1,9 @@
-import 'package:electra/data/models/purchase/export_purchase_model.dart';
-import 'package:electra/domain/entities/purchase/export_purchase.dart';
-import 'package:electra/domain/entities/purchase/purchase.dart';
-import 'package:electra/domain/usecases/purchase/export_purchase_usecase.dart';
-import 'package:electra/domain/usecases/purchase/get_purchases_usecase.dart';
-import 'package:electra/domain/usecases/purchase/purchase_usecases.dart';
+import 'package:minata/data/models/purchase/export_purchase_model.dart';
+import 'package:minata/domain/entities/purchase/export_purchase.dart';
+import 'package:minata/domain/entities/purchase/purchase.dart';
+import 'package:minata/domain/usecases/purchase/export_purchase_usecase.dart';
+import 'package:minata/domain/usecases/purchase/get_purchases_usecase.dart';
+import 'package:minata/domain/usecases/purchase/purchase_usecases.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'purchase_state.dart';
 

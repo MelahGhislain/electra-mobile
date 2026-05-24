@@ -1,5 +1,5 @@
-import 'package:electra/data/source/subscription/iap_datasource.dart';
-import 'package:electra/domain/entities/subscription/subscription.dart';
+import 'package:minata/data/source/subscription/iap_datasource.dart';
+import 'package:minata/domain/entities/subscription/subscription.dart';
 import 'package:equatable/equatable.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 

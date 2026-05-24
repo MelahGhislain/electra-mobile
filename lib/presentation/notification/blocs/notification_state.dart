@@ -1,4 +1,4 @@
-import 'package:electra/domain/entities/notification/notification.dart';
+import 'package:minata/domain/entities/notification/notification.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class NotificationState extends Equatable {

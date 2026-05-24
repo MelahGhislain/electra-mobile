@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:electra/core/errors/failures.dart';
-import 'package:electra/domain/entities/subscription/subscription.dart';
-import 'package:electra/domain/repository/subscription/subscription_repository.dart';
+import 'package:minata/core/errors/failures.dart';
+import 'package:minata/domain/entities/subscription/subscription.dart';
+import 'package:minata/domain/repository/subscription/subscription_repository.dart';
 
 class GetSubscriptionUseCase {
   final SubscriptionRepository repository;

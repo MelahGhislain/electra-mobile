@@ -1,4 +1,4 @@
-import 'package:electra/core/utils/storage/app_storage_keys.dart';
+import 'package:minata/core/utils/storage/app_storage_keys.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'home_state.dart';

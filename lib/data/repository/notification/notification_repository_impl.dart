@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:electra/core/errors/dio_error_mapper.dart';
-import 'package:electra/core/errors/failures.dart';
-import 'package:electra/data/source/notification/notification_datasource.dart';
-import 'package:electra/domain/entities/notification/notification.dart';
-import 'package:electra/domain/repository/notification/notification_repository.dart';
+import 'package:minata/core/errors/dio_error_mapper.dart';
+import 'package:minata/core/errors/failures.dart';
+import 'package:minata/data/source/notification/notification_datasource.dart';
+import 'package:minata/domain/entities/notification/notification.dart';
+import 'package:minata/domain/repository/notification/notification_repository.dart';
 
 class NotificationRepositoryImpl implements NotificationRepository {
   final NotificationRemoteDataSource remoteDataSource;

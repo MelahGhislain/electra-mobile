@@ -1,7 +1,7 @@
-import 'package:electra/core/network/api_client.dart';
-import 'package:electra/core/network/api_endpoints.dart';
-import 'package:electra/data/models/user/user_model.dart';
-import 'package:electra/data/models/user/user_settings_model.dart';
+import 'package:minata/core/network/api_client.dart';
+import 'package:minata/core/network/api_endpoints.dart';
+import 'package:minata/data/models/user/user_model.dart';
+import 'package:minata/data/models/user/user_settings_model.dart';
 
 abstract class UserRemoteDataSource {
   Future<UserModel> getUser();
