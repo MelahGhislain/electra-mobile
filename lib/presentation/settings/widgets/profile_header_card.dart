@@ -31,7 +31,7 @@ class ProfileHeaderCard extends StatelessWidget {
           // Avatar
           CircleAvatar(
             radius: 24,
-            backgroundImage: avatarUrl != null
+            backgroundImage: avatarUrl != null && avatarUrl!.isNotEmpty
                 ? NetworkImage(avatarUrl!)
                 : const AssetImage(AppImages.defaultAvatar),
             backgroundColor: Theme.of(context).colorScheme.onSurface,

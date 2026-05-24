@@ -359,24 +359,27 @@ class _OptionTile extends StatelessWidget {
     final theme = Theme.of(context);
     final l = AppLocalizations.of(context);
 
-    return ListTile(
-      leading: Icon(icon, color: color ?? theme.iconTheme.color, size: 20),
-      title: Text(
-        label,
-        style: TextStyle(color: color, fontWeight: FontWeight.w500),
+    return Material(
+      color: Colors.transparent,
+      child: ListTile(
+        leading: Icon(icon, color: color ?? theme.iconTheme.color, size: 20),
+        title: Text(
+          label,
+          style: TextStyle(color: color, fontWeight: FontWeight.w500),
+        ),
+        subtitle: isLocked == true
+            ? Text(l.premiumFeature, style: TextStyle(fontSize: AppFontSize.xs))
+            : null,
+        trailing: isLocked == true
+            ? Icon(Icons.lock_outline, color: theme.iconTheme.color, size: 20)
+            : null,
+        onTap: isLocked == true
+            ? () {
+                Navigator.pop(context);
+                context.pushNamed(RouteNames.subscription);
+              }
+            : onTap,
       ),
-      subtitle: isLocked == true
-          ? Text(l.premiumFeature, style: TextStyle(fontSize: AppFontSize.xs))
-          : null,
-      trailing: isLocked == true
-          ? Icon(Icons.lock_outline, color: theme.iconTheme.color, size: 20)
-          : null,
-      onTap: isLocked == true
-          ? () {
-              Navigator.pop(context);
-              context.pushNamed(RouteNames.subscription);
-            }
-          : onTap,
     );
   }
 }

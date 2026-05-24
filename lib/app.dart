@@ -3,7 +3,7 @@ import 'package:minata/common/blocs/locale_cubit.dart';
 import 'package:minata/core/configs/theme/app_theme.dart';
 import 'package:minata/core/router/app_router.dart';
 import 'package:minata/common/blocs/theme_cubit.dart';
-import 'package:minata/presentation/receipt/bloc/receipt_cubit.dart';
+import 'package:minata/presentation/receipt/bloc/receipt/receipt_cubit.dart';
 import 'package:minata/domain/usecases/receipt/pick_receipt_image.dart';
 import 'package:minata/l10n/app_localizations.dart';
 import 'package:minata/presentation/auth/bloc/auth_cubit.dart';

@@ -63,8 +63,7 @@ class _AddPurchaseBodyState extends State<_AddPurchaseBody> {
         ? CategoryMeta.fromKey(p!.categorySummary.first.name.toLowerCase())
         : CategoryMeta.fromKey('other');
     _paymentMethod = p != null
-        ? p.payment.method.name[0].toUpperCase() +
-              p.payment.method.name.substring(1)
+        ? _getPaymentMethod(p.payment.method)
         : 'Other';
   }
 
@@ -92,6 +91,17 @@ class _AddPurchaseBodyState extends State<_AddPurchaseBody> {
       selectedKey: _selectedCategory.label.toLowerCase(),
     );
     if (result != null) setState(() => _selectedCategory = result);
+  }
+
+  String _getPaymentMethod(PaymentMethod method) {
+    switch (method) {
+      case PaymentMethod.card:
+        return 'card';
+      case PaymentMethod.cash:
+        return 'cash';
+      case PaymentMethod.other:
+        return 'other';
+    }
   }
 
   Map<String, dynamic> _buildBody() {
@@ -174,6 +184,7 @@ class _AddPurchaseBodyState extends State<_AddPurchaseBody> {
       },
       builder: (context, state) {
         final isSaving = state is PurchaseMutating;
+        print(_paymentMethod);
 
         return SingleChildScrollView(
           padding: EdgeInsets.fromLTRB(
@@ -207,10 +218,10 @@ class _AddPurchaseBodyState extends State<_AddPurchaseBody> {
 
                 const SizedBox(height: 16),
 
-                CategorySelectField(
-                  selected: _selectedCategory,
-                  onTap: _pickCategory,
-                ),
+                // CategorySelectField(
+                //   selected: _selectedCategory,
+                //   onTap: _pickCategory,
+                // ),
 
                 const SizedBox(height: 16),
 
@@ -221,35 +232,35 @@ class _AddPurchaseBodyState extends State<_AddPurchaseBody> {
                   onSelected: (opt) => setState(() => _paymentMethod = opt!),
                 ),
 
-                const SizedBox(height: 16),
+                // const SizedBox(height: 16),
 
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: AppTextField(
-                        controller: _amountCtrl,
-                        label: l.amount,
-                        hint: '0.00',
-                        keyboardType: const TextInputType.numberWithOptions(
-                          decimal: true,
-                        ),
-                        validator: (v) => (v == null || v.trim().isEmpty)
-                            ? l.enterAmount
-                            : null,
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: AppTextField(
-                        controller: _currencyCtrl,
-                        label: l.currency,
-                        hint: 'e.g USD',
-                      ),
-                    ),
-                  ],
-                ),
+                // Row(
+                //   crossAxisAlignment: CrossAxisAlignment.start,
+                //   children: [
+                //     Expanded(
+                //       flex: 2,
+                //       child: AppTextField(
+                //         controller: _amountCtrl,
+                //         label: l.amount,
+                //         hint: '0.00',
+                //         keyboardType: const TextInputType.numberWithOptions(
+                //           decimal: true,
+                //         ),
+                //         validator: (v) => (v == null || v.trim().isEmpty)
+                //             ? l.enterAmount
+                //             : null,
+                //       ),
+                //     ),
+                //     const SizedBox(width: 10),
+                //     Expanded(
+                //       child: AppTextField(
+                //         controller: _currencyCtrl,
+                //         label: l.currency,
+                //         hint: 'e.g USD',
+                //       ),
+                //     ),
+                //   ],
+                // ),
 
                 const SizedBox(height: 28),
 

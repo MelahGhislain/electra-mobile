@@ -1,12 +1,15 @@
 import 'package:minata/core/configs/theme/app_colors.dart';
-import 'package:minata/presentation/purchase/blocs/voice/voice_cubit.dart';
-import 'package:minata/presentation/purchase/blocs/voice/voice_state.dart';
+import 'package:minata/presentation/receipt/bloc/voice/voice_cubit.dart';
+import 'package:minata/presentation/receipt/bloc/voice/voice_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 /// Central circular mic button.
-/// Idle    → outlined circle with mic icon
-/// Active  → filled primary colour, pulsing ring, stop icon
+///
+///  idle       → outlined circle, mic icon — tap to start
+///  listening  → filled dark, pulsing ring, stop icon — tap to stop
+///  processing → spinner — not tappable
+///  done/error → reset icon — tap to reset
 class MicButton extends StatefulWidget {
   const MicButton({super.key});
 
@@ -38,24 +41,42 @@ class _MicButtonState extends State<MicButton>
     super.dispose();
   }
 
+  void _handleTap(BuildContext context, VoiceState state) {
+    final cubit = context.read<VoiceCubit>();
+    switch (state.status) {
+      case VoiceStatus.idle:
+        cubit.startListening();
+        break;
+      case VoiceStatus.listening:
+        cubit.stopListening();
+        break;
+      case VoiceStatus.done:
+      case VoiceStatus.error:
+        cubit.reset();
+        break;
+      case VoiceStatus.processing:
+        // not tappable
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<VoiceCubit, VoiceState>(
       builder: (context, state) {
-        final isListening = state.isListening;
+        final isListening  = state.isListening;
+        final isProcessing = state.isProcessing;
+        final isDoneOrError = state.isDone || state.isError;
 
         return GestureDetector(
-          onTap: () {
-            final cubit = context.read<VoiceCubit>();
-            isListening ? cubit.stopListening() : cubit.startListening();
-          },
+          onTap: isProcessing ? null : () => _handleTap(context, state),
           child: AnimatedBuilder(
             animation: _pulseAnimation,
             builder: (context, child) {
               return Stack(
                 alignment: Alignment.center,
                 children: [
-                  // Pulsing outer ring — only visible when listening
+                  // Pulsing outer ring — only while listening
                   if (isListening)
                     Transform.scale(
                       scale: _pulseAnimation.value,
@@ -77,7 +98,9 @@ class _MicButtonState extends State<MicButton>
                     height: 52,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: isListening ? AppColors.darkSurface : Colors.white,
+                      color: isListening
+                          ? AppColors.darkSurface
+                          : Colors.white,
                       boxShadow: [
                         BoxShadow(
                           color: AppColors.darkSurface.withValues(
@@ -95,11 +118,25 @@ class _MicButtonState extends State<MicButton>
                         width: 1.5,
                       ),
                     ),
-                    child: Icon(
-                      isListening ? Icons.stop_rounded : Icons.mic_rounded,
-                      color: isListening ? Colors.white : AppColors.darkSurface,
-                      size: 28,
-                    ),
+                    child: isProcessing
+                        ? Padding(
+                            padding: const EdgeInsets.all(14),
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: AppColors.darkSurface,
+                            ),
+                          )
+                        : Icon(
+                            isDoneOrError
+                                ? Icons.refresh_rounded
+                                : isListening
+                                    ? Icons.stop_rounded
+                                    : Icons.mic_rounded,
+                            color: isListening
+                                ? Colors.white
+                                : AppColors.darkSurface,
+                            size: 28,
+                          ),
                   ),
                 ],
               );

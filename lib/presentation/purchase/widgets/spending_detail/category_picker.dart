@@ -150,39 +150,42 @@ class _CategoryPickerSheetState extends State<_CategoryPickerSheet> {
                       final isSelected =
                           meta.label.toLowerCase() ==
                           widget.selectedKey?.toLowerCase();
-                      return ListTile(
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 2,
-                        ),
-                        leading: Container(
-                          width: 38,
-                          height: 38,
-                          decoration: BoxDecoration(
-                            color: meta.color.withValues(alpha: 0.12),
-                            borderRadius: BorderRadius.circular(10),
+                      return Material(
+                        color: Colors.transparent,
+                        child: ListTile(
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 2,
                           ),
-                          child: Icon(meta.icon, color: meta.color, size: 18),
-                        ),
-                        title: Text(
-                          meta.localizedLabel(l),
-                          style: TextStyle(
-                            fontSize: isSelected
-                                ? AppFontSize.md
-                                : AppFontSize.sm,
-                            fontWeight: isSelected
-                                ? FontWeight.w800
-                                : FontWeight.w500,
+                          leading: Container(
+                            width: 38,
+                            height: 38,
+                            decoration: BoxDecoration(
+                              color: meta.color.withValues(alpha: 0.12),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Icon(meta.icon, color: meta.color, size: 18),
                           ),
+                          title: Text(
+                            meta.localizedLabel(l),
+                            style: TextStyle(
+                              fontSize: isSelected
+                                  ? AppFontSize.md
+                                  : AppFontSize.sm,
+                              fontWeight: isSelected
+                                  ? FontWeight.w800
+                                  : FontWeight.w500,
+                            ),
+                          ),
+                          trailing: isSelected
+                              ? Icon(
+                                  Icons.check_rounded,
+                                  color: theme.iconTheme.color,
+                                  size: AppFontSize.xxl,
+                                )
+                              : null,
+                          onTap: () => Navigator.pop(context, meta),
                         ),
-                        trailing: isSelected
-                            ? Icon(
-                                Icons.check_rounded,
-                                color: theme.iconTheme.color,
-                                size: AppFontSize.xxl,
-                              )
-                            : null,
-                        onTap: () => Navigator.pop(context, meta),
                       );
                     },
                   ),

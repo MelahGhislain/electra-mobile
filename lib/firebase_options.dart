@@ -35,19 +35,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCUA_Va5GAi8TjFQljlOnmW6igBiHqfSac',
-    appId: '1:936782351432:android:072bfc70737280fa6a5c7d',
-    messagingSenderId: '936782351432',
-    projectId: 'electra-3b6eb',
-    storageBucket: 'electra-3b6eb.firebasestorage.app',
+    apiKey: 'AIzaSyCTTpW4oAWRb2aSFZDw9ZFwXr8yBvlJQEI',
+    appId: '1:738537854047:android:75bf9ee2d10e44df8d37ea',
+    messagingSenderId: '738537854047',
+    projectId: 'minata-51ccd',
+    storageBucket: 'minata-51ccd.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyA2UW2iHOzMHO79VSiCBEyPiytZwkpc2CA',
-    appId: '1:936782351432:ios:f67f7e35212d83536a5c7d',
-    messagingSenderId: '936782351432',
-    projectId: 'electra-3b6eb',
-    storageBucket: 'electra-3b6eb.firebasestorage.app',
-    iosBundleId: 'com.electra.app',
+    apiKey: 'AIzaSyDpN-CJ3je3E5O_Vyl4YVpuKb9lVtokGOg',
+    appId: '1:738537854047:ios:6d48b1b5089e426b8d37ea',
+    messagingSenderId: '738537854047',
+    projectId: 'minata-51ccd',
+    storageBucket: 'minata-51ccd.firebasestorage.app',
+    iosBundleId: 'com.minata.app',
   );
+
 }

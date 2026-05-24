@@ -249,29 +249,32 @@ class _SetupItem extends StatelessWidget {
               ),
             ],
           ),
-          child: ListTile(
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 14,
-              vertical: 6,
-            ),
-            leading: Container(
-              width: 36,
-              height: 36,
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: 0.15),
-                shape: BoxShape.circle,
+          child: Material(
+            color: Colors.transparent,
+            child: ListTile(
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 14,
+                vertical: 6,
               ),
-              child: Icon(icon, size: 18, color: color),
+              leading: Container(
+                width: 36,
+                height: 36,
+                decoration: BoxDecoration(
+                  color: color.withValues(alpha: 0.15),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(icon, size: 18, color: color),
+              ),
+              title: Text(title),
+              subtitle: Text(subtitle),
+              trailing: onChanged != null
+                  ? Switch(value: value, onChanged: onChanged)
+                  : Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      size: 14,
+                      color: theme.iconTheme.color,
+                    ),
             ),
-            title: Text(title),
-            subtitle: Text(subtitle),
-            trailing: onChanged != null
-                ? Switch(value: value, onChanged: onChanged)
-                : Icon(
-                    Icons.arrow_forward_ios_rounded,
-                    size: 14,
-                    color: theme.iconTheme.color,
-                  ),
           ),
         ),
       ),

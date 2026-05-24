@@ -60,18 +60,6 @@ class _SplashScreenState extends State<SplashScreen> {
               fit: BoxFit.cover,
             ),
           ),
-
-          Positioned(
-            bottom: isDark ? 135 : 147,
-            right: 130,
-            child: Container(
-              height: 10,
-              width: 160,
-              color: isDark
-                  ? Color.fromARGB(255, 0, 0, 0)
-                  : Color.fromARGB(255, 255, 255, 255),
-            ),
-          ),
         ],
       ),
     );

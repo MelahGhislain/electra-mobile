@@ -1,13 +1,31 @@
-import 'package:minata/presentation/purchase/widgets/expense_recorder/animated_orb.dart';
-import 'package:minata/presentation/purchase/widgets/expense_recorder/mic_button.dart';
-import 'package:minata/presentation/purchase/widgets/expense_recorder/recorder_heading.dart';
-import 'package:minata/presentation/purchase/widgets/expense_recorder/session_timer.dart';
-import 'package:minata/presentation/purchase/widgets/expense_recorder/start_talking_pill.dart';
-import 'package:minata/presentation/purchase/widgets/expense_recorder/waveform_bar.dart';
+import 'package:minata/presentation/receipt/bloc/voice/voice_cubit.dart';
+import 'package:minata/presentation/receipt/widgets/expense_recorder/animated_orb.dart';
+import 'package:minata/presentation/receipt/widgets/expense_recorder/mic_button.dart';
+import 'package:minata/presentation/receipt/widgets/expense_recorder/recorder_heading.dart';
+import 'package:minata/presentation/receipt/widgets/expense_recorder/session_timer.dart';
+import 'package:minata/presentation/receipt/widgets/expense_recorder/start_talking_pill.dart';
+import 'package:minata/presentation/receipt/widgets/expense_recorder/waveform_bar.dart';
+import 'package:minata/service_locator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ExpenseRecorderScreen extends StatelessWidget {
   const ExpenseRecorderScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider<VoiceCubit>(
+      // sl<VoiceCubit>() hits the factory — fresh cubit + fresh
+      // VoiceStreamService (with a fresh token) every time this
+      // screen is opened. Auto-disposed when the screen is popped.
+      create: (_) => sl<VoiceCubit>(),
+      child: const _RecorderBody(),
+    );
+  }
+}
+
+class _RecorderBody extends StatelessWidget {
+  const _RecorderBody();
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +48,8 @@ class ExpenseRecorderScreen extends StatelessWidget {
 
               const Spacer(flex: 2),
 
-              // ── Green orb (unchanged from original) ───────────────────
-              AnimatedOrb(),
+              // ── Animated orb ───────────────────────────────────────────
+              const AnimatedOrb(),
 
               const Spacer(flex: 2),
 

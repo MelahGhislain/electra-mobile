@@ -20,7 +20,6 @@ import 'package:minata/data/source/receipt/receipt_data_source.dart';
 import 'package:minata/data/source/subscription/iap_datasource.dart';
 import 'package:minata/data/source/subscription/subscription_remote_datasource.dart';
 import 'package:minata/data/source/user/user_datasource.dart';
-import 'package:minata/data/source/voice/voice_stream_service.dart';
 import 'package:minata/domain/repository/insights/insights_repository.dart';
 import 'package:minata/domain/repository/purchase/purchase_repository.dart';
 import 'package:minata/domain/repository/receipt/receipt_repository.dart';
@@ -47,6 +46,7 @@ import 'package:minata/domain/usecases/voice/start_voice_stream.dart';
 import 'package:minata/domain/usecases/voice/stop_voice_stream.dart';
 import 'package:minata/presentation/purchase/blocs/purchase/purchase_cubit.dart';
 import 'package:minata/presentation/purchase/blocs/purchase_detail/purchase_detail_cubit.dart';
+import 'package:minata/presentation/receipt/bloc/voice/voice_cubit.dart';
 import 'package:minata/presentation/subscription/bloc/subscription_cubit.dart';
 import 'package:minata/core/services/fcm_service.dart';
 import 'package:minata/data/source/notification/notification_datasource.dart';
@@ -62,7 +62,6 @@ import 'core/network/dio_client.dart';
 final sl = GetIt.instance;
 
 Future<void> init() async {
-  // Add at the top of init(), before anything else
   final prefs = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => prefs);
   sl.registerLazySingleton(() => OnboardingStorage(sl()));
@@ -72,16 +71,16 @@ Future<void> init() async {
   await iapDataSource.initialize(); // sets up the purchase stream listener
   sl.registerLazySingleton(() => iapDataSource);
 
-  /// Core
+  // ── Core network ──────────────────────────────────────────────────────────
   final dioClient = DioClient();
   sl.registerLazySingleton(() => dioClient.dio);
   sl.registerLazySingleton(() => ApiClient(sl<Dio>()));
 
-  /// Storage
+  // ── Storage ───────────────────────────────────────────────────────────────
   sl.registerLazySingleton(() => SecureStorage());
   sl.registerLazySingleton(() => AuthStorage(sl<SecureStorage>()));
 
-  // Cubits
+  // ── Shared cubits (singleton — live for the app lifetime) ─────────────────
   sl.registerLazySingleton(
     () => PurchaseCubit(
       getPurchases: sl(),
@@ -101,8 +100,7 @@ Future<void> init() async {
     ),
   );
 
-  // Global auth state
-  // AppAuthCubit now needs AuthRepository too
+  // ── Global auth cubit ──────────────────────────────────────────────────────
   sl.registerLazySingleton(
     () => AppAuthCubit(
       sl<AuthStorage>(),
@@ -112,19 +110,20 @@ Future<void> init() async {
     ),
   );
 
-  // =============== DATASOURCES/SERVICES (API calls) ======================
-  /// DataSources
+  // ── DataSources ───────────────────────────────────────────────────────────
   sl.registerLazySingleton(() => AuthRemoteDataSourceImpl(sl<ApiClient>()));
   sl.registerLazySingleton(() => UserRemoteDataSourceImpl(sl<ApiClient>()));
   sl.registerLazySingleton(
     () => ReceiptDataSource(ImagePicker(), sl<ApiClient>()),
   );
-  sl.registerLazySingleton(() => VoiceStreamService());
+  // NOTE: VoiceStreamService is NOT registered here.
+  // VoiceRepositoryImpl creates a fresh instance per session so the token
+  // is always current. Registering it as a singleton would bake in a
+  // stale token from startup.
   sl.registerLazySingleton<PurchaseRemoteDataSourceImpl>(
     () => PurchaseRemoteDataSourceImpl(sl()),
   );
   sl.registerLazySingleton(() => InsightsRemoteDataSourceImpl(sl<ApiClient>()));
-  // ── Subscription datasource ────────────────────────────────────
   sl.registerLazySingleton<SubscriptionRemoteDataSource>(
     () => SubscriptionRemoteDataSourceImpl(sl<ApiClient>()),
   );
@@ -132,8 +131,7 @@ Future<void> init() async {
     () => NotificationRemoteDataSourceImpl(sl<ApiClient>()),
   );
 
-  // =============== REPOSITORIES ======================
-  /// Repository
+  // ── Repositories ──────────────────────────────────────────────────────────
   sl.registerLazySingleton(() => GoogleAuthDataSourceImpl());
   await sl<GoogleAuthDataSourceImpl>().initialize();
   sl.registerLazySingleton(() => AppleAuthDataSourceImpl());
@@ -148,9 +146,13 @@ Future<void> init() async {
   sl.registerLazySingleton<UserRepositoryImpl>(
     () => UserRepositoryImpl(sl<UserRemoteDataSourceImpl>()),
   );
+
+  // VoiceRepository takes AuthStorage — reads a fresh token on every
+  // startStream() call, never a stale one from app startup.
   sl.registerLazySingleton<VoiceRepository>(
-    () => VoiceRepositoryImpl(sl<VoiceStreamService>()),
+    () => VoiceRepositoryImpl(sl<AuthStorage>()),
   );
+
   sl.registerLazySingleton<ReceiptRepository>(
     () => ReceiptRepositoryImpl(sl<ReceiptDataSource>()),
   );
@@ -160,7 +162,6 @@ Future<void> init() async {
   sl.registerLazySingleton<InsightsRepository>(
     () => InsightsRepositoryImpl(sl<InsightsRemoteDataSourceImpl>()),
   );
-  // ── Subscription repository ────────────────────────────────────
   sl.registerLazySingleton<SubscriptionRepository>(
     () => SubscriptionRepositoryImpl(
       remoteDataSource: sl<SubscriptionRemoteDataSource>(),
@@ -171,8 +172,7 @@ Future<void> init() async {
     () => NotificationRepositoryImpl(sl<NotificationRemoteDataSourceImpl>()),
   );
 
-  /// ================ INTERCEPTORS ======================
-  // ✅ THIS is the missing call — runs after storage + repository are ready
+  // ── Interceptors ──────────────────────────────────────────────────────────
   dioClient.addAuthInterceptor(
     AuthInterceptor(storage: sl<AuthStorage>(), dio: sl<Dio>()),
   );
@@ -180,15 +180,14 @@ Future<void> init() async {
     () => FcmService(registerToken: sl<RegisterPushTokenUsecase>()),
   );
 
-  // =============== USECASES ======================
-  /// Auth Usecases
+  // ── Auth usecases ──────────────────────────────────────────────────────────
   sl.registerLazySingleton(() => LoginUser(sl<AuthRepositoryImpl>()));
   sl.registerLazySingleton(() => RegisterUser(sl<AuthRepositoryImpl>()));
   sl.registerLazySingleton(() => RefreshToken(sl<AuthRepositoryImpl>()));
   sl.registerLazySingleton(() => LogoutUser(sl<AuthRepositoryImpl>()));
   sl.registerLazySingleton(() => SocialLoginUseCase(sl<AuthRepositoryImpl>()));
 
-  /// User Usecases
+  // ── User usecases ──────────────────────────────────────────────────────────
   sl.registerLazySingleton(
     () => GetCurrentUserUsecase(sl<UserRepositoryImpl>()),
   );
@@ -198,8 +197,7 @@ Future<void> init() async {
     () => UpdateUserSettingUsecase(sl<UserRepositoryImpl>()),
   );
 
-  /// ── Notification Usecases ────────────────────────────────────
-
+  // ── Notification usecases ──────────────────────────────────────────────────
   sl.registerLazySingleton(
     () => RegisterPushTokenUsecase(sl<NotificationRepositoryImpl>()),
   );
@@ -216,49 +214,51 @@ Future<void> init() async {
     () => GetUnreadCountUsecase(sl<NotificationRepositoryImpl>()),
   );
 
-  /// Voice Usecases
+  // ── Voice usecases ─────────────────────────────────────────────────────────
   sl.registerLazySingleton(() => StartVoiceStream(sl<VoiceRepository>()));
   sl.registerLazySingleton(() => StopVoiceStream(sl<VoiceRepository>()));
   sl.registerLazySingleton(() => ListenVoiceStream(sl<VoiceRepository>()));
 
-  /// Receipt Usecases
+  // ── Receipt usecases ───────────────────────────────────────────────────────
   sl.registerLazySingleton(() => PickReceiptImage(sl<ReceiptRepository>()));
+  sl.registerLazySingleton(() => UploadReceipt(sl<ReceiptRepository>()));
+  sl.registerLazySingleton(() => ExtractReceiptText(sl<ReceiptRepository>()));
+  sl.registerLazySingleton(() => ProcessReceiptText(sl<ReceiptRepository>()));
 
-  /// Purchase Usecases
+  // ── Purchase usecases ──────────────────────────────────────────────────────
   sl.registerLazySingleton(() => CheckHasPurchasesUseCase(sl()));
   sl.registerLazySingleton(() => GetPurchasesUseCase(sl()));
   sl.registerLazySingleton(() => CreatePurchaseUseCase(sl()));
   sl.registerLazySingleton(() => UpdatePurchaseUseCase(sl()));
   sl.registerLazySingleton(() => DeletePurchaseUseCase(sl()));
   sl.registerLazySingleton(() => ExportPurchaseUseCase(sl()));
-
-  // Purchase Detail Usecases
   sl.registerLazySingleton(() => GetPurchaseDetailUseCase(sl()));
   sl.registerLazySingleton(() => CreatePurchaseItemUseCase(sl()));
   sl.registerLazySingleton(() => UpdatePurchaseItemUseCase(sl()));
   sl.registerLazySingleton(() => DeletePurchaseItemUseCase(sl()));
 
-  /// Insights Usecases
+  // ── Insights usecases ──────────────────────────────────────────────────────
   sl.registerLazySingleton(() => GetInsightsUseCase(sl()));
 
-  /// Upload Receipt Usecase
-  sl.registerLazySingleton(() => UploadReceipt(sl<ReceiptRepository>()));
-  sl.registerLazySingleton(
-    () => ExtractReceiptText(sl<ReceiptRepository>()),
-  ); // ← ML Kit OCR
-  sl.registerLazySingleton(
-    () => ProcessReceiptText(sl<ReceiptRepository>()),
-  ); // ← send text to BE
-
-  /// ── Subscription usecases ──────────────────────────────────────
+  // ── Subscription usecases ──────────────────────────────────────────────────
   sl.registerLazySingleton(() => GetSubscriptionUseCase(sl()));
   sl.registerLazySingleton(() => VerifySubscriptionUseCase(sl()));
   sl.registerLazySingleton(() => RestoreSubscriptionUseCase(sl()));
   sl.registerLazySingleton(() => CancelSubscriptionUseCase(sl()));
 
-  // ── Subscription cubit ─────────────────────────────────────────
-  // Registered as factory (not lazy singleton) because the screen
-  // creates a fresh cubit each time it opens.
+  // ── Per-screen cubits (factory = fresh instance every time) ───────────────
+
+  // VoiceCubit: factory so each recorder session gets its own clean state.
+  // The usecases are singletons but the cubit (and its subscriptions) are not.
+  sl.registerFactory(
+    () => VoiceCubit(
+      startVoiceStream: sl(),
+      stopVoiceStream: sl(),
+      listenVoiceStream: sl(),
+      repository: sl<VoiceRepository>(),
+    ),
+  );
+
   sl.registerFactory(
     () => SubscriptionCubit(
       getSubscription: sl(),
@@ -269,7 +269,6 @@ Future<void> init() async {
     ),
   );
 
-  // ── 6. CUBIT — registered as factory (fresh instance per screen) ──────────────
   sl.registerFactory(
     () => NotificationCubit(
       registerToken: sl(),

@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "936782351432",
-    "project_id": "electra-3b6eb",
-    "storage_bucket": "electra-3b6eb.firebasestorage.app"
+    "project_number": "738537854047",
+    "project_id": "minata-51ccd",
+    "storage_bucket": "minata-51ccd.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:936782351432:android:072bfc70737280fa6a5c7d",
+        "mobilesdk_app_id": "1:738537854047:android:75bf9ee2d10e44df8d37ea",
         "android_client_info": {
-          "package_name": "com.electra.app"
+          "package_name": "com.minata.app"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCUA_Va5GAi8TjFQljlOnmW6igBiHqfSac"
+          "current_key": "AIzaSyCTTpW4oAWRb2aSFZDw9ZFwXr8yBvlJQEI"
         }
       ],
       "services": {

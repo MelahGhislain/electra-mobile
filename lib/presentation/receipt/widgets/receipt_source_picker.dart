@@ -2,10 +2,9 @@ import 'dart:math' as math;
 
 import 'package:minata/common/widgets/bottom_sheets/app_bottom_sheet.dart';
 import 'package:minata/core/configs/fonts.dart';
-import 'package:minata/core/configs/theme/app_colors.dart';
 import 'package:minata/core/enums/image_source_enum.dart';
-import 'package:minata/presentation/receipt/bloc/receipt_cubit.dart';
-import 'package:minata/presentation/receipt/bloc/receipt_state.dart';
+import 'package:minata/presentation/receipt/bloc/receipt/receipt_cubit.dart';
+import 'package:minata/presentation/receipt/bloc/receipt/receipt_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -423,7 +422,7 @@ class _AiExtractionRingState extends State<_AiExtractionRing>
               turns: _rotateCtrl,
               child: AnimatedBuilder(
                 animation: _shimmer,
-                builder: (_, __) => CustomPaint(
+                builder: (_, _) => CustomPaint(
                   size: Size(size, size),
                   painter: _DoubleArcPainter(
                     colorA: background,
