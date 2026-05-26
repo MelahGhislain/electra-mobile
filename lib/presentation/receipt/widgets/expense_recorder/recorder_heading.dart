@@ -121,7 +121,7 @@ class RecorderHeading extends StatelessWidget {
             key: const ValueKey('transcript'),
             state.transcript,
             style: const TextStyle(
-              fontSize: AppFontSize.xxl,
+              fontSize: AppFontSize.md,
               fontWeight: FontWeight.w500,
               height: 1.35,
             ),

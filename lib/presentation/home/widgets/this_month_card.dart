@@ -108,7 +108,7 @@ class ThisMonthCard extends StatelessWidget {
                 Text(
                   '\$${summary.spentThisMonth.toStringAsFixed(2)}',
                   style: const TextStyle(
-                    fontSize: AppFontSize.xxxl,
+                    fontSize: AppFontSize.xxl,
                     fontWeight: FontWeight.w600,
                     letterSpacing: -1,
                   ),

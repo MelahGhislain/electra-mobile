@@ -107,7 +107,7 @@ class SpendingDetailHeroCard extends StatelessWidget {
                       const SizedBox(height: 3),
                       Text(
                         _formatDateTime(context, purchase.purchaseDate),
-                        style: const TextStyle(fontSize: AppFontSize.sm),
+                        style: const TextStyle(fontSize: AppFontSize.xs),
                       ),
                     ],
                   ),
@@ -120,7 +120,7 @@ class SpendingDetailHeroCard extends StatelessWidget {
                     Text(
                       '\$${purchase.totals.amount.toStringAsFixed(2)}',
                       style: TextStyle(
-                        fontSize: AppFontSize.xl,
+                        fontSize: AppFontSize.lg,
                         fontWeight: FontWeight.bold,
                         color: meta.color,
                         letterSpacing: -0.5,
@@ -133,7 +133,9 @@ class SpendingDetailHeroCard extends StatelessWidget {
           ),
 
           // Divider
-          Divider(height: 1, indent: 16, endIndent: 16),
+          Divider(height: 1, indent: 16, endIndent: 16, color: !isDark
+              ? meta.color.withValues(alpha: 0.15)
+              : meta.color.withValues(alpha: 0.25),),
 
           // Summary row: items | avg price | payment
           Padding(

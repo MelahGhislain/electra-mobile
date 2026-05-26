@@ -403,15 +403,6 @@ class _SpendingDetailContent extends StatelessWidget {
           // Items section reads from the cubit directly (see fix below)
           const SpendingDetailItemsSection(),
 
-          SpendingDetailSectionHeader(title: l.receipt),
-
-          SpendingDetailReceiptSection(
-            receipt: purchase.receipt,
-            onView: () {
-              final url = purchase.receipt?.imageUrl;
-              if (url != null) {}
-            },
-          ),
           const SizedBox(height: 50),
         ],
       ),

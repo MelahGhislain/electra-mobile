@@ -114,8 +114,8 @@ class SpendingListItem extends StatelessWidget {
                               Flexible(
                                 child: Container(
                                   padding: const EdgeInsets.symmetric(
-                                    horizontal: 6,
-                                    vertical: 2,
+                                    horizontal: 4,
+                                    vertical: 1,
                                   ),
                                   decoration: BoxDecoration(
                                     color: meta.color.withValues(alpha: 0.1),
@@ -126,8 +126,7 @@ class SpendingListItem extends StatelessWidget {
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
-                                      fontSize: AppFontSize.sm,
-                                      fontWeight: FontWeight.w600,
+                                      fontSize: AppFontSize.xxs,
                                       color: meta.color,
                                     ),
                                   ),
@@ -148,7 +147,7 @@ class SpendingListItem extends StatelessWidget {
                       Text(
                         '\$${purchase.totals.amount.toStringAsFixed(2)}',
                         style: const TextStyle(
-                          fontSize: AppFontSize.lg,
+                          fontSize: AppFontSize.md,
                           fontWeight: FontWeight.w700,
                           letterSpacing: -0.3,
                         ),
@@ -156,7 +155,7 @@ class SpendingListItem extends StatelessWidget {
                       const SizedBox(height: 2),
                       Text(
                         '${purchase.totals.itemCount} ${purchase.totals.itemCount == 1 ? l.item : l.items}',
-                        style: TextStyle(fontSize: AppFontSize.md),
+                        style: TextStyle(fontSize: AppFontSize.sm),
                       ),
                     ],
                   ),

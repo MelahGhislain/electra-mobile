@@ -23,7 +23,6 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
-  // ✅ Created once in initState — never recreated on rebuild
   late final AppAuthCubit _authCubit;
   late final ThemeCubit _themeCubit;
   late final LocaleCubit _localeCubit;
@@ -33,11 +32,9 @@ class _MainAppState extends State<MainApp> {
   void initState() {
     super.initState();
     _authCubit = sl<AppAuthCubit>();
-    _themeCubit = ThemeCubit(); // HydratedBloc restores persisted state
+    _themeCubit = ThemeCubit();
     _localeCubit = LocaleCubit();
-    _router = AppRouter.createRouter(
-      _authCubit,
-    ); // created once, never recreated
+    _router = AppRouter.createRouter(_authCubit);
   }
 
   @override
@@ -71,7 +68,7 @@ class _MainAppState extends State<MainApp> {
             processReceiptText: sl<ProcessReceiptText>(),
             purchaseCubit: sl<PurchaseCubit>(),
           ),
-        ), // Used both in recorder and home screens
+        ),
       ],
       child: BlocBuilder<LocaleCubit, Locale?>(
         builder: (context, locale) {
@@ -79,7 +76,7 @@ class _MainAppState extends State<MainApp> {
             builder: (context, themeMode) {
               return MaterialApp.router(
                 // ── Localization ─────────────────────────────────────
-                locale: locale, // null = follow device locale
+                locale: locale,
                 localizationsDelegates: const [
                   AppLocalizations.delegate,
                   GlobalMaterialLocalizations.delegate,
@@ -97,13 +94,30 @@ class _MainAppState extends State<MainApp> {
                   Locale('ko'),
                   Locale('ar'),
                 ],
-                // ── rest of your existing config ─────────────────────
-                title: 'Electra',
-                theme: AppTheme.lightTheme, // or let the system decide
+                title: 'Minata',
+                theme: AppTheme.lightTheme,
                 darkTheme: AppTheme.darkTheme,
-                themeMode: themeMode, // respects user's system setting
+                themeMode: themeMode,
                 routerConfig: _router,
                 debugShowCheckedModeBanner: false,
+
+                // ── Global text scale clamp ───────────────────────────
+                // Intercepts Flutter's text scaling before it reaches
+                // any Text widget. Respects user accessibility settings
+                // but caps at 1.3x so layouts never break.
+                // No widget changes needed — this applies globally.
+                builder: (context, child) {
+                  final mediaQuery = MediaQuery.of(context);
+                  return MediaQuery(
+                    data: mediaQuery.copyWith(
+                      textScaler: mediaQuery.textScaler.clamp(
+                        minScaleFactor: 1.0,
+                        maxScaleFactor: 1.3,
+                      ),
+                    ),
+                    child: child!,
+                  );
+                },
               );
             },
           );

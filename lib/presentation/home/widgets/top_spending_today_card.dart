@@ -124,15 +124,15 @@ class _TopSpendingTodayCardState extends State<TopSpendingTodayCard>
                           child: Row(
                             children: [
                               // Colored dot
-                              // Container(
-                              //   width: 10,
-                              //   height: 10,
-                              //   decoration: BoxDecoration(
-                              //     color: row.color,
-                              //     shape: BoxShape.circle,
-                              //   ),
-                              // ),
-                              // const SizedBox(width: 6),
+                              Container(
+                                width: 10,
+                                height: 10,
+                                decoration: BoxDecoration(
+                                  color: row.color,
+                                  shape: BoxShape.circle,
+                                ),
+                              ),
+                              const SizedBox(width: 6),
 
                               // Rounded-square icon
                               Container(
@@ -195,44 +195,6 @@ class _TopSpendingTodayCardState extends State<TopSpendingTodayCard>
                     }).toList(),
                   ),
                 ),
-
-                const SizedBox(width: 14),
-
-                // Donut chart
-                AnimatedBuilder(
-                  animation: _anim,
-                  builder: (_, _) => SizedBox(
-                    width: 105,
-                    height: 105,
-                    child: CustomPaint(
-                      painter: _DonutPainter(
-                        rows: widget.rows,
-                        total: total,
-                        progress: _anim.value,
-                        selected: _selected,
-                      ),
-                      child: Center(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              '\$${total.toStringAsFixed(2)}',
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontSize: AppFontSize.sm,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            Text(
-                              l.total,
-                              style: const TextStyle(fontSize: AppFontSize.xs),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
               ],
             ),
           ],
@@ -240,79 +202,6 @@ class _TopSpendingTodayCardState extends State<TopSpendingTodayCard>
       ),
     );
   }
-}
-
-// ─── Donut painter ────────────────────────────────────────────────────────────
-
-class _DonutPainter extends CustomPainter {
-  final List<RawSpendingRow> rows;
-  final double total;
-  final double progress;
-  final int? selected;
-
-  const _DonutPainter({
-    required this.rows,
-    required this.total,
-    required this.progress,
-    this.selected,
-  });
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final center = Offset(size.width / 2, size.height / 2);
-    final radius = size.width / 2;
-    const sw = 15.0;
-    const gap = 0.025;
-
-    // Background ring
-    canvas.drawCircle(
-      center,
-      radius - sw / 2,
-      Paint()
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = sw
-        ..color = const Color.fromARGB(134, 243, 244, 246),
-    );
-
-    final paint = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.butt;
-
-    double start = -math.pi / 2;
-    for (int i = 0; i < rows.length; i++) {
-      final fraction = rows[i].amount / total;
-      final sweep = (fraction * 2 * math.pi - gap) * progress;
-      if (sweep <= 0) {
-        start += fraction * 2 * math.pi * progress;
-        continue;
-      }
-
-      final isSel = selected == i;
-      paint
-        ..color = isSel
-            ? rows[i].color
-            : (selected != null
-                  ? rows[i].color.withValues(alpha: 0.3)
-                  : rows[i].color)
-        ..strokeWidth = isSel ? sw + 6 : sw;
-
-      final r = isSel ? radius - sw / 2 + 3 : radius - sw / 2;
-
-      canvas.drawArc(
-        Rect.fromCircle(center: center, radius: r),
-        start,
-        sweep,
-        false,
-        paint,
-      );
-
-      start += fraction * 2 * math.pi * progress + gap;
-    }
-  }
-
-  @override
-  bool shouldRepaint(_DonutPainter old) =>
-      old.progress != progress || old.selected != selected;
 }
 
 // ─── Data model for a single spending row ─────────────────────────────────────

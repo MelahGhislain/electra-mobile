@@ -1,4 +1,6 @@
 class AppFontSize {
+  static const double xxxs = 8.0;
+  static const double xxs = 10.0;
   static const double xs = 12.0;
   static const double sm = 14.0;
   static const double md = 16.0; // most common for body/buttons
