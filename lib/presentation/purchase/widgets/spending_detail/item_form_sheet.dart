@@ -169,7 +169,7 @@ class _ItemFormSheetBodyState extends State<_ItemFormSheetBody> {
                 text: _isEdit ? l.saveChanges : l.addItem,
                 onPressed: _submit,
                 width: double.infinity,
-                size: ButtonSize.small
+                size: ButtonSize.small,
               ),
             ],
           ),

@@ -50,5 +50,4 @@ class DefaultFirebaseOptions {
     storageBucket: 'minata-51ccd.firebasestorage.app',
     iosBundleId: 'com.minata.app',
   );
-
 }

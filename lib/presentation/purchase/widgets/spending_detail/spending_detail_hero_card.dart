@@ -133,9 +133,14 @@ class SpendingDetailHeroCard extends StatelessWidget {
           ),
 
           // Divider
-          Divider(height: 1, indent: 16, endIndent: 16, color: !isDark
-              ? meta.color.withValues(alpha: 0.15)
-              : meta.color.withValues(alpha: 0.25),),
+          Divider(
+            height: 1,
+            indent: 16,
+            endIndent: 16,
+            color: !isDark
+                ? meta.color.withValues(alpha: 0.15)
+                : meta.color.withValues(alpha: 0.25),
+          ),
 
           // Summary row: items | avg price | payment
           Padding(

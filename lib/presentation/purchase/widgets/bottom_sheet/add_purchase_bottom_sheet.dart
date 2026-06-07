@@ -62,9 +62,7 @@ class _AddPurchaseBodyState extends State<_AddPurchaseBody> {
     _selectedCategory = p?.categorySummary.isNotEmpty == true
         ? CategoryMeta.fromKey(p!.categorySummary.first.name.toLowerCase())
         : CategoryMeta.fromKey('other');
-    _paymentMethod = p != null
-        ? _getPaymentMethod(p.payment.method)
-        : 'Other';
+    _paymentMethod = p != null ? _getPaymentMethod(p.payment.method) : 'Other';
   }
 
   @override
@@ -222,7 +220,6 @@ class _AddPurchaseBodyState extends State<_AddPurchaseBody> {
                 //   selected: _selectedCategory,
                 //   onTap: _pickCategory,
                 // ),
-
                 const SizedBox(height: 16),
 
                 ChipSelector<String>(
@@ -261,7 +258,6 @@ class _AddPurchaseBodyState extends State<_AddPurchaseBody> {
                 //     ),
                 //   ],
                 // ),
-
                 const SizedBox(height: 28),
 
                 MainButton(

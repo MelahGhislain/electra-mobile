@@ -64,7 +64,7 @@ class _MicButtonState extends State<MicButton>
   Widget build(BuildContext context) {
     return BlocBuilder<VoiceCubit, VoiceState>(
       builder: (context, state) {
-        final isListening  = state.isListening;
+        final isListening = state.isListening;
         final isProcessing = state.isProcessing;
         final isDoneOrError = state.isDone || state.isError;
 
@@ -98,9 +98,7 @@ class _MicButtonState extends State<MicButton>
                     height: 52,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: isListening
-                          ? AppColors.darkSurface
-                          : Colors.white,
+                      color: isListening ? AppColors.darkSurface : Colors.white,
                       boxShadow: [
                         BoxShadow(
                           color: AppColors.darkSurface.withValues(
@@ -130,8 +128,8 @@ class _MicButtonState extends State<MicButton>
                             isDoneOrError
                                 ? Icons.refresh_rounded
                                 : isListening
-                                    ? Icons.stop_rounded
-                                    : Icons.mic_rounded,
+                                ? Icons.stop_rounded
+                                : Icons.mic_rounded,
                             color: isListening
                                 ? Colors.white
                                 : AppColors.darkSurface,

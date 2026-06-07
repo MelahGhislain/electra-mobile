@@ -7,10 +7,15 @@ import 'package:flutter/widgets.dart';
 class AuthInterceptor extends Interceptor {
   final AuthStorage storage;
   final Dio dio;
+  final Future<void> Function() onForceLogout;
 
   bool _isRefreshing = false;
 
-  AuthInterceptor({required this.storage, required this.dio});
+  AuthInterceptor({
+    required this.storage,
+    required this.dio,
+    required this.onForceLogout,
+  });
 
   @override
   void onRequest(
@@ -29,6 +34,14 @@ class AuthInterceptor extends Interceptor {
   void onError(DioException err, ErrorInterceptorHandler handler) async {
     debugPrint('🔴 onError fired: ${err.response?.statusCode}');
     final status = err.response?.statusCode;
+
+    // 🔥 If the refresh call itself failed with 400 → token is dead, force logout
+    if (err.requestOptions.path.contains(ApiEndpoints.refresh)) {
+      await storage.clearTokens();
+      await onForceLogout();
+      return handler.next(err);
+    }
+
     final isAuthError =
         status == 401 ||
         (status == 400 && _isMissingAuthHeaderFromResponse(err.response));
@@ -60,6 +73,7 @@ class AuthInterceptor extends Interceptor {
     final refreshToken = await storage.refreshToken;
     if (refreshToken == null || refreshToken.isEmpty) {
       await storage.clearTokens();
+      await onForceLogout();
       return onReject(
         DioException(
           requestOptions: requestOptions,
@@ -85,6 +99,7 @@ class AuthInterceptor extends Interceptor {
       final body = refreshResponse.data as Map<String, dynamic>;
       if (body['success'] != true) {
         await storage.clearTokens();
+        await onForceLogout();
         return onReject(
           DioException(
             requestOptions: requestOptions,
@@ -108,6 +123,7 @@ class AuthInterceptor extends Interceptor {
       return onResolve(cloned);
     } catch (e) {
       await storage.clearTokens();
+      await onForceLogout();
       return onReject(
         DioException(
           requestOptions: requestOptions,

@@ -43,8 +43,9 @@ class VoiceStreamService {
 
   Future<void> _initWebSocket() async {
     // Append token as query param — the BE wsAuthGuard reads request.query.token
-    final uri = Uri.parse('${Env.webSocketUrl}${ApiEndpoints.voiceStream}')
-        .replace(queryParameters: {'token': token});
+    final uri = Uri.parse(
+      '${Env.webSocketUrl}${ApiEndpoints.voiceStream}',
+    ).replace(queryParameters: {'token': token});
 
     _channel = WebSocketChannel.connect(uri);
 
@@ -63,10 +64,12 @@ class VoiceStreamService {
       onError: (error) {
         debugPrint('Socket error: $error');
         if (!_textController.isClosed) {
-          _textController.add(jsonEncode({
-            'type': 'ERROR',
-            'payload': {'message': error.toString(), 'code': 'SOCKET_ERROR'},
-          }));
+          _textController.add(
+            jsonEncode({
+              'type': 'ERROR',
+              'payload': {'message': error.toString(), 'code': 'SOCKET_ERROR'},
+            }),
+          );
         }
       },
       onDone: () => debugPrint('Socket closed'),
@@ -106,13 +109,15 @@ class VoiceStreamService {
         );
         // Emit an error to the text stream so the cubit can surface it in the UI.
         if (!_textController.isClosed) {
-          _textController.add(jsonEncode({
-            'type': 'ERROR',
-            'payload': {
-              'message': 'Microphone stream closed unexpectedly',
-              'code': 'MIC_STREAM_ENDED',
-            },
-          }));
+          _textController.add(
+            jsonEncode({
+              'type': 'ERROR',
+              'payload': {
+                'message': 'Microphone stream closed unexpectedly',
+                'code': 'MIC_STREAM_ENDED',
+              },
+            }),
+          );
         }
       },
     );

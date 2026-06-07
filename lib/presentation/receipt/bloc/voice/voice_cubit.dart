@@ -32,10 +32,12 @@ class VoiceCubit extends Cubit<VoiceState> {
   Future<void> startListening() async {
     final granted = await _ensureMicrophonePermission();
     if (!granted) {
-      emit(state.copyWith(
-        status: VoiceStatus.error,
-        error: 'Microphone permission denied',
-      ));
+      emit(
+        state.copyWith(
+          status: VoiceStatus.error,
+          error: 'Microphone permission denied',
+        ),
+      );
       return;
     }
 
@@ -70,18 +72,19 @@ class VoiceCubit extends Cubit<VoiceState> {
     _sub = listenVoiceStream().listen(
       _handleServerMessage,
       onError: (_) {
-        emit(state.copyWith(
-          status: VoiceStatus.error,
-          error: 'Connection error',
-        ));
+        emit(
+          state.copyWith(status: VoiceStatus.error, error: 'Connection error'),
+        );
         _cancelSub();
       },
       onDone: () {
         if (state.isProcessing || state.isListening) {
-          emit(state.copyWith(
-            status: VoiceStatus.error,
-            error: 'Connection closed unexpectedly',
-          ));
+          emit(
+            state.copyWith(
+              status: VoiceStatus.error,
+              error: 'Connection closed unexpectedly',
+            ),
+          );
         }
       },
     );
@@ -130,7 +133,8 @@ class VoiceCubit extends Cubit<VoiceState> {
         break;
 
       case 'ERROR':
-        final message = payload?['message'] as String? ?? 'Something went wrong';
+        final message =
+            payload?['message'] as String? ?? 'Something went wrong';
         emit(state.copyWith(status: VoiceStatus.error, error: message));
         _closeConnection();
         break;

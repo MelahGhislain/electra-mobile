@@ -17,8 +17,16 @@ Failure mapDioError(DioException e) {
       if (statusCode == 401) return const UnauthorisedFailure();
 
       // Fastify missing-auth header comes back as 400
-      if (statusCode == 400 && _isMissingAuth(e.response)) {
-        return const UnauthorisedFailure();
+      if (statusCode == 400) {
+        // Fastify missing-auth header
+        if (_isMissingAuth(e.response)) return const UnauthorisedFailure();
+
+        // 🔥 Expired/invalid refresh token from our BE
+        final body = e.response?.data as Map<String, dynamic>?;
+        final msg = body?['error']?['message'] as String? ?? '';
+        if (msg.toLowerCase().contains('refresh')) {
+          return const UnauthorisedFailure();
+        }
       }
 
       // All other server errors — parse the body

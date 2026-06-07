@@ -80,6 +80,16 @@ Future<void> init() async {
   sl.registerLazySingleton(() => SecureStorage());
   sl.registerLazySingleton(() => AuthStorage(sl<SecureStorage>()));
 
+  // ── Global auth cubit ──────────────────────────────────────────────────────
+  sl.registerLazySingleton(
+    () => AppAuthCubit(
+      sl<AuthStorage>(),
+      sl<AuthRepositoryImpl>(),
+      sl<FcmService>(),
+      sl<RemovePushTokenUsecase>(),
+    ),
+  );
+
   // ── Shared cubits (singleton — live for the app lifetime) ─────────────────
   sl.registerLazySingleton(
     () => PurchaseCubit(
@@ -97,16 +107,6 @@ Future<void> init() async {
       updateItem: sl(),
       deleteItem: sl(),
       purchaseCubit: sl<PurchaseCubit>(),
-    ),
-  );
-
-  // ── Global auth cubit ──────────────────────────────────────────────────────
-  sl.registerLazySingleton(
-    () => AppAuthCubit(
-      sl<AuthStorage>(),
-      sl<AuthRepositoryImpl>(),
-      sl<FcmService>(),
-      sl<RemovePushTokenUsecase>(),
     ),
   );
 
@@ -174,7 +174,11 @@ Future<void> init() async {
 
   // ── Interceptors ──────────────────────────────────────────────────────────
   dioClient.addAuthInterceptor(
-    AuthInterceptor(storage: sl<AuthStorage>(), dio: sl<Dio>()),
+    AuthInterceptor(
+      storage: sl<AuthStorage>(),
+      dio: sl<Dio>(),
+      onForceLogout: () => sl<AppAuthCubit>().onLogout(),
+    ),
   );
   sl.registerLazySingleton(
     () => FcmService(registerToken: sl<RegisterPushTokenUsecase>()),

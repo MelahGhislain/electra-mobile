@@ -90,7 +90,9 @@ class HomeHeader extends StatelessWidget {
                         final user = cubit.currentUser;
                         return CircleAvatar(
                           radius: 22,
-                          backgroundImage: user?.picture != null && user?.picture?.isNotEmpty == true
+                          backgroundImage:
+                              user?.picture != null &&
+                                  user?.picture?.isNotEmpty == true
                               ? NetworkImage(user!.picture!)
                               : const AssetImage(AppImages.defaultAvatar),
                           backgroundColor: Theme.of(

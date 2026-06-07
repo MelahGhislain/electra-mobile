@@ -112,7 +112,11 @@ class RecorderHeading extends StatelessWidget {
     );
   }
 
-  Widget _buildContent(BuildContext context, ThemeData theme, VoiceState state) {
+  Widget _buildContent(
+    BuildContext context,
+    ThemeData theme,
+    VoiceState state,
+  ) {
     switch (state.status) {
       // ── Live transcript while listening ─────────────────────────────────
       case VoiceStatus.listening:

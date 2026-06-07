@@ -198,18 +198,14 @@ class _CategoryChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+      padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 1),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.10),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(5),
       ),
       child: Text(
         label,
-        style: TextStyle(
-          fontSize: AppFontSize.xs,
-          fontWeight: FontWeight.w600,
-          color: color,
-        ),
+        style: TextStyle(fontSize: AppFontSize.xxs, color: color),
       ),
     );
   }
