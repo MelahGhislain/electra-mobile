@@ -418,5 +418,24 @@
   "snapPhotoOfReceipt": "Snap a photo of your receipt",
   "all": "All",
   "categories": "Categories",
-  "merchants": "Merchants"
+  "merchants": "Merchants",
+
+  "budget": "Budget",
+  "dailyAverage": "Daily average",
+  "financialHealthReport": "Financial Health Report",
+  "financialHealthScore": "Financial health score",
+  "generatedAt": "Generated at",
+  "noOpportunity": "No opportunity found",
+  "ofTotalSpend": "of total spend",
+  "perDay": "per day",
+  "perYear": "per year",
+  "periodSummary": "Period Summary",
+  "potentialSavings": "Potential savings",
+  "recommendationsForYou": "Recommendations for you",
+  "topCategory": "Top category",
+  "totalSpent": "Total spent",
+  "viewFullReport": "View full report",
+  "vsLastPeriod": "vs last period",
+  "vsPreviousPeriod": "vs previous period",
+  "youSpentTheMostOn": "You spent the most on"
 }

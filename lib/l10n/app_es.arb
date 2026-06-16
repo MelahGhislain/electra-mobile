@@ -390,5 +390,24 @@
   "snapPhotoOfReceipt": "Tomar una foto de tu recibo",
   "all": "Todos",
   "categories": "Categorías",
-  "merchants": "Comerciantes"
+  "merchants": "Comerciantes",
+
+  "budget": "Presupuesto",
+  "dailyAverage": "Promedio diario",
+  "financialHealthReport": "Informe de salud financiera",
+  "financialHealthScore": "Puntuación de salud financiera",
+  "generatedAt": "Generado el",
+  "noOpportunity": "No se encontró oportunidad",
+  "ofTotalSpend": "de gasto total",
+  "perDay": "por día",
+  "perYear": "por año",
+  "periodSummary": "Resumen del período",
+  "potentialSavings": "Ahorros potenciales",
+  "recommendationsForYou": "Recomendaciones para ti",
+  "topCategory": "Categoría principal",
+  "totalSpent": "Gasto total",
+  "viewFullReport": "Ver informe completo",
+  "vsLastPeriod": "vs período anterior",
+  "vsPreviousPeriod": "vs período anterior",
+  "youSpentTheMostOn": "Gastaste más en"
 }

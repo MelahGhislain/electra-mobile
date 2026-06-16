@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:minata/core/configs/fonts.dart';
 import 'package:minata/core/configs/theme/app_colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:minata/presentation/settings/widgets/bottom_sheets/currency_bottom_sheet.dart';
 
 class HomeSetupCard extends StatefulWidget {
   const HomeSetupCard({super.key});
@@ -37,9 +38,59 @@ class _HomeSetupCardState extends State<HomeSetupCard> {
   /// Setup is complete when BOTH budget and notifications are configured.
   bool _isSetupComplete(UserSettings? settings) {
     final hasBudget = (settings?.monthlyBudget ?? 0) > 0;
+    final hasCurrency = settings?.currency != null;
     final hasNotifications = settings?.pushNotification == true;
-    return hasBudget && hasNotifications;
+    return hasBudget && hasCurrency && hasNotifications;
   }
+
+  //   String _currencyLabel(UserSettings? settings) {
+  //   if (settings == null) return 'USD';
+  //   try {
+  //     final match = AppCurrency.values.firstWhere(
+  //       (c) => c.code.toLowerCase() == settings.currency.toLowerCase(),
+  //       orElse: () => AppCurrency.usd,
+  //     );
+  //     return match.code;
+  //   } catch (_) {
+  //     return settings.currency.toUpperCase();
+  //   }
+  // }
+
+  String _currencyLabel(UserSettings? settings) {
+    return settings?.currency.toUpperCase() ?? 'USD';
+  }
+
+  // Future<void> _openCurrencySheet(User user) async {
+  //   AppCurrency current = AppCurrency.usd;
+  //   try {
+  //     current = AppCurrency.values.firstWhere(
+  //       (c) =>
+  //           c.code.toLowerCase() ==
+  //           (user.settings?.currency ?? '').toLowerCase(),
+  //       orElse: () => AppCurrency.usd,
+  //     );
+  //   } catch (_) {}
+  //   final result = await CurrencyBottomSheet.show(context, current);
+  //   if (result != null && mounted) {
+  //     await context.read<UserCubit>().updateUserSetting(user.id, {
+  //       'currency': result.code,
+  //     });
+  //   }
+  // }
+
+  Future<void> _openCurrencySheet(User user) async {
+    final result = await CurrencyBottomSheet.show(
+      context,
+      currentCode: user.settings?.currency,
+    );
+    if (result != null && mounted) {
+      await context.read<UserCubit>().updateUserSetting(user.id, {
+        'currency': result.code,
+      });
+    }
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -140,6 +191,18 @@ class _HomeSetupCardState extends State<HomeSetupCard> {
                     const SizedBox(height: 12),
 
                     _SetupItem(
+                      icon: Icons.attach_money_rounded,
+                      color: (settings?.currency != null) ? AppColors.primary : theme.iconTheme.color!,
+                      title: l.settingsCurrency,
+                      subtitle: _currencyLabel(settings),
+                      onTap: user != null
+                          ? () => _openCurrencySheet(user)
+                          : null,
+                    ),
+
+                    const SizedBox(height: 12),
+
+                    _SetupItem(
                       icon: Icons.notifications_none_outlined,
                       color: (settings?.pushNotification == true)
                           ? AppColors.accent
@@ -155,27 +218,27 @@ class _HomeSetupCardState extends State<HomeSetupCard> {
                     const SizedBox(height: 16),
 
                     // ── Skip ────────────────────────────────────────
-                    Center(
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(8),
-                        onTap: () =>
-                            context.read<HomeCubit>().skipSetup(user!.id),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 4,
-                          ),
-                          child: Text(
-                            l.skipForNow,
-                            style: TextStyle(
-                              fontSize: AppFontSize.md,
-                              color: AppColors.primary,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                    // Center(
+                    //   child: InkWell(
+                    //     borderRadius: BorderRadius.circular(8),
+                    //     onTap: () =>
+                    //         context.read<HomeCubit>().skipSetup(user!.id),
+                    //     child: Padding(
+                    //       padding: EdgeInsets.symmetric(
+                    //         horizontal: 8,
+                    //         vertical: 4,
+                    //       ),
+                    //       child: Text(
+                    //         l.skipForNow,
+                    //         style: TextStyle(
+                    //           fontSize: AppFontSize.md,
+                    //           color: AppColors.primary,
+                    //           fontWeight: FontWeight.w500,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
 
                     const SizedBox(height: 4),
 

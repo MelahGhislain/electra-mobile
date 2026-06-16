@@ -1,3 +1,4 @@
+import 'package:minata/common/blocs/currency/currency_formatter_scope.dart';
 import 'package:minata/common/helpers/average.dart';
 import 'package:minata/common/widgets/bottom_sheets/app_bottom_sheet.dart';
 import 'package:minata/core/configs/fonts.dart';
@@ -353,6 +354,7 @@ class _GroupView extends StatelessWidget {
   Widget build(BuildContext context) {
     final total = purchase.totals.amount;
     final l = AppLocalizations.of(context);
+    final fmt = CurrencyFormatterScope.of(context);
 
     final Map<String, List<PurchaseItem>> grouped = {};
     for (final item in purchase.activeItems) {
@@ -424,7 +426,7 @@ class _GroupView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          '\$${catTotal.toStringAsFixed(2)}',
+                          fmt.format(catTotal),
                           style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w700,
@@ -489,7 +491,7 @@ class _GroupView extends StatelessWidget {
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            '\$${item.totalPrice.toStringAsFixed(2)}',
+                            fmt.format(item.totalPrice),
                             style: const TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w600,

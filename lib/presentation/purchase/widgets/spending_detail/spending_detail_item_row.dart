@@ -1,3 +1,4 @@
+import 'package:minata/common/blocs/currency/currency_formatter_scope.dart';
 import 'package:minata/common/widgets/bottom_sheets/app_bottom_sheet.dart';
 import 'package:minata/core/configs/fonts.dart';
 import 'package:minata/domain/entities/purchase/purchase_item.dart';
@@ -102,6 +103,7 @@ class SpendingDetailItemRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
+    final fmt = CurrencyFormatterScope.of(context);
 
     final meta = CategoryMeta.fromKey(item.category.normalizedName);
     final pct = _percentOfTotal;
@@ -172,7 +174,7 @@ class SpendingDetailItemRow extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        '${item.quantity} × \$${item.unitPrice.toStringAsFixed(2)}',
+                        '${item.quantity} × ${fmt.format(item.unitPrice)}',
                         style: const TextStyle(fontSize: AppFontSize.xs),
                       ),
                     ],
@@ -183,7 +185,7 @@ class SpendingDetailItemRow extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      '\$${item.totalPrice.toStringAsFixed(2)}',
+                      fmt.format(item.totalPrice),
                       style: const TextStyle(
                         fontSize: AppFontSize.md,
                         fontWeight: FontWeight.w800,

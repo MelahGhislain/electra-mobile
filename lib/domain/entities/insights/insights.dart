@@ -24,14 +24,7 @@ class InsightsMeta extends Equatable {
   });
 
   @override
-  List<Object?> get props => [
-    label,
-    period,
-    from,
-    to,
-    previousFrom,
-    previousTo,
-  ];
+  List<Object?> get props => [label, period, from, to, previousFrom, previousTo];
 }
 
 // ── Totals ────────────────────────────────────────────────────────────────────
@@ -56,14 +49,8 @@ class SpendingTotals extends Equatable {
   });
 
   @override
-  List<Object?> get props => [
-    amount,
-    currency,
-    delta,
-    deltaPercent,
-    trend,
-    previousAmount,
-  ];
+  List<Object?> get props =>
+      [amount, currency, delta, deltaPercent, trend, previousAmount];
 }
 
 // ── Budget ────────────────────────────────────────────────────────────────────
@@ -86,14 +73,8 @@ class BudgetStatus extends Equatable {
   });
 
   @override
-  List<Object?> get props => [
-    monthlyBudget,
-    currency,
-    spent,
-    remaining,
-    progressPercent,
-    isOnTrack,
-  ];
+  List<Object?> get props =>
+      [monthlyBudget, currency, spent, remaining, progressPercent, isOnTrack];
 }
 
 // ── Category breakdown ────────────────────────────────────────────────────────
@@ -118,15 +99,8 @@ class CategoryBreakdown extends Equatable {
   });
 
   @override
-  List<Object?> get props => [
-    name,
-    normalizedName,
-    color,
-    amount,
-    currency,
-    percent,
-    count,
-  ];
+  List<Object?> get props =>
+      [name, normalizedName, color, amount, currency, percent, count];
 }
 
 // ── Key Insight ───────────────────────────────────────────────────────────────
@@ -153,15 +127,8 @@ class KeyInsight extends Equatable {
   });
 
   @override
-  List<Object?> get props => [
-    type,
-    leadingText,
-    value,
-    tailingText,
-    trend,
-    numericValue,
-    date,
-  ];
+  List<Object?> get props =>
+      [type, leadingText, value, tailingText, trend, numericValue, date];
 }
 
 // ── Trend ─────────────────────────────────────────────────────────────────────
@@ -256,13 +223,85 @@ class SavingsOpportunity extends Equatable {
 
   @override
   List<Object?> get props => [
-    categoryName,
-    currentAmount,
-    suggestedReduction,
-    projectedAnnualSavings,
-    currency,
-    message,
-  ];
+        categoryName,
+        currentAmount,
+        suggestedReduction,
+        projectedAnnualSavings,
+        currency,
+        message,
+      ];
+}
+
+// ── NEW: Top spending day ─────────────────────────────────────────────────────
+
+class TopSpendingDay extends Equatable {
+  final String date;       // "2026-05-21"
+  final String dayLabel;   // "May 21, 2026"
+  final double amount;
+  final String currency;
+  final int transactionCount;
+
+  const TopSpendingDay({
+    required this.date,
+    required this.dayLabel,
+    required this.amount,
+    required this.currency,
+    required this.transactionCount,
+  });
+
+  @override
+  List<Object?> get props => [date, dayLabel, amount, currency, transactionCount];
+}
+
+// ── NEW: AI enrichment (premium only — null for free users) ──────────────────
+
+class HealthScore extends Equatable {
+  final int score;          // 0-100
+  final String label;       // "Good" | "Fair" | "Excellent" | "Needs attention"
+  final List<String> highlights;
+
+  const HealthScore({
+    required this.score,
+    required this.label,
+    required this.highlights,
+  });
+
+  @override
+  List<Object?> get props => [score, label, highlights];
+}
+
+class Recommendation extends Equatable {
+  final String title;
+  final String description;
+  final String icon;           // category normalizedName for icon lookup
+  final double? potentialSavings;
+  final String? currency;
+
+  const Recommendation({
+    required this.title,
+    required this.description,
+    required this.icon,
+    this.potentialSavings,
+    this.currency,
+  });
+
+  @override
+  List<Object?> get props => [title, description, icon, potentialSavings, currency];
+}
+
+class AiEnrichment extends Equatable {
+  final HealthScore healthScore;
+  final List<Recommendation> recommendations;
+  final DateTime generatedAt;
+
+  const AiEnrichment({
+    required this.healthScore,
+    required this.recommendations,
+    required this.generatedAt,
+  });
+
+  @override
+  List<Object?> get props => [healthScore, recommendations, generatedAt];
 }
 
 // ── Root entity ───────────────────────────────────────────────────────────────
@@ -277,6 +316,9 @@ class SpendingInsights extends Equatable {
   final List<PaymentMethodBreakdown> paymentMethods;
   final List<MerchantBreakdown> topMerchants;
   final SavingsOpportunity? savingsOpportunity;
+  final List<TopSpendingDay> topSpendingDays; // new
+  final AiEnrichment? aiEnrichment;           // new — null for free users
+  final bool isPremium;                        // new
 
   const SpendingInsights({
     required this.meta,
@@ -288,18 +330,24 @@ class SpendingInsights extends Equatable {
     required this.paymentMethods,
     required this.topMerchants,
     this.savingsOpportunity,
+    required this.topSpendingDays,
+    this.aiEnrichment,
+    required this.isPremium,
   });
 
   @override
   List<Object?> get props => [
-    meta,
-    totals,
-    budget,
-    categoryBreakdown,
-    keyInsights,
-    trend,
-    paymentMethods,
-    topMerchants,
-    savingsOpportunity,
-  ];
+        meta,
+        totals,
+        budget,
+        categoryBreakdown,
+        keyInsights,
+        trend,
+        paymentMethods,
+        topMerchants,
+        savingsOpportunity,
+        topSpendingDays,
+        aiEnrichment,
+        isPremium,
+      ];
 }

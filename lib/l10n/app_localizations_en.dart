@@ -926,4 +926,58 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get merchants => 'Merchants';
+
+  @override
+  String get budget => 'Budget';
+
+  @override
+  String get dailyAverage => 'Daily average';
+
+  @override
+  String get financialHealthReport => 'Financial Health Report';
+
+  @override
+  String get financialHealthScore => 'Financial health score';
+
+  @override
+  String get generatedAt => 'Generated at';
+
+  @override
+  String get noOpportunity => 'No opportunity found';
+
+  @override
+  String get ofTotalSpend => 'of total spend';
+
+  @override
+  String get perDay => 'per day';
+
+  @override
+  String get perYear => 'per year';
+
+  @override
+  String get periodSummary => 'Period Summary';
+
+  @override
+  String get potentialSavings => 'Potential savings';
+
+  @override
+  String get recommendationsForYou => 'Recommendations for you';
+
+  @override
+  String get topCategory => 'Top category';
+
+  @override
+  String get totalSpent => 'Total spent';
+
+  @override
+  String get viewFullReport => 'View full report';
+
+  @override
+  String get vsLastPeriod => 'vs last period';
+
+  @override
+  String get vsPreviousPeriod => 'vs previous period';
+
+  @override
+  String get youSpentTheMostOn => 'You spent the most on';
 }

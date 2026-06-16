@@ -934,4 +934,58 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get merchants => 'Marchands';
+
+  @override
+  String get budget => 'Budget';
+
+  @override
+  String get dailyAverage => 'Moyenne quotidienne';
+
+  @override
+  String get financialHealthReport => 'Rapport de santé financière';
+
+  @override
+  String get financialHealthScore => 'Score de santé financière';
+
+  @override
+  String get generatedAt => 'Généré le';
+
+  @override
+  String get noOpportunity => 'Aucune opportunité trouvée';
+
+  @override
+  String get ofTotalSpend => 'de dépenses totales';
+
+  @override
+  String get perDay => 'par jour';
+
+  @override
+  String get perYear => 'par an';
+
+  @override
+  String get periodSummary => 'Résumé de la période';
+
+  @override
+  String get potentialSavings => 'Économies potentielles';
+
+  @override
+  String get recommendationsForYou => 'Recommandations pour vous';
+
+  @override
+  String get topCategory => 'Catégorie principale';
+
+  @override
+  String get totalSpent => 'Dépenses totales';
+
+  @override
+  String get viewFullReport => 'Voir le rapport complet';
+
+  @override
+  String get vsLastPeriod => 'vs période précédente';
+
+  @override
+  String get vsPreviousPeriod => 'vs période précédente';
+
+  @override
+  String get youSpentTheMostOn => 'Vous avez dépensé le plus sur';
 }

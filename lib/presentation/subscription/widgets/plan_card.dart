@@ -1,3 +1,4 @@
+import 'package:minata/common/blocs/currency/currency_formatter_scope.dart';
 import 'package:minata/common/widgets/buttons/main_button.dart';
 import 'package:minata/core/configs/fonts.dart';
 import 'package:minata/core/configs/theme/app_colors.dart';
@@ -47,6 +48,7 @@ class PlanCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
+    final fmt = CurrencyFormatterScope.of(context);
 
     return Container(
       decoration: BoxDecoration(
@@ -114,7 +116,7 @@ class PlanCard extends StatelessWidget {
                           // Strikethrough original price — anchoring
                           if (isAnnual)
                             Text(
-                              '\$${monthlyPrice.toStringAsFixed(2)}/month',
+                              '${fmt.format(monthlyPrice)}/month',
                               style: TextStyle(
                                 fontSize: AppFontSize.xs,
                                 fontWeight: FontWeight.w500,

@@ -1,3 +1,4 @@
+import 'package:minata/common/blocs/currency/currency_formatter_scope.dart';
 import 'package:minata/common/widgets/bottom_sheets/app_bottom_sheet.dart';
 import 'package:minata/common/widgets/buttons/main_button.dart';
 import 'package:minata/common/widgets/dialogs/app_confirm_dialog.dart';
@@ -199,6 +200,7 @@ class _PricingRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
+    final fmt = CurrencyFormatterScope.of(context);
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -210,7 +212,7 @@ class _PricingRow extends StatelessWidget {
             controller: unitPriceCtrl,
             hint: '0.00',
             label: l.unitPrice,
-            prefixText: '\$ ',
+            prefixText: fmt.symbol,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             inputFormatters: [
               FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,2}')),
@@ -266,7 +268,7 @@ class _PricingRow extends StatelessWidget {
                 decoration: BoxDecoration(),
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  '\$${total.toStringAsFixed(2)}',
+                  fmt.format(total),
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w700,

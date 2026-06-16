@@ -906,4 +906,58 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get merchants => '商家';
+
+  @override
+  String get budget => '预算';
+
+  @override
+  String get dailyAverage => '日均';
+
+  @override
+  String get financialHealthReport => '财务健康报告';
+
+  @override
+  String get financialHealthScore => '财务健康评分';
+
+  @override
+  String get generatedAt => '生成于';
+
+  @override
+  String get noOpportunity => '未找到机会';
+
+  @override
+  String get ofTotalSpend => '总支出的';
+
+  @override
+  String get perDay => '每天';
+
+  @override
+  String get perYear => '每年';
+
+  @override
+  String get periodSummary => '期间摘要';
+
+  @override
+  String get potentialSavings => '潜在节省';
+
+  @override
+  String get recommendationsForYou => '为您推荐';
+
+  @override
+  String get topCategory => '顶级分类';
+
+  @override
+  String get totalSpent => '总支出';
+
+  @override
+  String get viewFullReport => '查看完整报告';
+
+  @override
+  String get vsLastPeriod => 'vs 上期';
+
+  @override
+  String get vsPreviousPeriod => 'vs 上期';
+
+  @override
+  String get youSpentTheMostOn => '您在以下方面花费最多';
 }

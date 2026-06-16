@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:minata/common/blocs/currency/currency_formatter_scope.dart';
 
 /// Hardcoded saving goal card matching the design exactly.
 /// Replace with dynamic data when ready.
@@ -16,6 +17,8 @@ class SavingGoalCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final fmt = CurrencyFormatterScope.of(context);
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 32),
       child: GestureDetector(
@@ -105,7 +108,7 @@ class SavingGoalCard extends StatelessWidget {
                           text: TextSpan(
                             children: [
                               TextSpan(
-                                text: '\$${_current.toStringAsFixed(2)}',
+                                text: fmt.format(_current),
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w800,
@@ -113,7 +116,7 @@ class SavingGoalCard extends StatelessWidget {
                                 ),
                               ),
                               TextSpan(
-                                text: ' /\$${_target.toStringAsFixed(2)}',
+                                text: ' /${fmt.format(_target)}',
                                 style: TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w400,

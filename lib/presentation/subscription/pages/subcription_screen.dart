@@ -1,3 +1,4 @@
+import 'package:minata/common/blocs/currency/currency_formatter_scope.dart';
 import 'package:minata/common/widgets/buttons/main_icon_button.dart';
 import 'package:minata/core/configs/fonts.dart';
 import 'package:minata/presentation/settings/blocs/user_cubit.dart';
@@ -57,6 +58,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
         builder: (context, state) {
           final isLoading = state is SubscriptionLoading;
           final isPurchasing = state is SubscriptionPurchasing;
+          final fmt = CurrencyFormatterScope.of(context);
 
           // Resolve product from loaded state
           ProductDetails? product;
@@ -72,7 +74,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
 
           // Price from store or sensible fallback
           final priceString =
-              product?.price ?? (_isAnnual ? '\$4.99' : '\$9.99');
+              product?.price ?? (_isAnnual ? fmt.format(4.99) : fmt.format(9.99));
 
           return Scaffold(
             appBar: AppBar(

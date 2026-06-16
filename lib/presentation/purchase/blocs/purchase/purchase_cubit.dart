@@ -33,8 +33,12 @@ class PurchaseCubit extends Cubit<PurchaseState> {
     emit(const PurchaseLoading());
     final result = await _getPurchases();
     result.fold(
-      (failure) => emit(PurchaseFailure(failure.message)),
-      (purchases) => emit(PurchaseLoaded(purchases)),
+      (failure) {
+        emit(PurchaseFailure(failure.message));
+      },
+      (purchases){
+        emit(PurchaseLoaded(purchases));
+      },
     );
   }
 
@@ -49,11 +53,11 @@ class PurchaseCubit extends Cubit<PurchaseState> {
       (failure) => emit(
         PurchaseMutationFailure(message: failure.message, purchases: current),
       ),
-      (purchase) {
+      (purchase) async {
         // Prepend the new purchase and notify created so the UI can navigate.
         emit(PurchaseCreated(purchase));
         emit(PurchaseLoaded([purchase, ...current]));
-        loadPurchases();
+        await loadPurchases();
       },
     );
   }
@@ -66,13 +70,15 @@ class PurchaseCubit extends Cubit<PurchaseState> {
 
     final result = await _updatePurchase(id, body);
     result.fold(
-      (failure) => emit(
+      (failure) { 
+        emit(
         PurchaseMutationFailure(message: failure.message, purchases: current),
-      ),
-      (updated) {
-        final refreshed = current.map((p) => p.id == id ? updated : p).toList();
-        emit(PurchaseLoaded(refreshed));
-        loadPurchases();
+      );
+      },
+      (updated) async {
+        // final refreshed = current.map((p) => p.id == id ? updated : p).toList();
+        // emit(PurchaseLoaded(refreshed));
+        await loadPurchases();
       },
     );
   }
@@ -88,10 +94,10 @@ class PurchaseCubit extends Cubit<PurchaseState> {
       (failure) => emit(
         PurchaseMutationFailure(message: failure.message, purchases: current),
       ),
-      (_) {
+      (_) async {
         emit(const PurchaseDeleted());
         emit(PurchaseLoaded(current.where((p) => p.id != id).toList()));
-        loadPurchases();
+        await loadPurchases();
       },
     );
   }

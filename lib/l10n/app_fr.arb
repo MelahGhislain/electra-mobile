@@ -390,5 +390,24 @@
   "snapPhotoOfReceipt": "Prendre une photo de votre reçu",
   "all": "Tous",
   "categories": "Catégories",
-  "merchants": "Marchands"
+  "merchants": "Marchands",
+
+  "budget": "Budget",
+  "dailyAverage": "Moyenne quotidienne",
+  "financialHealthReport": "Rapport de santé financière",
+  "financialHealthScore": "Score de santé financière",
+  "generatedAt": "Généré le",
+  "noOpportunity": "Aucune opportunité trouvée",
+  "ofTotalSpend": "de dépenses totales",
+  "perDay": "par jour",
+  "perYear": "par an",
+  "periodSummary": "Résumé de la période",
+  "potentialSavings": "Économies potentielles",
+  "recommendationsForYou": "Recommandations pour vous",
+  "topCategory": "Catégorie principale",
+  "totalSpent": "Dépenses totales",
+  "viewFullReport": "Voir le rapport complet",
+  "vsLastPeriod": "vs période précédente",
+  "vsPreviousPeriod": "vs période précédente",
+  "youSpentTheMostOn": "Vous avez dépensé le plus sur"
 }

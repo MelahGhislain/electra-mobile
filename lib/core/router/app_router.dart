@@ -155,15 +155,7 @@ class AppRouter {
                       purchaseCubit: sl<PurchaseCubit>(),
                     )..loadPurchase(id),
                   ),
-                  BlocProvider<PurchaseCubit>(
-                    create: (_) => PurchaseCubit(
-                      getPurchases: sl(),
-                      createPurchase: sl(),
-                      updatePurchase: sl(),
-                      deletePurchase: sl(),
-                      exportPurchase: sl(),
-                    ),
-                  ),
+                  BlocProvider.value(value: sl<PurchaseCubit>()),
                 ],
                 child: SpendingDetailScreen(purchaseId: id),
               ),

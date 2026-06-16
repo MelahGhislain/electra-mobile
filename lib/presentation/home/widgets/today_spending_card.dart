@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'package:minata/common/blocs/currency/currency_formatter_scope.dart';
 import 'package:minata/core/configs/fonts.dart';
 import 'package:minata/l10n/app_localizations.dart';
 import 'package:minata/presentation/home/utils/home_utils.dart';
@@ -45,6 +46,7 @@ class TodaySpendingCard extends StatelessWidget {
     final pct = todaySummary.percentVsYesterday;
     final accentColor = _accentColor;
     final l = AppLocalizations.of(context);
+    final fmt = CurrencyFormatterScope.of(context);
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 0),
@@ -86,7 +88,7 @@ class TodaySpendingCard extends StatelessWidget {
 
                       // Big dollar amount
                       Text(
-                        '\$${todaySummary.todayTotal.toStringAsFixed(2)}',
+                        fmt.format(todaySummary.todayTotal),
                         style: const TextStyle(
                           fontSize: AppFontSize.xxxxl,
                           fontWeight: FontWeight.w600,
@@ -204,7 +206,7 @@ class TodaySpendingCard extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          '\$${todaySummary.todayTotal.toStringAsFixed(2)}',
+                          fmt.format(todaySummary.todayTotal),
                           style: TextStyle(
                             fontSize: AppFontSize.sm,
                             fontWeight: FontWeight.w600,
@@ -212,7 +214,7 @@ class TodaySpendingCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          ' / \$${_dailyBudget.toStringAsFixed(2)}',
+                          ' / ${fmt.format(_dailyBudget)}',
                           style: TextStyle(
                             fontSize: AppFontSize.sm,
                             fontWeight: FontWeight.w600,

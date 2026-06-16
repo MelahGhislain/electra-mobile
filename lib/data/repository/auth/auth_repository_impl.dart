@@ -42,7 +42,11 @@ class AuthRepositoryImpl implements AuthRepository {
     } on DioException catch (e) {
       return Left(mapDioError(e));
     } catch (e) {
-      return const Left(UnknownFailure());
+      try {
+        return Left(ServerFailure((e as dynamic).message.toString()));
+      } catch (_) {
+        return const Left(UnknownFailure());
+      }
     }
   }
 

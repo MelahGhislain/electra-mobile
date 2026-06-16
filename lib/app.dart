@@ -1,4 +1,5 @@
 import 'package:minata/common/blocs/auth/app_auth_cubit.dart';
+import 'package:minata/common/blocs/currency/currency_formatter_scope.dart';
 import 'package:minata/common/blocs/locale_cubit.dart';
 import 'package:minata/core/configs/theme/app_theme.dart';
 import 'package:minata/core/router/app_router.dart';
@@ -115,7 +116,7 @@ class _MainAppState extends State<MainApp> {
                         maxScaleFactor: 1.3,
                       ),
                     ),
-                    child: child!,
+                    child: CurrencyProvider(child: child!),
                   );
                 },
               );

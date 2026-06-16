@@ -1,3 +1,4 @@
+import 'package:minata/common/blocs/currency/currency_formatter_scope.dart';
 import 'package:minata/core/configs/fonts.dart';
 import 'package:minata/domain/entities/purchase/purchase.dart';
 import 'package:minata/core/utils/category_meta.dart';
@@ -33,6 +34,7 @@ class SpendingListItem extends StatelessWidget {
         : 'other';
     final meta = CategoryMeta.fromKey(categoryKey);
     final merchantName = purchase.merchant?.name ?? l.unknown;
+    final fmt = CurrencyFormatterScope.of(context);
 
     return GestureDetector(
       onTap: onTap,
@@ -145,7 +147,7 @@ class SpendingListItem extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        '\$${purchase.totals.amount.toStringAsFixed(2)}',
+                        fmt.format(purchase.totals.amount),
                         style: const TextStyle(
                           fontSize: AppFontSize.md,
                           fontWeight: FontWeight.w700,

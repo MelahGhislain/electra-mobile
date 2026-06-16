@@ -1,3 +1,4 @@
+import 'package:minata/common/blocs/currency/currency_formatter_scope.dart';
 import 'package:minata/core/configs/fonts.dart';
 import 'package:minata/core/configs/theme/app_colors.dart';
 import 'package:minata/l10n/app_localizations.dart';
@@ -45,6 +46,7 @@ class ThisMonthCard extends StatelessWidget {
       spentThisMonth: summary.spentThisMonth,
     );
     final l = AppLocalizations.of(context);
+    final fmt = CurrencyFormatterScope.of(context);
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 14, 16, 0),
@@ -106,7 +108,7 @@ class ThisMonthCard extends StatelessWidget {
               textBaseline: TextBaseline.alphabetic,
               children: [
                 Text(
-                  '\$${summary.spentThisMonth.toStringAsFixed(2)}',
+                  fmt.format(summary.spentThisMonth),
                   style: const TextStyle(
                     fontSize: AppFontSize.xxl,
                     fontWeight: FontWeight.w600,
@@ -114,7 +116,7 @@ class ThisMonthCard extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  ' / \$${effectiveBudget.toStringAsFixed(2)}',
+                  ' / ${fmt.format(effectiveBudget)}',
                   style: const TextStyle(
                     fontSize: AppFontSize.xl,
                     fontWeight: FontWeight.w400,
@@ -164,7 +166,7 @@ class ThisMonthCard extends StatelessWidget {
                         icon: Icons.trending_up_rounded,
                         iconColor: AppColors.primary,
                         label: l.avgDailySpend,
-                        value: '\$${summary.avgDaily.toStringAsFixed(2)}',
+                        value: fmt.format(summary.avgDaily),
                       ),
                     ),
                   ),

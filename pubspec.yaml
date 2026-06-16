@@ -66,6 +66,10 @@ dependencies:
   # Equality
   equatable: ^2.0.8
 
+  # Currency picker
+  currency_picker: ^2.0.22
+  currency_formatter: ^2.3.0
+
   # Secure storage
   flutter_secure_storage: ^10.0.0
   

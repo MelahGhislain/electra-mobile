@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'package:minata/common/blocs/currency/currency_formatter_scope.dart';
 import 'package:minata/core/configs/fonts.dart';
 import 'package:minata/core/utils/category_meta.dart';
 import 'package:minata/l10n/app_localizations.dart';
@@ -50,6 +51,7 @@ class _TopSpendingTodayCardState extends State<TopSpendingTodayCard>
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
+    final fmt = CurrencyFormatterScope.of(context);
     if (widget.rows.isEmpty) return const SizedBox.shrink();
 
     final total = _total;
@@ -168,7 +170,7 @@ class _TopSpendingTodayCardState extends State<TopSpendingTodayCard>
                               const SizedBox(width: 1),
                               // Amount
                               Text(
-                                '\$${row.amount.toStringAsFixed(2)}',
+                                fmt.format(row.amount),
                                 style: TextStyle(
                                   fontSize: AppFontSize.md,
                                   fontWeight: FontWeight.w600,

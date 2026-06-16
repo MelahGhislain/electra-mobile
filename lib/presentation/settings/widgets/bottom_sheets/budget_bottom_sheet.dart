@@ -1,3 +1,4 @@
+import 'package:minata/common/blocs/currency/currency_formatter_scope.dart';
 import 'package:minata/common/widgets/bottom_sheets/app_bottom_sheet.dart';
 import 'package:minata/common/widgets/buttons/main_button.dart';
 import 'package:minata/common/widgets/text_fields/chip_selector.dart';
@@ -91,6 +92,7 @@ class _BudgetSheetBodyState extends State<_BudgetSheetBody> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l = AppLocalizations.of(context);
+    final fmt = CurrencyFormatterScope.of(context);
 
     return BlocListener<UserCubit, UserState>(
       listener: (context, state) {
@@ -138,7 +140,7 @@ class _BudgetSheetBodyState extends State<_BudgetSheetBody> {
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
                 ],
-                prefixText: '\$  ',
+                prefixText: '${fmt.symbol}  ',
                 validator: (v) {
                   if (v == null || v.trim().isEmpty) {
                     return l.pleaseEnterABudgetAmount;
@@ -163,7 +165,7 @@ class _BudgetSheetBodyState extends State<_BudgetSheetBody> {
                 options: _quickAmounts
                     .map(
                       (amount) =>
-                          ChipSelectorOption(value: amount, label: '\$$amount'),
+                          ChipSelectorOption(value: amount, label: fmt.format(double.parse(amount))),
                     )
                     .toList(),
                 onSelected: (amount) =>

@@ -367,5 +367,24 @@
   "snapPhotoOfReceipt": "拍摄收据照片",
   "all": "全部",
   "categories": "分类",
-  "merchants": "商家"
+  "merchants": "商家",
+
+  "budget": "预算",
+  "dailyAverage": "日均",
+  "financialHealthReport": "财务健康报告",
+  "financialHealthScore": "财务健康评分",
+  "generatedAt": "生成于",
+  "noOpportunity": "未找到机会",
+  "ofTotalSpend": "总支出的",
+  "perDay": "每天",
+  "perYear": "每年",
+  "periodSummary": "期间摘要",
+  "potentialSavings": "潜在节省",
+  "recommendationsForYou": "为您推荐",
+  "topCategory": "顶级分类",
+  "totalSpent": "总支出",
+  "viewFullReport": "查看完整报告",
+  "vsLastPeriod": "vs 上期",
+  "vsPreviousPeriod": "vs 上期",
+  "youSpentTheMostOn": "您在以下方面花费最多"
 }

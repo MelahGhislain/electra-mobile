@@ -182,7 +182,6 @@ class _AddPurchaseBodyState extends State<_AddPurchaseBody> {
       },
       builder: (context, state) {
         final isSaving = state is PurchaseMutating;
-        print(_paymentMethod);
 
         return SingleChildScrollView(
           padding: EdgeInsets.fromLTRB(

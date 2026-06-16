@@ -1,3 +1,4 @@
+import 'package:minata/common/blocs/currency/currency_formatter_scope.dart';
 import 'package:minata/core/configs/fonts.dart';
 import 'package:minata/core/router/route_names.dart';
 import 'package:minata/domain/entities/purchase/purchase.dart';
@@ -92,6 +93,7 @@ class _ActivityRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
+    final fmt = CurrencyFormatterScope.of(context);
 
     return InkWell(
       onTap: () => _navigateToDetail(context, purchase),
@@ -143,7 +145,7 @@ class _ActivityRow extends StatelessWidget {
 
             // Amount + chevron
             Text(
-              '\$${item.amount.toStringAsFixed(2)}',
+              fmt.format(item.amount),
               style: const TextStyle(
                 fontSize: AppFontSize.md,
                 fontWeight: FontWeight.w500,

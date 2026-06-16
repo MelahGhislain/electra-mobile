@@ -1,4 +1,5 @@
 import 'package:minata/common/blocs/auth/app_auth_cubit.dart';
+import 'package:minata/common/blocs/currency/currency_formatter_scope.dart';
 import 'package:minata/common/blocs/locale_cubit.dart';
 import 'package:minata/common/blocs/theme_cubit.dart';
 import 'package:minata/common/widgets/buttons/main_icon_button.dart';
@@ -71,29 +72,32 @@ class _SettingsScreenState extends State<SettingsScreen> {
     ThemeMode.dark => l.themeDark,
   };
 
+  // String _currencyLabel(UserSettings? settings) {
+  //   if (settings == null) return 'USD';
+  //   try {
+  //     final match = AppCurrency.values.firstWhere(
+  //       (c) => c.code.toLowerCase() == settings.currency.toLowerCase(),
+  //       orElse: () => AppCurrency.usd,
+  //     );
+  //     return match.code;
+  //   } catch (_) {
+  //     return settings.currency.toUpperCase();
+  //   }
+  // }
   String _currencyLabel(UserSettings? settings) {
-    if (settings == null) return 'USD';
-    try {
-      final match = AppCurrency.values.firstWhere(
-        (c) => c.code.toLowerCase() == settings.currency.toLowerCase(),
-        orElse: () => AppCurrency.usd,
-      );
-      return match.code;
-    } catch (_) {
-      return settings.currency.toUpperCase();
-    }
-  }
+  return settings?.currency.toUpperCase() ?? 'USD';
+}
 
   String _languageLabel(UserSettings? settings) {
     final lang = AppLanguage.fromCode(settings?.locale);
     return lang.label;
   }
 
-  String _budgetLabel(UserSettings? settings, AppLocalizations l) {
+  String _budgetLabel(UserSettings? settings, AppLocalizations l, CurrencyFormatterScope fmt) {
     if (settings?.monthlyBudget == null || settings!.monthlyBudget! <= 0) {
       return l.budgetNotSet;
     }
-    return l.budgetPerMonth('\$${settings.monthlyBudget!.toStringAsFixed(0)}');
+    return l.budgetPerMonth(fmt.format(settings.monthlyBudget!));
   }
 
   String _subscriptionLabel(UserCubit cubit, AppLocalizations l) {
@@ -130,17 +134,30 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
+  // Future<void> _openCurrencySheet(User user) async {
+  //   AppCurrency current = AppCurrency.usd;
+  //   try {
+  //     current = AppCurrency.values.firstWhere(
+  //       (c) =>
+  //           c.code.toLowerCase() ==
+  //           (user.settings?.currency ?? '').toLowerCase(),
+  //       orElse: () => AppCurrency.usd,
+  //     );
+  //   } catch (_) {}
+  //   final result = await CurrencyBottomSheet.show(context, current);
+  //   if (result != null && mounted) {
+  //     await context.read<UserCubit>().updateUserSetting(user.id, {
+  //       'currency': result.code,
+  //     });
+  //   }
+  // }
+
   Future<void> _openCurrencySheet(User user) async {
-    AppCurrency current = AppCurrency.usd;
-    try {
-      current = AppCurrency.values.firstWhere(
-        (c) =>
-            c.code.toLowerCase() ==
-            (user.settings?.currency ?? '').toLowerCase(),
-        orElse: () => AppCurrency.usd,
-      );
-    } catch (_) {}
-    final result = await CurrencyBottomSheet.show(context, current);
+    final result = await CurrencyBottomSheet.show(
+      context,
+      currentCode: user.settings?.currency,
+    );
+    print({result});
     if (result != null && mounted) {
       await context.read<UserCubit>().updateUserSetting(user.id, {
         'currency': result.code,
@@ -231,6 +248,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               userState is UserLoading || userState is UserInitial;
           final l = AppLocalizations.of(context);
           final isDark = Theme.of(context).brightness == Brightness.dark;
+          final fmt = CurrencyFormatterScope.of(context);
 
           return Scaffold(
             appBar: AppBar(
@@ -335,7 +353,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               SettingsTile(
                                 icon: Icons.wallet_rounded,
                                 title: l.settingsBudget,
-                                subtitle: _budgetLabel(settings, l),
+                                subtitle: _budgetLabel(settings, l, fmt),
                                 showChevron: true,
                                 onTap: user != null
                                     ? () => _openBudgetSheet(user)

@@ -45,6 +45,9 @@ Failure mapDioError(DioException e) {
       return UnknownFailure();
 
     default:
+      if (e.message != null) {
+        return ServerFailure(e.message.toString());
+      }
       return UnknownFailure();
   }
 }

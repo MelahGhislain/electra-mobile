@@ -1839,6 +1839,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Merchants'**
   String get merchants;
+
+  /// No description provided for @budget.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget'**
+  String get budget;
+
+  /// No description provided for @dailyAverage.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily average'**
+  String get dailyAverage;
+
+  /// No description provided for @financialHealthReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Financial Health Report'**
+  String get financialHealthReport;
+
+  /// No description provided for @financialHealthScore.
+  ///
+  /// In en, this message translates to:
+  /// **'Financial health score'**
+  String get financialHealthScore;
+
+  /// No description provided for @generatedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Generated at'**
+  String get generatedAt;
+
+  /// No description provided for @noOpportunity.
+  ///
+  /// In en, this message translates to:
+  /// **'No opportunity found'**
+  String get noOpportunity;
+
+  /// No description provided for @ofTotalSpend.
+  ///
+  /// In en, this message translates to:
+  /// **'of total spend'**
+  String get ofTotalSpend;
+
+  /// No description provided for @perDay.
+  ///
+  /// In en, this message translates to:
+  /// **'per day'**
+  String get perDay;
+
+  /// No description provided for @perYear.
+  ///
+  /// In en, this message translates to:
+  /// **'per year'**
+  String get perYear;
+
+  /// No description provided for @periodSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Period Summary'**
+  String get periodSummary;
+
+  /// No description provided for @potentialSavings.
+  ///
+  /// In en, this message translates to:
+  /// **'Potential savings'**
+  String get potentialSavings;
+
+  /// No description provided for @recommendationsForYou.
+  ///
+  /// In en, this message translates to:
+  /// **'Recommendations for you'**
+  String get recommendationsForYou;
+
+  /// No description provided for @topCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Top category'**
+  String get topCategory;
+
+  /// No description provided for @totalSpent.
+  ///
+  /// In en, this message translates to:
+  /// **'Total spent'**
+  String get totalSpent;
+
+  /// No description provided for @viewFullReport.
+  ///
+  /// In en, this message translates to:
+  /// **'View full report'**
+  String get viewFullReport;
+
+  /// No description provided for @vsLastPeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'vs last period'**
+  String get vsLastPeriod;
+
+  /// No description provided for @vsPreviousPeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'vs previous period'**
+  String get vsPreviousPeriod;
+
+  /// No description provided for @youSpentTheMostOn.
+  ///
+  /// In en, this message translates to:
+  /// **'You spent the most on'**
+  String get youSpentTheMostOn;
 }
 
 class _AppLocalizationsDelegate

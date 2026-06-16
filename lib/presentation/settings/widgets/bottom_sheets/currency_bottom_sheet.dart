@@ -1,79 +1,67 @@
-import 'package:minata/common/widgets/bottom_sheets/app_bottom_sheet.dart';
-import 'package:minata/common/widgets/text_fields/radio_option_list.dart';
-import 'package:minata/l10n/app_localizations.dart';
+import 'dart:async';
+
+import 'package:currency_picker/currency_picker.dart';
 import 'package:flutter/material.dart';
 
-enum AppCurrency { usd, eur, gbp, jpy, cad, aud, chf, cny, inr, brl }
-
-extension AppCurrencyExtension on AppCurrency {
-  String get label {
-    return switch (this) {
-      AppCurrency.usd => 'US Dollar',
-      AppCurrency.eur => 'Euro',
-      AppCurrency.gbp => 'British Pound',
-      AppCurrency.jpy => 'Japanese Yen',
-      AppCurrency.cad => 'Canadian Dollar',
-      AppCurrency.aud => 'Australian Dollar',
-      AppCurrency.chf => 'Swiss Franc',
-      AppCurrency.cny => 'Chinese Yuan',
-      AppCurrency.inr => 'Indian Rupee',
-      AppCurrency.brl => 'Brazilian Real',
-    };
-  }
-
-  String get code {
-    return switch (this) {
-      AppCurrency.usd => 'USD',
-      AppCurrency.eur => 'EUR',
-      AppCurrency.gbp => 'GBP',
-      AppCurrency.jpy => 'JPY',
-      AppCurrency.cad => 'CAD',
-      AppCurrency.aud => 'AUD',
-      AppCurrency.chf => 'CHF',
-      AppCurrency.cny => 'CNY',
-      AppCurrency.inr => 'INR',
-      AppCurrency.brl => 'BRL',
-    };
-  }
-
-  String get symbol {
-    return switch (this) {
-      AppCurrency.usd => '\$',
-      AppCurrency.eur => '€',
-      AppCurrency.gbp => '£',
-      AppCurrency.jpy => '¥',
-      AppCurrency.cad => 'C\$',
-      AppCurrency.aud => 'A\$',
-      AppCurrency.chf => 'CHF',
-      AppCurrency.cny => '¥',
-      AppCurrency.inr => '₹',
-      AppCurrency.brl => 'R\$',
-    };
-  }
-}
-
+/// Thin wrapper around currency_picker's showCurrencyPicker.
+/// Returns the selected currency code string (e.g. 'USD', 'EUR')
+/// or null if the user dismissed without selecting.
 class CurrencyBottomSheet {
-  static Future<AppCurrency?> show(BuildContext context, AppCurrency current) {
-    final l = AppLocalizations.of(context);
-    return AppBottomSheet.show<AppCurrency>(
-      context,
-      title: l.settingsCurrency,
-      icon: Icons.folder_outlined,
-      child: RadioOptionList<AppCurrency>(
-        selectedValue: current,
-        onSelected: (value) {
-          Navigator.of(context, rootNavigator: false).pop(value);
-        },
-        options: AppCurrency.values
-            .map(
-              (c) => RadioOption(
-                value: c,
-                label: c.label,
-                subtitle: '${c.code} · ${c.symbol}',
+  static Future<Currency?> show(
+    BuildContext context, {
+    String? currentCode,
+  }) async {
+    final completer = Completer<Currency?>();
+    final theme = Theme.of(context);
+
+    showCurrencyPicker(
+      context: context,
+      showFlag: true,
+      showCurrencyName: true,
+      showCurrencyCode: true,
+      showSearchField: true,
+      // Highlight the user's current currency at the top
+      favorite: currentCode != null ? [currentCode] : [],
+      theme: CurrencyPickerThemeData(
+        flagSize: 22,
+        bottomSheetHeight: MediaQuery.sizeOf(context).height * 0.75,
+        inputDecoration: InputDecoration(
+          hintText: 'Search currency...',
+          hintStyle: TextStyle(
+            color: theme.textTheme.bodyMedium?.color,
+          ),
+          prefixIcon: Icon(Icons.search_rounded, color: theme.iconTheme.color),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide(
+              color: theme.dividerColor,
+            ),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide(
+              color: theme.dividerColor,
+            ),
+          ),
+          focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(color: theme.dividerColor),
               ),
-            )
-            .toList(),
+          filled: true,
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 12,
+          ),
+        ),
       ),
+      onSelect: (Currency currency) {
+        completer.complete(currency);
+      },
+    );
+
+    return completer.future.timeout(
+      const Duration(minutes: 5),
+      onTimeout: () => null,
     );
   }
 }

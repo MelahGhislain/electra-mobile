@@ -1,3 +1,4 @@
+import 'package:minata/common/blocs/currency/currency_formatter_scope.dart';
 import 'package:minata/core/configs/fonts.dart';
 import 'package:minata/domain/entities/insights/insights.dart';
 import 'package:minata/l10n/app_localizations.dart';
@@ -29,12 +30,13 @@ class InsightsTrendSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final fmt = NumberFormat.currency(symbol: r'$', decimalDigits: 2);
+    // final fmt = NumberFormat.currency(symbol: r'$', decimalDigits: 2);
     final currentSpots = _toSpots(trend.current);
     final previousSpots = _toSpots(trend.previous);
     final maxX = currentSpots.isNotEmpty ? currentSpots.last.x : 30.0;
     final yInterval = (_maxY / 3).ceilToDouble();
     final l = AppLocalizations.of(context);
+    final fmt = CurrencyFormatterScope.of(context);
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -130,7 +132,7 @@ class InsightsTrendSection extends StatelessWidget {
                             reservedSize: 44,
                             interval: yInterval,
                             getTitlesWidget: (v, _) => Text(
-                              v == 0 ? '\$0' : '\$${v.toInt()}',
+                              v == 0 ? fmt.format(0) : fmt.format(v.toDouble()),
                               style: theme.textTheme.bodySmall?.copyWith(
                                 fontSize: 10,
                               ),

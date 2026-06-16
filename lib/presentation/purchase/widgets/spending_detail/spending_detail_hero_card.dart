@@ -1,3 +1,4 @@
+import 'package:minata/common/blocs/currency/currency_formatter_scope.dart';
 import 'package:minata/core/configs/fonts.dart';
 import 'package:minata/domain/entities/purchase/purchase.dart';
 import 'package:minata/core/utils/category_meta.dart';
@@ -52,6 +53,7 @@ class SpendingDetailHeroCard extends StatelessWidget {
     final l = AppLocalizations.of(context);
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
+    final fmt = CurrencyFormatterScope.of(context);
 
     final categoryKey = purchase.items.isNotEmpty
         ? purchase.items.first.category.normalizedName
@@ -118,7 +120,7 @@ class SpendingDetailHeroCard extends StatelessWidget {
                     Text(l.total, style: TextStyle(fontSize: AppFontSize.sm)),
                     const SizedBox(height: 2),
                     Text(
-                      '\$${purchase.totals.amount.toStringAsFixed(2)}',
+                      fmt.format(purchase.totals.amount),
                       style: TextStyle(
                         fontSize: AppFontSize.lg,
                         fontWeight: FontWeight.bold,

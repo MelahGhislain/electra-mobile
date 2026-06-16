@@ -390,5 +390,24 @@
   "snapPhotoOfReceipt": "Foto deiner Quittung machen",
   "all": "Alle",
   "categories": "Kategorien",
-  "merchants": "Händler"
+  "merchants": "Händler",
+
+  "budget": "Budget",
+  "dailyAverage": "Täglicher Durchschnitt",
+  "financialHealthReport": "Finanzgesundheitsbericht",
+  "financialHealthScore": "Finanzgesundheitswert",
+  "generatedAt": "Erstellt am",
+  "noOpportunity": "Keine Gelegenheit gefunden",
+  "ofTotalSpend": "von Gesamtausgaben",
+  "perDay": "pro Tag",
+  "perYear": "pro Jahr",
+  "periodSummary": "Zeitraum Zusammenfassung",
+  "potentialSavings": "Potenzielle Einsparungen",
+  "recommendationsForYou": "Empfehlungen für dich",
+  "topCategory": "Top Kategorie",
+  "totalSpent": "Gesamtausgaben",
+  "viewFullReport": "Vollständigen Bericht anzeigen",
+  "vsLastPeriod": "vs letzter Zeitraum",
+  "vsPreviousPeriod": "vs vorheriger Zeitraum",
+  "youSpentTheMostOn": "Du hast am meisten ausgegeben auf"
 }

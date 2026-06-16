@@ -935,4 +935,58 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get merchants => 'Comerciantes';
+
+  @override
+  String get budget => 'Orçamento';
+
+  @override
+  String get dailyAverage => 'Média diária';
+
+  @override
+  String get financialHealthReport => 'Relatório de Saúde Financeira';
+
+  @override
+  String get financialHealthScore => 'Score de saúde financeira';
+
+  @override
+  String get generatedAt => 'Gerado em';
+
+  @override
+  String get noOpportunity => 'Nenhuma oportunidade encontrada';
+
+  @override
+  String get ofTotalSpend => 'de gastos totais';
+
+  @override
+  String get perDay => 'por dia';
+
+  @override
+  String get perYear => 'por ano';
+
+  @override
+  String get periodSummary => 'Resumo do período';
+
+  @override
+  String get potentialSavings => 'Economias potenciais';
+
+  @override
+  String get recommendationsForYou => 'Recomendações para você';
+
+  @override
+  String get topCategory => 'Categoria principal';
+
+  @override
+  String get totalSpent => 'Total gasto';
+
+  @override
+  String get viewFullReport => 'Ver relatório completo';
+
+  @override
+  String get vsLastPeriod => 'vs período anterior';
+
+  @override
+  String get vsPreviousPeriod => 'vs período anterior';
+
+  @override
+  String get youSpentTheMostOn => 'Você gastou mais em';
 }
