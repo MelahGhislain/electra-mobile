@@ -5,9 +5,9 @@ class Env {
   static String get appEnv => dotenv.env['APP_ENV'] ?? 'development';
 
   static String get apiBaseUrl =>
-      dotenv.env['API_BASE_URL'] ?? 'https://api.electra.app';
+      dotenv.env['API_BASE_URL'] ?? 'https://api.qleo.app';
   static String get webSocketUrl =>
-      dotenv.env['WEB_SOCKET_URL'] ?? 'wss://api.electra.app/ws';
+      dotenv.env['WEB_SOCKET_URL'] ?? 'wss://api.qleo.app/ws';
 
   static String get googleServerClientId =>
       dotenv.env['GOOGLE_SERVER_CLIENT_ID'] ?? '';

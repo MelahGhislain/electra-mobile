@@ -113,7 +113,7 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
                         ),
                         const SizedBox(height: 10),
                         const Text(
-                          'Most people lose track of +\$300/month without realising. Electra shows you exactly where it goes — in seconds.',
+                          'Most people lose track of +\$300/month without realising. Qleo shows you exactly where it goes — in seconds.',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: AppFontSize.sm,

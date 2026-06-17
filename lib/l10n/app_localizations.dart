@@ -109,7 +109,7 @@ abstract class AppLocalizations {
   /// The name of the app
   ///
   /// In en, this message translates to:
-  /// **'Electra'**
+  /// **'Qleo'**
   String get appName;
 
   /// No description provided for @settingsTitle.
@@ -1423,7 +1423,7 @@ abstract class AppLocalizations {
   /// No description provided for @stopGuessingSpending.
   ///
   /// In en, this message translates to:
-  /// **'Stop guessing your spending. Electra helps you track every expense effortlessly.'**
+  /// **'Stop guessing your spending. Qleo helps you track every expense effortlessly.'**
   String get stopGuessingSpending;
 
   /// No description provided for @trackWithYourVoice.
@@ -1459,7 +1459,7 @@ abstract class AppLocalizations {
   /// No description provided for @autoCategorizeDescription.
   ///
   /// In en, this message translates to:
-  /// **'Electra automatically categorizes your expenses so you can focus on what matters.'**
+  /// **'Qleo automatically categorizes your expenses so you can focus on what matters.'**
   String get autoCategorizeDescription;
 
   /// No description provided for @insightsThatHelpYouSave.

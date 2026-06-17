@@ -83,7 +83,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     child: Column(
                       children: [
                         const Text(
-                          'Electra',
+                          'Qleo',
                           style: TextStyle(
                             fontSize: 26,
                             fontWeight: FontWeight.w800,
@@ -118,7 +118,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   // const SizedBox(height: 6),
 
                   // Text(
-                  //   'Continue to Electra.',
+                  //   'Continue to Qleo.',
                   //   style: TextStyle(fontSize: AppFontSize.sm),
                   // ),
                   const SizedBox(height: 32),

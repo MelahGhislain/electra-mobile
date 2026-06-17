@@ -82,7 +82,7 @@ class PlanCard extends StatelessWidget {
                   Text('👑', style: TextStyle(fontSize: AppFontSize.md)),
                   SizedBox(width: 6),
                   Text(
-                    'Electra Premium',
+                    'Qleo Premium',
                     style: TextStyle(
                       fontSize: AppFontSize.md,
                       fontWeight: FontWeight.w700,

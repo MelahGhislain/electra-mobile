@@ -9,7 +9,7 @@ class AppLocalizationsZh extends AppLocalizations {
   AppLocalizationsZh([String locale = 'zh']) : super(locale);
 
   @override
-  String get appName => 'Electra';
+  String get appName => 'Qleo';
 
   @override
   String get settingsTitle => '设置';

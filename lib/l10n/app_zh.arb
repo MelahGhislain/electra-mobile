@@ -1,7 +1,7 @@
 {
   "@@locale": "zh",
 
-  "appName": "Electra",
+  "appName": "Qleo",
   "@appName": { "description": "应用名称" },
 
   "settingsTitle": "设置",

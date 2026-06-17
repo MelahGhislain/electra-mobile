@@ -126,7 +126,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   const SizedBox(height: 6),
 
                   Text(
-                    'Start tracking your expenses smarter with Electra.',
+                    'Start tracking your expenses smarter with Qleo.',
                     style: TextStyle(fontSize: AppFontSize.sm),
                   ),
 

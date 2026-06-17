@@ -9,7 +9,7 @@ class AppLocalizationsDe extends AppLocalizations {
   AppLocalizationsDe([String locale = 'de']) : super(locale);
 
   @override
-  String get appName => 'Electra';
+  String get appName => 'Qleo';
 
   @override
   String get settingsTitle => 'Einstellungen';
@@ -715,7 +715,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get stopGuessingSpending =>
-      'Hör auf zu raten. Electra hilft dir, jeden Ausgabe mühelos zu verfolgen.';
+      'Hör auf zu raten. Qleo hilft dir, jeden Ausgabe mühelos zu verfolgen.';
 
   @override
   String get trackWithYourVoice => 'Mit deiner Stimme verfolgen';
@@ -735,7 +735,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get autoCategorizeDescription =>
-      'Electra kategorisiert deine Ausgaben automatisch, damit du dich auf das Wesentliche konzentrieren kannst.';
+      'Qleo kategorisiert deine Ausgaben automatisch, damit du dich auf das Wesentliche konzentrieren kannst.';
 
   @override
   String get insightsThatHelpYouSave => 'Einblicke, die dir helfen zu sparen';

@@ -1,7 +1,7 @@
 {
   "@@locale": "en",
 
-  "appName": "Electra",
+  "appName": "Qleo",
   "@appName": { "description": "The name of the app" },
 
   "settingsTitle": "Settings",
@@ -324,7 +324,7 @@
 
   "whereDidMyMoneyGo": "Where Did My Money Go?",
   "myMoney": "My Money",
-  "stopGuessingSpending": "Stop guessing your spending. Electra helps you track every expense effortlessly.",
+  "stopGuessingSpending": "Stop guessing your spending. Qleo helps you track every expense effortlessly.",
 
   "trackWithYourVoice": "Track with Your Voice",
   "voice": "Voice",
@@ -332,7 +332,7 @@
 
   "autoCategorizeExpenses": "Auto-Categorize Expenses",
   "autoCategorize": "Auto-Categorize",
-  "autoCategorizeDescription": "Electra automatically categorizes your expenses so you can focus on what matters.",
+  "autoCategorizeDescription": "Qleo automatically categorizes your expenses so you can focus on what matters.",
 
   "insightsThatHelpYouSave": "Insights That Help You Save",
   "insightsDescription": "Understand your spending patterns and make smarter financial decisions.",

@@ -34,7 +34,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           highlights: const ['My Money'],
           topPosition: 60,
           description:
-              "Stop guessing your spending. Electra helps you track every expense effortlessly.",
+              "Stop guessing your spending. Qleo helps you track every expense effortlessly.",
           image: AppImages.onboarding1,
         ),
       ),
@@ -54,7 +54,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           highlights: const ['Auto-Categorize'],
           topPosition: 200,
           description:
-              "Electra automatically categorizes your expenses so you can focus on what matters.",
+              "Qleo automatically categorizes your expenses so you can focus on what matters.",
           image: AppImages.onboarding3,
         ),
       ),
