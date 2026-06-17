@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:minata/core/errors/failures.dart';
-import 'package:minata/domain/repository/purchase/purchase_repository.dart';
+import 'package:qleo/core/errors/failures.dart';
+import 'package:qleo/domain/repository/purchase/purchase_repository.dart';
 
 class ExportPurchaseUseCase {
   final PurchaseRepository _repository;

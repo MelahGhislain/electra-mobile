@@ -1,9 +1,9 @@
-import 'package:minata/core/services/fcm_service.dart';
-import 'package:minata/data/repository/auth/auth_repository_impl.dart';
-import 'package:minata/domain/usecases/notification/notification_usecase.dart';
+import 'package:qleo/core/services/fcm_service.dart';
+import 'package:qleo/data/repository/auth/auth_repository_impl.dart';
+import 'package:qleo/domain/usecases/notification/notification_usecase.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:minata/core/utils/storage/auth_storage.dart';
+import 'package:qleo/core/utils/storage/auth_storage.dart';
 import 'app_auth_state.dart';
 
 class AppAuthCubit extends Cubit<AppAuthState> {

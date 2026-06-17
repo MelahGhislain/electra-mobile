@@ -1,4 +1,4 @@
-# minata
+# qleo
 
 A new Flutter project.
 
@@ -67,4 +67,4 @@ flutter emulators --launch Medium_Phone_API_36.1
 ```
 
 ### App Names
-- Minata
+- qleo

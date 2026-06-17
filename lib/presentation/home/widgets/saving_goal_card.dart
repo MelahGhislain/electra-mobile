@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:minata/common/blocs/currency/currency_formatter_scope.dart';
+import 'package:qleo/common/blocs/currency/currency_formatter_scope.dart';
 
 /// Hardcoded saving goal card matching the design exactly.
 /// Replace with dynamic data when ready.

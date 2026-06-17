@@ -9,7 +9,7 @@ plugins {
 }
 
 android {
-    namespace = "com.minata.app"
+    namespace = "com.app.qleo"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -24,14 +24,14 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.minata.app"
+        applicationId = "com.app.qleo"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
-        manifestPlaceholders["appAuthRedirectScheme"] = "com.minata.app"
+        manifestPlaceholders["appAuthRedirectScheme"] = "com.app.qleo"
     }
 
     buildTypes {

@@ -1,6 +1,6 @@
-import 'package:minata/core/network/api_client.dart';
-import 'package:minata/data/models/insights/insights_model.dart';
-import 'package:minata/domain/entities/insights/insights.dart';
+import 'package:qleo/core/network/api_client.dart';
+import 'package:qleo/data/models/insights/insights_model.dart';
+import 'package:qleo/domain/entities/insights/insights.dart';
 
 abstract class InsightsRemoteDataSource {
   Future<SpendingInsights> getInsights({required String period, String? date});

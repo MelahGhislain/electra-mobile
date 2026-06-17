@@ -1,4 +1,4 @@
-import 'package:minata/domain/repository/voice/voice_repository.dart';
+import 'package:qleo/domain/repository/voice/voice_repository.dart';
 
 class StartVoiceStream {
   final VoiceRepository repository;

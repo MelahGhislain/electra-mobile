@@ -1,8 +1,8 @@
-import 'package:minata/common/blocs/auth/app_auth_cubit.dart';
-import 'package:minata/core/assets/app_images.dart';
-import 'package:minata/core/router/route_names.dart';
-import 'package:minata/core/utils/storage/onboarding_storage.dart';
-import 'package:minata/service_locator.dart';
+import 'package:qleo/common/blocs/auth/app_auth_cubit.dart';
+import 'package:qleo/core/assets/app_images.dart';
+import 'package:qleo/core/router/route_names.dart';
+import 'package:qleo/core/utils/storage/onboarding_storage.dart';
+import 'package:qleo/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';

@@ -1,6 +1,6 @@
-import 'package:minata/common/widgets/bottom_sheets/app_bottom_sheet.dart';
-import 'package:minata/common/widgets/text_fields/radio_option_list.dart';
-import 'package:minata/l10n/app_localizations.dart';
+import 'package:qleo/common/widgets/bottom_sheets/app_bottom_sheet.dart';
+import 'package:qleo/common/widgets/text_fields/radio_option_list.dart';
+import 'package:qleo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 /// Each entry maps a human-readable label to the BCP-47 locale code

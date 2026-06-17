@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:minata/core/errors/dio_error_mapper.dart';
-import 'package:minata/core/errors/failures.dart';
-import 'package:minata/data/source/purchase/purchase_remote_datasource.dart';
-import 'package:minata/domain/entities/purchase/purchase.dart';
-import 'package:minata/domain/entities/purchase/purchase_item.dart';
-import 'package:minata/domain/repository/purchase/purchase_repository.dart';
+import 'package:qleo/core/errors/dio_error_mapper.dart';
+import 'package:qleo/core/errors/failures.dart';
+import 'package:qleo/data/source/purchase/purchase_remote_datasource.dart';
+import 'package:qleo/domain/entities/purchase/purchase.dart';
+import 'package:qleo/domain/entities/purchase/purchase_item.dart';
+import 'package:qleo/domain/repository/purchase/purchase_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:open_filex/open_filex.dart';
 

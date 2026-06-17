@@ -1,6 +1,6 @@
-import 'package:minata/data/models/subscription/subscription_model.dart';
-import 'package:minata/data/models/user/user_settings_model.dart';
-import 'package:minata/domain/entities/user/user.dart';
+import 'package:qleo/data/models/subscription/subscription_model.dart';
+import 'package:qleo/data/models/user/user_settings_model.dart';
+import 'package:qleo/domain/entities/user/user.dart';
 
 class UserModel extends User {
   const UserModel({

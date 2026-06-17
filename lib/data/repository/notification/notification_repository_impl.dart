@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:minata/core/errors/dio_error_mapper.dart';
-import 'package:minata/core/errors/failures.dart';
-import 'package:minata/data/source/notification/notification_datasource.dart';
-import 'package:minata/domain/entities/notification/notification.dart';
-import 'package:minata/domain/repository/notification/notification_repository.dart';
+import 'package:qleo/core/errors/dio_error_mapper.dart';
+import 'package:qleo/core/errors/failures.dart';
+import 'package:qleo/data/source/notification/notification_datasource.dart';
+import 'package:qleo/domain/entities/notification/notification.dart';
+import 'package:qleo/domain/repository/notification/notification_repository.dart';
 
 class NotificationRepositoryImpl implements NotificationRepository {
   final NotificationRemoteDataSource remoteDataSource;

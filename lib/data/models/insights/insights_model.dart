@@ -1,4 +1,4 @@
-import 'package:minata/domain/entities/insights/insights.dart';
+import 'package:qleo/domain/entities/insights/insights.dart';
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 

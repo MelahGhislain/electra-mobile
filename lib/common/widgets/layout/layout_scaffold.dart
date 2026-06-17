@@ -1,12 +1,12 @@
 import 'dart:ui';
 
-import 'package:minata/common/widgets/nav/add_popup.dart';
-import 'package:minata/core/router/route_names.dart';
-import 'package:minata/presentation/purchase/widgets/bottom_sheet/add_purchase_bottom_sheet.dart';
-import 'package:minata/presentation/receipt/widgets/receipt_source_picker.dart';
+import 'package:qleo/common/widgets/nav/add_popup.dart';
+import 'package:qleo/core/router/route_names.dart';
+import 'package:qleo/presentation/purchase/widgets/bottom_sheet/add_purchase_bottom_sheet.dart';
+import 'package:qleo/presentation/receipt/widgets/receipt_source_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:minata/common/widgets/nav/custom_bottom_nav.dart';
+import 'package:qleo/common/widgets/nav/custom_bottom_nav.dart';
 
 class LayoutScaffold extends StatefulWidget {
   const LayoutScaffold({Key? key, required this.navigationShell})

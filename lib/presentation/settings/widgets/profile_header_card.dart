@@ -1,6 +1,6 @@
-import 'package:minata/common/widgets/buttons/animated_icon_button.dart';
-import 'package:minata/core/assets/app_images.dart';
-import 'package:minata/core/configs/fonts.dart';
+import 'package:qleo/common/widgets/buttons/animated_icon_button.dart';
+import 'package:qleo/core/assets/app_images.dart';
+import 'package:qleo/core/configs/fonts.dart';
 import 'package:flutter/material.dart';
 
 class ProfileHeaderCard extends StatelessWidget {

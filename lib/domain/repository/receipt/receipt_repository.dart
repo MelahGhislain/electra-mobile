@@ -1,5 +1,5 @@
-import 'package:minata/core/enums/image_source_enum.dart';
-import 'package:minata/domain/entities/receipt/receipt_image.dart';
+import 'package:qleo/core/enums/image_source_enum.dart';
+import 'package:qleo/domain/entities/receipt/receipt_image.dart';
 
 abstract class ReceiptRepository {
   /// Pick image from camera or gallery

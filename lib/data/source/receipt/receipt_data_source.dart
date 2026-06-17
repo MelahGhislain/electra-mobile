@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:minata/core/network/api_client.dart';
-import 'package:minata/core/network/api_endpoints.dart';
+import 'package:qleo/core/network/api_client.dart';
+import 'package:qleo/core/network/api_endpoints.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:image_picker/image_picker.dart';
 

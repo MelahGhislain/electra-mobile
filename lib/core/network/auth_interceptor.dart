@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:minata/core/errors/api_error.dart';
-import 'package:minata/core/network/api_endpoints.dart';
-import 'package:minata/core/utils/storage/auth_storage.dart';
+import 'package:qleo/core/errors/api_error.dart';
+import 'package:qleo/core/network/api_endpoints.dart';
+import 'package:qleo/core/utils/storage/auth_storage.dart';
 import 'package:flutter/widgets.dart';
 
 class AuthInterceptor extends Interceptor {

@@ -1,4 +1,4 @@
-import 'package:minata/domain/entities/auth/auth_tokens.dart';
+import 'package:qleo/domain/entities/auth/auth_tokens.dart';
 
 class AuthTokensModel extends AuthTokens {
   const AuthTokensModel({

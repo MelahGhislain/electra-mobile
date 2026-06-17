@@ -1,4 +1,4 @@
-import 'package:minata/core/assets/app_images.dart';
+import 'package:qleo/core/assets/app_images.dart';
 import 'package:flutter/material.dart';
 
 class AuthGoogleButton extends StatelessWidget {

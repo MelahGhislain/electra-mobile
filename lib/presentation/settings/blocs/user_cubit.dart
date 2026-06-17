@@ -1,7 +1,7 @@
-import 'package:minata/domain/entities/user/user.dart';
-import 'package:minata/domain/entities/user/user_settings.dart';
-import 'package:minata/domain/usecases/user/setting_usecase.dart';
-import 'package:minata/domain/usecases/user/user_usecase.dart';
+import 'package:qleo/domain/entities/user/user.dart';
+import 'package:qleo/domain/entities/user/user_settings.dart';
+import 'package:qleo/domain/usecases/user/setting_usecase.dart';
+import 'package:qleo/domain/usecases/user/user_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'user_state.dart';
 

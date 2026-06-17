@@ -1,4 +1,4 @@
-import 'package:minata/data/models/onboarding/onboarding.dart';
+import 'package:qleo/data/models/onboarding/onboarding.dart';
 import 'package:flutter/material.dart';
 
 enum OnboardingPageType { content, custom }

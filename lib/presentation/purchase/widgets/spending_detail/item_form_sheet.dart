@@ -1,13 +1,13 @@
-import 'package:minata/common/blocs/currency/currency_formatter_scope.dart';
-import 'package:minata/common/widgets/bottom_sheets/app_bottom_sheet.dart';
-import 'package:minata/common/widgets/buttons/main_button.dart';
-import 'package:minata/common/widgets/dialogs/app_confirm_dialog.dart';
-import 'package:minata/common/widgets/text_fields/catetory_selector.dart';
-import 'package:minata/common/widgets/text_fields/text_field.dart';
-import 'package:minata/domain/entities/purchase/purchase_item.dart';
-import 'package:minata/core/utils/category_meta.dart';
-import 'package:minata/l10n/app_localizations.dart';
-import 'package:minata/presentation/purchase/widgets/spending_detail/category_picker.dart';
+import 'package:qleo/common/blocs/currency/currency_formatter_scope.dart';
+import 'package:qleo/common/widgets/bottom_sheets/app_bottom_sheet.dart';
+import 'package:qleo/common/widgets/buttons/main_button.dart';
+import 'package:qleo/common/widgets/dialogs/app_confirm_dialog.dart';
+import 'package:qleo/common/widgets/text_fields/catetory_selector.dart';
+import 'package:qleo/common/widgets/text_fields/text_field.dart';
+import 'package:qleo/domain/entities/purchase/purchase_item.dart';
+import 'package:qleo/core/utils/category_meta.dart';
+import 'package:qleo/l10n/app_localizations.dart';
+import 'package:qleo/presentation/purchase/widgets/spending_detail/category_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

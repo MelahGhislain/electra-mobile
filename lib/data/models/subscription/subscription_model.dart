@@ -1,4 +1,4 @@
-import 'package:minata/domain/entities/subscription/subscription.dart';
+import 'package:qleo/domain/entities/subscription/subscription.dart';
 
 class SubscriptionModel {
   final String id;

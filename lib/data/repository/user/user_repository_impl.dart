@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:minata/core/errors/dio_error_mapper.dart';
-import 'package:minata/core/errors/failures.dart';
-import 'package:minata/data/source/user/user_datasource.dart';
-import 'package:minata/domain/entities/user/user.dart';
-import 'package:minata/domain/entities/user/user_settings.dart';
-import 'package:minata/domain/repository/user/user_repository.dart';
+import 'package:qleo/core/errors/dio_error_mapper.dart';
+import 'package:qleo/core/errors/failures.dart';
+import 'package:qleo/data/source/user/user_datasource.dart';
+import 'package:qleo/domain/entities/user/user.dart';
+import 'package:qleo/domain/entities/user/user_settings.dart';
+import 'package:qleo/domain/repository/user/user_repository.dart';
 
 class UserRepositoryImpl implements UserRepository {
   final UserRemoteDataSource remoteDataSource;

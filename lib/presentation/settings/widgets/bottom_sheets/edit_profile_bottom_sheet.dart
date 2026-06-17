@@ -1,10 +1,10 @@
-import 'package:minata/common/widgets/bottom_sheets/app_bottom_sheet.dart';
-import 'package:minata/common/widgets/buttons/main_button.dart';
-import 'package:minata/common/widgets/text_fields/text_field.dart';
-import 'package:minata/domain/entities/user/user.dart';
-import 'package:minata/l10n/app_localizations.dart';
-import 'package:minata/presentation/settings/blocs/user_cubit.dart';
-import 'package:minata/presentation/settings/blocs/user_state.dart';
+import 'package:qleo/common/widgets/bottom_sheets/app_bottom_sheet.dart';
+import 'package:qleo/common/widgets/buttons/main_button.dart';
+import 'package:qleo/common/widgets/text_fields/text_field.dart';
+import 'package:qleo/domain/entities/user/user.dart';
+import 'package:qleo/l10n/app_localizations.dart';
+import 'package:qleo/presentation/settings/blocs/user_cubit.dart';
+import 'package:qleo/presentation/settings/blocs/user_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

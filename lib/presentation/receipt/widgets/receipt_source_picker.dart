@@ -1,10 +1,10 @@
 import 'dart:math' as math;
 
-import 'package:minata/common/widgets/bottom_sheets/app_bottom_sheet.dart';
-import 'package:minata/core/configs/fonts.dart';
-import 'package:minata/core/enums/image_source_enum.dart';
-import 'package:minata/presentation/receipt/bloc/receipt/receipt_cubit.dart';
-import 'package:minata/presentation/receipt/bloc/receipt/receipt_state.dart';
+import 'package:qleo/common/widgets/bottom_sheets/app_bottom_sheet.dart';
+import 'package:qleo/core/configs/fonts.dart';
+import 'package:qleo/core/enums/image_source_enum.dart';
+import 'package:qleo/presentation/receipt/bloc/receipt/receipt_cubit.dart';
+import 'package:qleo/presentation/receipt/bloc/receipt/receipt_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

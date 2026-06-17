@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:minata/core/network/auth_interceptor.dart';
+import 'package:qleo/core/network/auth_interceptor.dart';
 import 'api_endpoints.dart';
 
 class DioClient {

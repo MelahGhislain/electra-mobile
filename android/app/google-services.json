@@ -1,15 +1,15 @@
 {
   "project_info": {
     "project_number": "738537854047",
-    "project_id": "minata-51ccd",
-    "storage_bucket": "minata-51ccd.firebasestorage.app"
+    "project_id": "qleo-51ccd",
+    "storage_bucket": "qleo-51ccd.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
         "mobilesdk_app_id": "1:738537854047:android:75bf9ee2d10e44df8d37ea",
         "android_client_info": {
-          "package_name": "com.minata.app"
+          "package_name": "com.app.qleo"
         }
       },
       "oauth_client": [],

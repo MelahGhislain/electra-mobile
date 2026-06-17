@@ -1,6 +1,6 @@
-import 'package:minata/core/utils/storage/auth_storage.dart';
-import 'package:minata/domain/repository/voice/voice_repository.dart';
-import 'package:minata/data/source/voice/voice_stream_service.dart';
+import 'package:qleo/core/utils/storage/auth_storage.dart';
+import 'package:qleo/domain/repository/voice/voice_repository.dart';
+import 'package:qleo/data/source/voice/voice_stream_service.dart';
 
 class VoiceRepositoryImpl implements VoiceRepository {
   final AuthStorage _authStorage;

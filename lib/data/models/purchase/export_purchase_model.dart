@@ -1,4 +1,4 @@
-import 'package:minata/domain/entities/purchase/export_purchase.dart';
+import 'package:qleo/domain/entities/purchase/export_purchase.dart';
 import 'package:equatable/equatable.dart';
 
 class ExportPurchaseModel extends Equatable {

@@ -1,6 +1,6 @@
-import 'package:minata/common/widgets/buttons/main_icon_button.dart';
-import 'package:minata/presentation/receipt/bloc/voice/voice_cubit.dart';
-import 'package:minata/presentation/receipt/bloc/voice/voice_state.dart';
+import 'package:qleo/common/widgets/buttons/main_icon_button.dart';
+import 'package:qleo/presentation/receipt/bloc/voice/voice_cubit.dart';
+import 'package:qleo/presentation/receipt/bloc/voice/voice_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

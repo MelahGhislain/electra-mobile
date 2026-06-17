@@ -38,16 +38,16 @@ class DefaultFirebaseOptions {
     apiKey: 'AIzaSyCTTpW4oAWRb2aSFZDw9ZFwXr8yBvlJQEI',
     appId: '1:738537854047:android:75bf9ee2d10e44df8d37ea',
     messagingSenderId: '738537854047',
-    projectId: 'minata-51ccd',
-    storageBucket: 'minata-51ccd.firebasestorage.app',
+    projectId: 'qleo-51ccd',
+    storageBucket: 'qleo-51ccd.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDpN-CJ3je3E5O_Vyl4YVpuKb9lVtokGOg',
     appId: '1:738537854047:ios:6d48b1b5089e426b8d37ea',
     messagingSenderId: '738537854047',
-    projectId: 'minata-51ccd',
-    storageBucket: 'minata-51ccd.firebasestorage.app',
-    iosBundleId: 'com.minata.app',
+    projectId: 'qleo-51ccd',
+    storageBucket: 'qleo-51ccd.firebasestorage.app',
+    iosBundleId: 'com.app.qleo',
   );
 }

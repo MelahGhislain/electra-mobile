@@ -1,5 +1,5 @@
-import 'package:minata/core/configs/fonts.dart';
-import 'package:minata/domain/entities/insights/insights.dart';
+import 'package:qleo/core/configs/fonts.dart';
+import 'package:qleo/domain/entities/insights/insights.dart';
 import 'package:flutter/material.dart';
 
 class InsightsKeyInsightsGrid extends StatelessWidget {

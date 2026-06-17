@@ -1,5 +1,5 @@
-import 'package:minata/core/configs/theme/app_colors.dart';
-import 'package:minata/domain/entities/user/language.dart';
+import 'package:qleo/core/configs/theme/app_colors.dart';
+import 'package:qleo/domain/entities/user/language.dart';
 import 'package:flutter/material.dart';
 import 'language_tile.dart';
 

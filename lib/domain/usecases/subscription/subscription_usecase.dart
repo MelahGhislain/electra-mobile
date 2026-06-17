@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:minata/core/errors/failures.dart';
-import 'package:minata/domain/entities/subscription/subscription.dart';
-import 'package:minata/domain/repository/subscription/subscription_repository.dart';
+import 'package:qleo/core/errors/failures.dart';
+import 'package:qleo/domain/entities/subscription/subscription.dart';
+import 'package:qleo/domain/repository/subscription/subscription_repository.dart';
 
 class GetSubscriptionUseCase {
   final SubscriptionRepository repository;

@@ -1,9 +1,9 @@
-import 'package:minata/common/blocs/currency/currency_formatter_scope.dart';
-import 'package:minata/core/configs/fonts.dart';
-import 'package:minata/core/configs/theme/app_colors.dart';
-import 'package:minata/l10n/app_localizations.dart';
-import 'package:minata/presentation/home/utils/home_summary.dart';
-import 'package:minata/presentation/home/utils/home_utils.dart';
+import 'package:qleo/common/blocs/currency/currency_formatter_scope.dart';
+import 'package:qleo/core/configs/fonts.dart';
+import 'package:qleo/core/configs/theme/app_colors.dart';
+import 'package:qleo/l10n/app_localizations.dart';
+import 'package:qleo/presentation/home/utils/home_summary.dart';
+import 'package:qleo/presentation/home/utils/home_utils.dart';
 import 'package:flutter/material.dart';
 
 class ThisMonthCard extends StatelessWidget {

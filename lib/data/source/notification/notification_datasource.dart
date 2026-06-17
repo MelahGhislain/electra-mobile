@@ -1,6 +1,6 @@
-import 'package:minata/core/network/api_client.dart';
-import 'package:minata/core/network/api_endpoints.dart';
-import 'package:minata/data/models/notification/notification_model.dart';
+import 'package:qleo/core/network/api_client.dart';
+import 'package:qleo/core/network/api_endpoints.dart';
+import 'package:qleo/data/models/notification/notification_model.dart';
 
 abstract class NotificationRemoteDataSource {
   Future<void> registerPushToken(String token, String platform);

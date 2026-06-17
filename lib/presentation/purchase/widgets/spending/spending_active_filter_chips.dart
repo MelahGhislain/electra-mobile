@@ -1,7 +1,7 @@
-import 'package:minata/l10n/app_localizations.dart';
-import 'package:minata/presentation/purchase/pages/purchase_filter.dart';
+import 'package:qleo/l10n/app_localizations.dart';
+import 'package:qleo/presentation/purchase/pages/purchase_filter.dart';
 import 'package:flutter/material.dart';
-import 'package:minata/core/configs/theme/app_colors.dart';
+import 'package:qleo/core/configs/theme/app_colors.dart';
 
 class SpendingActiveFilterChips extends StatelessWidget {
   final PurchaseFilter filter;

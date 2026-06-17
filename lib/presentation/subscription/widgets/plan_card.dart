@@ -1,7 +1,7 @@
-import 'package:minata/common/blocs/currency/currency_formatter_scope.dart';
-import 'package:minata/common/widgets/buttons/main_button.dart';
-import 'package:minata/core/configs/fonts.dart';
-import 'package:minata/core/configs/theme/app_colors.dart';
+import 'package:qleo/common/blocs/currency/currency_formatter_scope.dart';
+import 'package:qleo/common/widgets/buttons/main_button.dart';
+import 'package:qleo/core/configs/fonts.dart';
+import 'package:qleo/core/configs/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'feature_row.dart';
 

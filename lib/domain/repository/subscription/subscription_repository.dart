@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:minata/core/errors/failures.dart';
-import 'package:minata/domain/entities/subscription/subscription.dart';
+import 'package:qleo/core/errors/failures.dart';
+import 'package:qleo/domain/entities/subscription/subscription.dart';
 
 abstract class SubscriptionRepository {
   /// Fetch the current user's subscription from the backend.
@@ -11,7 +11,7 @@ abstract class SubscriptionRepository {
     required String provider, // 'APPLE' | 'GOOGLE'
     required String
     providerId, // transactionId (Apple) or purchaseToken (Google)
-    required String productId, // e.g. 'com.minata.premium.monthly'
+    required String productId, // e.g. 'com.qleo.premium.monthly'
   });
 
   /// Restore previously purchased subscriptions (required by App Store guidelines).

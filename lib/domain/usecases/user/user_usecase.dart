@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:minata/core/errors/failures.dart';
-import 'package:minata/data/repository/user/user_repository_impl.dart';
-import 'package:minata/domain/entities/user/user.dart';
+import 'package:qleo/core/errors/failures.dart';
+import 'package:qleo/data/repository/user/user_repository_impl.dart';
+import 'package:qleo/domain/entities/user/user.dart';
 
 class GetCurrentUserUsecase {
   final UserRepositoryImpl repository;

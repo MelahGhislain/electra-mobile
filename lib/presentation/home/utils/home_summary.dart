@@ -1,7 +1,7 @@
-import 'package:minata/domain/entities/purchase/purchase.dart';
-import 'package:minata/core/utils/category_meta.dart';
-import 'package:minata/l10n/app_localizations.dart';
-import 'package:minata/presentation/home/model/spending_category.dart';
+import 'package:qleo/domain/entities/purchase/purchase.dart';
+import 'package:qleo/core/utils/category_meta.dart';
+import 'package:qleo/l10n/app_localizations.dart';
+import 'package:qleo/presentation/home/model/spending_category.dart';
 
 /// All derived values the home screen needs, computed once from purchases.
 class HomeSummary {

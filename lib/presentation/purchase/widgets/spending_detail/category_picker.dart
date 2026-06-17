@@ -1,8 +1,8 @@
-import 'package:minata/common/widgets/text_fields/search_bar.dart';
-import 'package:minata/core/configs/fonts.dart';
-import 'package:minata/core/configs/theme/app_colors.dart';
-import 'package:minata/core/utils/category_meta.dart';
-import 'package:minata/l10n/app_localizations.dart';
+import 'package:qleo/common/widgets/text_fields/search_bar.dart';
+import 'package:qleo/core/configs/fonts.dart';
+import 'package:qleo/core/configs/theme/app_colors.dart';
+import 'package:qleo/core/utils/category_meta.dart';
+import 'package:qleo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 /// Shows a searchable category picker bottom sheet.

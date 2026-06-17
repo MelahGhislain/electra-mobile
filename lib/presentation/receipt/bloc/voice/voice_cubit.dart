@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:minata/domain/repository/voice/voice_repository.dart';
-import 'package:minata/domain/usecases/voice/start_voice_stream.dart';
-import 'package:minata/domain/usecases/voice/stop_voice_stream.dart';
-import 'package:minata/domain/usecases/voice/listen_voice_stream.dart';
+import 'package:qleo/domain/repository/voice/voice_repository.dart';
+import 'package:qleo/domain/usecases/voice/start_voice_stream.dart';
+import 'package:qleo/domain/usecases/voice/stop_voice_stream.dart';
+import 'package:qleo/domain/usecases/voice/listen_voice_stream.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'voice_state.dart';

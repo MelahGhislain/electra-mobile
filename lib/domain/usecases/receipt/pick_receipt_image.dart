@@ -1,6 +1,6 @@
-import 'package:minata/core/enums/image_source_enum.dart';
-import 'package:minata/domain/entities/receipt/receipt_image.dart';
-import 'package:minata/domain/repository/receipt/receipt_repository.dart';
+import 'package:qleo/core/enums/image_source_enum.dart';
+import 'package:qleo/domain/entities/receipt/receipt_image.dart';
+import 'package:qleo/domain/repository/receipt/receipt_repository.dart';
 
 /// Picks an image from camera or gallery
 class PickReceiptImage {

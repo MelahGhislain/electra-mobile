@@ -1,10 +1,10 @@
-import 'package:minata/core/enums/auth_provider_enum.dart';
-import 'package:minata/data/repository/auth/auth_repository_impl.dart';
-import 'package:minata/domain/entities/user/user.dart';
-import 'package:minata/domain/usecases/auth/login_user.dart';
-import 'package:minata/domain/usecases/auth/logout_user.dart';
-import 'package:minata/domain/usecases/auth/register_user.dart';
-import 'package:minata/domain/usecases/auth/social_login_usecase.dart';
+import 'package:qleo/core/enums/auth_provider_enum.dart';
+import 'package:qleo/data/repository/auth/auth_repository_impl.dart';
+import 'package:qleo/domain/entities/user/user.dart';
+import 'package:qleo/domain/usecases/auth/login_user.dart';
+import 'package:qleo/domain/usecases/auth/logout_user.dart';
+import 'package:qleo/domain/usecases/auth/register_user.dart';
+import 'package:qleo/domain/usecases/auth/social_login_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'auth_state.dart';
 

@@ -1,4 +1,4 @@
-import 'package:minata/core/configs/env.dart';
+import 'package:qleo/core/configs/env.dart';
 
 class ApiEndpoints {
   static String get baseUrl => Env.apiBaseUrl;

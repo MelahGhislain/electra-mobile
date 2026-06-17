@@ -1,8 +1,8 @@
-import 'package:minata/domain/entities/purchase/purchase.dart';
-import 'package:minata/domain/entities/purchase/purchase_item.dart';
-import 'package:minata/domain/usecases/purchase/get_purchase_detail_usecase.dart';
-import 'package:minata/domain/usecases/purchase/purchase_item_usecases.dart';
-import 'package:minata/presentation/purchase/blocs/purchase/purchase_cubit.dart';
+import 'package:qleo/domain/entities/purchase/purchase.dart';
+import 'package:qleo/domain/entities/purchase/purchase_item.dart';
+import 'package:qleo/domain/usecases/purchase/get_purchase_detail_usecase.dart';
+import 'package:qleo/domain/usecases/purchase/purchase_item_usecases.dart';
+import 'package:qleo/presentation/purchase/blocs/purchase/purchase_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'purchase_detail_state.dart';
 

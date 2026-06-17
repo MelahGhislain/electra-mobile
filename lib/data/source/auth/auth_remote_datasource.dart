@@ -1,7 +1,7 @@
-import 'package:minata/core/network/api_client.dart';
-import 'package:minata/core/network/api_endpoints.dart';
-import 'package:minata/data/models/auth/auth_tokens_model.dart';
-import 'package:minata/domain/entities/auth/social_auth_credential.dart';
+import 'package:qleo/core/network/api_client.dart';
+import 'package:qleo/core/network/api_endpoints.dart';
+import 'package:qleo/data/models/auth/auth_tokens_model.dart';
+import 'package:qleo/domain/entities/auth/social_auth_credential.dart';
 
 abstract class AuthRemoteDataSource {
   Future<AuthTokensModel> login({

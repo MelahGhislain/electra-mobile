@@ -1,5 +1,5 @@
-import 'package:minata/core/configs/theme/app_colors.dart';
-import 'package:minata/data/models/onboarding/onboarding.dart';
+import 'package:qleo/core/configs/theme/app_colors.dart';
+import 'package:qleo/data/models/onboarding/onboarding.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingWidget extends StatelessWidget {

@@ -1,6 +1,6 @@
-import 'package:minata/core/configs/fonts.dart';
-import 'package:minata/domain/entities/purchase/purchase.dart';
-import 'package:minata/l10n/app_localizations.dart';
+import 'package:qleo/core/configs/fonts.dart';
+import 'package:qleo/domain/entities/purchase/purchase.dart';
+import 'package:qleo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

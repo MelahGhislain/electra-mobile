@@ -1,4 +1,4 @@
-import 'package:minata/domain/entities/notification/notification.dart';
+import 'package:qleo/domain/entities/notification/notification.dart';
 
 class NotificationModel extends NotificationEntity {
   const NotificationModel({

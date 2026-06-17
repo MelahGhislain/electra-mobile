@@ -1,6 +1,6 @@
 // domain/entities/purchase.dart
 
-import 'package:minata/domain/entities/purchase/purchase_item.dart';
+import 'package:qleo/domain/entities/purchase/purchase_item.dart';
 import 'package:equatable/equatable.dart';
 
 /// =========================

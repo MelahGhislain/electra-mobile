@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:minata/core/errors/failures.dart';
-import 'package:minata/domain/entities/auth/auth_tokens.dart';
-import 'package:minata/domain/repository/auth/auth_repository.dart';
+import 'package:qleo/core/errors/failures.dart';
+import 'package:qleo/domain/entities/auth/auth_tokens.dart';
+import 'package:qleo/domain/repository/auth/auth_repository.dart';
 
 class LoginUser {
   final AuthRepository repository;

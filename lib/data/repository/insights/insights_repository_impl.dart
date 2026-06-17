@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:minata/core/errors/dio_error_mapper.dart';
-import 'package:minata/core/errors/failures.dart';
-import 'package:minata/data/source/insights/insights_remote_datasource.dart';
-import 'package:minata/domain/entities/insights/insights.dart';
-import 'package:minata/domain/repository/insights/insights_repository.dart';
+import 'package:qleo/core/errors/dio_error_mapper.dart';
+import 'package:qleo/core/errors/failures.dart';
+import 'package:qleo/data/source/insights/insights_remote_datasource.dart';
+import 'package:qleo/domain/entities/insights/insights.dart';
+import 'package:qleo/domain/repository/insights/insights_repository.dart';
 import 'package:flutter/foundation.dart';
 
 class InsightsRepositoryImpl implements InsightsRepository {

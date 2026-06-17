@@ -1,5 +1,5 @@
-import 'package:minata/core/network/api_client.dart';
-import 'package:minata/data/models/subscription/subscription_model.dart';
+import 'package:qleo/core/network/api_client.dart';
+import 'package:qleo/data/models/subscription/subscription_model.dart';
 
 abstract class SubscriptionRemoteDataSource {
   Future<SubscriptionModel> getSubscription();

@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:minata/core/errors/failures.dart';
-import 'package:minata/domain/entities/user/user.dart';
-import 'package:minata/domain/entities/user/user_settings.dart';
+import 'package:qleo/core/errors/failures.dart';
+import 'package:qleo/domain/entities/user/user.dart';
+import 'package:qleo/domain/entities/user/user_settings.dart';
 
 abstract class UserRepository {
   Future<Either<Failure, User>> getCurrentUser();

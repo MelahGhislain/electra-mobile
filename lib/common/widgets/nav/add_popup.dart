@@ -1,9 +1,9 @@
-import 'package:minata/core/configs/fonts.dart';
-import 'package:minata/core/configs/theme/app_colors.dart';
-import 'package:minata/core/router/route_names.dart';
-import 'package:minata/l10n/app_localizations.dart';
-import 'package:minata/presentation/settings/blocs/user_cubit.dart';
-import 'package:minata/presentation/settings/blocs/user_state.dart';
+import 'package:qleo/core/configs/fonts.dart';
+import 'package:qleo/core/configs/theme/app_colors.dart';
+import 'package:qleo/core/router/route_names.dart';
+import 'package:qleo/l10n/app_localizations.dart';
+import 'package:qleo/presentation/settings/blocs/user_cubit.dart';
+import 'package:qleo/presentation/settings/blocs/user_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';

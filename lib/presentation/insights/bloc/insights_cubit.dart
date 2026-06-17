@@ -1,4 +1,4 @@
-import 'package:minata/domain/usecases/insights/get_insights_usecase.dart';
+import 'package:qleo/domain/usecases/insights/get_insights_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'insights_state.dart';
 

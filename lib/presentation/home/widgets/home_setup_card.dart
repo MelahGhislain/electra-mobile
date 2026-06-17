@@ -1,17 +1,17 @@
-import 'package:minata/core/assets/app_images.dart';
-import 'package:minata/domain/entities/user/user.dart';
-import 'package:minata/domain/entities/user/user_settings.dart';
-import 'package:minata/l10n/app_localizations.dart';
-import 'package:minata/presentation/home/bloc/home_cubit.dart';
-import 'package:minata/presentation/home/bloc/home_state.dart';
-import 'package:minata/presentation/settings/widgets/bottom_sheets/budget_bottom_sheet.dart';
-import 'package:minata/presentation/settings/blocs/user_cubit.dart';
-import 'package:minata/presentation/settings/blocs/user_state.dart';
+import 'package:qleo/core/assets/app_images.dart';
+import 'package:qleo/domain/entities/user/user.dart';
+import 'package:qleo/domain/entities/user/user_settings.dart';
+import 'package:qleo/l10n/app_localizations.dart';
+import 'package:qleo/presentation/home/bloc/home_cubit.dart';
+import 'package:qleo/presentation/home/bloc/home_state.dart';
+import 'package:qleo/presentation/settings/widgets/bottom_sheets/budget_bottom_sheet.dart';
+import 'package:qleo/presentation/settings/blocs/user_cubit.dart';
+import 'package:qleo/presentation/settings/blocs/user_state.dart';
 import 'package:flutter/material.dart';
-import 'package:minata/core/configs/fonts.dart';
-import 'package:minata/core/configs/theme/app_colors.dart';
+import 'package:qleo/core/configs/fonts.dart';
+import 'package:qleo/core/configs/theme/app_colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:minata/presentation/settings/widgets/bottom_sheets/currency_bottom_sheet.dart';
+import 'package:qleo/presentation/settings/widgets/bottom_sheets/currency_bottom_sheet.dart';
 
 class HomeSetupCard extends StatefulWidget {
   const HomeSetupCard({super.key});

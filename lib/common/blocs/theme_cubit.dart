@@ -1,4 +1,4 @@
-import 'package:minata/core/utils/constants/storage_keys.dart';
+import 'package:qleo/core/utils/constants/storage_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 

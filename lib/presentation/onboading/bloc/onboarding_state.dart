@@ -1,4 +1,4 @@
-import 'package:minata/presentation/onboading/models/onboarding_settings.dart';
+import 'package:qleo/presentation/onboading/models/onboarding_settings.dart';
 import 'package:equatable/equatable.dart';
 
 class OnboardingState extends Equatable {

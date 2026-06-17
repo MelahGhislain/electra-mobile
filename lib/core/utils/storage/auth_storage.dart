@@ -1,5 +1,5 @@
-import 'package:minata/core/utils/constants/storage_keys.dart';
-import 'package:minata/core/utils/storage/secure_storage.dart';
+import 'package:qleo/core/utils/constants/storage_keys.dart';
+import 'package:qleo/core/utils/storage/secure_storage.dart';
 
 class AuthStorage {
   final SecureStorage _storage;

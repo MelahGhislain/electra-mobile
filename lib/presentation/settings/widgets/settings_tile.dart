@@ -1,5 +1,5 @@
-import 'package:minata/common/widgets/buttons/animated_icon_button.dart';
-import 'package:minata/core/router/route_names.dart';
+import 'package:qleo/common/widgets/buttons/animated_icon_button.dart';
+import 'package:qleo/core/router/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

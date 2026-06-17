@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:minata/core/errors/failures.dart';
-import 'package:minata/domain/entities/purchase/purchase.dart';
-import 'package:minata/domain/entities/purchase/purchase_item.dart';
+import 'package:qleo/core/errors/failures.dart';
+import 'package:qleo/domain/entities/purchase/purchase.dart';
+import 'package:qleo/domain/entities/purchase/purchase_item.dart';
 
 abstract class PurchaseRepository {
   // ── Purchase ──────────────────────────────────────────────────────────────

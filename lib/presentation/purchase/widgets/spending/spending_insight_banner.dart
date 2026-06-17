@@ -1,6 +1,6 @@
-import 'package:minata/l10n/app_localizations.dart';
+import 'package:qleo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:minata/core/configs/theme/app_colors.dart';
+import 'package:qleo/core/configs/theme/app_colors.dart';
 
 /// A dismissible insight banner shown below the category tabs.
 class SpendingInsightBanner extends StatelessWidget {

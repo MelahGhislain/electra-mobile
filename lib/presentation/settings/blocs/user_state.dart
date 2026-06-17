@@ -1,4 +1,4 @@
-import 'package:minata/domain/entities/user/user.dart';
+import 'package:qleo/domain/entities/user/user.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class UserState extends Equatable {

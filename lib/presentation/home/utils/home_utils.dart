@@ -1,7 +1,7 @@
-import 'package:minata/core/utils/category_meta.dart';
-import 'package:minata/domain/entities/purchase/purchase.dart';
-import 'package:minata/l10n/app_localizations.dart';
-import 'package:minata/presentation/home/widgets/top_spending_today_card.dart';
+import 'package:qleo/core/utils/category_meta.dart';
+import 'package:qleo/domain/entities/purchase/purchase.dart';
+import 'package:qleo/l10n/app_localizations.dart';
+import 'package:qleo/presentation/home/widgets/top_spending_today_card.dart';
 import 'package:flutter/material.dart';
 
 // ─────────────────────────────────────────────────────────────────────────────

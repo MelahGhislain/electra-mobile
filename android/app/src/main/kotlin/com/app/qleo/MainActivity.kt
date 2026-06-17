@@ -1,4 +1,4 @@
-package com.minata.app
+package com.app.qleo
 
 import io.flutter.embedding.android.FlutterActivity
 

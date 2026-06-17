@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:minata/core/errors/failures.dart';
-import 'package:minata/domain/entities/notification/notification.dart';
+import 'package:qleo/core/errors/failures.dart';
+import 'package:qleo/domain/entities/notification/notification.dart';
 
 abstract class NotificationRepository {
   Future<Either<Failure, void>> registerPushToken(

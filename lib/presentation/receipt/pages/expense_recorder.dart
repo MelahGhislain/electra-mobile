@@ -1,11 +1,11 @@
-import 'package:minata/presentation/receipt/bloc/voice/voice_cubit.dart';
-import 'package:minata/presentation/receipt/widgets/expense_recorder/animated_orb.dart';
-import 'package:minata/presentation/receipt/widgets/expense_recorder/mic_button.dart';
-import 'package:minata/presentation/receipt/widgets/expense_recorder/recorder_heading.dart';
-import 'package:minata/presentation/receipt/widgets/expense_recorder/session_timer.dart';
-import 'package:minata/presentation/receipt/widgets/expense_recorder/start_talking_pill.dart';
-import 'package:minata/presentation/receipt/widgets/expense_recorder/waveform_bar.dart';
-import 'package:minata/service_locator.dart';
+import 'package:qleo/presentation/receipt/bloc/voice/voice_cubit.dart';
+import 'package:qleo/presentation/receipt/widgets/expense_recorder/animated_orb.dart';
+import 'package:qleo/presentation/receipt/widgets/expense_recorder/mic_button.dart';
+import 'package:qleo/presentation/receipt/widgets/expense_recorder/recorder_heading.dart';
+import 'package:qleo/presentation/receipt/widgets/expense_recorder/session_timer.dart';
+import 'package:qleo/presentation/receipt/widgets/expense_recorder/start_talking_pill.dart';
+import 'package:qleo/presentation/receipt/widgets/expense_recorder/waveform_bar.dart';
+import 'package:qleo/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

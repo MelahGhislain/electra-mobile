@@ -1,16 +1,16 @@
-import 'package:minata/core/assets/app_images.dart';
-import 'package:minata/core/configs/fonts.dart';
-import 'package:minata/core/configs/theme/app_colors.dart';
-import 'package:minata/core/router/route_names.dart';
-import 'package:minata/core/utils/storage/onboarding_storage.dart';
-import 'package:minata/data/models/onboarding/onboarding.dart';
-import 'package:minata/domain/entities/user/language.dart';
-import 'package:minata/l10n/app_localizations.dart';
-import 'package:minata/presentation/onboading/widgets/highlighted_title.dart';
-import 'package:minata/presentation/onboading/widgets/language/language_selector.dart';
-import 'package:minata/presentation/onboading/widgets/onboarding_page.dart';
-import 'package:minata/presentation/onboading/widgets/onboarding_widget.dart';
-import 'package:minata/service_locator.dart';
+import 'package:qleo/core/assets/app_images.dart';
+import 'package:qleo/core/configs/fonts.dart';
+import 'package:qleo/core/configs/theme/app_colors.dart';
+import 'package:qleo/core/router/route_names.dart';
+import 'package:qleo/core/utils/storage/onboarding_storage.dart';
+import 'package:qleo/data/models/onboarding/onboarding.dart';
+import 'package:qleo/domain/entities/user/language.dart';
+import 'package:qleo/l10n/app_localizations.dart';
+import 'package:qleo/presentation/onboading/widgets/highlighted_title.dart';
+import 'package:qleo/presentation/onboading/widgets/language/language_selector.dart';
+import 'package:qleo/presentation/onboading/widgets/onboarding_page.dart';
+import 'package:qleo/presentation/onboading/widgets/onboarding_widget.dart';
+import 'package:qleo/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -278,11 +278,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
                             const Spacer(),
 
-                            // Bottom Bar: @minata + Next Button
+                            // Bottom Bar: @qleo + Next Button
                             Row(
                               children: [
                                 const Text(
-                                  "@minata",
+                                  "@qleo",
                                   style: TextStyle(
                                     color: Colors.white70,
                                     fontSize: 16,

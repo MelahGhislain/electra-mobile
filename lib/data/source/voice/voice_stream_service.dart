@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math' show sqrt;
 
-import 'package:minata/core/configs/env.dart';
-import 'package:minata/core/enums/voice_session_enum.dart';
-import 'package:minata/core/network/api_endpoints.dart';
+import 'package:qleo/core/configs/env.dart';
+import 'package:qleo/core/enums/voice_session_enum.dart';
+import 'package:qleo/core/network/api_endpoints.dart';
 import 'package:flutter/material.dart';
 import 'package:record/record.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';

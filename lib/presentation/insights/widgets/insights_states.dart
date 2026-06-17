@@ -1,8 +1,8 @@
-import 'package:minata/common/widgets/buttons/main_button.dart';
-import 'package:minata/core/configs/fonts.dart';
-import 'package:minata/core/configs/theme/app_colors.dart';
-import 'package:minata/domain/entities/insights/insights.dart';
-import 'package:minata/l10n/app_localizations.dart';
+import 'package:qleo/common/widgets/buttons/main_button.dart';
+import 'package:qleo/core/configs/fonts.dart';
+import 'package:qleo/core/configs/theme/app_colors.dart';
+import 'package:qleo/domain/entities/insights/insights.dart';
+import 'package:qleo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 // ── Loading ───────────────────────────────────────────────────────────────────

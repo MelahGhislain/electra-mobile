@@ -1,7 +1,7 @@
-import 'package:minata/core/enums/image_source_enum.dart';
-import 'package:minata/data/source/receipt/receipt_data_source.dart';
-import 'package:minata/domain/entities/receipt/receipt_image.dart';
-import 'package:minata/domain/repository/receipt/receipt_repository.dart';
+import 'package:qleo/core/enums/image_source_enum.dart';
+import 'package:qleo/data/source/receipt/receipt_data_source.dart';
+import 'package:qleo/domain/entities/receipt/receipt_image.dart';
+import 'package:qleo/domain/repository/receipt/receipt_repository.dart';
 
 class ReceiptRepositoryImpl implements ReceiptRepository {
   final ReceiptDataSource dataSource;

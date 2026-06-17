@@ -1,16 +1,16 @@
-import 'package:minata/common/blocs/auth/app_auth_cubit.dart';
-import 'package:minata/common/blocs/currency/currency_formatter_scope.dart';
-import 'package:minata/common/blocs/locale_cubit.dart';
-import 'package:minata/core/configs/theme/app_theme.dart';
-import 'package:minata/core/router/app_router.dart';
-import 'package:minata/common/blocs/theme_cubit.dart';
-import 'package:minata/presentation/receipt/bloc/receipt/receipt_cubit.dart';
-import 'package:minata/domain/usecases/receipt/pick_receipt_image.dart';
-import 'package:minata/l10n/app_localizations.dart';
-import 'package:minata/presentation/auth/bloc/auth_cubit.dart';
-import 'package:minata/presentation/purchase/blocs/purchase/purchase_cubit.dart';
-import 'package:minata/presentation/settings/blocs/user_cubit.dart';
-import 'package:minata/service_locator.dart';
+import 'package:qleo/common/blocs/auth/app_auth_cubit.dart';
+import 'package:qleo/common/blocs/currency/currency_formatter_scope.dart';
+import 'package:qleo/common/blocs/locale_cubit.dart';
+import 'package:qleo/core/configs/theme/app_theme.dart';
+import 'package:qleo/core/router/app_router.dart';
+import 'package:qleo/common/blocs/theme_cubit.dart';
+import 'package:qleo/presentation/receipt/bloc/receipt/receipt_cubit.dart';
+import 'package:qleo/domain/usecases/receipt/pick_receipt_image.dart';
+import 'package:qleo/l10n/app_localizations.dart';
+import 'package:qleo/presentation/auth/bloc/auth_cubit.dart';
+import 'package:qleo/presentation/purchase/blocs/purchase/purchase_cubit.dart';
+import 'package:qleo/presentation/settings/blocs/user_cubit.dart';
+import 'package:qleo/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -95,7 +95,7 @@ class _MainAppState extends State<MainApp> {
                   Locale('ko'),
                   Locale('ar'),
                 ],
-                title: 'Minata',
+                title: 'qleo',
                 theme: AppTheme.lightTheme,
                 darkTheme: AppTheme.darkTheme,
                 themeMode: themeMode,

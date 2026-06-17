@@ -1,8 +1,8 @@
 import 'package:currency_formatter/currency_formatter.dart' as cf;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:minata/presentation/settings/blocs/user_cubit.dart';
-import 'package:minata/presentation/settings/blocs/user_state.dart';
+import 'package:qleo/presentation/settings/blocs/user_cubit.dart';
+import 'package:qleo/presentation/settings/blocs/user_state.dart';
 
 class CurrencyFormatterScope extends InheritedWidget {
   final String currencyCode;
