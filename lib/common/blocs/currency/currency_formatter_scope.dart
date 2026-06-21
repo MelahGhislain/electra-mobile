@@ -8,11 +8,10 @@ class CurrencyFormatterScope extends InheritedWidget {
   final String currencyCode;
   final cf.CurrencyFormat _format;
 
-  CurrencyFormatterScope._({
-    required this.currencyCode,
-    required super.child,
-  }) : _format =  cf.CurrencyFormat.fromCode(currencyCode) ??
-         cf.CurrencyFormat.fromCode('usd')!;
+  CurrencyFormatterScope._({required this.currencyCode, required super.child})
+    : _format =
+          cf.CurrencyFormat.fromCode(currencyCode) ??
+          cf.CurrencyFormat.fromCode('usd')!;
 
   /// Format amount respecting symbol position, decimal separator, etc.
   /// USD → $1,234.50  |  XAF → 1.234 FCFA  |  EUR → 1.234,50 €
@@ -24,8 +23,8 @@ class CurrencyFormatterScope extends InheritedWidget {
   String get symbol => _format.symbol;
 
   static CurrencyFormatterScope of(BuildContext context) {
-    final result =
-        context.dependOnInheritedWidgetOfExactType<CurrencyFormatterScope>();
+    final result = context
+        .dependOnInheritedWidgetOfExactType<CurrencyFormatterScope>();
     assert(
       result != null,
       'No CurrencyFormatterScope found. Did you add it in app.dart builder?',
@@ -50,11 +49,9 @@ class CurrencyProvider extends StatelessWidget {
     return BlocBuilder<UserCubit, UserState>(
       buildWhen: (prev, curr) => _code(context, prev) != _code(context, curr),
       builder: (context, _) {
-        final code = context.read<UserCubit>().currentUserSettings?.currency ?? 'USD';
-        return CurrencyFormatterScope._(
-          currencyCode: code,
-          child: child,
-        );
+        final code =
+            context.read<UserCubit>().currentUserSettings?.currency ?? 'USD';
+        return CurrencyFormatterScope._(currencyCode: code, child: child);
       },
     );
   }

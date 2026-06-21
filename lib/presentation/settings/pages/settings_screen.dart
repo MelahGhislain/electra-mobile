@@ -85,15 +85,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
   //   }
   // }
   String _currencyLabel(UserSettings? settings) {
-  return settings?.currency.toUpperCase() ?? 'USD';
-}
+    return settings?.currency.toUpperCase() ?? 'USD';
+  }
 
   String _languageLabel(UserSettings? settings) {
     final lang = AppLanguage.fromCode(settings?.locale);
     return lang.label;
   }
 
-  String _budgetLabel(UserSettings? settings, AppLocalizations l, CurrencyFormatterScope fmt) {
+  String _budgetLabel(
+    UserSettings? settings,
+    AppLocalizations l,
+    CurrencyFormatterScope fmt,
+  ) {
     if (settings?.monthlyBudget == null || settings!.monthlyBudget! <= 0) {
       return l.budgetNotSet;
     }
@@ -134,30 +138,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
     }
   }
 
-  // Future<void> _openCurrencySheet(User user) async {
-  //   AppCurrency current = AppCurrency.usd;
-  //   try {
-  //     current = AppCurrency.values.firstWhere(
-  //       (c) =>
-  //           c.code.toLowerCase() ==
-  //           (user.settings?.currency ?? '').toLowerCase(),
-  //       orElse: () => AppCurrency.usd,
-  //     );
-  //   } catch (_) {}
-  //   final result = await CurrencyBottomSheet.show(context, current);
-  //   if (result != null && mounted) {
-  //     await context.read<UserCubit>().updateUserSetting(user.id, {
-  //       'currency': result.code,
-  //     });
-  //   }
-  // }
-
   Future<void> _openCurrencySheet(User user) async {
     final result = await CurrencyBottomSheet.show(
       context,
       currentCode: user.settings?.currency,
     );
-    print({result});
+
     if (result != null && mounted) {
       await context.read<UserCubit>().updateUserSetting(user.id, {
         'currency': result.code,

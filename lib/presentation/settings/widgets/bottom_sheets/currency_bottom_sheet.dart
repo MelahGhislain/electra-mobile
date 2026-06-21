@@ -27,26 +27,20 @@ class CurrencyBottomSheet {
         bottomSheetHeight: MediaQuery.sizeOf(context).height * 0.75,
         inputDecoration: InputDecoration(
           hintText: 'Search currency...',
-          hintStyle: TextStyle(
-            color: theme.textTheme.bodyMedium?.color,
-          ),
+          hintStyle: TextStyle(color: theme.textTheme.bodyMedium?.color),
           prefixIcon: Icon(Icons.search_rounded, color: theme.iconTheme.color),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(
-              color: theme.dividerColor,
-            ),
+            borderSide: BorderSide(color: theme.dividerColor),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide(
-              color: theme.dividerColor,
-            ),
+            borderSide: BorderSide(color: theme.dividerColor),
           ),
           focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(color: theme.dividerColor),
-              ),
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: theme.dividerColor),
+          ),
           filled: true,
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 16,

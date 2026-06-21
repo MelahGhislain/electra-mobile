@@ -35,19 +35,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCTTpW4oAWRb2aSFZDw9ZFwXr8yBvlJQEI',
-    appId: '1:738537854047:android:75bf9ee2d10e44df8d37ea',
-    messagingSenderId: '738537854047',
-    projectId: 'qleo-51ccd',
-    storageBucket: 'qleo-51ccd.firebasestorage.app',
+    apiKey: 'AIzaSyBXpUIK6oBNXE3DhhYT7qJp3NDajnRbN54',
+    appId: '1:420625008233:android:67a9dae343fe121dd144f8',
+    messagingSenderId: '420625008233',
+    projectId: 'qleo-1eeac',
+    storageBucket: 'qleo-1eeac.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDpN-CJ3je3E5O_Vyl4YVpuKb9lVtokGOg',
-    appId: '1:738537854047:ios:6d48b1b5089e426b8d37ea',
-    messagingSenderId: '738537854047',
-    projectId: 'qleo-51ccd',
-    storageBucket: 'qleo-51ccd.firebasestorage.app',
+    apiKey: 'AIzaSyAoKuOmdI1YPpo0b8F2oqJ_Ali2zritlZg',
+    appId: '1:420625008233:ios:f19293aa9c47444dd144f8',
+    messagingSenderId: '420625008233',
+    projectId: 'qleo-1eeac',
+    storageBucket: 'qleo-1eeac.firebasestorage.app',
     iosBundleId: 'com.app.qleo',
   );
 }

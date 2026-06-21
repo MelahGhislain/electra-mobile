@@ -135,8 +135,18 @@ class InsightsTopSpendingDays extends StatelessWidget {
 
   String _monthAbbr(int month) {
     const abbrs = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
     ];
     return month >= 1 && month <= 12 ? abbrs[month - 1] : '';
   }

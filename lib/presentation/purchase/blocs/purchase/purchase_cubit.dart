@@ -36,7 +36,7 @@ class PurchaseCubit extends Cubit<PurchaseState> {
       (failure) {
         emit(PurchaseFailure(failure.message));
       },
-      (purchases){
+      (purchases) {
         emit(PurchaseLoaded(purchases));
       },
     );
@@ -70,10 +70,10 @@ class PurchaseCubit extends Cubit<PurchaseState> {
 
     final result = await _updatePurchase(id, body);
     result.fold(
-      (failure) { 
+      (failure) {
         emit(
-        PurchaseMutationFailure(message: failure.message, purchases: current),
-      );
+          PurchaseMutationFailure(message: failure.message, purchases: current),
+        );
       },
       (updated) async {
         // final refreshed = current.map((p) => p.id == id ? updated : p).toList();

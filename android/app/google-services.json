@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "738537854047",
-    "project_id": "qleo-51ccd",
-    "storage_bucket": "qleo-51ccd.firebasestorage.app"
+    "project_number": "420625008233",
+    "project_id": "qleo-1eeac",
+    "storage_bucket": "qleo-1eeac.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:738537854047:android:75bf9ee2d10e44df8d37ea",
+        "mobilesdk_app_id": "1:420625008233:android:67a9dae343fe121dd144f8",
         "android_client_info": {
           "package_name": "com.app.qleo"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCTTpW4oAWRb2aSFZDw9ZFwXr8yBvlJQEI"
+          "current_key": "AIzaSyBXpUIK6oBNXE3DhhYT7qJp3NDajnRbN54"
         }
       ],
       "services": {

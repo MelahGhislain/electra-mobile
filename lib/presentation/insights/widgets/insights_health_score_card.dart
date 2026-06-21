@@ -26,10 +26,8 @@ class InsightsHealthScoreCard extends StatelessWidget {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (_) => _FullReportSheet(
-        aiEnrichment: aiEnrichment,
-        insights: insights,
-      ),
+      builder: (_) =>
+          _FullReportSheet(aiEnrichment: aiEnrichment, insights: insights),
     );
   }
 
@@ -57,10 +55,7 @@ class InsightsHealthScoreCard extends StatelessWidget {
               children: [
                 CustomPaint(
                   size: const Size(80, 80),
-                  painter: _ScoreArcPainter(
-                    score: score.score,
-                    color: color,
-                  ),
+                  painter: _ScoreArcPainter(score: score.score, color: color),
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -105,7 +100,9 @@ class InsightsHealthScoreCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 // Highlights
-                ...score.highlights.take(2).map(
+                ...score.highlights
+                    .take(2)
+                    .map(
                       (h) => Padding(
                         padding: const EdgeInsets.only(bottom: 4),
                         child: Row(
@@ -224,10 +221,7 @@ class _FullReportSheet extends StatelessWidget {
   final AiEnrichment aiEnrichment;
   final SpendingInsights insights;
 
-  const _FullReportSheet({
-    required this.aiEnrichment,
-    required this.insights,
-  });
+  const _FullReportSheet({required this.aiEnrichment, required this.insights});
 
   Color _scoreColor(int score) {
     if (score >= 80) return const Color(0xFF16A34A);
@@ -451,7 +445,9 @@ class _FullReportSheet extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 12),
-                      ...insights.categoryBreakdown.take(3).map(
+                      ...insights.categoryBreakdown
+                          .take(3)
+                          .map(
                             (c) => _SummaryRow(
                               label: c.name,
                               value:
@@ -491,7 +487,11 @@ class _SummaryRow extends StatelessWidget {
   final String value;
   final Color? valueColor;
 
-  const _SummaryRow({required this.label, required this.value, this.valueColor});
+  const _SummaryRow({
+    required this.label,
+    required this.value,
+    this.valueColor,
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyDpN-CJ3je3E5O_Vyl4YVpuKb9lVtokGOg</string>
+	<string>AIzaSyAoKuOmdI1YPpo0b8F2oqJ_Ali2zritlZg</string>
 	<key>GCM_SENDER_ID</key>
-	<string>738537854047</string>
+	<string>420625008233</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.app.qleo</string>
 	<key>PROJECT_ID</key>
-	<string>qleo-51ccd</string>
+	<string>qleo-1eeac</string>
 	<key>STORAGE_BUCKET</key>
-	<string>qleo-51ccd.firebasestorage.app</string>
+	<string>qleo-1eeac.firebasestorage.app</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:738537854047:ios:6d48b1b5089e426b8d37ea</string>
+	<string>1:420625008233:ios:f19293aa9c47444dd144f8</string>
 </dict>
 </plist>

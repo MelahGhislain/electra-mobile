@@ -560,8 +560,7 @@ class _InsightsContentState extends State<_InsightsContent> {
             InsightsHeader(
               period: widget.state.period,
               label: insights.meta.label,
-              onPrevious: () =>
-                  context.read<InsightsCubit>().previousPeriod(),
+              onPrevious: () => context.read<InsightsCubit>().previousPeriod(),
               onNext: () => context.read<InsightsCubit>().nextPeriod(),
               onPeriodChanged: (p) =>
                   context.read<InsightsCubit>().setPeriod(p),
@@ -631,18 +630,13 @@ class _InsightsContentState extends State<_InsightsContent> {
               const SizedBox(height: 12),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: InsightsKeyInsightsGrid(
-                  insights: insights.keyInsights,
-                ),
+                child: InsightsKeyInsightsGrid(insights: insights.keyInsights),
               ),
               const SizedBox(height: 24),
             ],
 
             // ── Top spending categories ───────────────────────────────
-            _SectionHeader(
-              title: l.topSpendingCategories,
-              hideDropdown: true,
-            ),
+            _SectionHeader(title: l.topSpendingCategories, hideDropdown: true),
             const SizedBox(height: 12),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -656,8 +650,7 @@ class _InsightsContentState extends State<_InsightsContent> {
             // ── Spending trend ────────────────────────────────────────
             _SectionHeader(
               title: l.spendingTrend,
-              trailing:
-                  'vs ${_previousLabel(context, widget.state.period)}',
+              trailing: 'vs ${_previousLabel(context, widget.state.period)}',
             ),
             const SizedBox(height: 12),
             Padding(
@@ -777,8 +770,7 @@ class _OverviewSectionHeader extends StatelessWidget {
                   label,
                   style: TextStyle(
                     fontSize: AppFontSize.sm,
-                    fontWeight:
-                        isSelected ? FontWeight.w600 : FontWeight.w400,
+                    fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
                     color: theme.textTheme.bodyMedium?.color,
                   ),
                 ),
@@ -798,8 +790,7 @@ class _OverviewSectionHeader extends StatelessWidget {
     });
   }
 
-  String get _selectedLabel =>
-      items.firstWhere((e) => e.$1 == selected).$2;
+  String get _selectedLabel => items.firstWhere((e) => e.$1 == selected).$2;
 
   @override
   Widget build(BuildContext context) {
@@ -825,16 +816,10 @@ class _OverviewSectionHeader extends StatelessWidget {
               children: [
                 Text(
                   l.viewByCategories(_selectedLabel),
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(width: 2),
-                Icon(
-                  Icons.arrow_drop_down_rounded,
-                  size: AppFontSize.xxxxl,
-                ),
+                Icon(Icons.arrow_drop_down_rounded, size: AppFontSize.xxxxl),
               ],
             ),
           ),

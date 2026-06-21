@@ -74,7 +74,8 @@ class _SubscriptionScreenState extends State<SubscriptionScreen> {
 
           // Price from store or sensible fallback
           final priceString =
-              product?.price ?? (_isAnnual ? fmt.format(4.99) : fmt.format(9.99));
+              product?.price ??
+              (_isAnnual ? fmt.format(4.99) : fmt.format(9.99));
 
           return Scaffold(
             appBar: AppBar(

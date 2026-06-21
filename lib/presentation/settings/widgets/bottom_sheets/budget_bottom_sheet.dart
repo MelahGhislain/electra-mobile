@@ -164,8 +164,10 @@ class _BudgetSheetBodyState extends State<_BudgetSheetBody> {
                 selected: _budgetCtrl.text.trim(),
                 options: _quickAmounts
                     .map(
-                      (amount) =>
-                          ChipSelectorOption(value: amount, label: fmt.format(double.parse(amount))),
+                      (amount) => ChipSelectorOption(
+                        value: amount,
+                        label: fmt.format(double.parse(amount)),
+                      ),
                     )
                     .toList(),
                 onSelected: (amount) =>

@@ -90,8 +90,6 @@ class _HomeSetupCardState extends State<HomeSetupCard> {
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -192,7 +190,9 @@ class _HomeSetupCardState extends State<HomeSetupCard> {
 
                     _SetupItem(
                       icon: Icons.attach_money_rounded,
-                      color: (settings?.currency != null) ? AppColors.primary : theme.iconTheme.color!,
+                      color: (settings?.currency != null)
+                          ? AppColors.primary
+                          : theme.iconTheme.color!,
                       title: l.settingsCurrency,
                       subtitle: _currencyLabel(settings),
                       onTap: user != null
@@ -239,7 +239,6 @@ class _HomeSetupCardState extends State<HomeSetupCard> {
                     //     ),
                     //   ),
                     // ),
-
                     const SizedBox(height: 4),
 
                     // ── Footer note ─────────────────────────────────

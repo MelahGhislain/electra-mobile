@@ -20,15 +20,15 @@ class InsightsStatCardsRow extends StatelessWidget {
           : insights.totals.currency,
       decimalDigits: 2,
     );
-    final absPct =
-        insights.totals.deltaPercent.abs().toStringAsFixed(1);
+    final absPct = insights.totals.deltaPercent.abs().toStringAsFixed(1);
     final isDown = insights.totals.trend == TrendDirection.down;
 
     final topCategory = insights.categoryBreakdown.isNotEmpty
         ? insights.categoryBreakdown.first
         : null;
 
-    final potentialSavings = insights.savingsOpportunity?.projectedAnnualSavings;
+    final potentialSavings =
+        insights.savingsOpportunity?.projectedAnnualSavings;
 
     return SizedBox(
       height: 104,
@@ -43,7 +43,9 @@ class InsightsStatCardsRow extends StatelessWidget {
             iconBg: const Color(0xFFEDE9FE),
             topLabel: l.spendingTrend,
             mainValue: '$absPct%',
-            mainColor: isDown ? const Color(0xFF16A34A) : const Color(0xFFDC2626),
+            mainColor: isDown
+                ? const Color(0xFF16A34A)
+                : const Color(0xFFDC2626),
             mainIcon: isDown
                 ? Icons.arrow_downward_rounded
                 : Icons.arrow_upward_rounded,
